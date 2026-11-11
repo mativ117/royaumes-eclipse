@@ -3,8 +3,11 @@
 
 select{background:#211c28;color:#fce6cf;padding:10px;border:1px solid #886647;border-radius:6px;font:inherit}button{-webkit-tap-highlight-color:transparent}.hud{align-items:flex-start}canvas{position:fixed;inset:0}#notice{top:145px} .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:#d7c9bd;margin:20px 0} .legend span{border-left:3px solid var(--c);padding-left:8px}
 #roomHint{font-size:11px;color:#95dce3;margin-top:5px;max-width:340px}.hudButtons{display:flex;gap:6px}.hudButtons button{font-size:12px}#notice{top:auto;bottom:175px;font-size:13px;max-width:560px}#bossHUD{position:fixed;top:max(145px,calc(env(safe-area-inset-top) + 130px));left:50%;transform:translateX(-50%);width:min(85%,460px);background:#16121dde;border:1px solid #845c48;padding:10px 15px;border-radius:8px;font-size:11px;letter-spacing:.1em;z-index:2;pointer-events:none}.bossTrack{height:6px;background:#45303b;margin:7px 0}.bossTrack i{display:block;height:100%;background:#ffc17b;width:100%}#bossState{color:#e0c6a6;font-size:10px;letter-spacing:.02em}#damageFlash{position:fixed;inset:0;pointer-events:none;z-index:2}.hit{animation:hurt .35s ease-out}@keyframes hurt{0%{box-shadow:inset 0 0 100px #ff423b77}100%{box-shadow:inset 0 0 0 transparent}}@media(max-width:600px){.plate{max-width:72%}.hudButtons{flex-direction:column}#notice{bottom:235px;padding:9px;font-size:12px}#bossHUD{top:162px}}@media(max-height:500px){.plate{font-size:11px;padding:8px}#roomHint{max-width:270px;font-size:10px}#bossHUD{top:16px;left:58%;width:32%}#notice{bottom:18px;max-width:40%;font-size:11px}#controls{display:none}#stick{width:98px;height:98px;left:20px}#knob{left:28px;top:28px}#fire{width:76px;height:76px}#power{width:64px;height:64px;bottom:112px}#dash{width:64px;height:64px;right:112px}}
+
+/* Keep iOS browser gestures out of the active controls. Menus remain scrollable. */
+html,body{overscroll-behavior:none}#mobile{touch-action:none}#mobile .pad{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none}#mobile button{outline-offset:2px}
 </style></head><body><canvas id="world" aria-label="Salle 3D de la cathédrale"></canvas>
-<section class="screen" id="menu"><div class="panel"><span class="eyebrow">Les Royaumes de l’Éclipse · Chapitre I · Version 0.3</span><h1>La nef<br>des <em>serments.</em></h1><p id="intro">Trois salles, trois épreuves. Choisissez un pacte, traversez une nef piégée et affrontez le Veilleur du seuil. La cathédrale exige plus que des tirs.</p><div class="legend"><span style="--c:#ffd294">Tirs dorés</span><span style="--c:#79daff">Bouclier bleu</span><span style="--c:#ff654f">Danger rouge</span></div><p>Contournez les obstacles et choisissez entre Vigueur et Élan. Observez les pièges. Face au Veilleur, esquivez sa préparation rouge puis ripostez quand son armure devient dorée.</p><p><label for="quality">Qualité graphique </label><select id="quality"><option value="standard">Standard</option><option value="light">Légère — téléphone</option></select></p><button id="start" class="primary">Commencer l’expédition →</button><p class="fine">PC : ZQSD / WASD / flèches · souris : viser · clic : tirer · Espace : esquive · E : bouclier · Échap : pause.<br>Téléphone : joystick et visée automatique. Paysage conseillé.<br>Prototype solo 0.3 · Trois salles du premier niveau · Sans compte ni coop.</p></div></section>
+<section class="screen" id="menu"><div class="panel"><span class="eyebrow">Les Royaumes de l’Éclipse · Chapitre I · Version 0.3.1</span><h1>La nef<br>des <em>serments.</em></h1><p id="intro">Trois salles, trois épreuves. Choisissez un pacte, traversez une nef piégée et affrontez le Veilleur du seuil. La cathédrale exige plus que des tirs. Reprise possible à l’entrée de chaque salle après une défaite.</p><div class="legend"><span style="--c:#ffd294">Tirs dorés</span><span style="--c:#79daff">Bouclier bleu</span><span style="--c:#ff654f">Danger rouge</span></div><p>Contournez les obstacles et choisissez entre Vigueur et Élan. Observez les pièges. Face au Veilleur, esquivez sa préparation rouge puis ripostez quand son armure devient dorée.</p><p><label for="quality">Qualité graphique </label><select id="quality"><option value="standard">Standard</option><option value="light">Légère — téléphone</option></select></p><button id="start" class="primary">Commencer l’expédition →</button><p class="fine">PC : ZQSD / WASD / flèches · souris : viser · clic : tirer · Espace : esquive · E : bouclier · Échap : pause.<br>Téléphone : joystick et visée automatique. Paysage conseillé.<br>Prototype solo 0.3.1 · Trois salles du premier niveau · Sans compte ni coop.</p></div></section>
 <div class="hud" id="hud" hidden><div class="plate"><strong id="chapter">I · Le choix des cendres</strong><div id="hp"><i></i></div><div id="objective"></div><div id="cooldown"></div><div id="roomHint"></div></div><div class="hudButtons"><button id="sound" aria-pressed="true">Son : oui</button><button id="pause">Pause</button></div></div><div id="damageFlash" aria-hidden="true"></div><div id="bossHUD" hidden><div>LE VEILLEUR DU SEUIL</div><div class="bossTrack"><i id="bossHP"></i></div><span id="bossState"></span></div><div id="notice" role="status" aria-live="polite" hidden></div><div id="controls" hidden>Clic : tir doré · Espace : esquive · E : bouclier bleu</div><div id="mobile"><div class="pad" id="stick"><div id="knob"></div></div><button class="pad" id="fire">Tirer</button><button class="pad" id="dash">Esquive</button><button class="pad" id="power" style="border-color:#79daff;color:#b8efff">Bouclier</button></div><section class="screen" id="pausePanel" hidden><div class="panel"><span class="eyebrow" id="endTag"></span><h1 id="endTitle"></h1><p id="endText"></p><button class="primary" id="resume">Reprendre</button> <button class="secondary" id="back">Retour au menu</button></div></section><!-- Three.js 0.160.1
 The MIT License
 
@@ -77,7 +80,18 @@ function tone(freq,dur=.06,type='sine',volume=.025){if(!soundOn||!audio||audio.s
 function unlockAudio(){try{if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();audio.resume().catch(()=>{})}catch(_){soundOn=false}}
 $('#sound').onclick=()=>{soundOn=!soundOn;$('#sound').textContent=soundOn?'Son : oui':'Son : non';$('#sound').setAttribute('aria-pressed',String(soundOn));if(soundOn)unlockAudio()};
 function announce(s){$('#notice').textContent=s;$('#notice').hidden=false;noticeUntil=performance.now()+6000}
-function clearInputs(){keys.clear();joy.x=joy.y=0;shooting=mouseDown=false;stickId=fireId=null;$('#knob').style.transform='';if(p)p.vx=p.vz=0}
+function clearInputs(){
+ keys.clear();joy.x=joy.y=0;shooting=mouseDown=false;
+ const oldStick=stickId,oldFire=fireId;stickId=fireId=null;
+ for(const [el,id] of [[$('#stick'),oldStick],[$('#fire'),oldFire]]){
+  try{if(id!==null&&el.hasPointerCapture(id))el.releasePointerCapture(id)}catch(_){}
+ }
+ $('#knob').style.transform='';if(p)p.vx=p.vz=0;
+}
+function releaseMenuFocus(){
+ // A hidden menu button must not receive the gameplay Space key as a click.
+ const el=document.activeElement;if(el&&el!==document.body&&typeof el.blur==='function')el.blur();
+}
 function cleanupObject(o){scene.remove(o);o.traverse(child=>{if(child.userData.labelTexture){child.userData.labelTexture.dispose();child.material.dispose()}if(child.userData.ownedMaterial)child.material.dispose()})}
 function clearFX(){effects.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});effects=[];hazards.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});hazards=[]}
 function clearRoom(){enemies.forEach(e=>cleanupObject(e.root));enemies=[];bullets.forEach(b=>scene.remove(b.mesh));bullets=[];clearFX();roomMeshes.forEach(o=>cleanupObject(o));roomMeshes=[];obstacles=[];shrines=[];boss=null}
@@ -93,9 +107,30 @@ else if(room===1){shard=false;for(const z of [5,-1,-7]){roomObject(box(bronze,-1
 else {obstacle(-10,1,2.6,2.6,3);obstacle(10,1,2.6,2.6,3);boss=spawn(0,-7,'boss');boss.hp=boss.max=700;boss.mode='idle';boss.timer=1.7;boss.pattern=0;boss.phase=1;announce('Le Veilleur : esquivez son attaque, puis frappez pendant sa récupération. Le bouclier peut interrompre sa préparation.');}
 $('#chapter').textContent=['I · Le choix des cendres','II · La nef respirante','III · Le Veilleur du seuil'][room];updateHUD()}
 function start(){unlockAudio();p={x:0,z:12,vx:0,vz:0,hp:150,max:150,shot:0,dash:0,dashT:0,dx:0,dz:-1,power:0,shield:0,inv:0,recoil:0};kills=shotCount=walkPhase=0;boon='';clearInputs();setupRoom(0);state='playing';$('#menu').hidden=true;$('#pausePanel').hidden=true;$('#hud').hidden=false;$('#controls').hidden=false;$('#mobile').classList.add('playing');accumulator=0;last=performance.now();updateHUD()}
-function pause(){if(state!=='playing')return;state='paused';clearInputs();$('#pausePanel').hidden=false;$('#resume').hidden=false;$('#endTag').textContent='Version 0.3 · Pause';$('#endTitle').textContent='En pause';$('#endText').textContent='Votre pacte et la progression de cette tentative sont conservés pendant la pause.';$('#mobile').classList.remove('playing')}
-function finish(won){state=won?'won':'lost';clearInputs();$('#pausePanel').hidden=false;$('#resume').hidden=true;$('#endTag').textContent=won?'Premier chapitre terminé':'La cathédrale se souvient';$('#endTitle').textContent=won?'Le Veilleur s’incline.':'Le Rempart est tombé.';$('#endText').textContent=won?`Trois salles traversées · ${kills} adversaires vaincus · Pacte ${boon==='vigor'?'de Vigueur':'d’Élan'}. Fin de cette version ; les deux autres grands niveaux restent à construire.`:'Observez les préparations rouges, utilisez les abris et gardez votre bouclier pour les moments difficiles. Une nouvelle tentative repart du premier pacte.';$('#mobile').classList.remove('playing');tone(won?660:100,.4)}
-$('#start').onclick=start;$('#pause').onclick=pause;$('#resume').onclick=()=>{state='playing';$('#pausePanel').hidden=true;$('#mobile').classList.add('playing');last=performance.now();accumulator=0};$('#back').onclick=()=>{state='menu';clearInputs();$('#menu').hidden=false;$('#pausePanel').hidden=true;$('#hud').hidden=true;$('#controls').hidden=true;$('#mobile').classList.remove('playing');$('#notice').hidden=true};
+let pauseReason='';
+function pause(reason='manual'){
+ if(state!=='playing')return;
+ pauseReason=reason;state='paused';clearInputs();$('#pausePanel').hidden=false;
+ $('#resume').hidden=false;$('#resume').textContent='Reprendre';
+ $('#endTag').textContent='Version 0.3.1 · Pause';$('#endTitle').textContent='En pause';
+ $('#endText').textContent=reason==='hidden'?'La page a été masquée. Votre progression dans cette tentative est conservée.':reason==='graphics'?'Le rendu 3D a été interrompu. Rechargez la page et choisissez la qualité légère.':'Votre pacte et la progression de cette tentative sont conservés.';
+ $('#mobile').classList.remove('playing');
+}
+function finish(won){state=won?'won':'lost';clearInputs();$('#pausePanel').hidden=false;$('#resume').hidden=won;$('#resume').textContent='Réessayer cette salle';$('#endTag').textContent=won?'Premier chapitre terminé':'La cathédrale se souvient';$('#endTitle').textContent=won?'Le Veilleur s’incline.':'Le Rempart est tombé.';$('#endText').textContent=won?`Trois salles traversées · ${kills} adversaires vaincus · Pacte ${boon==='vigor'?'de Vigueur':'d’Élan'}. Fin de cette version ; les deux autres grands niveaux restent à construire.`:'Observez les préparations rouges, utilisez les abris et gardez votre bouclier pour les moments difficiles. Vous pouvez reprendre à l’entrée de cette salle, avec votre pacte.';$('#mobile').classList.remove('playing');tone(won?660:100,.4)}
+function resume(){
+ if(document.hidden)return;
+ if(state==='lost'){
+  const checkpoint=room;
+  p.hp=p.max;p.shot=p.dash=p.dashT=p.power=p.shield=p.recoil=0;
+  clearInputs();setupRoom(checkpoint);if(checkpoint===0&&boon){portal.visible=true;shrines.forEach(s=>s.root.visible=false);announce('Votre pacte est conservé. Rejoignez la porte au fond.')}
+ }else if(state!=='paused')return;
+ state='playing';pauseReason='';$('#pausePanel').hidden=true;
+ $('#mobile').classList.add('playing');releaseMenuFocus();last=performance.now();accumulator=0;
+}
+$('#start').onclick=()=>{start();releaseMenuFocus()};
+$('#pause').onclick=()=>pause('manual');
+$('#resume').onclick=resume;
+$('#back').onclick=()=>{state='menu';clearInputs();$('#menu').hidden=false;$('#pausePanel').hidden=true;$('#hud').hidden=true;$('#controls').hidden=true;$('#mobile').classList.remove('playing');$('#notice').hidden=true;$('#bossHUD').hidden=true};
 $('#quality').onchange=e=>{quality=e.target.value;renderer.setPixelRatio(quality==='light'?1:Math.min(devicePixelRatio||1,1.5));renderer.setSize(innerWidth,innerHeight);dust.visible=quality!=='light'};
 function effect(x,z,r,color,duration=.45){const o=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.8,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.09,z);scene.add(o);effects.push({mesh:o,r,t:duration,max:duration})}
 function addHazard(x,z,r,delay,damageAmount=26,color='#ff6049'){const o=new THREE.Mesh(discGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.22,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.07,z);o.scale.setScalar(r);scene.add(o);const h={mesh:o,x,z,r,delay,max:delay,damage:damageAmount,fired:false,tail:.3};hazards.push(h);return h}
@@ -132,13 +167,34 @@ for(const e of enemies)updateEnemy(e,dt);
 for(const b of bullets){const oldX=b.x,oldZ=b.z;b.x+=b.dx*(b.enemy?b.speed:32)*dt;b.z+=b.dz*(b.enemy?b.speed:32)*dt;b.t-=dt;b.mesh.position.set(b.x,1.35,b.z);if(blocked(b.x,b.z,.1)){b.t=0;effect(b.x,b.z,.6,b.enemy?'#ff8065':'#ffc17b',.2)}if(b.t>0){if(b.enemy){if(distance(b,p)<.8){hurt(14);b.t=0}}else for(const e of enemies)if(!e.dead&&distance(e,b)<(e.type==='boss'?1.7:.85)){damage(e,34);b.t=0;effect(b.x,b.z,.9,'#ffd292',.18);break}}if(b.t<=0){scene.remove(b.mesh)}}bullets=bullets.filter(b=>b.t>0);enemies=enemies.filter(e=>!e.dead);
 for(const h of hazards){h.delay-=dt;if(h.delay<=0&&!h.fired){h.fired=true;h.mesh.material.opacity=.85;if(distance(p,h)<h.r+.3)hurt(h.damage);effect(h.x,h.z,h.r,'#ff6542',.35)}if(h.fired)h.tail-=dt;else h.mesh.material.opacity=.16+(1-h.delay/h.max)*.3}hazards=hazards.filter(h=>{if(h.tail<=0){scene.remove(h.mesh);h.mesh.material.dispose();return false}return true});
 for(const e of effects){e.t-=dt;e.mesh.scale.setScalar(Math.max(.01,e.r*(1-e.t/e.max)));e.mesh.material.opacity=Math.max(0,e.t/e.max)}effects=effects.filter(e=>{if(e.t<=0){scene.remove(e.mesh);e.mesh.material.dispose();return false}return true});for(const s of shrines){s.crystal.rotation.y+=dt;s.crystal.position.y=1.8+Math.sin(t*2)*.15}if(state==='playing')updateRoom(dt);updateHUD()}
-addEventListener('keydown',e=>{if(state==='menu')return;const k=e.key.toLowerCase();if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();keys.add(k);if(!e.repeat){if(k==='escape'){if(state==='paused')$('#resume').click();else pause()}if(k===' ')dash();if(k==='e')power()}});addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>{clearInputs();pause()});document.addEventListener('visibilitychange',()=>{if(document.hidden)pause()});
+// Focus changes are not a reliable indication of leaving the game on mobile.
+// Clear desktop inputs on blur; only real page visibility changes auto-pause.
+addEventListener('blur',()=>{keys.clear();mouseDown=false});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')pause('hidden')});
+addEventListener('pagehide',()=>{if(document.visibilityState==='hidden')pause('hidden')});
+addEventListener('keydown',e=>{
+ const k=e.key.toLowerCase();
+ if(k==='escape'&&!e.repeat){
+  if(state==='paused'){e.preventDefault();resume()}
+  else if(state==='playing'){e.preventDefault();pause('manual')}
+  return;
+ }
+ if(state!=='playing')return;
+ if([' ','arrowup','arrowdown','arrowleft','arrowright','e'].includes(k))e.preventDefault();
+ keys.add(k);
+ if(!e.repeat){if(k===' ')dash();if(k==='e')power()}
+});
+addEventListener('keyup',e=>{keys.delete(e.key.toLowerCase());if(state==='playing'&&e.key===' ')e.preventDefault()});
+// Prevent browser scroll/selection gestures only over active gameplay, not menus.
+document.addEventListener('touchmove',e=>{
+ if(state==='playing'&&e.target instanceof Element&&e.target.closest('#mobile, #world'))e.preventDefault();
+},{passive:false});
 function point(e){pointer.set(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);mouseAim=true}canvas.onpointermove=e=>{if(e.pointerType==='mouse')point(e)};canvas.onpointerdown=e=>{if(e.pointerType==='mouse'){point(e);mouseDown=true}};addEventListener('pointerup',e=>{if(e.pointerType==='mouse')mouseDown=false});canvas.oncontextmenu=e=>e.preventDefault();
-const stick=$('#stick');function moveStick(e){const r=stick.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2,n=Math.hypot(x,y),f=Math.min(1,40/(n||1));joy.x=x*f/40;joy.y=y*f/40;$('#knob').style.transform=`translate(${x*f}px,${y*f}px)`}stick.onpointerdown=e=>{e.preventDefault();stickId=e.pointerId;stick.setPointerCapture(e.pointerId);moveStick(e)};stick.onpointermove=e=>{if(e.pointerId===stickId)moveStick(e)};function stopStick(e){if(e.pointerId===stickId){stickId=null;joy.x=joy.y=0;$('#knob').style.transform=''}}stick.onpointerup=stick.onpointercancel=stick.onlostpointercapture=stopStick;
-$('#fire').onpointerdown=e=>{e.preventDefault();fireId=e.pointerId;$('#fire').setPointerCapture(e.pointerId);shooting=true};function stopFire(e){if(e.pointerId===fireId){shooting=false;fireId=null}}$('#fire').onpointerup=$('#fire').onpointercancel=$('#fire').onlostpointercapture=stopFire;
+const stick=$('#stick');function moveStick(e){const r=stick.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2,n=Math.hypot(x,y),f=Math.min(1,40/(n||1));joy.x=x*f/40;joy.y=y*f/40;$('#knob').style.transform=`translate(${x*f}px,${y*f}px)`}stick.onpointerdown=e=>{if(state!=='playing'||stickId!==null)return;e.preventDefault();stickId=e.pointerId;try{stick.setPointerCapture(e.pointerId)}catch(_){}moveStick(e)};stick.onpointermove=e=>{if(e.pointerId===stickId)moveStick(e)};function stopStick(e){if(e.pointerId===stickId){stickId=null;joy.x=joy.y=0;$('#knob').style.transform=''}}stick.onpointerup=stick.onpointercancel=stick.onlostpointercapture=stopStick;
+$('#fire').onpointerdown=e=>{if(state!=='playing'||fireId!==null)return;e.preventDefault();fireId=e.pointerId;try{$('#fire').setPointerCapture(e.pointerId)}catch(_){}shooting=true};function stopFire(e){if(e.pointerId===fireId){shooting=false;fireId=null}}$('#fire').onpointerup=$('#fire').onpointercancel=$('#fire').onlostpointercapture=stopFire;
 $('#dash').onpointerdown=e=>{e.preventDefault();dash()};$('#power').onpointerdown=e=>{e.preventDefault();power()};
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)}addEventListener('resize',resize);
-canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();pause();announce('La 3D a été interrompue. Rechargez la page et essayez la qualité légère.')});
+canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();pause('graphics');announce('La 3D a été interrompue. Rechargez la page et essayez la qualité légère.')});
 function frame(now){const elapsed=Math.min(.1,(now-(last||now))/1000);last=now;if(state==='playing'){accumulator+=elapsed;while(accumulator>=1/60&&state==='playing'){update(1/60);accumulator-=1/60}}else accumulator=0;
 if(p){const portrait=innerWidth<innerHeight;camDesired.set(p.x*.85,portrait?21:15,p.z+(portrait?22:19));camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(p.x*.85,1,p.z-6);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}requestAnimationFrame(frame);
 </script>

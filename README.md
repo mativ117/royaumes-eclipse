@@ -1,6 +1,6 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Prototype solo 0.4** : le Dernier Rempart, trois salles de la Cathédrale, deux serments avec contreparties, un secret facultatif et un boss à deux phases.
+Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Prototype solo 0.5** : le Dernier Rempart et le Voltigeur, trois salles de la Cathédrale, deux serments avec contreparties, un secret facultatif et un boss à deux phases.
 
 **[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md)
 
@@ -39,6 +39,7 @@ Les tests utilisent Python Playwright et Chromium à `/usr/bin/chromium` :
 
 ```sh
 python -m pip install -r tests/requirements.txt
+python tests/heroes.py
 python tests/smoke.py
 python tests/design.py
 python tests/input_regression.py
@@ -52,6 +53,6 @@ Le lien historique `cathedrale-v03.html` redirige vers le jeu actuel. Pour ajout
 
 ## Suite du projet
 
-Les dix personnages, le personnage secret complet, les deux autres grands niveaux, les comptes, la coop et le battle restent à développer. Les graphismes actuels sont provisoires. Les tests de navigateur simulé ne remplacent pas les essais de fluidité sur téléphone réel.
+Les huit autres personnages du casting initial, le personnage secret complet, les deux autres grands niveaux, les comptes, la coop et le battle restent à développer. Les graphismes actuels sont provisoires. Les tests de navigateur simulé ne remplacent pas les essais de fluidité sur téléphone réel.
 
 Three.js est sous licence MIT, conservée dans `vendor/THREE-LICENSE.txt` et dans la page générée. Aucune licence n’a encore été choisie pour les créations du jeu.

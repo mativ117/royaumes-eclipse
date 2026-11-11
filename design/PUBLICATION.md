@@ -1,7 +1,9 @@
 # Publication GitHub Pages
 
 - Dépôt : `mativ117/royaumes-eclipse`.
-- Source Pages : branche `main`, dossier `/docs`.
+- Source Pages souhaitée : branche `main`, dossier `/docs`.
+- État lors de l’envoi : branche `main`, racine `/`. La connexion GitHub autorise le code mais refuse ce réglage d’administration (403). Deux redirections à la racine permettent donc de jouer immédiatement, tout en gardant le jeu dans `docs`.
+- Pour ne publier que `docs`, le propriétaire peut choisir Settings → Pages → main → /docs → Save. Les redirections à la racine seront alors simplement ignorées.
 - Adresse principale : https://mativ117.github.io/royaumes-eclipse/
 - Ancien lien conservé : https://mativ117.github.io/royaumes-eclipse/cathedrale-v03.html
 

@@ -46,7 +46,7 @@ python tests/input_regression.py
 
 ## Publier
 
-GitHub Pages doit rester sur **`main` → `/docs`**. Après une modification, régénérer le site et envoyer sources et `docs/` dans le même commit. GitHub publie alors les pages de ce dossier. [Procédure](design/PUBLICATION.md).
+Le réglage souhaité est **`main` → `/docs`**. La connexion ne peut pas changer ce réglage d’administration ; tant que Pages utilise la racine, les redirections fournies ouvrent le jeu dans `docs`. Le propriétaire peut sélectionner `/docs` une seule fois dans Settings → Pages. Après une modification, régénérer le site et envoyer sources et `docs/` dans le même commit. GitHub publie alors les pages de ce dossier. [Procédure](design/PUBLICATION.md).
 
 Le lien historique `cathedrale-v03.html` redirige vers le jeu actuel. Pour ajouter une autre page indépendante, la placer dans `docs/` avec un nom distinct.
 

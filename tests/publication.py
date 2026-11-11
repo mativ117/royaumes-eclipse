@@ -34,6 +34,15 @@ try:
   assert ctx.request.get(url+'/src/game.js').status==404
   assert ctx.request.get(url+'/design/CONCEPTION.md').status==404
   assert not errors,errors
+  # Also support the current Pages setting (repository root) without admin API access.
+  fallback=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Quiet,directory=str(ROOT)))
+  Thread(target=fallback.serve_forever,daemon=True).start()
+  try:
+   for entry in ['/', '/cathedrale-v03.html']:
+    page.goto(f'http://127.0.0.1:{fallback.server_port}'+entry+'?entry=root')
+    page.wait_for_url('**/docs/index.html?entry=root')
+    assert 'Version 0.4' in page.locator('#menu').text_content()
+  finally:fallback.shutdown();fallback.server_close()
   page.screenshot(path='/tmp/royaumes-publication-preview.png')
   b.close()
  print('PASS: reproducible build; historical URL preserves query and opens current game; mobile gameplay and choice; blur fix; canonical homepage; version metadata; source and design not published.')

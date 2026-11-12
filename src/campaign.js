@@ -68,7 +68,7 @@ function rebuildCampaign(snapshot=null){
   }
   const q=box(new THREE.MeshBasicMaterial({color:'#8de7eb',transparent:true,opacity:.45}),gap,.05,z,4.5,.02,.2);q.userData.ownedMaterial=true;q.userData.row=i;roomObject(q);campaign.safeMarkers.push(q);
  }
- buildTrials();
+ buildTrials();dressLandmarks();
  // Visual gates follow collision state; they do not rebuild the scene each frame.
  updateCampaignGates();
 }
@@ -114,7 +114,7 @@ function updateCampaign(dt){
  const cycle=t%5,active=cycle>2.1&&cycle<(boon==='vigor'?3.65:3),warning=cycle>1&&cycle<=2.1;
  for(const trap of campaign.traps){trap.material.opacity=active?.7:warning?.22:.06;trap.material.color.set(active?'#ff5635':warning?'#ffae65':'#7bc4c9');if(active&&Math.abs(p.z-trap.userData.z)<.65&&Math.abs(p.x-trap.userData.gap)>2.3)hurt(22);}
  updateTrials(dt);if(boss?.dead){portal.visible=true;startExtraction();}
- updateCampaignGates();
+ updateCampaignGates();updateLandmarkReadability();
  mapClock+=dt;if(mapClock>.12){drawCampaignMap($('#miniMap'));mapClock=0;}
  return false;
 }
@@ -139,21 +139,27 @@ function updateOracle(e,dt){
 }
 function drawCampaignMap(canvas){
  if(!canvas||!campaign||!p)return;
- const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,s=Math.min((W-24)/128,(H-24)/146),ox=W/2;
- const X=x=>ox+x*s,Z=z=>12+(z+112)*s;
- ctx.fillStyle='#100f1a';ctx.fillRect(0,0,W,H);
- for(const region of world.regions){ctx.fillStyle=region.color;ctx.globalAlpha=.32;ctx.fillRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);}
- ctx.globalAlpha=1;ctx.strokeStyle='#74617d';ctx.lineWidth=1;
- for(const region of world.regions)ctx.strokeRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);
- for(const camp of CAMPS){ctx.fillStyle='#76e1c9';ctx.fillRect(X(camp.x)-3,Z(camp.z)-3,6,6);}
- for(const goal of objectiveTargets()){ctx.fillStyle='#ffc986';ctx.beginPath();ctx.arc(X(goal.x),Z(goal.z),4,0,Math.PI*2);ctx.fill();}
- for(const e of enemies)if(!e.dead&&trialActive(e)&&distance(e,p)<17){ctx.fillStyle='#ff756b';ctx.beginPath();ctx.arc(X(e.x),Z(e.z),2.5,0,Math.PI*2);ctx.fill();}
- ctx.fillStyle='#f5f4ff';ctx.beginPath();ctx.arc(X(p.x),Z(p.z),4,0,Math.PI*2);ctx.fill();
- ctx.fillStyle='#ffe4b9';ctx.font='12px system-ui';ctx.fillText('N ↑',W-36,18);
+ const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,large=W>300,pad=large?34:13,s=Math.min((W-pad*2)/128,(H-pad*2)/146),ox=W/2;
+ const X=x=>ox+x*s,Z=z=>pad+(z+112)*s;
+ ctx.fillStyle='#10131d';ctx.fillRect(0,0,W,H);
+ // Ground, void and solid cover are distinct. The map uses the same obstacles as movement.
+ for(const region of world.regions){ctx.fillStyle=region.name==='Archives'?'#3b405a':region.name==='Forge'?'#554231':'#3f4755';ctx.fillRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);ctx.strokeStyle='#9ca9bc';ctx.lineWidth=large?1.5:.7;ctx.strokeRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);}
+ for(const o of obstacles){if(o.gate&&!campaignGateClosed(o.gate))continue;ctx.fillStyle=o.gate?'#f5c285':'#171c29';ctx.fillRect(X(o.x-o.w/2),Z(o.z-o.d/2),Math.max(large?2:1,o.w*s),Math.max(large?2:1,o.d*s));}
+ const goal=selectedMission(),route=guideRoute(goal);
+ if(guidanceOn&&route.length){ctx.strokeStyle='#ffe3a2';ctx.lineWidth=large?3:1.5;ctx.setLineDash(large?[7,5]:[3,2]);ctx.beginPath();route.forEach((q,i)=>i?ctx.lineTo(X(q.x),Z(q.z)):ctx.moveTo(X(q.x),Z(q.z)));ctx.stroke();ctx.setLineDash([]);}
+ function caption(text,x,z){ctx.font=`600 ${large?18:9}px system-ui`;const w=ctx.measureText(text).width;ctx.fillStyle='#10131ded';ctx.fillRect(X(x)-w/2-6,Z(z)-15,w+12,22);ctx.fillStyle='#e8edf7';ctx.textAlign='center';ctx.fillText(text,X(x),Z(z)+1);}
+ if(large){for(const [name,x,z]of[['ATRIUM',0,26],['JARDINS',-18,-31],['CLOÎTRE',18,-30],['CROISÉE',0,-38],['ARCHIVES',-40,-71],['FORGE',39,-71],['NEF',0,-47],['COUR DU VEILLEUR',0,-107]])caption(name,x,z);}
+ for(const camp of CAMPS){const visited=campaign.completed.has('camp-'+camp.id);mapGlyph(ctx,'camp',X(camp.x),Z(camp.z),large?7:3.5,visited?'#97efd7':'#acb9c9',visited);}
+ const goals=missionGoals();for(const g of goals){const selected=g.id===goal?.id;if(selected){ctx.strokeStyle='#fff6de';ctx.lineWidth=large?2:1;ctx.beginPath();ctx.arc(X(g.x),Z(g.z),large?13:6.5,0,Math.PI*2);ctx.stroke();}mapGlyph(ctx,g.kind,X(g.x),Z(g.z),large?7:3.5,SIGN_COLORS[g.kind]||'#ffe0a0');}
+ if(mapThreats)for(const e of enemies)if(!e.dead&&trialActive(e)&&distance(e,p)<17)mapGlyph(ctx,'enemy',X(e.x),Z(e.z),large?4:2,'#ffac9a');
+ ctx.save();ctx.translate(X(p.x),Z(p.z));ctx.rotate(-aim);mapGlyph(ctx,'player',0,0,large?7:4,'#ffffff');ctx.restore();
+ ctx.fillStyle='#f5e4c7';ctx.font=`600 ${large?17:11}px system-ui`;ctx.textAlign='right';ctx.fillText('N ↑',W-9,large?24:15);
+ if(large){ctx.textAlign='left';ctx.font='16px system-ui';ctx.fillText('Vous : flèche blanche',16,H-12);}
 }
+
 function toggleMap(){
  if(state==='map'){state=mapPreviousState;$('#mapPanel').hidden=true;$('#mobile').classList.add('playing');last=performance.now();accumulator=0;return;}
  if(state!=='playing')return;
- mapPreviousState=state;state='map';clearInputs();$('#mapPanel').hidden=false;$('#mobile').classList.remove('playing');drawCampaignMap($('#largeMap'));
+ mapPreviousState=state;state='map';clearInputs();$('#mapPanel').hidden=false;$('#mobile').classList.remove('playing');renderMissionJournal();drawCampaignMap($('#largeMap'));
 }
-function wireCampaignUI(){wireExpeditionUI();$('#mapButton').onclick=toggleMap;$('#closeMap').onclick=toggleMap;}
+function wireCampaignUI(){wireExpeditionUI();wireReadabilityUI();$('#mapButton').onclick=toggleMap;$('#closeMap').onclick=toggleMap;}

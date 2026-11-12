@@ -21,9 +21,15 @@ body.has-interaction #notice{display:none!important}@media(max-height:500px){#co
 #miniMap{left:auto;bottom:auto}#zoneBanner{font-size:clamp(22px,3vw,34px);top:22%;text-shadow:0 2px 20px #000}
 button:disabled{opacity:.5;cursor:default}#menu{align-items:flex-start}#menu .panel{margin:auto 0}
 #runClock{font-size:9px;color:#b8a7b6;margin-top:4px}#continueRun{margin-top:8px}#copyReport{margin:8px 0}#miniMap{height:147px}#largeMap{aspect-ratio:9/10}.heroChoices{margin:12px 0}#menu .fine{max-width:600px}
+
+/* Readability pass: one immediate task, named landmarks and high contrast map. */
+#missionTracker{display:flex;gap:9px;margin-top:8px;padding-top:8px;border-top:1px solid #60513f;max-width:310px}#missionTracker strong{font-size:13px;color:#fff0cd;display:block}#trackedAction{font-size:12px;color:#f0e7dd;display:block;line-height:1.4;margin-top:4px}#trackedDistance{font-size:11px;color:#d6c8b2;display:block;margin-top:4px}#guideArrow{font-size:26px;color:#ffe3a2;align-self:center;display:block;min-width:20px;text-align:center}.hud .plate{max-width:350px;background:#15121bf5}#objective{font-size:11px;color:#d5c9b8}#heroIdentity,#pactStatus,#secretStatus,#runClock{font-size:10px}#runClock{color:#d5c9b8}#bossHUD{top:265px}#zoneBanner{top:38%}#notice{background:#19141ff5;color:#f7eadb;font-size:13px}#interact{background:#211b2af5;border:2px solid #ffdda2;font-size:14px;max-width:280px;line-height:1.4}
+#mapPanel{padding:24px;align-items:center;background:#0d1019fc}.mapLayout{display:grid;grid-template-columns:minmax(240px,450px) minmax(240px,330px);gap:28px;width:min(100%,850px);max-height:94dvh;overflow:auto}.mapDrawing h2{font:28px Georgia;margin:8px 0 14px}.mapDrawing #largeMap{width:100%;height:auto;max-height:none;border:1px solid #ac9b82;background:#10131d}.mapLegend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:#e9dfd0;margin-top:10px}.mapJournal{padding:8px 0}.mapJournal h3{font-size:15px;color:#f6e4c4;margin:12px 0}.mapJournal p{font-size:13px;line-height:1.6;color:#e4dcd1}.missionChoice{display:block;width:100%;text-align:left;background:#1d2330;border:1px solid #727d8e;border-radius:8px;padding:12px;margin:8px 0;color:#f5efe4;min-height:64px}.missionChoice[aria-pressed=true]{border:2px solid #ffdf9f;background:#332b22;padding:11px}.missionChoice strong{display:block;font-size:14px}.missionChoice span{display:block;font-size:13px;line-height:1.5;margin-top:5px;color:#e4dcd1}.mapOptions{display:flex;flex-direction:column;gap:10px;margin:16px 0;font-size:13px}.mapOptions label{display:flex;align-items:center;gap:9px;min-height:32px;cursor:pointer}.mapOptions input{width:19px;height:19px;accent-color:#ffdf9f}.mapJournal details{font-size:13px;margin:12px 0}.mapJournal summary{cursor:pointer;padding:8px 0}.mapJournal #closeMap{margin-top:14px;min-height:48px}#miniMap{width:120px;height:133px;top:82px;opacity:1;background:#10131d}#roomHint{display:none}
+@media(max-width:600px){.hud .plate{max-width:calc(100% - 83px);padding:9px 11px}#missionTracker{max-width:245px}#missionTracker strong{font-size:12px}#trackedAction{font-size:12px}#trackedDistance{font-size:10px}#cooldown{font-size:10px;line-height:1.45}#heroIdentity,#pactStatus,#runClock{display:none}#bossHUD{top:225px}#mapPanel{padding:16px;align-items:flex-start}.mapLayout{display:block;max-height:none;padding-bottom:20px}.mapDrawing{max-width:380px;margin:auto}.mapJournal{padding-top:14px}#notice{top:auto;bottom:230px;font-size:12px;max-width:92%}body.has-boss #notice{top:auto}#interact{bottom:172px;font-size:13px;max-width:270px}#zoneBanner{top:37%}}
+@media(max-height:500px){.hud .plate{max-width:290px;padding:8px 10px}#chapter{font-size:11px}#objective,#heroIdentity,#pactStatus,#runClock{display:none}#missionTracker{margin-top:5px;padding-top:5px;max-width:255px}#trackedAction{font-size:11px;max-width:220px}#missionTracker strong{font-size:12px}#trackedDistance{font-size:10px}#bossHUD{top:62px;right:16px;width:28%;left:auto;transform:none}#mapPanel{padding:10px;align-items:flex-start}.mapLayout{display:grid;grid-template-columns:minmax(230px,360px) minmax(220px,1fr);gap:18px;max-height:none;width:850px}.mapDrawing h2{font-size:22px;margin:5px 0}.mapDrawing .eyebrow{font-size:9px}.mapJournal{padding-top:0}.mapJournal h3{margin:6px 0}.mapLegend{font-size:11px}#notice{top:auto;bottom:14px;max-width:40%;font-size:11px}#interact{bottom:24px;font-size:12px;max-width:250px}#zoneBanner{top:45%}}
 </style></head><body><canvas id="world" aria-label="Salle 3D de la cathédrale"></canvas>
-<section class="screen" id="menu"><div class="panel"><span class="eyebrow">Les Royaumes de l’Éclipse · Chapitre I · Version 0.9</span><h1>Le Carillon<br>des <em>Âmes.</em></h1><p id="intro">Le carillon qui relie les mondes s’est tu. Ramenez une âme à son refuge, restituez la mélodie du cloître, puis réunissez la mémoire des archives et le feu de la forge. Le Veilleur garde la dernière sonnerie. Après sa chute, l’âme sera votre chemin de retour.</p><div class="legend"><span style="--c:#ffd294">Tirs dorés</span><span style="--c:#79daff">Bouclier bleu</span><span style="--c:#ff654f">Danger rouge</span></div><p>Choisissez votre style : tirs et bouclier du Rempart, ou lame et bond du Voltigeur. Les serments s’adaptent à chaque personnage. Chaque don a un prix. Contournez les boucliers des Sentinelles et gardez la cloche du Silence pour le bon moment.</p><div class="heroChoices" role="group" aria-label="Choisir son personnage"><button type="button" class="heroCard" data-hero="rempart" aria-pressed="true"><span class="eyebrow">Distance · Protection</span><strong>Le Dernier Rempart</strong><small>150 PV · Tir doré · Bouclier bleu</small></button><button type="button" class="heroCard" data-hero="voltigeur" aria-pressed="false"><span class="eyebrow">Mêlée · Mobilité</span><strong>Le Voltigeur</strong><small>110 PV · Combo de lame · Bond explosif</small></button></div><p><label for="quality">Qualité graphique </label><select id="quality"><option value="standard">Standard</option><option value="light">Légère — téléphone</option></select></p><button id="start" class="primary">Nouvelle expédition →</button> <button id="continueRun" class="secondary" hidden>Continuer au refuge</button><p class="fine">Durée visée : 10–15 min pour une découverte. Sauvegarde locale aux refuges. La difficulté et la durée restent en cours d’équilibrage.</p><p class="fine">PC : ZQSD / WASD / flèches · souris : viser · clic : tirer · Espace : esquive · E : pouvoir · F : interagir · M : carte · Échap : pause.<br>Téléphone : joystick et visée automatique. Bouton d’interaction près des offrandes. Paysage conseillé.<br>Expédition solo 0.9 · Une expédition en sept actes · Sans compte ni coop.</p></div></section>
-<div class="hud" id="hud" hidden><div class="plate"><strong id="chapter">I · Le choix des cendres</strong><div id="hp"><i></i></div><div id="objective"></div><div id="cooldown"></div><div id="roomHint"></div><div id="runClock"></div><div id="heroIdentity"></div><div id="combatHint"></div><div id="pactStatus"></div><div id="secretStatus"></div></div><div class="hudButtons"><button id="mapButton">Carte</button><button id="sound" aria-pressed="true">Son : oui</button><button id="pause">Pause</button></div></div><button id="interact" hidden aria-label="Interagir avec le monde">Examiner</button><canvas id="miniMap" width="150" height="170" aria-label="Carte de la zone"></canvas><div id="zoneBanner" aria-live="polite"></div><div id="damageFlash" aria-hidden="true"></div><div id="bossHUD" hidden><div>LE VEILLEUR DU SEUIL</div><div class="bossTrack"><i id="bossHP"></i></div><span id="bossState"></span></div><div id="notice" role="status" aria-live="polite" hidden></div><div id="controls" hidden>Clic : attaquer · Espace : esquive · E : pouvoir</div><div id="mobile"><div class="pad" id="stick"><div id="knob"></div></div><button class="pad" id="fire">Tirer</button><button class="pad" id="dash">Esquive</button><button class="pad" id="power" style="border-color:#79daff;color:#b8efff">Bouclier</button></div><section class="screen" id="pausePanel" hidden><div class="panel"><span class="eyebrow" id="endTag"></span><h1 id="endTitle"></h1><p id="endText"></p><button class="secondary" id="copyReport" hidden>Copier le bilan</button> <button class="primary" id="resume">Reprendre</button> <button class="secondary" id="back">Retour au menu</button></div></section><section id="choicePanel" class="screen" hidden role="dialog" aria-modal="true" aria-labelledby="pactTitle"><div class="panel"><span class="eyebrow">Un don. Un prix. Un chemin.</span><h1 id="pactTitle">Le serment</h1><div class="pactTerms"><div><span class="eyebrow">Le don</span><p id="pactGift"></p></div><div><span class="eyebrow">Le prix</span><p id="pactCost"></p></div><div><span class="eyebrow">Le monde répond</span><p id="pactWorld"></p></div></div><p class="fine">Ce choix vaut pour cette expédition. Vous pouvez revenir examiner l’autre offrande avant de décider.</p><div class="choiceActions"><button id="sealPact" class="primary">Sceller ce serment</button><button id="leavePact" class="secondary">Revenir</button></div></div></section><section id="mapPanel" class="screen" hidden role="dialog" aria-modal="true" aria-labelledby="mapTitle"><div class="mapContent"><span class="eyebrow">Les Marches de l’Éclipse</span><h2 id="mapTitle">Votre route</h2><canvas id="largeMap" width="540" height="600" aria-label="Carte des chemins, refuges et objectifs"></canvas><p>Blanc : vous · Or : objectif · Vert : refuge · Rouge : ennemi proche</p><button id="closeMap" class="primary">Reprendre l’exploration</button></div></section><!-- Three.js 0.160.1
+<section class="screen" id="menu"><div class="panel"><span class="eyebrow">Les Royaumes de l’Éclipse · Chapitre I · Version 0.9.1</span><h1>Le Carillon<br>des <em>Âmes.</em></h1><p id="intro">Le carillon qui relie les mondes s’est tu. Ramenez une âme à son refuge, restituez la mélodie du cloître, puis réunissez la mémoire des archives et le feu de la forge. Le Veilleur garde la dernière sonnerie. Après sa chute, l’âme sera votre chemin de retour.</p><div class="legend"><span style="--c:#ffd294">Tirs dorés</span><span style="--c:#79daff">Bouclier bleu</span><span style="--c:#ff654f">Danger rouge</span></div><p>Choisissez votre style : tirs et bouclier du Rempart, ou lame et bond du Voltigeur. Les serments s’adaptent à chaque personnage. Chaque don a un prix. Contournez les boucliers des Sentinelles et gardez la cloche du Silence pour le bon moment.</p><div class="heroChoices" role="group" aria-label="Choisir son personnage"><button type="button" class="heroCard" data-hero="rempart" aria-pressed="true"><span class="eyebrow">Distance · Protection</span><strong>Le Dernier Rempart</strong><small>150 PV · Tir doré · Bouclier bleu</small></button><button type="button" class="heroCard" data-hero="voltigeur" aria-pressed="false"><span class="eyebrow">Mêlée · Mobilité</span><strong>Le Voltigeur</strong><small>110 PV · Combo de lame · Bond explosif</small></button></div><p><label for="quality">Qualité graphique </label><select id="quality"><option value="standard">Standard</option><option value="light">Légère — téléphone</option></select></p><button id="start" class="primary">Nouvelle expédition →</button> <button id="continueRun" class="secondary" hidden>Continuer au refuge</button><p class="fine">Durée visée : 10–15 min pour une découverte. Sauvegarde locale aux refuges. La difficulté et la durée restent en cours d’équilibrage.</p><p class="fine">PC : ZQSD / WASD / flèches · souris : viser · clic : tirer · Espace : esquive · E : pouvoir · F : interagir · M : carte · Échap : pause.<br>Téléphone : joystick et visée automatique. Bouton d’interaction près des offrandes. Paysage conseillé.<br>Expédition solo 0.9.1 · Une expédition en sept actes · Sans compte ni coop.</p></div></section>
+<div class="hud" id="hud" hidden><div class="plate"><strong id="chapter">I · Le choix des cendres</strong><div id="hp"><i></i></div><div id="objective"></div><div id="missionTracker"><span id="guideArrow" aria-hidden="true">↑</span><div><strong id="trackedTitle"></strong><span id="trackedAction"></span><small id="trackedDistance"></small></div></div><div id="cooldown"></div><div id="roomHint"></div><div id="runClock"></div><div id="heroIdentity"></div><div id="combatHint"></div><div id="pactStatus"></div><div id="secretStatus"></div></div><div class="hudButtons"><button id="mapButton">Carte</button><button id="sound" aria-pressed="true">Son : oui</button><button id="pause">Pause</button></div></div><button id="interact" hidden aria-label="Interagir avec le monde">Examiner</button><canvas id="miniMap" width="150" height="170" aria-label="Carte de la zone"></canvas><div id="zoneBanner" aria-live="polite"></div><div id="damageFlash" aria-hidden="true"></div><div id="bossHUD" hidden><div>LE VEILLEUR DU SEUIL</div><div class="bossTrack"><i id="bossHP"></i></div><span id="bossState"></span></div><div id="notice" role="status" aria-live="polite" hidden></div><div id="controls" hidden>Clic : attaquer · Espace : esquive · E : pouvoir</div><div id="mobile"><div class="pad" id="stick"><div id="knob"></div></div><button class="pad" id="fire">Tirer</button><button class="pad" id="dash">Esquive</button><button class="pad" id="power" style="border-color:#79daff;color:#b8efff">Bouclier</button></div><section class="screen" id="pausePanel" hidden><div class="panel"><span class="eyebrow" id="endTag"></span><h1 id="endTitle"></h1><p id="endText"></p><button class="secondary" id="copyReport" hidden>Copier le bilan</button> <button class="primary" id="resume">Reprendre</button> <button class="secondary" id="back">Retour au menu</button></div></section><section id="choicePanel" class="screen" hidden role="dialog" aria-modal="true" aria-labelledby="pactTitle"><div class="panel"><span class="eyebrow">Un don. Un prix. Un chemin.</span><h1 id="pactTitle">Le serment</h1><div class="pactTerms"><div><span class="eyebrow">Le don</span><p id="pactGift"></p></div><div><span class="eyebrow">Le prix</span><p id="pactCost"></p></div><div><span class="eyebrow">Le monde répond</span><p id="pactWorld"></p></div></div><p class="fine">Ce choix vaut pour cette expédition. Vous pouvez revenir examiner l’autre offrande avant de décider.</p><div class="choiceActions"><button id="sealPact" class="primary">Sceller ce serment</button><button id="leavePact" class="secondary">Revenir</button></div></div></section><section id="mapPanel" class="screen" hidden role="dialog" aria-modal="true" aria-labelledby="mapTitle"><div class="mapLayout"><div class="mapDrawing"><span class="eyebrow">Les Marches de l’Éclipse</span><h2 id="mapTitle">Carte &amp; objectifs</h2><canvas id="largeMap" width="720" height="800" aria-label="Carte du niveau : chemins, obstacles, portes fermées, refuges et objectif suivi"></canvas><div class="mapLegend"><span>➤ Vous</span><span>◈ Objectif</span><span>⊞ Refuge</span><span>▲ Menace</span><span>━ Porte fermée</span></div></div><div class="mapJournal"><h3>Choisir un objectif à suivre</h3><div id="missionList"></div><div class="mapOptions"><label><input id="guidanceToggle" type="checkbox" checked> Chemin de guidage</label><label><input id="threatToggle" type="checkbox" checked> Menaces proches</label></div><h3>Objets de quête</h3><p id="questItems"></p><p id="melodyReminder"></p><details><summary>Progression de l’expédition</summary><p id="questProgress"></p></details><button id="closeMap" class="primary">Reprendre l’exploration</button></div></div></section><!-- Three.js 0.160.1
 The MIT License
 
 Copyright © 2010-2023 three.js authors
@@ -288,7 +294,136 @@ function wireExpeditionUI(){
  $('#continueRun').hidden=!readRun();$('#continueRun').onclick=continueRun;
  $('#copyReport').onclick=async()=>{const text=expeditionReport();try{await navigator.clipboard.writeText(text);$('#copyReport').textContent='Bilan copié';}catch(_){$('#endText').textContent+=' '+text;}};
 }
-function expeditionReport(){return JSON.stringify({version:'0.9',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
+function expeditionReport(){return JSON.stringify({version:'0.9.1',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
+
+'use strict';
+// Shapes, words and colour share the same meaning on the map and in the world.
+const SIGN_COLORS={soul:'#97efd7',lamp:'#ffe0a0',fresco:'#e8dcc8',archive:'#d9bcff',valve:'#ffca86',core:'#ffca86',ritual:'#a8e4ff',camp:'#97efd7',pact:'#ffe0a0',relic:'#d9bcff',boss:'#ffac9a'};
+let trackedGoal='',guidanceOn=true,mapThreats=true,navCache=null,readabilityAssets=null;
+try{guidanceOn=localStorage.getItem('royaumes-guidance')!=='off'}catch(_){}
+function missionGoals(){
+ if(!campaign||!p)return[];
+ const q=campaign.trials,goal=(id,title,action,kind,point)=>({id,title,action,kind,...point});
+ if(!boon)return[goal('braise','Serment de Braise','Examiner le don et sa contrepartie.','pact',{x:-9,z:7}),goal('elan','Serment d’Élan','Examiner le don et sa contrepartie.','pact',{x:9,z:7})];
+ if(campaign.keys.size<2){const a=[];
+  if(!q.escort.done){const remaining=enemies.filter(e=>!e.dead&&trialActive(e)&&e.stage===ESCORT_PATH[q.escort.waypoint]?.gate);a.push(goal('soul','L’âme des jardins',!q.escort.started?'Accueillir l’âme, puis rester près d’elle.':remaining.length&&distance(q.escort,ESCORT_PATH[q.escort.waypoint])<1.5?'Éliminer l’embuscade pour libérer l’âme.':'Accompagner l’âme jusqu’à la croisée.','soul',q.escort));}
+  if(!q.bells.done){const next=LAMPS.find(l=>l.id===q.bells.order[q.bells.step]);a.push(goal('bells','Le carillon du cloître',q.bells.read?`Accorder ${next.id} · ${q.bells.step}/3 accords justes.`:'Lire la fresque pour connaître la mélodie.',q.bells.read?'lamp':'fresco',q.bells.read?next:{x:16,z:-7}));}return a;
+ }
+ if(!q.archive||!q.forge.done){const a=[];
+  if(!q.archive){const foes=enemies.filter(e=>!e.dead&&e.stage==='shades').sort((a,b)=>distance(a,p)-distance(b,p));a.push(goal('archive','La lentille des Archives',foes.length?`Vaincre les Reflets · ${3-foes.length}/3. Le pouvoir les révèle.`:'Prendre la lentille au fond des Archives.','archive',foes[0]||{x:-52,z:-68}));}
+  if(!q.forge.done){const valves=VALVES.filter(v=>!q.forge.valves.includes(v.id)).sort((a,b)=>distance(a,p)-distance(b,p));a.push(goal('forge','Le noyau de la forge',q.forge.carrying?'Rapporter le noyau au refuge de la croisée.':valves.length?`Fermer les vannes · ${q.forge.valves.length}/3.`:'Prendre le noyau, puis le rapporter au refuge.',q.forge.carrying?'camp':valves.length?'valve':'core',q.forge.carrying?CAMPS[0]:valves[0]||q.forge));}return a;
+ }
+ if(q.ritual.length<2)return SEALS.filter(s=>!q.ritual.includes(s.id)).map(s=>goal(s.id,'Sceau '+(s.id==='west'?'des mémoires':'du brasier'),'Charger le sceau avec l’offrande retrouvée.','ritual',s));
+ if(!campaign.defeated.has('carillonneur')){const chains=enemies.filter(e=>e.type==='anchor'&&!e.dead).sort((a,b)=>distance(a,p)-distance(b,p));return[goal('porter','Le Carillonneur',chains.length?`Briser les chaînes · ${2-chains.length}/2.`:'Frapper le gardien pendant sa récupération.','boss',chains[0]||enemies.find(e=>e.type==='porter')||{x:0,z:-65})];}
+ if(q.extraction)return[goal('return','L’ancre de retour',`Rejoindre l’âme au refuge · ${Math.ceil(campaign.escapeLeft)} s.`,'soul',CAMPS[0])];
+ return[goal('boss','Le Veilleur du seuil',campaign.bossAwake?'Esquiver ses marques, puis frapper sa récupération.':'Traverser le seuil pour entrer dans la cour.','boss',campaign.bossAwake?boss:{x:0,z:-78})];
+}
+function selectedMission(){const goals=missionGoals();let goal=goals.find(g=>g.id===trackedGoal);if(!goal){goal=goals.slice().sort((a,b)=>distance(a,p)-distance(b,p))[0];trackedGoal=goal?.id||'';navCache=null;}return goal;}
+function setTrackedGoal(id){trackedGoal=id;navCache=null;renderMissionJournal();drawCampaignMap($('#largeMap'));}
+function mapGlyph(ctx,kind,x,y,r,color,filled=true){
+ ctx.save();ctx.translate(x,y);ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=Math.max(1.5,r*.2);ctx.beginPath();
+ if(kind==='player'){ctx.moveTo(0,-r*1.5);ctx.lineTo(r,r);ctx.lineTo(0,r*.55);ctx.lineTo(-r,r);ctx.closePath();}
+ else if(kind==='camp'){ctx.rect(-r,-r,r*2,r*2);}
+ else if(kind==='boss'||kind==='enemy'){ctx.moveTo(0,-r);ctx.lineTo(r,r);ctx.lineTo(-r,r);ctx.closePath();}
+ else if(kind==='core'||kind==='pact'||kind==='relic'||kind==='ritual'){ctx.moveTo(0,-r*1.25);ctx.lineTo(r,0);ctx.lineTo(0,r*1.25);ctx.lineTo(-r,0);ctx.closePath();}
+ else ctx.arc(0,0,r,0,Math.PI*2);
+ if(filled)ctx.fill();else ctx.stroke();
+ if(kind==='camp'){ctx.strokeStyle='#10151b';ctx.beginPath();ctx.moveTo(-r*.55,0);ctx.lineTo(r*.55,0);ctx.moveTo(0,-r*.55);ctx.lineTo(0,r*.55);ctx.stroke();}
+ if(kind==='valve'||kind==='archive'){ctx.strokeStyle=filled?'#10151b':color;ctx.beginPath();ctx.moveTo(-r*.65,0);ctx.lineTo(r*.65,0);ctx.moveTo(0,-r*.65);ctx.lineTo(0,r*.65);ctx.stroke();}
+ ctx.restore();
+}
+// A walkable route, never a straight line through the void or a closed gate.
+function buildGuideRoute(goal){
+ const W=129,H=143,N=W*H,idx=(x,z)=>(z+112)*W+x+64,point=i=>({x:i%W-64,z:Math.floor(i/W)-112});
+ const sx=Math.round(p.x),sz=Math.round(p.z);if(sx<-64||sx>64||sz<-112||sz>30)return[];
+ const queue=new Int32Array(N),parent=new Int32Array(N);parent.fill(-2);let head=0,tail=0,end=-1;
+ const start=idx(sx,sz);queue[tail++]=start;parent[start]=-1;
+ while(head<tail){const i=queue[head++],{x,z}=point(i);if(Math.hypot(x-goal.x,z-goal.z)<1.8&&!blocked(x,z,.55)){end=i;break;}
+  for(const [dx,dz]of[[1,0],[-1,0],[0,-1],[0,1]]){const a=x+dx,b=z+dz;if(a<-64||a>64||b<-112||b>30)continue;const next=idx(a,b);if(parent[next]!==-2||blocked(a,b,.55))continue;parent[next]=i;queue[tail++]=next;}
+ }
+ if(end<0)return[];const route=[];while(end>=0){route.push(point(end));end=parent[end];}return route.reverse();
+}
+function guideRoute(goal=selectedMission()){
+ if(!goal||!guidanceOn)return[];
+ const key=[goal.id,Math.round(goal.x),Math.round(goal.z),boon,campaign.keys.size,campaign.trials.ritual.length,campaign.defeated.has('carillonneur'),campaign.bossAwake].join(':');
+ if(!navCache||navCache.key!==key||Math.hypot(p.x-navCache.x,p.z-navCache.z)>3.5||t-navCache.time>2){navCache={key,x:p.x,z:p.z,time:t,route:buildGuideRoute(goal)};}
+ return navCache.route;
+}
+function landmarkState(m){
+ const q=campaign.trials;
+ if(m.kind==='valve')return q.forge.valves.includes(m.id)?'done':'ready';
+ if(m.kind==='lamp')return q.bells.done||q.bells.order.slice(0,q.bells.step).includes(m.id)?'done':'ready';
+ if(m.kind==='ritual')return q.ritual.includes(m.id)?'done':(m.id==='west'?q.archive:q.forge.done)?'ready':'locked';
+ if(m.kind==='core')return q.forge.valves.length===3?'ready':'locked';
+ if(m.kind==='archive')return trialDead('shades')?'ready':'locked';
+ return 'ready';
+}
+function getLandmarkAssets(){
+ if(!readabilityAssets)readabilityAssets={wheel:new THREE.TorusGeometry(.65,.13,6,16),lens:new THREE.TorusGeometry(.62,.16,6,20),book:new THREE.BoxGeometry(1.2,.16,.9),core:new THREE.IcosahedronGeometry(.7,0),lamp:new THREE.SphereGeometry(.4,10,8),camp:new THREE.ConeGeometry(.75,1.2,4),pact:new THREE.OctahedronGeometry(.65),ritual:new THREE.TorusGeometry(.65,.13,6,14,Math.PI),spoke:new THREE.BoxGeometry(1.2,.09,.1),pointer:new THREE.ConeGeometry(.26,.8,3),focus:new THREE.RingGeometry(1.55,1.68,40)};
+ return readabilityAssets;
+}
+function dressLandmarks(){
+ navCache=null;const assets=getLandmarkAssets();
+ for(const m of shrines)m.kind='pact';for(const m of campaign.campModels)m.kind='camp';
+ const all=[...shrines,...campaign.trialModels,...campaign.campModels,...campaign.collectibles];
+ campaign.landmarks=all;
+ for(const m of all){
+  if(m===campaign.soul)m.kind='soul';const kind=m.kind||'relic';
+  const geo=assets[kind==='fresco'?'book':kind==='valve'?'wheel':kind==='archive'?'lens':kind];
+  if(geo&&m.crystal.geometry!==geo){if(m.crystal.userData.ownedGeometry)m.crystal.geometry.dispose();m.crystal.geometry=geo;m.crystal.userData.ownedGeometry=false;}
+  m.crystal.scale.setScalar(kind==='soul'?.4:1);m.crystal.position.y=kind==='camp'?1.1:1.8;
+  if(kind==='valve'){const spoke=new THREE.Mesh(assets.spoke,bronze);m.crystal.add(spoke);const second=spoke.clone();second.rotation.z=Math.PI/2;m.crystal.add(second);}
+  if(kind==='fresco'){m.crystal.rotation.x=.55;const page=new THREE.Mesh(assets.book,bronze);page.scale.set(.05,1.2,1);m.crystal.add(page);}
+  if(kind==='ritual')retitleWorldLabel(m,m.id==='west'?'SCEAU DES MÉMOIRES':'SCEAU DU BRASIER');
+  m.root.userData.landmarkKind=kind;
+ }
+ const focus=new THREE.Mesh(assets.focus,new THREE.MeshBasicMaterial({color:'#fff3cd',side:THREE.DoubleSide,transparent:true,opacity:.95,depthWrite:false}));focus.rotation.x=-Math.PI/2;focus.visible=false;scene.add(focus);roomObject(focus);campaign.focusRing=focus;focus.userData.ownedMaterial=true;
+ const pointerMaterial=new THREE.MeshBasicMaterial({color:'#ffe9b2'});campaign.guidePointers=[];
+ for(let i=0;i<4;i++){const mesh=new THREE.Mesh(assets.pointer,pointerMaterial);mesh.rotation.x=-Math.PI/2;mesh.visible=false;scene.add(mesh);roomObject(mesh);campaign.guidePointers.push(mesh);}
+ campaign.guidePointers[0].userData.ownedMaterial=true;
+}
+function updateLandmarkReadability(){
+ const goal=selectedMission(),route=guideRoute(goal);let focus=null,nearest=Infinity;
+ for(const m of campaign.landmarks||[]){
+  const d=distance(m,p),state=landmarkState(m),active=m.root.visible&&state!=='done';
+  if(m.tag){m.tag.visible=active&&d<7.5;m.tag.scale.set(4.5,.844,1);}
+  if(m.crystal){m.crystal.material.emissiveIntensity=state==='done'?.12:state==='locked'?.2:.7;if(m.kind==='lamp')m.crystal.scale.setScalar(state==='done'?.65:1);}
+  if(active&&d<3.1&&d<nearest){focus=m;nearest=d;}
+ }
+ if(campaign.focusRing){campaign.focusRing.visible=!!focus;if(focus)campaign.focusRing.position.set(focus.x,.07,focus.z);}
+ for(let i=0;i<(campaign.guidePointers||[]).length;i++){
+  const mesh=campaign.guidePointers[i],index=3+i*2,a=route[index],b=route[index+1];mesh.visible=guidanceOn&&!!a&&!!b&&state==='playing';
+  if(mesh.visible){mesh.position.set(a.x,.14,a.z);mesh.rotation.z=-Math.atan2(b.x-a.x,-(b.z-a.z));}
+ }
+ if(goal){$('#trackedTitle').textContent=goal.title;$('#trackedAction').textContent=goal.action;$('#trackedDistance').textContent=!guidanceOn?'Repères désactivés':route.length?`${route.length} m de chemin`:'Consulter la carte';
+  const a=route[Math.min(5,route.length-1)];$('#guideArrow').hidden=!guidanceOn||!a;if(a)$('#guideArrow').style.rotate=Math.atan2(a.x-p.x,-(a.z-p.z))+'rad';}
+}
+function journalRows(){
+ const q=campaign.trials;return[
+  {title:'Âme des jardins',done:q.escort.done},
+  {title:'Carillon du cloître',done:q.bells.done},
+  {title:'Lentille des Archives',done:q.archive},
+  {title:'Noyau de la forge',done:q.forge.done},
+  {title:'Sceaux de la nef',done:q.ritual.length===2},
+  {title:'Carillonneur',done:campaign.defeated.has('carillonneur')},
+  {title:'Veilleur',done:!!boss?.dead},
+  {title:'Retour à l’âme',done:state==='won'}];
+}
+function renderMissionJournal(){
+ const goal=selectedMission(),container=$('#missionList');container.replaceChildren();
+ for(const g of missionGoals()){
+  const button=document.createElement('button');button.className='missionChoice';button.setAttribute('aria-pressed',String(g.id===goal?.id));
+  const title=document.createElement('strong'),description=document.createElement('span');title.textContent=(g.id===goal?.id?'◈ Suivi · ':'◇ ')+g.title;description.textContent=g.action;button.append(title,description);button.onclick=()=>setTrackedGoal(g.id);container.append(button);
+ }
+ $('#questProgress').textContent=journalRows().map(r=>(r.done?'✓ ':'○ ')+r.title).join(' · ');
+ const q=campaign.trials;$('#questItems').textContent=`Empreintes : ${campaign.keys.size}/2 · Lentille : ${q.archive?'obtenue':'à retrouver'} · Noyau : ${q.forge.done?'livré':q.forge.carrying?'transporté':'à retrouver'}`;
+ if(q.bells.read)$('#melodyReminder').textContent='Mélodie de la fresque : '+q.bells.order.join(' → ')+(q.bells.done?' · Accordée':'');else $('#melodyReminder').textContent='La mélodie apparaîtra ici après lecture de la fresque.';
+ $('#guidanceToggle').checked=guidanceOn;$('#threatToggle').checked=mapThreats;
+}
+function wireReadabilityUI(){
+ $('#guidanceToggle').onchange=e=>{guidanceOn=e.target.checked;navCache=null;try{localStorage.setItem('royaumes-guidance',guidanceOn?'on':'off')}catch(_){}drawCampaignMap($('#largeMap'));};
+ $('#threatToggle').onchange=e=>{mapThreats=e.target.checked;drawCampaignMap($('#largeMap'));};
+}
 
 'use strict';
 let campaign=null,mapPreviousState='playing',mapClock=0;
@@ -360,7 +495,7 @@ function rebuildCampaign(snapshot=null){
   }
   const q=box(new THREE.MeshBasicMaterial({color:'#8de7eb',transparent:true,opacity:.45}),gap,.05,z,4.5,.02,.2);q.userData.ownedMaterial=true;q.userData.row=i;roomObject(q);campaign.safeMarkers.push(q);
  }
- buildTrials();
+ buildTrials();dressLandmarks();
  // Visual gates follow collision state; they do not rebuild the scene each frame.
  updateCampaignGates();
 }
@@ -406,7 +541,7 @@ function updateCampaign(dt){
  const cycle=t%5,active=cycle>2.1&&cycle<(boon==='vigor'?3.65:3),warning=cycle>1&&cycle<=2.1;
  for(const trap of campaign.traps){trap.material.opacity=active?.7:warning?.22:.06;trap.material.color.set(active?'#ff5635':warning?'#ffae65':'#7bc4c9');if(active&&Math.abs(p.z-trap.userData.z)<.65&&Math.abs(p.x-trap.userData.gap)>2.3)hurt(22);}
  updateTrials(dt);if(boss?.dead){portal.visible=true;startExtraction();}
- updateCampaignGates();
+ updateCampaignGates();updateLandmarkReadability();
  mapClock+=dt;if(mapClock>.12){drawCampaignMap($('#miniMap'));mapClock=0;}
  return false;
 }
@@ -431,24 +566,30 @@ function updateOracle(e,dt){
 }
 function drawCampaignMap(canvas){
  if(!canvas||!campaign||!p)return;
- const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,s=Math.min((W-24)/128,(H-24)/146),ox=W/2;
- const X=x=>ox+x*s,Z=z=>12+(z+112)*s;
- ctx.fillStyle='#100f1a';ctx.fillRect(0,0,W,H);
- for(const region of world.regions){ctx.fillStyle=region.color;ctx.globalAlpha=.32;ctx.fillRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);}
- ctx.globalAlpha=1;ctx.strokeStyle='#74617d';ctx.lineWidth=1;
- for(const region of world.regions)ctx.strokeRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);
- for(const camp of CAMPS){ctx.fillStyle='#76e1c9';ctx.fillRect(X(camp.x)-3,Z(camp.z)-3,6,6);}
- for(const goal of objectiveTargets()){ctx.fillStyle='#ffc986';ctx.beginPath();ctx.arc(X(goal.x),Z(goal.z),4,0,Math.PI*2);ctx.fill();}
- for(const e of enemies)if(!e.dead&&trialActive(e)&&distance(e,p)<17){ctx.fillStyle='#ff756b';ctx.beginPath();ctx.arc(X(e.x),Z(e.z),2.5,0,Math.PI*2);ctx.fill();}
- ctx.fillStyle='#f5f4ff';ctx.beginPath();ctx.arc(X(p.x),Z(p.z),4,0,Math.PI*2);ctx.fill();
- ctx.fillStyle='#ffe4b9';ctx.font='12px system-ui';ctx.fillText('N ↑',W-36,18);
+ const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,large=W>300,pad=large?34:13,s=Math.min((W-pad*2)/128,(H-pad*2)/146),ox=W/2;
+ const X=x=>ox+x*s,Z=z=>pad+(z+112)*s;
+ ctx.fillStyle='#10131d';ctx.fillRect(0,0,W,H);
+ // Ground, void and solid cover are distinct. The map uses the same obstacles as movement.
+ for(const region of world.regions){ctx.fillStyle=region.name==='Archives'?'#3b405a':region.name==='Forge'?'#554231':'#3f4755';ctx.fillRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);ctx.strokeStyle='#9ca9bc';ctx.lineWidth=large?1.5:.7;ctx.strokeRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);}
+ for(const o of obstacles){if(o.gate&&!campaignGateClosed(o.gate))continue;ctx.fillStyle=o.gate?'#f5c285':'#171c29';ctx.fillRect(X(o.x-o.w/2),Z(o.z-o.d/2),Math.max(large?2:1,o.w*s),Math.max(large?2:1,o.d*s));}
+ const goal=selectedMission(),route=guideRoute(goal);
+ if(guidanceOn&&route.length){ctx.strokeStyle='#ffe3a2';ctx.lineWidth=large?3:1.5;ctx.setLineDash(large?[7,5]:[3,2]);ctx.beginPath();route.forEach((q,i)=>i?ctx.lineTo(X(q.x),Z(q.z)):ctx.moveTo(X(q.x),Z(q.z)));ctx.stroke();ctx.setLineDash([]);}
+ function caption(text,x,z){ctx.font=`600 ${large?18:9}px system-ui`;const w=ctx.measureText(text).width;ctx.fillStyle='#10131ded';ctx.fillRect(X(x)-w/2-6,Z(z)-15,w+12,22);ctx.fillStyle='#e8edf7';ctx.textAlign='center';ctx.fillText(text,X(x),Z(z)+1);}
+ if(large){for(const [name,x,z]of[['ATRIUM',0,26],['JARDINS',-18,-31],['CLOÎTRE',18,-30],['CROISÉE',0,-38],['ARCHIVES',-40,-71],['FORGE',39,-71],['NEF',0,-47],['COUR DU VEILLEUR',0,-107]])caption(name,x,z);}
+ for(const camp of CAMPS){const visited=campaign.completed.has('camp-'+camp.id);mapGlyph(ctx,'camp',X(camp.x),Z(camp.z),large?7:3.5,visited?'#97efd7':'#acb9c9',visited);}
+ const goals=missionGoals();for(const g of goals){const selected=g.id===goal?.id;if(selected){ctx.strokeStyle='#fff6de';ctx.lineWidth=large?2:1;ctx.beginPath();ctx.arc(X(g.x),Z(g.z),large?13:6.5,0,Math.PI*2);ctx.stroke();}mapGlyph(ctx,g.kind,X(g.x),Z(g.z),large?7:3.5,SIGN_COLORS[g.kind]||'#ffe0a0');}
+ if(mapThreats)for(const e of enemies)if(!e.dead&&trialActive(e)&&distance(e,p)<17)mapGlyph(ctx,'enemy',X(e.x),Z(e.z),large?4:2,'#ffac9a');
+ ctx.save();ctx.translate(X(p.x),Z(p.z));ctx.rotate(-aim);mapGlyph(ctx,'player',0,0,large?7:4,'#ffffff');ctx.restore();
+ ctx.fillStyle='#f5e4c7';ctx.font=`600 ${large?17:11}px system-ui`;ctx.textAlign='right';ctx.fillText('N ↑',W-9,large?24:15);
+ if(large){ctx.textAlign='left';ctx.font='16px system-ui';ctx.fillText('Vous : flèche blanche',16,H-12);}
 }
+
 function toggleMap(){
  if(state==='map'){state=mapPreviousState;$('#mapPanel').hidden=true;$('#mobile').classList.add('playing');last=performance.now();accumulator=0;return;}
  if(state!=='playing')return;
- mapPreviousState=state;state='map';clearInputs();$('#mapPanel').hidden=false;$('#mobile').classList.remove('playing');drawCampaignMap($('#largeMap'));
+ mapPreviousState=state;state='map';clearInputs();$('#mapPanel').hidden=false;$('#mobile').classList.remove('playing');renderMissionJournal();drawCampaignMap($('#largeMap'));
 }
-function wireCampaignUI(){wireExpeditionUI();$('#mapButton').onclick=toggleMap;$('#closeMap').onclick=toggleMap;}
+function wireCampaignUI(){wireExpeditionUI();wireReadabilityUI();$('#mapButton').onclick=toggleMap;$('#closeMap').onclick=toggleMap;}
 </script><script>'use strict';
 let hitPause=0,impactTime=0;
 const sparkPool=[];
@@ -642,7 +783,7 @@ function pause(reason='manual'){
  if(state!=='playing')return;
  pauseReason=reason;state='paused';clearInputs();$('#pausePanel').hidden=false;
  $('#resume').hidden=false;$('#resume').textContent='Reprendre';
- $('#endTag').textContent='Version 0.9 · Pause';$('#endTitle').textContent='En pause';
+ $('#endTag').textContent='Version 0.9.1 · Pause';$('#endTitle').textContent='En pause';
  $('#endText').textContent=reason==='hidden'?'La page a été masquée. Votre progression dans cette tentative est conservée.':reason==='graphics'?'Le rendu 3D a été interrompu. Rechargez la page et choisissez la qualité légère.':'Votre pacte et la progression de cette tentative sont conservés.';
  $('#mobile').classList.remove('playing');
 }

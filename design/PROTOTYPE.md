@@ -2,6 +2,10 @@
 
 Un premier niveau complet dans le monde relié des Marches : début calme, quatre épreuves liées, rituel, gardien intermédiaire, boss final et retour. Les deux autres grands niveaux restent à produire.
 
+## Lisibilité 0.9.1
+
+La carte nomme les zones et montre les obstacles, portes et objectifs. Un journal permet de choisir l’objectif suivi ; son chemin praticable peut être désactivé. Les objets de quête ont des formes propres, leur état reste consultable et les libellés proches remplacent les grandes étiquettes distantes. Les sauvegardes 0.9 sont conservées. [Recherche et détails](LISIBILITE.md).
+
 ## Fil conducteur
 
 La cathédrale a perdu sa voix. Le joueur libère une âme, retrouve un accord et réunit lumière et énergie pour réveiller le Carillonneur. L’âme secourue au début devient l’ancre qui permet de sortir à la fin.

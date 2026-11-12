@@ -1,8 +1,8 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.9 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
+Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.9.1 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Carte nommée avec obstacles, objectifs à suivre et guidage facultatif. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md) · [Recherche sur la lisibilité](design/LISIBILITE.md)
 
 ## Jouer
 
@@ -40,6 +40,7 @@ Les tests utilisent Python Playwright et Chromium à `/usr/bin/chromium` :
 ```sh
 python -m pip install -r tests/requirements.txt
 python tests/expedition.py
+python tests/readability.py
 python tests/mobile_world.py
 python tests/publication.py
 ```

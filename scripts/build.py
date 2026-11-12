@@ -9,7 +9,7 @@ template = (ROOT / 'src/template.html').read_text()
 engine = (ROOT / 'vendor/three.min.js').read_text()
 game = (ROOT / 'src/combat-motion.js').read_text() + '\n' + (ROOT / 'src/game.js').read_text()
 art = (ROOT / 'src/world.js').read_text()
-campaign = (ROOT / 'src/expedition.js').read_text() + '\n' + (ROOT / 'src/campaign.js').read_text()
+campaign = (ROOT / 'src/expedition.js').read_text() + '\n' + (ROOT / 'src/readability.js').read_text() + '\n' + (ROOT / 'src/campaign.js').read_text()
 assert template.count('<!-- THREE_ENGINE -->') == 1
 assert template.count('<!-- GAME_SCRIPT -->') == 1
 assert f'Version {version}' in template

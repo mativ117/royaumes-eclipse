@@ -11,6 +11,8 @@ function buildCampaign(THREE,scene,renderer,m){
   {x0:8,x1:27,z0:-35,z1:0,color:'#ad9283',name:'Cloître'},
   {x0:-27,x1:27,z0:-42,z1:-35,color:'#9b929d',name:'Croisée'},
   {x0:-14,x1:14,z0:-74,z1:-42,color:'#95a5ae',name:'Nef'},
+  {x0:-62,x1:-14,z0:-74,z1:-42,color:'#8e92b4',name:'Archives'},
+  {x0:14,x1:62,z0:-74,z1:-42,color:'#b99b79',name:'Forge'},
   {x0:-23,x1:23,z0:-111,z1:-74,color:'#b79d8d',name:'Cour'}
  ];
  let seed=473;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
@@ -30,7 +32,12 @@ function buildCampaign(THREE,scene,renderer,m){
  for(const z of [-9,-21,-31]){obstacle(12,z,2.5,3.5,4);obstacle(23,z,2.5,3.5,4);}
  obstacle(-21,-29,3,1.7,1.3,m.bronze);
  for(const z of [-46,-58])for(const x of [-9,9])obstacle(x,z,2.5,2.5,5);
+ obstacle(0,-43,28,.5,3,m.bronze,'ritual-entry');
+ for(const side of [-1,1]){obstacle(side*38,-42,48,.5,3,m.bronze,'ritual-entry');obstacle(side*14,-65,.7,18,3.5);obstacle(side*14,-46,.7,8,3.5);}
+ for(const x of [-50,-34])for(const z of [-49,-64])obstacle(x,z,2.2,7,3.8);
+ for(const [x,z]of[[31,-55],[45,-61]])obstacle(x,z,2.8,2.8,3);
  obstacle(0,-69,28,.7,4,m.bronze,'seals');
+ for(const side of [-1,1])obstacle(side*38,-74,48,.5,4,m.bronze,'seals');
  obstacle(0,-74,46,.45,3,m.bronze,'boss');
  for(const x of [-12,12])obstacle(x,-88,2.5,3,3.7);
  const abyss=new THREE.Mesh(new THREE.PlaneGeometry(100,180),new THREE.MeshBasicMaterial({color:'#261325',transparent:true,opacity:.8}));abyss.rotation.x=-Math.PI/2;abyss.position.set(0,-8,-40);root.add(abyss);
@@ -60,7 +67,7 @@ function buildCampaign(THREE,scene,renderer,m){
  let time=0;
  return {root,regions,obstacles:colliders,exit,dust,halo,floor:ground[0],
   onGround(x,z,r=.48){return [[x-r,z-r],[x+r,z-r],[x-r,z+r],[x+r,z+r]].every(([a,b])=>regions.some(q=>a>=q.x0&&a<=q.x1&&b>=q.z0&&b<=q.z1));},
-  zoneAt(x,z){return z<-74?'Cour du Veilleur':z<-42?'Nef des marées':z<-28?'Croisée des pèlerins':z<0?(x<0?'Jardins suspendus':'Cloître des cendres'):'Atrium des serments';},
+  zoneAt(x,z){return x<-14&&z<-42&&z>=-74?'Archives du Reflet':x>14&&z<-42&&z>=-74?'Forge du brasier':z<-74?'Cour du Veilleur':z<-42?'Nef des marées':z<-28?'Croisée des pèlerins':z<0?(x<0?'Jardins suspendus':'Cloître des cendres'):'Atrium des serments';},
   art:{haze,detail:ornament,glows,setQuality(light){haze.visible=!light;ornament.visible=!light;dust.visible=!light;glows.children.forEach((o,i)=>o.visible=!light||i%2===0)},update(dt){time+=dt;haze.children.forEach((f,i)=>f.position.x=Math.sin(time*.12+i)*4);glows.children.forEach((g,i)=>g.material.opacity=.58+Math.sin(time*2+i)*.05)}}
  };
 }

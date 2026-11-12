@@ -29,7 +29,7 @@ function soldier(){
  box(armor,0,1.3,.4,.6,.85,.3,heavy);box(cyan,0,1.35,.57,.09,.5,.03,heavy);
  box(bronze,0,1.4,-.3,.65,.55,.12,heavy);
  for(const x of [-.67,.67]){box(armor,x,1.65,0,.4,.45,.55,heavy);box(joint,x,1.15,0,.25,.6,.3,root)}
- box(joint,.5,1.35,-.75,.28,.3,1.35,heavy);box(cyan,.5,1.35,-1.44,.14,.14,.12,heavy);
+ const rifle=new THREE.Group();box(joint,0,0,-.25,.28,.3,1.35,rifle);box(cyan,0,0,-.95,.14,.14,.12,rifle);
  const light=new THREE.Group();root.add(light);
  const cape=new THREE.Mesh(new THREE.PlaneGeometry(1.1,1.25),new THREE.MeshStandardMaterial({color:'#682f35',side:THREE.DoubleSide,roughness:1}));cape.position.set(0,1.1,.4);cape.rotation.x=.12;light.add(cape);
  for(const x of [-.33,.33])box(bronze,x,1.35,-.3,.08,.7,.05,light);
@@ -40,10 +40,10 @@ function soldier(){
  const edge=box(bladeMaterial,0,.85,0,.1,1.25,.1,sword);edge.rotation.z=-.08;
  const arms=[];for(const side of [-1,1]){const arm=new THREE.Group();arm.position.set(side*.6,1.55,0);root.add(arm);mesh(new THREE.CapsuleGeometry(.14,.46,3,7),joint,0,-.35,0,1,1,1,arm);arms.push(arm);}
  const legs=[box(armor,-.25,.5,0,.35,.9,.4,root),box(armor,.25,.5,0,.35,.9,.4,root)];
- return{root,legs,body,helmet,heavy,light,sword,scarf,cape,arms};
+ arms[1].add(sword,rifle);sword.position.set(0,-.65,0);rifle.position.set(0,-.6,0);rifle.rotation.x=-1.2;return{root,legs,body,helmet,heavy,light,sword,scarf,cape,arms,rifle};
 }
 function applyHero(){
- const light=hero==='voltigeur';player.heavy.visible=!light;player.light.visible=light;
+ const light=hero==='voltigeur';player.heavy.visible=!light;player.light.visible=light;player.sword.visible=light;player.rifle.visible=!light;
  player.body.material=light?cloth:armor;player.helmet.material=light?cloth:armor;
  player.legs.forEach(l=>l.material=light?cloth:armor);player.root.scale.setScalar(light?.92:1);
  $('#heroIdentity').textContent=HEROES[hero].name;
@@ -51,6 +51,7 @@ function applyHero(){
 }
 function dodgeCooldown(){return boon==='haste'?Math.max(.8,HEROES[hero].dash*.583333):HEROES[hero].dash+(boon==='vigor'?.6:0)}
 const player=soldier();const shield=new THREE.Mesh(new THREE.SphereGeometry(1.65,24,16),new THREE.MeshBasicMaterial({color:'#79daff',transparent:true,opacity:.17,wireframe:true}));shield.position.y=1.3;player.root.add(shield);shield.visible=false;
+const carriedCore=mesh(sphereGeo,gold,0,1.2,-.8,.35,.35,.35,player.root);carriedCore.visible=false;
 const reticle=new THREE.Mesh(new THREE.RingGeometry(.26,.34,24),new THREE.MeshBasicMaterial({color:'#ffe1a3',side:THREE.DoubleSide}));reticle.rotation.x=-Math.PI/2;reticle.position.y=.05;scene.add(reticle);
 
 // Simulation at a fixed timestep; rendering remains independent of display refresh.
@@ -66,7 +67,7 @@ const wrap=a=>Math.atan2(Math.sin(a),Math.cos(a));
 const cameraTarget=new THREE.Vector3(),cameraLook=new THREE.Vector3(0,0,-4),camDesired=new THREE.Vector3();
 const ringGeo=new THREE.RingGeometry(.84,1,40),discGeo=new THREE.CircleGeometry(1,40),coneGeo=new THREE.ConeGeometry(.72,1.8,8),enemyRobeGeo=new THREE.CylinderGeometry(.34,.75,1.8,8);
 const enemyArmor=mat('#62505c',.45),floorRoute=mat('#493844',.2),runeGold=mat('#c99a65',.5,.4,'#593319');
-const muzzle=mesh(sphereGeo,gold,.5,1.35,-1.65,.32,.25,.4,player.root);muzzle.visible=false;
+const muzzle=mesh(sphereGeo,gold,.5,1.35,-1.65,.32,.25,.4,player.root);player.rifle.add(muzzle);muzzle.position.set(0,0,-1.05);muzzle.visible=false;
 const slashMaterial=new THREE.MeshBasicMaterial({color:'#ffcb83',side:THREE.DoubleSide,transparent:true,opacity:.8,depthWrite:false});
 const slash=new THREE.Mesh(new THREE.RingGeometry(.7,1,36,1,Math.PI/2-1.15,2.3),slashMaterial);slash.rotation.x=-Math.PI/2;slash.position.y=1.15;slash.scale.setScalar(3.3);player.root.add(slash);slash.visible=false;
 const landingMarker=new THREE.Mesh(new THREE.RingGeometry(.94,1,48),new THREE.MeshBasicMaterial({color:'#ffb763',side:THREE.DoubleSide,transparent:true,opacity:.65,depthWrite:false}));landingMarker.rotation.x=-Math.PI/2;landingMarker.position.y=.08;landingMarker.scale.setScalar(4.6);scene.add(landingMarker);landingMarker.visible=false;
@@ -97,7 +98,7 @@ function label(text,x,z,color='#ffd496',width=6){const c=document.createElement(
 function obstacle(x,z,w,d,height=2.4){const o=box(stone,x,height/2,z,w,height,d);roomObject(o);box(bronze,0,0,0,1.015,.035,1.015,o);obstacles.push({x,z,w,d});return o}
 function blocked(x,z,r=.48,projectile=false){
  if(!projectile&&!world.onGround(x,z,r))return true;
- if(x<-40||x>40||z<-120||z>38)return true;
+ if(x<-70||x>70||z<-120||z>38)return true;
  return obstacles.some(o=>(!o.gate||campaignGateClosed(o.gate))&&Math.abs(x-o.x)<o.w/2+r&&Math.abs(z-o.z)<o.d/2+r);
 }
 function moveEntity(e,dx,dz,r=.48){
@@ -111,11 +112,11 @@ function pause(reason='manual'){
  if(state!=='playing')return;
  pauseReason=reason;state='paused';clearInputs();$('#pausePanel').hidden=false;
  $('#resume').hidden=false;$('#resume').textContent='Reprendre';
- $('#endTag').textContent='Version 0.8 · Pause';$('#endTitle').textContent='En pause';
+ $('#endTag').textContent='Version 0.9 · Pause';$('#endTitle').textContent='En pause';
  $('#endText').textContent=reason==='hidden'?'La page a été masquée. Votre progression dans cette tentative est conservée.':reason==='graphics'?'Le rendu 3D a été interrompu. Rechargez la page et choisissez la qualité légère.':'Votre pacte et la progression de cette tentative sont conservés.';
  $('#mobile').classList.remove('playing');
 }
-function finish(won){state=won?'won':'lost';clearInputs();$('#pausePanel').hidden=false;$('#resume').hidden=won;$('#resume').textContent='Réessayer cette salle';$('#endTag').textContent=won?'Premier chapitre terminé':'La cathédrale se souvient';$('#endTitle').textContent=won?'Le Veilleur s’incline.':'Votre héros est tombé.';$('#endText').textContent=won?`Les Marches traversées · ${kills} adversaires vaincus · Serment ${boon==='vigor'?'de Braise':'d’Élan'} · ${secretFound?'Marque du Reflet trouvée':'Un secret reste à découvrir'}. Fin de cette version ; les deux autres grands niveaux restent à construire.`:'Observez les préparations rouges, utilisez les abris et gardez votre bouclier pour les moments difficiles. Vous pouvez reprendre au dernier refuge atteint, avec votre serment.';$('#mobile').classList.remove('playing');tone(won?660:100,.4)}
+function finish(won){if(!won)campaign.deaths=(campaign.deaths||0)+1;else try{localStorage.removeItem(RUN_KEY)}catch(_){}$('#copyReport').hidden=false;$('#copyReport').textContent='Copier le bilan';state=won?'won':'lost';clearInputs();$('#pausePanel').hidden=false;$('#resume').hidden=won;$('#resume').textContent='Réessayer cette salle';$('#endTag').textContent=won?'Premier chapitre terminé':'La cathédrale se souvient';$('#endTitle').textContent=won?'Le Veilleur s’incline.':'Votre héros est tombé.';$('#endText').textContent=won?`Les Marches traversées · ${kills} adversaires vaincus · Durée active ${Math.floor((campaign.activeSeconds||campaign.time)/60)} min ${Math.floor((campaign.activeSeconds||campaign.time)%60)} s · ${campaign.deaths||0} défaite(s) · Serment ${boon==='vigor'?'de Braise':'d’Élan'} · ${secretFound?'Marque du Reflet trouvée':'Un secret reste à découvrir'}. Expédition terminée. Le bilan permet de mesurer la durée réelle et d’affiner l’équilibrage.`:'Observez les préparations rouges, utilisez les abris et gardez votre bouclier pour les moments difficiles. Vous pouvez reprendre au dernier refuge atteint, avec votre serment.';$('#mobile').classList.remove('playing');tone(won?660:100,.4)}
 function resume(){
  if(document.hidden)return;
  if(state==='lost'){
@@ -134,7 +135,7 @@ $('#quality').onchange=e=>{quality=e.target.value;renderer.setPixelRatio(quality
 function effect(x,z,r,color,duration=.45){const o=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.8,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.09,z);scene.add(o);effects.push({mesh:o,r,t:duration,max:duration})}
 function addHazard(x,z,r,delay,damageAmount=26,color='#ff6049'){const o=new THREE.Mesh(discGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.22,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.07,z);o.scale.setScalar(r);scene.add(o);const h={mesh:o,x,z,r,delay,max:delay,damage:damageAmount,fired:false,tail:.3};hazards.push(h);return h}
 function clearHazards(){hazards.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});hazards=[]}
-function damage(e,n,source=p){if(e.dead)return;if(e.type==='boss'&&!campaign.bossAwake){effect(e.x,e.z,2.5,'#a3b7ff',.2);return;}
+function damage(e,n,source=p){if(e.dead||!trialActive(e))return;if(e.type==='shade'&&!shadeVulnerable(e)){effect(e.x,e.z,1.3,'#c6a3ff',.2);return;}if(e.type==='porter'&&enemies.some(q=>q.type==='anchor'&&!q.dead)){effect(e.x,e.z,2,'#a8cdff');return;}if(e.type==='boss'&&!campaign.bossAwake){effect(e.x,e.z,2.5,'#a3b7ff',.2);return;}
  if(e.type==='sentinel'&&e.mode!=='recover'&&source){
   const dx=source.x-e.x,dz=source.z-e.z,d=Math.max(.01,Math.hypot(dx,dz));
   if((dx*-Math.sin(e.facing)+dz*-Math.cos(e.facing))/d>.35){
@@ -142,50 +143,52 @@ function damage(e,n,source=p){if(e.dead)return;if(e.type==='boss'&&!campaign.bos
    if(e.blockHint<=0){announce('La Sentinelle bloque de face. Contournez-la ou attendez sa charge.');e.blockHint=6;}
   }
  }
-if(e.type==='boss'&&e.mode!=='recover')n*=.25;e.hp-=n;e.flash=.12;if(e.type!=='boss')e.alert=10;tone(e.type==='boss'?150:260,.04,'triangle',.012);if(e.hp<=0){e.dead=true;kills++;effect(e.x,e.z,e.type==='boss'?5:2,'#ffc17b');cleanupObject(e.root);if(e.type==='boss'){clearHazards();bullets.filter(b=>b.enemy).forEach(b=>scene.remove(b.mesh));bullets=bullets.filter(b=>!b.enemy);portal.visible=true;announce('Le Veilleur est vaincu. La porte du fond est ouverte.')}else if(kills%2===0)p.hp=Math.min(p.max,p.hp+8)}}
-function fire(){if(state!=='playing'||p.shot>0||p.leap>0)return;if(hero==='voltigeur'){meleeAttack();return;}p.shot=.22;p.recoil=1;shotCount++;const charge=p.overcharge;p.overcharge=0;observeTime=0;const dx=-Math.sin(aim),dz=-Math.cos(aim),sideX=Math.cos(aim)*.5,sideZ=-Math.sin(aim)*.5,x=p.x+sideX+dx*1.6,z=p.z+sideZ+dz*1.6;const o=mesh(sphereGeo,charge?cyan:gold,x,1.35,z,charge?.22:.12,charge?.22:.12,charge?.8:.5);o.rotation.y=aim;bullets.push({mesh:o,x,z,dx,dz,t:1.8,enemy:false,damage:34+charge*20});tone(420,.055,'sawtooth',.008)}
-function dash(){if(state!=='playing'||p.dash>0)return;const v=movement(),n=Math.hypot(v.x,v.z);p.dx=n?v.x/n:-Math.sin(aim);p.dz=n?v.z/n:-Math.cos(aim);p.dash=dodgeCooldown();if(boon==='haste')createDecoy();p.dashT=.2;p.inv=.28;effect(p.x,p.z,1.5,'#c4abff');tone(200,.1,'sine')}
-function power(){if(state!=='playing'||p.power>0)return;if(hero==='voltigeur'){p.power=7;p.leap=.75;p.inv=.85;p.swing=0;observeTime=0;effect(p.x,p.z,2,'#ffb964');tone(240,.2);return;}p.power=9;p.shield=3;effect(p.x,p.z,5,'#76dcff',.7);tone(110,.3,'sine');for(const e of enemies)if(!e.dead&&distance(e,p)<5){if(e.type==='boss'&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2.8;announce('Préparation interrompue ! Le Veilleur est vulnérable.')}damage(e,55,null);if(e.type!=='boss'){const d=Math.max(.1,distance(e,p));moveEntity(e,(e.x-p.x)/d*1.4,(e.z-p.z)/d*1.4)}}}
+if(['boss','porter'].includes(e.type)&&e.mode!=='recover')n*=.25;e.hp-=n;e.flash=.12;if(e.type!=='boss')e.alert=10;tone(e.type==='boss'?150:260,.04,'triangle',.012);if(e.hp<=0){e.dead=true;kills++;if(e.id)campaign.defeated.add(e.id);effect(e.x,e.z,e.type==='boss'?5:2,'#ffc17b');cleanupObject(e.root);if(e.type==='boss'){clearHazards();bullets.filter(b=>b.enemy).forEach(b=>scene.remove(b.mesh));bullets=bullets.filter(b=>!b.enemy);portal.visible=true;announce('Le Veilleur est vaincu. La porte du fond est ouverte.')}else if(kills%2===0)p.hp=Math.min(p.max,p.hp+8)}}
+function fire(){beginAttack()}
+function dash(){if(state!=='playing'||p.dash>0)return;cancelAttack();if(campaign.trials.forge.carrying)dropCore();const v=movement(),n=Math.hypot(v.x,v.z);p.dx=n?v.x/n:-Math.sin(aim);p.dz=n?v.z/n:-Math.cos(aim);p.dash=dodgeCooldown();if(boon==='haste')createDecoy();p.dashT=.2;p.inv=.28;effect(p.x,p.z,1.5,'#c4abff');tone(200,.1,'sine')}
+function power(){if(state!=='playing'||p.power>0)return;cancelAttack();revealShades();if(hero==='voltigeur'&&campaign.trials.forge.carrying)dropCore();if(hero==='voltigeur'){p.power=7;p.leap=.75;p.inv=.85;p.swing=0;observeTime=0;effect(p.x,p.z,2,'#ffb964');tone(240,.2);return;}p.power=9;p.shield=3;effect(p.x,p.z,5,'#76dcff',.7);tone(110,.3,'sine');for(const e of enemies)if(!e.dead&&distance(e,p)<5){if(['boss','porter'].includes(e.type)&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2.8;announce('Préparation interrompue ! Le Veilleur est vulnérable.')}damage(e,55,null);if(e.type!=='boss'){const d=Math.max(.1,distance(e,p));moveEntity(e,(e.x-p.x)/d*1.4,(e.z-p.z)/d*1.4)}}}
 function hurt(n){
  if(state!=='playing')return;
  if(p.shield>0||(hero==='voltigeur'&&p.leap>0)){
   if(boon==='vigor'&&p.absorbLock<=0){p.overcharge=Math.min(3,p.overcharge+1);p.absorbLock=.35;effect(p.x,p.z,2.1,'#91ecff',.25);tone(580,.08,'sine')}
   return;
  }
- if(p.inv>0||p.dashT>0)return;p.hp=Math.max(0,p.hp-n);p.inv=.65;observeTime=0;effect(p.x,p.z,1.6,'#ff564b');tone(70,.15,'triangle');$('#damageFlash').classList.remove('hit');void $('#damageFlash').offsetWidth;$('#damageFlash').classList.add('hit');if(p.hp<=0)finish(false)}
+ if(p.inv>0||p.dashT>0)return;if(campaign.trials.forge.carrying)dropCore();p.stagger=.2;p.hp=Math.max(0,p.hp-n);p.inv=.65;observeTime=0;effect(p.x,p.z,1.6,'#ff564b');tone(70,.15,'triangle');$('#damageFlash').classList.remove('hit');void $('#damageFlash').offsetWidth;$('#damageFlash').classList.add('hit');if(p.hp<=0)finish(false)}
 // Melee respects facing and cover; it never damages through a wall.
 function clearStrikeLine(x,z){
  const d=Math.hypot(x-p.x,z-p.z),steps=Math.max(1,Math.ceil(d/.3));
  for(let i=1;i<steps;i++)if(blocked(p.x+(x-p.x)*i/steps,p.z+(z-p.z)*i/steps,.05,true))return false;
  return true;
 }
-function meleeAttack(){
- p.combo=p.comboWindow>0?p.combo%3+1:1;p.comboWindow=.95;
- p.shot=p.combo===3?.48:.32;p.swing=.28;p.recoil=1;shotCount++;observeTime=0;
- const charge=p.overcharge,forwardX=-Math.sin(aim),forwardZ=-Math.cos(aim);p.overcharge=0;
- for(const e of enemies){
-  const d=distance(e,p),radius=e.type==='boss'?1.2:0;
-  if(!e.dead&&d<3.4+radius&&((e.x-p.x)*forwardX+(e.z-p.z)*forwardZ)/Math.max(.01,d)>.25&&clearStrikeLine(e.x,e.z)){
-   damage(e,(p.combo===3?66:44)+20*charge);effect(e.x,e.z,1.1,charge?'#a4f5ff':'#ffc788',.22);
-   if(!e.dead&&e.type!=='boss')moveEntity(e,forwardX*.5,forwardZ*.5,.55);
-  }
- }
- slashMaterial.color.set(charge?'#9beaff':p.combo===3?'#fff3b6':'#ffc082');tone(p.combo===3?130:330,.09,'triangle');
-}
 function landLeap(){
  effect(p.x,p.z,4.6,'#ffac50',.65);effect(p.x,p.z,3.5,'#fff1b4',.4);tone(75,.25,'triangle');
  for(const e of enemies)if(!e.dead&&distance(e,p)<4.6+(e.type==='boss'?1:0)&&clearStrikeLine(e.x,e.z)){
-  if(e.type==='boss'&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2;announce('Frappe au sol : le Veilleur est interrompu !')}
+  if(['boss','porter'].includes(e.type)&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2;announce('Frappe au sol : le Veilleur est interrompu !')}
   damage(e,95,null);
  }
 }
 function movement(){return{x:joy.x+Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('q')||keys.has('arrowleft')),z:joy.y+Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('z')||keys.has('arrowup'))}}
-function spawn(x,z,type='warden'){const root=new THREE.Group();scene.add(root);const robe=mesh(enemyRobeGeo,type==='boss'?enemyArmor:dark,0,.9,0,1,1,1,root);mesh(sphereGeo,joint,0,1.7,0,.4,.4,.4,root);box(type==='archer'?cyan:red,0,1.7,-.35,.45,.09,.1,root);for(const x of [-.5,.5])mesh(cylGeo,joint,x,1.1,0,.13,.65,.13,root);if(type==='oracle'){const crown=mesh(new THREE.TorusGeometry(.65,.08,6,16),cyan,0,2.2,0,1,1,1,root);crown.rotation.x=Math.PI/2;crown.userData.ownedGeometry=true;}if(type==='archer')box(cyan,.6,1.2,-.4,.14,.8,.14,root);if(type==='boss'){root.scale.setScalar(2.2);for(const x of [-.6,.6])box(bronze,x,1.65,0,.4,.4,.5,root);const crown=mesh(new THREE.TorusGeometry(.45,.08,6,16),gold,0,2.3,0,1,1,1,root);crown.rotation.x=Math.PI/2;crown.userData.ownedGeometry=true}root.position.set(x,0,z);const e={root,robe,x,z,hp:type==='boss'?700:80,max:type==='boss'?700:80,type,mode:'idle',timer:1.2,dead:false,flash:0};if(type==='archer'){e.sight=box(new THREE.MeshBasicMaterial({color:'#ff7154',transparent:true,opacity:.45,depthWrite:false}),0,.04,-7,.055,.02,14,root);e.sight.userData.ownedMaterial=true;e.sight.visible=false;}if(type!=='boss'){const health=new THREE.Sprite(new THREE.SpriteMaterial({color:'#f5a391',depthTest:false}));health.position.set(0,2.5,0);health.scale.set(1.2,.07,1);health.visible=false;health.userData.ownedMaterial=true;root.add(health);e.healthBar=health;}if(type==='oracle')e.hp=e.max=110;if(type==='sentinel'){e.hp=e.max=160;e.facing=Math.PI;e.blockHint=0;e.plate=box(bronze,0,1.3,-.65,1.25,1.7,.25,root);box(runeGold,0,1.3,-.79,.65,.75,.03,root);}enemies.push(e);return e}
+function spawn(x,z,type='warden'){const root=new THREE.Group();scene.add(root);const robe=mesh(enemyRobeGeo,type==='boss'?enemyArmor:dark,0,.9,0,1,1,1,root);mesh(sphereGeo,joint,0,1.7,0,.4,.4,.4,root);box(type==='archer'?cyan:red,0,1.7,-.35,.45,.09,.1,root);const armBones=[];for(const x of [-.5,.5]){const a=new THREE.Group();a.position.set(x,1.45,0);root.add(a);mesh(cylGeo,joint,0,-.3,0,.13,.65,.13,a);armBones.push(a);}if(type==='oracle'){const crown=mesh(new THREE.TorusGeometry(.65,.08,6,16),cyan,0,2.2,0,1,1,1,root);crown.rotation.x=Math.PI/2;crown.userData.ownedGeometry=true;}if(type==='archer')box(cyan,.6,1.2,-.4,.14,.8,.14,root);if(type==='boss'){root.scale.setScalar(2.2);for(const x of [-.6,.6])box(bronze,x,1.65,0,.4,.4,.5,root);const crown=mesh(new THREE.TorusGeometry(.45,.08,6,16),gold,0,2.3,0,1,1,1,root);crown.rotation.x=Math.PI/2;crown.userData.ownedGeometry=true}root.position.set(x,0,z);const e={root,robe,rig:{arms:armBones},x,z,hp:type==='boss'?700:80,max:type==='boss'?700:80,type,mode:'idle',timer:1.2,dead:false,flash:0};if(type==='archer'){e.sight=box(new THREE.MeshBasicMaterial({color:'#ff7154',transparent:true,opacity:.45,depthWrite:false}),0,.04,-7,.055,.02,14,root);e.sight.userData.ownedMaterial=true;e.sight.visible=false;}if(type!=='boss'){const health=new THREE.Sprite(new THREE.SpriteMaterial({color:'#f5a391',depthTest:false}));health.position.set(0,2.5,0);health.scale.set(1.2,.07,1);health.visible=false;health.userData.ownedMaterial=true;root.add(health);e.healthBar=health;}if(type==='shade'){e.hp=e.max=120;e.reveal=0;e.phaseOffset=Math.random()*6;e.robe.material=cloth.clone();e.robe.material.transparent=true;e.robe.userData.ownedMaterial=true;}if(type==='porter'){e.hp=e.max=380;e.root.scale.setScalar(1.6);}if(type==='anchor'){e.hp=e.max=65;root.children.forEach(c=>c.visible=c===e.robe||c===e.healthBar);e.robe.geometry=new THREE.OctahedronGeometry(.8);e.robe.material=cyan;e.robe.userData.ownedGeometry=true;e.robe.position.y=1.5;}if(type==='oracle')e.hp=e.max=110;if(type==='sentinel'){e.hp=e.max=160;e.facing=Math.PI;e.blockHint=0;e.plate=box(bronze,0,1.3,-.65,1.25,1.7,.25,root);box(runeGold,0,1.3,-.79,.65,.75,.03,root);}enemies.push(e);return e}
 function enemyShot(e,angle,speed=7){const dx=-Math.sin(angle),dz=-Math.cos(angle),o=mesh(sphereGeo,red,e.x,1.25,e.z,.23,.23,.23);bullets.push({mesh:o,x:e.x,z:e.z,dx,dz,t:5,enemy:true,speed})}
-function updateBoss(e,dt){if(e.dead)return;e.timer-=dt;e.root.rotation.y=Math.atan2(e.x-p.x,e.z-p.z);if(e.hp<=e.max*.5&&e.phase===1){e.phase=2;announce('Phase II : le Veilleur ajoute une salve circulaire après chaque attaque.');effect(e.x,e.z,5,'#ff9c51',.8)}
-if(e.timer<=0){if(e.mode==='idle'){e.mode='windup';e.timer=1.3;if(secretFound)e.timer+=.45;const pattern=e.pattern++%2;if(pattern===0){addHazard(enemyTarget(e).x,enemyTarget(e).z,3.6,1.25+(secretFound?.45:0),30);if(e.phase===2)addHazard(clamp(enemyTarget(e).x+4,-20,20),enemyTarget(e).z,2.5,1.6+(secretFound?.45:0),25);announce('FRAPPE · quittez le cercle rouge, puis attaquez le gardien.')}else{const target=enemyTarget(e),dx=target.x-e.x,dz=target.z-e.z,n=Math.max(1,Math.hypot(dx,dz));for(let i=1;i<=6;i++)addHazard(clamp(e.x+dx/n*i*2.3,-20,20),clamp(e.z+dz/n*i*2.3,-104,-76),1.7,1.2+i*.035+(secretFound?.45:0),26);announce('FISSURE · sortez de la ligne rouge.')}}else if(e.mode==='windup'){e.mode='recover';e.timer=e.phase===2?2.8:3.4;if(e.phase===2)for(let i=0;i<10;i++)enemyShot(e,i/10*Math.PI*2,5);tone(80,.2);}
-else{e.mode='idle';e.timer=1.3}}
-e.robe.material=e.flash>0?red:e.mode==='recover'?bronze:enemyArmor;}
+function updateBoss(e,dt){
+ if(e.dead)return;e.timer-=dt;e.root.rotation.y=Math.atan2(e.x-p.x,e.z-p.z);
+ const next=e.hp<e.max*.3?3:e.hp<e.max*.65?2:1;
+ if(next>e.phase){e.phase=next;announce(next===2?'Le Veilleur appelle deux Oracles. Vous pouvez les éliminer pour libérer la cour.':'Dernière sonnerie : les fissures se croisent. Gardez une esquive pour la seconde marque.');effect(e.x,e.z,6,'#ffb16b',.8);}
+ if(e.timer<=0){
+  if(e.mode==='idle'){
+   e.mode='windup';e.windupTotal=e.timer=1.4+(secretFound?.45:0);e.attackKind=e.pattern++%3;
+   const target=enemyTarget(e),delay=e.windupTotal-.04;
+   if(e.attackKind===0){addHazard(target.x,target.z,3.5,delay,28);if(e.phase===3)addHazard(clamp(target.x-4,-20,20),target.z,2.5,delay+.5,22);}
+   else if(e.attackKind===1){const dx=target.x-e.x,dz=target.z-e.z,n=Math.max(.1,Math.hypot(dx,dz));for(let i=1;i<=7;i++)addHazard(clamp(e.x+dx/n*i*2.4,-20,20),clamp(e.z+dz/n*i*2.4,-105,-77),1.5,delay+i*.035,24);}
+   else{addHazard(e.x,e.z,5,delay,30);if(e.phase>1)addHazard(target.x,target.z,2.5,delay+.35,22);}
+  }else if(e.mode==='windup'){
+   e.mode='recover';e.timer=e.phase===1?3.2:e.phase===2?2.8:2.5;
+   if(e.attackKind===2||e.phase===3)for(let i=0;i<8;i++)enemyShot(e,i/8*Math.PI*2,5);
+   tone(80,.2);
+  }else{e.mode='idle';e.timer=1.1;}
+ }
+ e.robe.material=e.flash>0?red:e.mode==='recover'?bronze:enemyArmor;
+}
 // The sentinel locks its facing during an announced charge: a chance to flank it.
 function updateSentinel(e,dt){
  e.timer-=dt;e.blockHint=Math.max(0,e.blockHint-dt);
@@ -222,7 +225,7 @@ function ringBell(){
  boss.mode='recover';boss.timer=4;effect(bell.x,bell.z,14,'#f5cf8f',1);tone(440,.8,'sine',.045);
  announce('La cloche impose le silence : 4 secondes pour approcher et frapper. Elle ne peut sonner qu’une fois.');
 }
-function updateEnemy(e,dt){if(e.dead)return;e.alert=Math.max(0,(e.alert||0)-dt);if(e.type==='boss'&&!campaign.bossAwake)return;if(e.type!=='boss'&&distance(e,p)>26&&e.alert<=0)return;if(e.type==='oracle'){updateOracle(e,dt);return;}if(e.type==='boss'){updateBoss(e,dt);return}if(e.type==='sentinel'){updateSentinel(e,dt);return}e.timer-=dt;const target=enemyTarget(e),d=distance(e,target);e.root.rotation.y=Math.atan2(e.x-target.x,e.z-target.z);
+function updateEnemy(e,dt){if(e.dead||!trialActive(e))return;if(e.type==='anchor')return;if(e.type==='shade'){updateShade(e,dt);return;}if(e.type==='porter'){if(distance(e,p)<24)updatePorter(e,dt);return;}e.alert=Math.max(0,(e.alert||0)-dt);if(e.type==='boss'&&!campaign.bossAwake)return;if(e.type!=='boss'&&distance(e,p)>26&&e.alert<=0)return;if(e.type==='oracle'){updateOracle(e,dt);return;}if(e.type==='boss'){updateBoss(e,dt);return}if(e.type==='sentinel'){updateSentinel(e,dt);return}e.timer-=dt;const target=enemyTarget(e),d=distance(e,target);e.root.rotation.y=Math.atan2(e.x-target.x,e.z-target.z);
 if(e.mode==='windup'){if(e.timer<=0){if(e.type==='archer'){enemyShot(e,e.lockAngle);effect(e.x,e.z,1,'#85d9ff',.2)}e.mode='recover';e.timer=1.1}}
 else if(e.mode==='recover'){if(e.timer<=0){e.mode='idle';e.timer=.5}}
 else if(e.timer<=0&&d<(e.type==='archer'?17:4)){e.mode='windup';e.timer=e.type==='archer'?1.1:.9;if(e.type==='archer'){e.lockAngle=Math.atan2(e.x-target.x,e.z-target.z);effect(e.x,e.z,1.4,'#85d9ff',1.1)}else addHazard(e.x,e.z,2.6,.85,22)}
@@ -248,6 +251,7 @@ function createDecoy(){
 }
 function enemyTarget(e){return decoy&&decoy.t>0&&distance(e,decoy)<17?decoy:p}
 function interactionTarget(){
+ const trial=trialTarget();if(trial)return trial;
  if(room===2&&bell&&!bell.used&&boss&&!boss.dead&&distance(p,bell)<2.7)return{type:'bell',label:'Sonner · 1 usage'};
  if(!boon){for(let i=0;i<shrines.length;i++)if(distance(p,shrines[i])<2.7)return{type:'pact',value:i===0?'vigor':'haste',label:'Examiner le serment'};}
  if(secretMirror&&!secretFound&&distance(p,secretMirror)<2.6)return{type:'mirror',label:'Maintenir · observer'};
@@ -271,7 +275,7 @@ function closePact(confirm){
 $('#sealPact').onclick=()=>closePact(true);$('#leavePact').onclick=()=>closePact(false);
 function interact(){
  if(state!=='playing')return;const target=interactionTarget();if(!target)return;
- if(target.type==='pact')openPact(target.value);else if(target.type==='bell')ringBell();else observing=true;
+ if(!['pact','bell','mirror'].includes(target.type)){trialInteract(target);return;}if(target.type==='pact')openPact(target.value);else if(target.type==='bell')ringBell();else observing=true;
 }
 $('#interact').onpointerdown=e=>{
  e.preventDefault();if(state!=='playing')return;interactId=e.pointerId;
@@ -318,19 +322,23 @@ function updateDesign(dt){
 function updateRoom(dt){return updateCampaign(dt)}
 function updateHUD(){
  $('#hp i').style.width=p.hp/p.max*100+'%';
- $('#objective').textContent=!boon?'Choisir un serment dans l’atrium':campaign.keys.size<2?`Explorer vers le nord · Sceaux ${campaign.keys.size}/2`:boss.dead?'Rejoindre le passage au nord':campaign.bossAwake?'Vaincre le Veilleur':'Rejoindre le seuil au nord';
+ const q=campaign.trials;
+ $('#objective').textContent=!boon?'I · Choisir un serment':campaign.keys.size<2?`II · Âme ${q.escort.done?'✓':'à guider'} · Carillon ${q.bells.done?'✓':q.bells.step+'/3'}`:!q.archive||!q.forge.done?`III · Archives ${q.archive?'✓':'à purifier'} · Forge ${q.forge.done?'✓':q.forge.carrying?'noyau à rapporter':q.forge.valves.length+'/3 vannes'}`:q.ritual.length<2?`IV · Charger les sceaux ${q.ritual.length}/2`:!campaign.defeated.has('carillonneur')?'V · Briser les chaînes et vaincre le Carillonneur':q.extraction?`VII · Extraction · ${Math.ceil(campaign.escapeLeft)} s`:'VI · Affronter le Veilleur';
+ const active=campaign.activeSeconds||campaign.time;$('#runClock').textContent=`${Math.floor(active/60)}:${String(Math.floor(active%60)).padStart(2,'0')} · cible 10–15 min`;
  $('#cooldown').textContent=`${Math.ceil(p.hp)}/${p.max} PV · Esquive ${p.dash>0?p.dash.toFixed(1)+' s':'prête'} · ${HEROES[hero].powerName} ${(p.shield>0||p.leap>0)?'ACTIF':p.power>0?Math.ceil(p.power)+' s':'prêt'}`;
  $('#power').textContent=(p.shield>0||p.leap>0)?'Actif':p.power>0?Math.ceil(p.power)+' s':HEROES[hero].powerName;
  $('#fire').textContent=hero==='voltigeur'?'Frapper':'Tirer';$('#heroIdentity').textContent=HEROES[hero].name;
- $('#combatHint').textContent='';$('#roomHint').textContent='';$('#dash').textContent=p.dash>0?p.dash.toFixed(1):'Esquive';
+ $('#combatHint').textContent=p.attack?.melee?`Enchaînement ${p.attack.combo}/3 · ${p.attack.struck?'récupération':'préparation'}`:'';
+ const zone=world.zoneAt(p.x,p.z);
+ $('#roomHint').textContent=q.extraction?'Rejoignez l’âme à la croisée.':zone==='Jardins suspendus'&&!q.escort.done?(q.escort.started?'Restez près de l’âme ; libérez ses passages.':'Approchez l’âme et accueillez-la.'):zone==='Cloître des cendres'&&!q.bells.done?(q.bells.read?q.bells.order.join(' → '):'La fresque révèle l’ordre des lanternes.'):zone==='Archives du Reflet'&&!q.archive?'Frappez les Reflets matérialisés ; le pouvoir les révèle.':zone==='Forge du brasier'&&!q.forge.done?(q.forge.carrying?'Retour au refuge · attaquer pose le noyau.':'Fermez les vannes, puis rapportez le noyau.'):zone==='Nef des marées'&&q.ritual.length===2&&!campaign.defeated.has('carillonneur')?'Les deux chaînes protègent le Carillonneur.':'';$('#dash').textContent=p.dash>0?p.dash.toFixed(1):'Esquive';
  $('#bossHUD').hidden=!campaign.bossAwake||!boss||boss.dead;document.body.classList.toggle('has-boss',!$('#bossHUD').hidden);
  if(boss&&!boss.dead){$('#bossHP').style.width=Math.max(0,boss.hp/boss.max*100)+'%';$('#bossState').textContent=boss.mode==='recover'?'VULNÉRABLE · attaquez !':boss.mode==='windup'?'PRÉPARATION · esquivez':'GARDE · dégâts réduits';}
 }
-function update(dt){t+=dt;const wasLeaping=p.leap>0;for(const k of ['leap','swing','comboWindow','shot','dash','dashT','power','shield','inv','absorbLock'])p[k]=Math.max(0,p[k]-dt);p.recoil=Math.max(0,p.recoil-dt*7);if(wasLeaping&&p.leap===0)landLeap();const v=movement(),n=Math.hypot(v.x,v.z),deadzone=.12;let x=n<deadzone?0:v.x,z=n<deadzone?0:v.z;if(n>deadzone){const magnitude=Math.min(1,(n-deadzone)/(1-deadzone));x=x/n*magnitude;z=z/n*magnitude;}const response=1-Math.exp(-dt*(n>deadzone?18:26));p.vx+=(x*HEROES[hero].speed-p.vx)*response;p.vz+=(z*HEROES[hero].speed-p.vz)*response;if(p.dashT>0)moveEntity(p,p.dx*24*dt,p.dz*24*dt);else moveEntity(p,p.vx*dt,p.vz*dt);
-if(coarse()){const target=enemies.filter(e=>!e.dead&&distance(e,p)<16&&(e.type!=='boss'||campaign.bossAwake)&&clearStrikeLine(e.x,e.z)).sort((a,b)=>distance(a,p)-distance(b,p))[0];if(target)targetAim=Math.atan2(p.x-target.x,p.z-target.z);else if(n>deadzone)targetAim=Math.atan2(-x,-z);reticle.visible=false}else{reticle.visible=mouseAim;if(mouseAim){ray.setFromCamera(pointer,camera);if(ray.ray.intersectPlane(ground,aimPoint)){targetAim=Math.atan2(p.x-aimPoint.x,p.z-aimPoint.z);reticle.position.set(aimPoint.x,.07,aimPoint.z)}}else if(n>deadzone)targetAim=Math.atan2(-x,-z)}
-aim+=wrap(targetAim-aim)*(1-Math.exp(-dt*20));const speed=Math.hypot(p.vx,p.vz);walkPhase+=(p.dashT>0?12:speed)*dt*1.9;player.root.rotation.x=p.dashT>0?-.22*(p.dx*-Math.sin(aim)+p.dz*-Math.cos(aim)):0;const jumpHeight=p.leap>0?Math.sin((1-p.leap/.75)*Math.PI)*3.2:0;player.root.position.set(p.x,jumpHeight+Math.abs(Math.sin(walkPhase))*Math.min(.07,speed*.012),p.z);player.root.rotation.y=aim;player.legs.forEach((leg,i)=>leg.rotation.x=Math.sin(walkPhase+i*Math.PI)*.42*Math.min(1,speed/3));player.arms.forEach((a,i)=>a.rotation.x=hero==='rempart'&&i===1?-.7+p.recoil*.2:Math.sin(walkPhase+i*Math.PI)*.28*Math.min(1,speed/3));player.body.rotation.x=-p.recoil*.09;player.root.rotation.z=Math.sin(walkPhase)*.025*Math.min(1,speed/3);muzzle.visible=hero==='rempart'&&p.recoil>.55;slash.visible=hero==='voltigeur'&&p.swing>0;slashMaterial.opacity=p.swing/.28*.85;slash.rotation.z=(p.combo%2?1:-1)*(1-p.swing/.28)*.65;player.sword.rotation.z=p.swing>0?-1+(1-p.swing/.28)*2:.1;player.scarf.rotation.x=-.45-speed*.025+Math.sin(walkPhase*.7)*.08;player.cape.rotation.x=.12+speed*.035+Math.sin(walkPhase*.6)*.05;landingMarker.visible=p.leap>0;landingMarker.position.set(p.x,.08,p.z);shield.visible=p.shield>0;shield.rotation.y+=dt;player.body.material=p.inv>0?bronze:hero==='voltigeur'?cloth:armor;heroShadow.position.set(p.x,.035,p.z);trailTimer-=dt;if(p.dashT>0&&trailTimer<=0){effect(p.x,p.z,.8,'#baa4ef',.25);trailTimer=.055}if(shooting||mouseDown)fire();
-for(const e of enemies){e.root.visible=distance(e,p)<52;e.flash=Math.max(0,e.flash-dt);updateEnemy(e,dt);e.root.rotation.z=e.flash>0?Math.sin(t*75)*.06:0;if(e.healthBar){e.healthBar.visible=e.hp<e.max;e.healthBar.scale.x=1.2*Math.max(0,e.hp/e.max);}}
-for(const b of bullets){const oldX=b.x,oldZ=b.z;b.x+=b.dx*(b.enemy?b.speed:32)*dt;b.z+=b.dz*(b.enemy?b.speed:32)*dt;b.t-=dt;b.mesh.position.set(b.x,1.35,b.z);if(blocked(b.x,b.z,.1,true)){b.t=0;effect(b.x,b.z,.6,b.enemy?'#ff8065':'#ffc17b',.2)}if(b.t>0){if(b.enemy){if(distance(b,p)<.8){hurt(14);b.t=0}}else for(const e of enemies)if(!e.dead&&distance(e,b)<(e.type==='boss'?1.7:.85)){damage(e,b.damage||34,{x:oldX,z:oldZ});b.t=0;effect(b.x,b.z,.9,'#ffd292',.18);break}}if(b.t<=0){scene.remove(b.mesh)}}bullets=bullets.filter(b=>b.t>0);enemies=enemies.filter(e=>!e.dead);
+function update(dt){if(hitPause>0){hitPause=Math.max(0,hitPause-dt);return;}t+=dt;updateSparks(dt);const wasLeaping=p.leap>0;for(const k of ['stagger','leap','swing','comboWindow','shot','dash','dashT','power','shield','inv','absorbLock'])p[k]=Math.max(0,p[k]-dt);p.recoil=Math.max(0,p.recoil-dt*7);if(wasLeaping&&p.leap===0)landLeap();const v=movement(),n=Math.hypot(v.x,v.z),deadzone=.12;let x=n<deadzone?0:v.x,z=n<deadzone?0:v.z;if(n>deadzone){const magnitude=Math.min(1,(n-deadzone)/(1-deadzone));x=x/n*magnitude;z=z/n*magnitude;}const response=1-Math.exp(-dt*(n>deadzone?18:26));const carry=campaign.trials.forge.carrying?.72:1;p.vx+=(x*HEROES[hero].speed*carry-p.vx)*response;p.vz+=(z*HEROES[hero].speed*carry-p.vz)*response;if(p.dashT>0)moveEntity(p,p.dx*24*dt,p.dz*24*dt);else moveEntity(p,p.vx*dt,p.vz*dt);
+if(coarse()){const target=enemies.filter(e=>!e.dead&&trialActive(e)&&(e.type!=='shade'||shadeVulnerable(e))&&distance(e,p)<16&&(e.type!=='boss'||campaign.bossAwake)&&clearStrikeLine(e.x,e.z)).sort((a,b)=>distance(a,p)-distance(b,p))[0];if(target)targetAim=Math.atan2(p.x-target.x,p.z-target.z);else if(n>deadzone)targetAim=Math.atan2(-x,-z);reticle.visible=false}else{reticle.visible=mouseAim;if(mouseAim){ray.setFromCamera(pointer,camera);if(ray.ray.intersectPlane(ground,aimPoint)){targetAim=Math.atan2(p.x-aimPoint.x,p.z-aimPoint.z);reticle.position.set(aimPoint.x,.07,aimPoint.z)}}else if(n>deadzone)targetAim=Math.atan2(-x,-z)}
+aim+=wrap(targetAim-aim)*(1-Math.exp(-dt*20));const speed=Math.hypot(p.vx,p.vz);walkPhase+=(p.dashT>0?12:speed)*dt*1.9;player.root.rotation.x=p.dashT>0?-.22*(p.dx*-Math.sin(aim)+p.dz*-Math.cos(aim)):0;const jumpHeight=p.leap>0?Math.sin((1-p.leap/.75)*Math.PI)*3.2:0;player.root.position.set(p.x,jumpHeight+Math.abs(Math.sin(walkPhase))*Math.min(.07,speed*.012),p.z);player.root.rotation.y=aim;player.legs.forEach((leg,i)=>leg.rotation.x=Math.sin(walkPhase+i*Math.PI)*.42*Math.min(1,speed/3));player.arms.forEach((a,i)=>a.rotation.x=hero==='rempart'&&i===1?1.2+p.recoil*.1:Math.sin(walkPhase+i*Math.PI)*.28*Math.min(1,speed/3));player.body.rotation.x=-p.recoil*.09;player.root.rotation.z=Math.sin(walkPhase)*.025*Math.min(1,speed/3);muzzle.visible=hero==='rempart'&&p.recoil>.55;slash.visible=hero==='voltigeur'&&p.swing>0;slashMaterial.opacity=p.swing/.28*.85;slash.rotation.z=(p.combo%2?1:-1)*(1-p.swing/.28)*.65;player.sword.rotation.z=p.swing>0?-1+(1-p.swing/.28)*2:.1;player.scarf.rotation.x=-.45-speed*.025+Math.sin(walkPhase*.7)*.08;player.cape.rotation.x=.12+speed*.035+Math.sin(walkPhase*.6)*.05;landingMarker.visible=p.leap>0;landingMarker.position.set(p.x,.08,p.z);shield.visible=p.shield>0;shield.rotation.y+=dt;player.body.material=p.inv>0?bronze:hero==='voltigeur'?cloth:armor;heroShadow.position.set(p.x,.035,p.z);trailTimer-=dt;if(p.dashT>0&&trailTimer<=0){effect(p.x,p.z,.8,'#baa4ef',.25);trailTimer=.055}carriedCore.visible=campaign.trials.forge.carrying;poseHero(dt);if(shooting||mouseDown||p.attackBuffer>t)fire();updateAttack(dt);
+for(const e of enemies){e.root.visible=trialActive(e)&&distance(e,p)<52;e.flash=Math.max(0,e.flash-dt);updateEnemy(e,dt);poseEnemy(e);e.root.rotation.z=e.flash>0?Math.sin(t*75)*.06:0;if(e.healthBar){e.healthBar.visible=e.hp<e.max;e.healthBar.scale.x=1.2*Math.max(0,e.hp/e.max);}}
+for(const b of bullets){const oldX=b.x,oldZ=b.z;b.x+=b.dx*(b.enemy?b.speed:32)*dt;b.z+=b.dz*(b.enemy?b.speed:32)*dt;b.t-=dt;b.mesh.position.set(b.x,1.35,b.z);if(blocked(b.x,b.z,.1,true)){b.t=0;effect(b.x,b.z,.6,b.enemy?'#ff8065':'#ffc17b',.2)}if(b.t>0){if(b.enemy){if(distance(b,p)<.8){hurt(14);b.t=0}}else for(const e of enemies)if(!e.dead&&distance(e,b)<(e.type==='boss'?1.7:.85)){const previousHP=e.hp;damage(e,b.damage||34,{x:oldX,z:oldZ});if(e.hp<previousHP)sparks(e.x,e.z);b.t=0;effect(b.x,b.z,.9,'#ffd292',.18);break}}if(b.t<=0){scene.remove(b.mesh)}}bullets=bullets.filter(b=>b.t>0);enemies=enemies.filter(e=>!e.dead);
 for(const h of hazards){h.delay-=dt;if(h.delay<=0&&!h.fired){h.fired=true;h.mesh.material.opacity=.85;if(h.damage>0&&distance(p,h)<h.r+.3)hurt(h.damage);effect(h.x,h.z,h.r,'#ff6542',.35)}if(h.fired)h.tail-=dt;else h.mesh.material.opacity=.16+(1-h.delay/h.max)*.3}hazards=hazards.filter(h=>{if(h.tail<=0){scene.remove(h.mesh);h.mesh.material.dispose();return false}return true});
 for(const e of effects){e.t-=dt;e.mesh.scale.setScalar(Math.max(.01,e.r*(1-e.t/e.max)));e.mesh.material.opacity=Math.max(0,e.t/e.max)}effects=effects.filter(e=>{if(e.t<=0){scene.remove(e.mesh);e.mesh.material.dispose();return false}return true});for(const s of shrines){s.crystal.rotation.y+=dt;s.crystal.position.y=1.8+Math.sin(t*2)*.15}updateDesign(dt);if(state==='playing')updateRoom(dt);updateHUD()}
 // Focus changes are not a reliable indication of leaving the game on mobile.
@@ -358,12 +366,12 @@ addEventListener('keyup',e=>{keys.delete(e.key.toLowerCase());if(e.key.toLowerCa
 document.addEventListener('touchmove',e=>{
  if(state==='playing'&&e.target instanceof Element&&e.target.closest('#mobile, #world, #interact'))e.preventDefault();
 },{passive:false});
-function point(e){pointer.set(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);mouseAim=true}canvas.onpointermove=e=>{if(e.pointerType==='mouse')point(e)};canvas.onpointerdown=e=>{if(e.pointerType==='mouse'){point(e);mouseDown=true}};addEventListener('pointerup',e=>{if(e.pointerType==='mouse')mouseDown=false});canvas.oncontextmenu=e=>e.preventDefault();
+function point(e){pointer.set(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);mouseAim=true}canvas.onpointermove=e=>{if(e.pointerType==='mouse')point(e)};canvas.onpointerdown=e=>{if(e.pointerType==='mouse'){point(e);mouseDown=true;requestAttack()}};addEventListener('pointerup',e=>{if(e.pointerType==='mouse')mouseDown=false});canvas.oncontextmenu=e=>e.preventDefault();
 const stick=$('#stick');function moveStick(e){const r=stick.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2,n=Math.hypot(x,y),f=Math.min(1,40/(n||1));joy.x=x*f/40;joy.y=y*f/40;$('#knob').style.transform=`translate(${x*f}px,${y*f}px)`}stick.onpointerdown=e=>{if(state!=='playing'||stickId!==null)return;e.preventDefault();stickId=e.pointerId;try{stick.setPointerCapture(e.pointerId)}catch(_){}moveStick(e)};stick.onpointermove=e=>{if(e.pointerId===stickId)moveStick(e)};function stopStick(e){if(e.pointerId===stickId){stickId=null;joy.x=joy.y=0;$('#knob').style.transform=''}}stick.onpointerup=stick.onpointercancel=stick.onlostpointercapture=stopStick;
-$('#fire').onpointerdown=e=>{if(state!=='playing'||fireId!==null)return;e.preventDefault();fireId=e.pointerId;try{$('#fire').setPointerCapture(e.pointerId)}catch(_){}shooting=true};function stopFire(e){if(e.pointerId===fireId){shooting=false;fireId=null}}$('#fire').onpointerup=$('#fire').onpointercancel=$('#fire').onlostpointercapture=stopFire;
+$('#fire').onpointerdown=e=>{if(state!=='playing'||fireId!==null)return;e.preventDefault();fireId=e.pointerId;try{$('#fire').setPointerCapture(e.pointerId)}catch(_){}shooting=true;requestAttack()};function stopFire(e){if(e.pointerId===fireId){shooting=false;fireId=null}}$('#fire').onpointerup=$('#fire').onpointercancel=$('#fire').onlostpointercapture=stopFire;
 $('#dash').onpointerdown=e=>{e.preventDefault();dash()};$('#power').onpointerdown=e=>{e.preventDefault();power()};
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)}addEventListener('resize',resize);
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();pause('graphics');announce('La 3D a été interrompue. Rechargez la page et essayez la qualité légère.')});
-function frame(now){const elapsed=Math.min(.1,(now-(last||now))/1000);last=now;if(state==='playing'){accumulator+=elapsed;while(accumulator>=1/60&&state==='playing'){update(1/60);accumulator-=1/60}}else accumulator=0;
+function frame(now){const rawElapsed=(now-(last||now))/1000,elapsed=Math.min(.1,rawElapsed);last=now;if(state==='playing'&&campaign)campaign.activeSeconds+=Math.max(0,rawElapsed);if(state==='playing'){accumulator+=elapsed;while(accumulator>=1/60&&state==='playing'){update(1/60);accumulator-=1/60}}else accumulator=0;
 if(state!=='playing')$('#interact').hidden=true;
-if(p){const portrait=innerWidth<innerHeight;camDesired.set(p.x+p.vx*.08,portrait?19:13,p.z+(portrait?20:16));camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(p.x+p.vx*.12,1,p.z-4+p.vz*.1);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}wireCampaignUI();requestAnimationFrame(frame);
+if(p){const portrait=innerWidth<innerHeight;camDesired.set(p.x+p.vx*.08,portrait?19:13,p.z+(portrait?20:16));camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(p.x+p.vx*.12,1,p.z-4+p.vz*.1);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}initCombatMotion();wireCampaignUI();requestAnimationFrame(frame);

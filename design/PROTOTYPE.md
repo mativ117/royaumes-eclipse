@@ -1,57 +1,42 @@
-# Les Marches de l’Éclipse — refonte 0.8
+# Le Carillon des Âmes — expédition 0.9
 
-## Changement de structure
+Un premier niveau complet dans le monde relié des Marches : début calme, quatre épreuves liées, rituel, gardien intermédiaire, boss final et retour. Les deux autres grands niveaux restent à produire.
 
-La première expédition est désormais un monde relié, sur environ 56 unités de largeur et 140 de longueur. Il se parcourt sans téléportation entre les anciennes salles. Le sol physique est composé de plateformes raccordées : le joueur ne peut ni marcher ni esquiver à travers le vide. Ce n’est pas encore le jeu final, ni les trois grands niveaux complets.
+## Fil conducteur
 
-### Parcours
+La cathédrale a perdu sa voix. Le joueur libère une âme, retrouve un accord et réunit lumière et énergie pour réveiller le Carillonneur. L’âme secourue au début devient l’ancre qui permet de sortir à la fin.
 
-- **Atrium des serments** : zone d’arrivée calme, choix du héros puis du serment. Le choix ouvre les deux itinéraires.
-- **Jardins suspendus** : terrasses, pont au-dessus du vide, cristaux, Sentinelle et tireur. Un détour mène à une relique qui soigne 20 PV et renforce la prochaine attaque, ainsi qu’au Reflet facultatif.
-- **Cloître des cendres** : colonnade et couvertures, Oracle et Traqueur. Il offre une autre route vers la croisée.
-- **Croisée des pèlerins** : jonction des itinéraires et premier refuge. Le chemin continue vers le nord.
-- **Nef des marées** : passages de feu influencés par le serment, couvertures et rencontres mixtes. Il faut récupérer deux sceaux pour ouvrir le seuil.
-- **Cour du Veilleur** : le combat s’active à l’entrée, la cour se ferme et la cloche reste disponible une fois. Après la victoire, le passage au nord termine l’expédition.
+| Étape | Décision ou défi | Cible de rythme, découverte |
+|---|---|---|
+| Atrium | Choisir héros et serment avec contrepartie | 30–60 s |
+| Jardins | Guider une âme, disperser deux embuscades, explorer le détour secret | 90–120 s |
+| Cloître | Lire une mélodie variable, accorder trois lanternes sous menace | 60–90 s |
+| Archives | Affronter trois Reflets qui alternent absence et matérialisation ; le pouvoir les révèle | 75–120 s |
+| Forge | Fermer trois vannes, éviter les jets, transporter un noyau jusqu’au refuge | 90–120 s |
+| Nef | Charger deux sceaux, détruire les chaînes et battre le Carillonneur | 60–90 s |
+| Cour | Veilleur à trois phases, cloche interruptive à usage unique, renforts | 90–150 s |
+| Retour | Rejoindre l’âme sauvée, avant la fermeture de la faille | jusqu’à 70 s |
 
-Les deux routes peuvent être explorées dans la même tentative. Aucune porte ne demande un nombre arbitraire d’ennemis vaincus. Les ennemis sont placés à des endroits définis ; ils ne réapparaissent pas continuellement.
+Ces budgets servent à viser une première partie de 10–15 minutes. Ils ne sont pas un résultat mesuré : le temps varie avec l’exploration, le héros et les défaites. Aucun chronomètre minimum ne bloque artificiellement l’avancée. Les deux premières épreuves et les deux ailes peuvent être traitées dans l’ordre choisi. Les 23 adversaires sont placés et finis, sans génération continue de vagues.
 
-## Rencontres
+## Combat
 
-- **Traqueur** : avance et contourne localement les obstacles.
-- **Tireur** : annonce sa direction, lance des projectiles et peut se replacer lorsqu’il est attaqué.
-- **Sentinelle** : bouclier frontal, charge verrouillée et récupération vulnérable.
-- **Oracle** : annonce des zones dangereuses avant de les déclencher ; ajoute une zone lorsqu’il est blessé.
-- **Veilleur** : boss à deux phases. Il ne peut pas être éliminé depuis une autre zone avant le début de l’affrontement.
+La lame a trois coups : préparation visible, contact unique à 0,16 s (0,25 s au troisième coup), récupération. Les dégâts sont de 44 / 44 / 72 ; le troisième coup repousse davantage. Le fusil part après une préparation de 0,07 s. Les armes suivent le bras, le torse tourne, les ennemis arment leurs attaques, les impacts produisent étincelles et une courte suspension de 25 ms. Esquive et pouvoir interrompent l’attaque ; une charge non dépensée est rendue.
 
-Les ennemis lointains attendent l’approche. Un ennemi touché est alerté. Le leurre d’Élan reste une cible possible. La navigation des ennemis utilise un contournement local, pas un planificateur de chemins général.
+Le noyau ralentit le déplacement et occupe les bras. Attaquer, esquiver ou subir un coup le pose au sol : on peut dégager le chemin puis le reprendre. Le bouclier du Rempart permet de protéger son transport. Les Reflets demandent de choisir une fenêtre de vulnérabilité. Le Carillonneur reste protégé tant que ses chaînes subsistent. Le Veilleur change de phase à 65 % et 30 % de vie.
 
-## Refuges et progression
+## Refuges et suivi
 
-Atteindre un nouveau refuge restaure les PV, recharge le pouvoir et enregistre un état de reprise pour cette tentative. Le premier se trouve à la croisée ; le second, devant le seuil, s’active après la collecte des deux sceaux.
+Les refuges restaurent les PV et le pouvoir et sauvegardent localement le héros, le serment, les épreuves et les ennemis vaincus. « Continuer » recharge le dernier refuge même après fermeture de la page. Le retour final possède son propre point de reprise ; le boss reste vaincu après une défaite lors de l’extraction. Une nouvelle expédition remplace la sauvegarde au prochain refuge. La victoire la supprime.
 
-La reprise restaure le héros et son serment, les sceaux acquis et les ennemis vaincus au moment du refuge. Les actions réalisées ensuite sont annulées. Sans refuge, la tentative reprend dans l’atrium. Recharger la page perd cette expédition : aucun compte ni synchronisation réseau n’est encore ajouté. La Marque du Reflet, distincte de l’expédition, reste sauvegardée localement si le navigateur le permet.
+Un compteur mesure le temps actif réel : menus, pause et carte sont exclus. Le bilan copiable contient durée, défaites, héros et premiers passages dans les zones pour les essais d’équilibrage. Il reste local, sans compte ni envoi de données. La Marque du Reflet utilise une sauvegarde distincte.
 
-## Caméra, commandes et présentation
+## Sources et validation
 
-Caméra plus proche, centrée sur la position réelle dans le monde et légèrement anticipée par le mouvement. Réponse analogique progressive du joystick et freinage plus net. Les mouvements rapides sont découpés pour éviter de traverser les obstacles. Le sol et les portes utilisent la même logique physique pour les deux héros.
+`world.js` décrit les plateformes et obstacles ; `campaign.js` les rencontres et refuges ; `expedition.js` les épreuves et la sauvegarde ; `combat-motion.js` les contacts et poses ; `game.js` les contrôles, simulation et IA ; `template.html` l’interface. `scripts/build.py` génère une page autonome sans CDN.
 
-Le torse et les bras des héros sont moins cubiques, la démarche et l’esquive sont mieux animées. Les ennemis ont des robes et des bras plus lisibles, des réactions aux impacts et de petites barres de vie lorsqu’ils sont blessés. Les inscriptions éloignées ou déjà consommées sont masquées.
+`tests/expedition.py` vérifie toutes les transitions, l’escorte sur son vrai trajet, l’accessibilité physique des objectifs, les immunités, le transport, la reprise après rechargement, les contacts différés, les trois phases et la sortie. Certains états et dégâts sont contrôlés : ce test ne constitue pas un playtest de durée ou de difficulté. Les suites mobile et publication vérifient les gestes simultanés et les adresses du site. Les anciennes suites restent archivées.
 
-Le HUD est compact. **Carte** (ou M) ouvre un plan et suspend la simulation ; le fermer reprend l’exploration. Les refuges, objectifs et ennemis proches y apparaissent. Une mini-carte est disponible sur grand écran.
+## Limites actuelles
 
-Un correctif empêche qu’un même geste tactile ouvre puis confirme automatiquement un serment : l’ouverture se fait au relâchement et la confirmation n’est activée qu’après un court délai.
-
-## Sources et tests
-
-- `src/world.js` : plateformes, architecture, collisions statiques et habillage.
-- `src/campaign.js` : rencontres, objectifs, refuges, carte et Oracle.
-- `src/game.js` : contrôles, héros, combat et interface.
-- `src/template.html` : menus et disposition responsive.
-
-`python scripts/build.py` produit la page autonome dans `docs`. Aucun téléchargement de modèle ou de moteur au lancement.
-
-Tests actuels : `campaign.py` vérifie les routes, les portes, une traversée physique, les objectifs et les victoires des deux héros ; `systems.py` vérifie combats, reprise cohérente et secret sauvegardé ; `mobile_world.py` vérifie les gestes simultanés, la carte et les dialogues tactiles en portrait/paysage ; `publication.py` vérifie le paquet et les redirections. Les tests utilisent des états contrôlés pour certains combats et du mobile simulé ; ils ne garantissent pas la fluidité sur téléphone réel.
-
-## Limites
-
-Les modèles et textures restent procéduraux et stylisés ; le rendu final demandera une production d’assets et davantage d’animation. Deux héros sont présents, les autres restent à produire. Les deux autres grands niveaux, les comptes, la coopération et le battle ne sont pas encore implémentés. Les plateformes ne comportent pas encore de dénivelés parcourables ni de chute dans le vide.
+Deux héros ; modèles, animations et textures procéduraux. Pas encore d’assets finaux, de comptes, de coop, de battle ni de dénivelés parcourables. Les essais Chromium avec mobile simulé ne garantissent pas la fluidité sur iPhone réel. La durée cible nécessite les premiers bilans de parties humaines pour équilibrer les ennemis et déplacements.

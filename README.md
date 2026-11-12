@@ -1,6 +1,6 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Refonte jouable 0.8 — Les Marches de l’Éclipse** : une carte reliée avec deux itinéraires, des refuges, des sceaux à retrouver, cinq rôles ennemis et la cour du Veilleur. Deux héros sont jouables : Rempart et Voltigeur.
+Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.9 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
 
 **[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md)
 
@@ -9,7 +9,7 @@ Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Refon
 - PC : ZQSD / WASD / flèches ; souris pour viser ; clic pour tirer ; Espace pour esquiver ; E pour le bouclier ; F pour examiner ou maintenir pour observer ; M pour la carte ; Échap pour la pause.
 - Téléphone : joystick et boutons tactiles ; visée automatique. Un bouton contextuel apparaît près des objets. Paysage conseillé ; qualité légère disponible.
 
-La reprise après défaite conserve le serment et restaure l’état du dernier refuge atteint. Les actions réalisées après ce refuge sont réinitialisées. La Marque du Reflet peut être conservée sur l’appareil ; les expéditions ne sont pas sauvegardées au rechargement.
+La reprise après défaite conserve le serment et restaure l’état du dernier refuge atteint. Les actions réalisées après ce refuge sont réinitialisées. La Marque du Reflet peut être conservée sur l’appareil ; le bouton Continuer restaure le dernier refuge après rechargement. Le bilan copiable mesure le temps actif et les défaites, sans envoi réseau.
 
 ## Organisation
 
@@ -39,13 +39,12 @@ Les tests utilisent Python Playwright et Chromium à `/usr/bin/chromium` :
 
 ```sh
 python -m pip install -r tests/requirements.txt
-python tests/campaign.py
-python tests/systems.py
+python tests/expedition.py
 python tests/mobile_world.py
 python tests/publication.py
 ```
 
-Les anciennes suites de tests sont conservées dans `historique/tests-v0.7` avec les anciens prototypes.
+Les anciennes suites de tests sont conservées dans `historique/tests-v0.7` et `historique/tests-v0.8` avec les anciens prototypes.
 
 ## Publier
 

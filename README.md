@@ -1,21 +1,21 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Prototype solo 0.7** : le Dernier Rempart et le Voltigeur, trois salles de la Cathédrale, deux serments avec contreparties, des Sentinelles à contourner, une cloche tactique, un secret facultatif et un boss à deux phases. Architecture gothique, fenêtres orangées, pierre texturée et brume légère.
+Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Refonte jouable 0.8 — Les Marches de l’Éclipse** : une carte reliée avec deux itinéraires, des refuges, des sceaux à retrouver, cinq rôles ennemis et la cour du Veilleur. Deux héros sont jouables : Rempart et Voltigeur.
 
 **[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md)
 
 ## Jouer
 
-- PC : ZQSD / WASD / flèches ; souris pour viser ; clic pour tirer ; Espace pour esquiver ; E pour le bouclier ; F pour examiner ou maintenir pour observer ; Échap pour la pause.
+- PC : ZQSD / WASD / flèches ; souris pour viser ; clic pour tirer ; Espace pour esquiver ; E pour le bouclier ; F pour examiner ou maintenir pour observer ; M pour la carte ; Échap pour la pause.
 - Téléphone : joystick et boutons tactiles ; visée automatique. Un bouton contextuel apparaît près des objets. Paysage conseillé ; qualité légère disponible.
 
-La reprise après défaite conserve le serment et recommence la salle. La Marque du Reflet peut être conservée sur l’appareil ; les expéditions ne sont pas sauvegardées au rechargement.
+La reprise après défaite conserve le serment et restaure l’état du dernier refuge atteint. Les actions réalisées après ce refuge sont réinitialisées. La Marque du Reflet peut être conservée sur l’appareil ; les expéditions ne sont pas sauvegardées au rechargement.
 
 ## Organisation
 
 ```text
 docs/       Site publié par GitHub Pages, généré automatiquement
-src/        Logique du jeu et interface éditables
+src/        Monde, campagne, combat, contrôles et interface éditables
 vendor/     Moteur Three.js et licence MIT
 scripts/    Construction du site
 tests/      Vérifications dans Chromium
@@ -39,13 +39,13 @@ Les tests utilisent Python Playwright et Chromium à `/usr/bin/chromium` :
 
 ```sh
 python -m pip install -r tests/requirements.txt
-python tests/art.py
-python tests/tactics.py
-python tests/heroes.py
-python tests/smoke.py
-python tests/design.py
-python tests/input_regression.py
+python tests/campaign.py
+python tests/systems.py
+python tests/mobile_world.py
+python tests/publication.py
 ```
+
+Les anciennes suites de tests sont conservées dans `historique/tests-v0.7` avec les anciens prototypes.
 
 ## Publier
 

@@ -8,12 +8,13 @@ version = (ROOT / 'VERSION').read_text().strip()
 template = (ROOT / 'src/template.html').read_text()
 engine = (ROOT / 'vendor/three.min.js').read_text()
 game = (ROOT / 'src/game.js').read_text()
-art = (ROOT / 'src/art.js').read_text()
+art = (ROOT / 'src/world.js').read_text()
+campaign = (ROOT / 'src/campaign.js').read_text()
 assert template.count('<!-- THREE_ENGINE -->') == 1
 assert template.count('<!-- GAME_SCRIPT -->') == 1
 assert f'Version {version}' in template
 html = template.replace('<!-- THREE_ENGINE -->', '<script>' + engine + '</script>')
-html = html.replace('<!-- GAME_SCRIPT -->', '<script>' + art + '</script><script>' + game + '</script>')
+html = html.replace('<!-- GAME_SCRIPT -->', '<script>' + art + '</script><script>' + campaign + '</script><script>' + game + '</script>')
 output = ROOT / 'docs'
 output.mkdir(exist_ok=True)
 (output / 'index.html').write_text(html)
@@ -33,6 +34,6 @@ output.mkdir(exist_ok=True)
 (output / '.nojekyll').write_text('')
 (output / 'version.json').write_text(json.dumps({
     'version': version,
-    'source_sha256': hashlib.sha256((template + engine + art + game).encode()).hexdigest(),
+    'source_sha256': hashlib.sha256((template + engine + art + campaign + game).encode()).hexdigest(),
 }, indent=2) + '\n')
 print(f'Built version {version} in docs/')

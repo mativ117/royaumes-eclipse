@@ -1,8 +1,8 @@
 [
   {
     "file": "historique/README.md",
-    "bytes": 1221,
-    "sha256": "4ce2210129fd639ae495735401c4616258841d80449a5e644ad8dce43879e654"
+    "bytes": 1296,
+    "sha256": "8b595ceadafd98b98f062acea3a86128430bff30429b87ee8a63ce90d4e5682e"
   },
   {
     "file": "historique/cathedrale-v0.3.1.html",
@@ -33,6 +33,11 @@
     "file": "historique/cathedrale-v0.7.html",
     "bytes": 735882,
     "sha256": "5f12099e58da13c8fd62ab530919ac00d3a3a4831e781d37d995c712c5825d33"
+  },
+  {
+    "file": "historique/cathedrale-v0.8.html",
+    "bytes": 748270,
+    "sha256": "fa5469d9bd811a8fe95c678b7b68e6d79be0b23418e96994f89bfbf85b4bbfeb"
   },
   {
     "file": "historique/depot-avant-reorganisation/cathedrale-v0.3.1.html",
@@ -85,6 +90,11 @@
     "sha256": "0a02ca8bc335bf963a2ce9a6666145cc141f20709a00f68bbd26731b776423d3"
   },
   {
+    "file": "historique/livraisons-zip/royaumes-eclipse-3d-v0.8.zip",
+    "bytes": 419264,
+    "sha256": "5a9084dad40548c41bede7e6c2f88a53ac17d1a09dbfd58ae2bd40c2ada9ff5f"
+  },
+  {
     "file": "historique/livraisons-zip/royaumes-eclipse-reorganise-v0.4.zip",
     "bytes": 756535,
     "sha256": "155be7ecc72286dea03c226f2929d8e20efa60d647d514495d87a3306b49c19c"
@@ -123,5 +133,45 @@
     "file": "historique/relay-raid-original.html",
     "bytes": 17958,
     "sha256": "e3a4412644a3f1d30e608f6a2a33f3520b3e1a09023ead9eb73d64b51f82e77a"
+  },
+  {
+    "file": "historique/sources-v0.7/art.js",
+    "bytes": 5613,
+    "sha256": "3351f46a1682773c6955cb8d423c8b8d645e5af41b72f9f0f4616184da5de735"
+  },
+  {
+    "file": "historique/tests-v0.7/README.md",
+    "bytes": 319,
+    "sha256": "f6feba29ec4df77f941919835e6591d8f3f68e0d37283c844ece06e4b73bfa5b"
+  },
+  {
+    "file": "historique/tests-v0.7/art.py",
+    "bytes": 1909,
+    "sha256": "9e818e520127eae81f99b03308a8bf3663104c0c85b95efb63e73f94f62ad852"
+  },
+  {
+    "file": "historique/tests-v0.7/design.py",
+    "bytes": 5457,
+    "sha256": "26f37a8b618795167e6a9302fbc2ef049b44a9d1bf3ff421203a662162dda92f"
+  },
+  {
+    "file": "historique/tests-v0.7/heroes.py",
+    "bytes": 5038,
+    "sha256": "90c08739e81a377e47afc259701facb60eb083ef5715f3e5fef0a4c7122317e6"
+  },
+  {
+    "file": "historique/tests-v0.7/input_regression.py",
+    "bytes": 5097,
+    "sha256": "4105897c6da2f9957f34c8adb6cf9f2a42e025996f1125a18e9109eb5bba51cd"
+  },
+  {
+    "file": "historique/tests-v0.7/smoke.py",
+    "bytes": 5071,
+    "sha256": "49f636d121a620b795ee5b18c69092fb0a85aad8d117716c7d947605a9cd21fd"
+  },
+  {
+    "file": "historique/tests-v0.7/tactics.py",
+    "bytes": 2963,
+    "sha256": "ba209140511fea34f4215c567042de906e7832d232863e0b733506b6b5da18ef"
   }
 ]

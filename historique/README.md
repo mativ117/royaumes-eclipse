@@ -9,7 +9,8 @@
 - `cathedrale-v0.4.html` : serments, conséquences et secret.
 - `cathedrale-v0.5.html` : deuxième héros, combo de lame et bond.
 - `cathedrale-v0.6.html` : Sentinelles directionnelles et cloche du Silence.
-- `cathedrale-v0.7.html` : architecture, éclairage orange, textures et brume ; version actuelle.
+- `cathedrale-v0.7.html` : architecture, éclairage orange, textures et brume.
+- `cathedrale-v0.8.html` : monde relié, routes, refuges, carte et Oracle ; version actuelle.
 - `depot-avant-reorganisation/` : copies exactes des anciens jeux récupérés sur GitHub.
 - `livraisons-zip/` : tous les ZIP de livraison disponibles avant ce paquet complet, avec leurs sources et documents à chaque étape.
 - `INVENTAIRE.json` : tailles et empreintes des archives pour contrôler leur intégrité.

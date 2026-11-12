@@ -1,33 +1,57 @@
-# La nef des serments — prototype 3D 0.7
+# Les Marches de l’Éclipse — refonte 0.8
 
-Cette version travaille la direction artistique sans changer les règles de combat, les personnages disponibles ou les parcours.
+## Changement de structure
 
-## Cathédrale
+La première expédition est désormais un monde relié, sur environ 56 unités de largeur et 140 de longueur. Il se parcourt sans téléportation entre les anciennes salles. Le sol physique est composé de plateformes raccordées : le joueur ne peut ni marcher ni esquiver à travers le vide. Ce n’est pas encore le jeu final, ni les trois grands niveaux complets.
 
-Arches latérales et fenêtres stylisées orangées, colonnes en pierre texturée, incrustations métalliques au sol, statues monumentales à l’extérieur de l’arène et halo au sol. Le quadrillage de développement est remplacé par un dallage procédural. Le sol est éclairci pour conserver le contraste avec les ennemis et les zones dangereuses.
+### Parcours
 
-La lumière orange des fenêtres et les halos des braseros renforcent l’ambiance. Une brume basse très discrète anime le sol. Ce sont des effets simples : pas de lumière volumétrique calculée, de reflets réalistes ou d’ombres dynamiques coûteuses.
+- **Atrium des serments** : zone d’arrivée calme, choix du héros puis du serment. Le choix ouvre les deux itinéraires.
+- **Jardins suspendus** : terrasses, pont au-dessus du vide, cristaux, Sentinelle et tireur. Un détour mène à une relique qui soigne 20 PV et renforce la prochaine attaque, ainsi qu’au Reflet facultatif.
+- **Cloître des cendres** : colonnade et couvertures, Oracle et Traqueur. Il offre une autre route vers la croisée.
+- **Croisée des pèlerins** : jonction des itinéraires et premier refuge. Le chemin continue vers le nord.
+- **Nef des marées** : passages de feu influencés par le serment, couvertures et rencontres mixtes. Il faut récupérer deux sceaux pour ouvrir le seuil.
+- **Cour du Veilleur** : le combat s’active à l’entrée, la cour se ferme et la cloche reste disponible une fois. Après la victoire, le passage au nord termine l’expédition.
 
-## Personnages et lisibilité
+Les deux routes peuvent être explorées dans la même tentative. Aucune porte ne demande un nombre arbitraire d’ennemis vaincus. Les ennemis sont placés à des endroits définis ; ils ne réapparaissent pas continuellement.
 
-Le Rempart reçoit des épaulières, un équipement dorsal, une ceinture et des détails de bottes et de genoux. Le Voltigeur reçoit une cape animée, des ornements de tenue et une écharpe plus vivante. Les silhouettes restent des modèles procéduraux provisoires.
+## Rencontres
 
-Les messages sont déplacés pour libérer le personnage, et les longues inscriptions sont raccourcies ou ajustées à leur support. Les avertissements de combat et les interactions restent prioritaires sur la décoration.
+- **Traqueur** : avance et contourne localement les obstacles.
+- **Tireur** : annonce sa direction, lance des projectiles et peut se replacer lorsqu’il est attaqué.
+- **Sentinelle** : bouclier frontal, charge verrouillée et récupération vulnérable.
+- **Oracle** : annonce des zones dangereuses avant de les déclencher ; ajoute une zone lorsqu’il est blessé.
+- **Veilleur** : boss à deux phases. Il ne peut pas être éliminé depuis une autre zone avant le début de l’affrontement.
 
-## Mode léger
+Les ennemis lointains attendent l’approche. Un ennemi touché est alerté. Le leurre d’Élan reste une cible possible. La navigation des ennemis utilise un contournement local, pas un planificateur de chemins général.
 
-Le mode léger réduit la résolution de rendu, cache la brume, les grandes statues extérieures et la moitié des halos. Les fenêtres, les arches principales et les silhouettes restent visibles. Aucune collision ni zone dangereuse ne dépend de ce réglage.
+## Refuges et progression
 
-Les bandes répétées au sol utilisent une géométrie instanciée. Aucun modèle, texture ou moteur n’est téléchargé à l’ouverture : toutes les textures sont produites localement par le navigateur. Les mêmes ressources sont réutilisées entre les salles.
+Atteindre un nouveau refuge restaure les PV, recharge le pouvoir et enregistre un état de reprise pour cette tentative. Le premier se trouve à la croisée ; le second, devant le seuil, s’active après la collecte des deux sceaux.
 
-## Sources et vérifications
+La reprise restaure le héros et son serment, les sceaux acquis et les ennemis vaincus au moment du refuge. Les actions réalisées ensuite sont annulées. Sans refuge, la tentative reprend dans l’atrium. Recharger la page perd cette expédition : aucun compte ni synchronisation réseau n’est encore ajouté. La Marque du Reflet, distincte de l’expédition, reste sauvegardée localement si le navigateur le permet.
 
-`src/art.js` contient la décoration et les textures procédurales. `src/game.js` conserve la logique et les animations des héros. `python scripts/build.py` intègre ces fichiers et le moteur dans la page publiée.
+## Caméra, commandes et présentation
 
-`tests/art.py` vérifie l’affichage en 1280×800, 844×390 et 390×844, les textures, l’absence de grille, le budget de soumissions de rendu, le mode léger, la stabilité des collisions et l’absence de pause sur une perte de focus. Les captures sont examinées pour le contraste et le placement des textes. Ces tests Chromium/WebGL logiciel ne mesurent pas la fluidité sur téléphone physique.
+Caméra plus proche, centrée sur la position réelle dans le monde et légèrement anticipée par le mouvement. Réponse analogique progressive du joystick et freinage plus net. Les mouvements rapides sont découpés pour éviter de traverser les obstacles. Le sol et les portes utilisent la même logique physique pour les deux héros.
 
-Les autres tests restent disponibles. [Mécaniques de la 0.6](PROTOTYPE-0.6.md), [héros](PROTOTYPE-0.5.md), [publication](PUBLICATION.md).
+Le torse et les bras des héros sont moins cubiques, la démarche et l’esquive sont mieux animées. Les ennemis ont des robes et des bras plus lisibles, des réactions aux impacts et de petites barres de vie lorsqu’ils sont blessés. Les inscriptions éloignées ou déjà consommées sont masquées.
 
-## Suite et limites
+Le HUD est compact. **Carte** (ou M) ouvre un plan et suspend la simulation ; le fermer reprend l’exploration. Les refuges, objectifs et ennemis proches y apparaissent. Une mini-carte est disponible sur grand écran.
 
-Toujours deux personnages et trois salles du premier niveau. Les modèles définitifs, les autres héros, les deux niveaux suivants, les comptes et les modes réseau restent à développer. Les ombres et reflets réalistes ne font pas partie de cette version.
+Un correctif empêche qu’un même geste tactile ouvre puis confirme automatiquement un serment : l’ouverture se fait au relâchement et la confirmation n’est activée qu’après un court délai.
+
+## Sources et tests
+
+- `src/world.js` : plateformes, architecture, collisions statiques et habillage.
+- `src/campaign.js` : rencontres, objectifs, refuges, carte et Oracle.
+- `src/game.js` : contrôles, héros, combat et interface.
+- `src/template.html` : menus et disposition responsive.
+
+`python scripts/build.py` produit la page autonome dans `docs`. Aucun téléchargement de modèle ou de moteur au lancement.
+
+Tests actuels : `campaign.py` vérifie les routes, les portes, une traversée physique, les objectifs et les victoires des deux héros ; `systems.py` vérifie combats, reprise cohérente et secret sauvegardé ; `mobile_world.py` vérifie les gestes simultanés, la carte et les dialogues tactiles en portrait/paysage ; `publication.py` vérifie le paquet et les redirections. Les tests utilisent des états contrôlés pour certains combats et du mobile simulé ; ils ne garantissent pas la fluidité sur téléphone réel.
+
+## Limites
+
+Les modèles et textures restent procéduraux et stylisés ; le rendu final demandera une production d’assets et davantage d’animation. Deux héros sont présents, les autres restent à produire. Les deux autres grands niveaux, les comptes, la coopération et le battle ne sont pas encore implémentés. Les plateformes ne comportent pas encore de dénivelés parcourables ni de chute dans le vide.

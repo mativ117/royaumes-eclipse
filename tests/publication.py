@@ -27,7 +27,7 @@ try:
   assert f'Version {version}' in page.locator('#menu').text_content()
   page.tap('#start');assert page.evaluate('state')=='playing'
   page.evaluate('window.dispatchEvent(new Event("blur"))');assert page.evaluate('state')=='playing'
-  page.evaluate('p.inv=999;p.x=9;p.z=-7;update(1/60)');page.tap('#interact')
+  page.evaluate('p.inv=999;p.x=9;p.z=7;update(1/60)');page.tap('#interact')
   assert page.evaluate('state')=='choice';page.tap('#sealPact')
   assert page.evaluate('boon')=='haste'
   page.goto(url+'/');assert f'Version {version}' in page.locator('#menu').text_content()

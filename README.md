@@ -1,6 +1,6 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Prototype solo 0.5** : le Dernier Rempart et le Voltigeur, trois salles de la Cathédrale, deux serments avec contreparties, un secret facultatif et un boss à deux phases.
+Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Prototype solo 0.6** : le Dernier Rempart et le Voltigeur, trois salles de la Cathédrale, deux serments avec contreparties, des Sentinelles à contourner, une cloche tactique, un secret facultatif et un boss à deux phases.
 
 **[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md)
 
@@ -39,6 +39,7 @@ Les tests utilisent Python Playwright et Chromium à `/usr/bin/chromium` :
 
 ```sh
 python -m pip install -r tests/requirements.txt
+python tests/tactics.py
 python tests/heroes.py
 python tests/smoke.py
 python tests/design.py

@@ -56,6 +56,7 @@ const reticle=new THREE.Mesh(new THREE.RingGeometry(.26,.34,24),new THREE.MeshBa
 
 // Simulation at a fixed timestep; rendering remains independent of display refresh.
 let state='menu',p,enemies=[],bullets=[],effects=[],hazards=[],obstacles=[],roomMeshes=[],shrines=[],t=0,kills=0,last=0,accumulator=0,noticeUntil=0,aim=0,targetAim=0,shotCount=0,quality='standard',room=0,boon='',shard=false,boss=null,walkPhase=0,trailTimer=0;
+let bell=null;
 let decoy=null,secretMirror=null,secretFound=false,observing=false,observeTime=0,pendingPact='',interactId=null,secretNewThisRun=false;
 const SECRET_KEY='royaumes-eclipse-reflet-v1';
 try{secretFound=localStorage.getItem(SECRET_KEY)==='found'}catch(_){}
@@ -91,7 +92,7 @@ function releaseMenuFocus(){
 }
 function cleanupObject(o){scene.remove(o);o.traverse(child=>{if(child.userData.labelTexture){child.userData.labelTexture.dispose();child.material.dispose()}if(child.userData.ownedMaterial)child.material.dispose();if(child.userData.ownedGeometry)child.geometry.dispose()})}
 function clearFX(){effects.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});effects=[];hazards.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});hazards=[]}
-function clearRoom(){clearDecoy();secretMirror=null;observeTime=0;observing=false;enemies.forEach(e=>cleanupObject(e.root));enemies=[];bullets.forEach(b=>scene.remove(b.mesh));bullets=[];clearFX();roomMeshes.forEach(o=>cleanupObject(o));roomMeshes=[];obstacles=[];shrines=[];boss=null}
+function clearRoom(){bell=null;clearDecoy();secretMirror=null;observeTime=0;observing=false;enemies.forEach(e=>cleanupObject(e.root));enemies=[];bullets.forEach(b=>scene.remove(b.mesh));bullets=[];clearFX();roomMeshes.forEach(o=>cleanupObject(o));roomMeshes=[];obstacles=[];shrines=[];boss=null}
 function roomObject(o){roomMeshes.push(o);return o}
 function label(text,x,z,color='#ffd496',width=6){const c=document.createElement('canvas');c.width=512;c.height=96;const ctx=c.getContext('2d');ctx.fillStyle='#100d19d9';ctx.fillRect(0,0,512,96);ctx.font='bold 30px system-ui';ctx.textAlign='center';ctx.fillStyle=color;ctx.fillText(text,256,60);const texture=new THREE.CanvasTexture(c),material=new THREE.SpriteMaterial({map:texture,depthTest:false});const sprite=new THREE.Sprite(material);sprite.position.set(x,3.6,z);sprite.scale.set(width,width*96/512,1);scene.add(sprite);sprite.userData.labelTexture=texture;roomObject(sprite);return sprite}
 function obstacle(x,z,w,d,height=2.4){const o=box(stone,x,height/2,z,w,height,d);roomObject(o);box(bronze,0,0,0,1.015,.035,1.015,o);obstacles.push({x,z,w,d});return o}
@@ -99,9 +100,9 @@ function blocked(x,z,r=.48){if(x<-15+r||x>15-r||z<-16+r||z>16-r)return true;retu
 function moveEntity(e,dx,dz,r=.48){if(!blocked(e.x+dx,e.z,r))e.x+=dx;if(!blocked(e.x,e.z+dz,r))e.z+=dz}
 function makeShrine(x,z,color,name){const group=new THREE.Group();group.position.set(x,0,z);scene.add(group);roomObject(group);box(bronze,0,.45,0,1.8,.9,1.8,group);const crystal=mesh(new THREE.OctahedronGeometry(.65),mat(color,.4,.25,color),0,1.8,0,1,1,1,group);crystal.userData.ownedMaterial=true;crystal.userData.ownedGeometry=true;const glow=mesh(ringGeo,new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide,transparent:true,opacity:.7}),0,.05,0,2,2,2,group);glow.rotation.x=-Math.PI/2;glow.userData.ownedMaterial=true;label(name,x,z, color);return{root:group,crystal,x,z}}
 function enterRoom(next){clearRoom();room=next;floor.material.color.set(['#2c232b','#202b38','#30212a'][room]);floor.material.roughness=room===1?.22:.5;scene.fog.color.set(['#241722','#1b2333','#301b22'][room]);p.x=0;p.z=12;p.vx=p.vz=0;p.inv=1;p.dashT=0;p.recoil=0;p.leap=0;p.swing=0;p.combo=0;p.comboWindow=0;aim=targetAim=0;portal.visible=false;player.root.position.set(0,0,12);player.root.rotation.y=0;cameraLook.set(0,1,5);camera.position.set(0,innerWidth<innerHeight?23:16,31);t=0;
-if(room===0){obstacle(0,0,11,2,3);for(const x of [-12,12])obstacle(x,4,2.2,2.2,3.5);label('CHOISISSEZ VOTRE SERMENT',0,-4,'#ffd496',8);label('DANS LA NEF, OBSERVEZ L’OMBRE SANS TIRER',0,7,'#c1b7d7',9);shrines=[makeShrine(-9,-7,'#7ee2ff','BRAISE · absorption'),makeShrine(9,-7,'#c4a1ff','ÉLAN · ombre leurre')];spawn(-7,0,'warden');spawn(7,-2,'archer');announce('Contournez le mur. Examinez les offrandes avant de sceller votre pacte : chacune donne un pouvoir et impose une contrepartie.');}
-else if(room===1){shard=false;for(const z of [5,-1,-7]){roomObject(box(bronze,-15,.6,z,.5,1.2,1));roomObject(box(bronze,15,.6,z,.5,1.2,1))}shrines=[makeShrine(0,-11,'#ffd38b','ÉCLAT · approchez')];spawn(-11,-11,'archer');spawn(11,-11,'archer');announce('La nef respire : traversez les lignes de feu. Le passage clair est sûr ; le rouge annonce le danger.');}
-else {obstacle(-10,1,2.6,2.6,3);obstacle(10,1,2.6,2.6,3);boss=spawn(0,-7,'boss');boss.hp=boss.max=700;boss.mode='idle';boss.timer=1.7;boss.pattern=0;boss.phase=1;announce('Le Veilleur : esquivez son attaque, puis frappez pendant sa récupération. Le bouclier peut interrompre sa préparation.');}
+if(room===0){obstacle(0,0,11,2,3);for(const x of [-12,12])obstacle(x,4,2.2,2.2,3.5);label('CHOISISSEZ VOTRE SERMENT',0,-4,'#ffd496',8);label('DANS LA NEF, OBSERVEZ L’OMBRE SANS TIRER',0,7,'#c1b7d7',9);shrines=[makeShrine(-9,-7,'#7ee2ff','BRAISE · absorption'),makeShrine(9,-7,'#c4a1ff','ÉLAN · ombre leurre')];spawn(-7,0,'sentinel');spawn(7,-2,'archer');announce('Contournez le mur. Examinez les offrandes avant de sceller votre pacte : chacune donne un pouvoir et impose une contrepartie.');}
+else if(room===1){shard=false;for(const z of [5,-1,-7]){roomObject(box(bronze,-15,.6,z,.5,1.2,1));roomObject(box(bronze,15,.6,z,.5,1.2,1))}shrines=[makeShrine(0,-11,'#ffd38b','ÉCLAT · approchez')];spawn(-11,-11,'archer');spawn(7,-3,'sentinel');announce('La nef respire : traversez les lignes de feu. Le passage clair est sûr ; le rouge annonce le danger.');}
+else {obstacle(-10,1,2.6,2.6,3);obstacle(10,1,2.6,2.6,3);boss=spawn(0,-7,'boss');boss.hp=boss.max=700;boss.mode='idle';boss.timer=1.7;boss.pattern=0;boss.phase=1;buildBell();announce('La cloche du Silence crée une ouverture unique. Observez les attaques du Veilleur, esquivez puis ripostez.');}
 $('#chapter').textContent=['I · Le choix des cendres','II · La nef respirante','III · Le Veilleur du seuil'][room];updateHUD()}
 function start(){unlockAudio();applyHero();p={x:0,z:12,vx:0,vz:0,hp:HEROES[hero].hp,max:HEROES[hero].hp,shot:0,dash:0,dashT:0,dx:0,dz:-1,power:0,shield:0,inv:0,recoil:0,overcharge:0,absorbLock:0,leap:0,swing:0,combo:0,comboWindow:0};kills=shotCount=walkPhase=0;secretNewThisRun=false;boon='';clearInputs();setupRoom(0);state='playing';$('#menu').hidden=true;$('#pausePanel').hidden=true;$('#hud').hidden=false;$('#controls').hidden=false;$('#mobile').classList.add('playing');accumulator=0;last=performance.now();updateHUD()}
 let pauseReason='';
@@ -109,7 +110,7 @@ function pause(reason='manual'){
  if(state!=='playing')return;
  pauseReason=reason;state='paused';clearInputs();$('#pausePanel').hidden=false;
  $('#resume').hidden=false;$('#resume').textContent='Reprendre';
- $('#endTag').textContent='Version 0.5 · Pause';$('#endTitle').textContent='En pause';
+ $('#endTag').textContent='Version 0.6 · Pause';$('#endTitle').textContent='En pause';
  $('#endText').textContent=reason==='hidden'?'La page a été masquée. Votre progression dans cette tentative est conservée.':reason==='graphics'?'Le rendu 3D a été interrompu. Rechargez la page et choisissez la qualité légère.':'Votre pacte et la progression de cette tentative sont conservés.';
  $('#mobile').classList.remove('playing');
 }
@@ -134,10 +135,18 @@ $('#quality').onchange=e=>{quality=e.target.value;renderer.setPixelRatio(quality
 function effect(x,z,r,color,duration=.45){const o=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.8,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.09,z);scene.add(o);effects.push({mesh:o,r,t:duration,max:duration})}
 function addHazard(x,z,r,delay,damageAmount=26,color='#ff6049'){const o=new THREE.Mesh(discGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.22,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.07,z);o.scale.setScalar(r);scene.add(o);const h={mesh:o,x,z,r,delay,max:delay,damage:damageAmount,fired:false,tail:.3};hazards.push(h);return h}
 function clearHazards(){hazards.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});hazards=[]}
-function damage(e,n){if(e.dead)return;if(e.type==='boss'&&e.mode!=='recover')n*=.25;e.hp-=n;e.flash=.12;tone(e.type==='boss'?150:260,.04,'triangle',.012);if(e.hp<=0){e.dead=true;kills++;effect(e.x,e.z,e.type==='boss'?5:2,'#ffc17b');cleanupObject(e.root);if(e.type==='boss'){clearHazards();bullets.filter(b=>b.enemy).forEach(b=>scene.remove(b.mesh));bullets=bullets.filter(b=>!b.enemy);portal.visible=true;announce('Le Veilleur est vaincu. La porte du fond est ouverte.')}else if(kills%2===0)p.hp=Math.min(p.max,p.hp+8)}}
+function damage(e,n,source=p){if(e.dead)return;
+ if(e.type==='sentinel'&&e.mode!=='recover'&&source){
+  const dx=source.x-e.x,dz=source.z-e.z,d=Math.max(.01,Math.hypot(dx,dz));
+  if((dx*-Math.sin(e.facing)+dz*-Math.cos(e.facing))/d>.35){
+   n*=.15;effect(e.x,e.z,1.3,'#bba2ff',.2);
+   if(e.blockHint<=0){announce('La Sentinelle bloque de face. Contournez-la ou attendez sa charge.');e.blockHint=6;}
+  }
+ }
+if(e.type==='boss'&&e.mode!=='recover')n*=.25;e.hp-=n;e.flash=.12;tone(e.type==='boss'?150:260,.04,'triangle',.012);if(e.hp<=0){e.dead=true;kills++;effect(e.x,e.z,e.type==='boss'?5:2,'#ffc17b');cleanupObject(e.root);if(e.type==='boss'){clearHazards();bullets.filter(b=>b.enemy).forEach(b=>scene.remove(b.mesh));bullets=bullets.filter(b=>!b.enemy);portal.visible=true;announce('Le Veilleur est vaincu. La porte du fond est ouverte.')}else if(kills%2===0)p.hp=Math.min(p.max,p.hp+8)}}
 function fire(){if(state!=='playing'||p.shot>0||p.leap>0)return;if(hero==='voltigeur'){meleeAttack();return;}p.shot=.22;p.recoil=1;shotCount++;const charge=p.overcharge;p.overcharge=0;observeTime=0;const dx=-Math.sin(aim),dz=-Math.cos(aim),sideX=Math.cos(aim)*.5,sideZ=-Math.sin(aim)*.5,x=p.x+sideX+dx*1.6,z=p.z+sideZ+dz*1.6;const o=mesh(sphereGeo,charge?cyan:gold,x,1.35,z,charge?.22:.12,charge?.22:.12,charge?.8:.5);o.rotation.y=aim;bullets.push({mesh:o,x,z,dx,dz,t:1.8,enemy:false,damage:34+charge*20});tone(420,.055,'sawtooth',.008)}
 function dash(){if(state!=='playing'||p.dash>0)return;const v=movement(),n=Math.hypot(v.x,v.z);p.dx=n?v.x/n:-Math.sin(aim);p.dz=n?v.z/n:-Math.cos(aim);p.dash=dodgeCooldown();if(boon==='haste')createDecoy();p.dashT=.2;p.inv=.28;effect(p.x,p.z,1.5,'#c4abff');tone(200,.1,'sine')}
-function power(){if(state!=='playing'||p.power>0)return;if(hero==='voltigeur'){p.power=7;p.leap=.75;p.inv=.85;p.swing=0;observeTime=0;effect(p.x,p.z,2,'#ffb964');tone(240,.2);return;}p.power=9;p.shield=3;effect(p.x,p.z,5,'#76dcff',.7);tone(110,.3,'sine');for(const e of enemies)if(!e.dead&&distance(e,p)<5){if(e.type==='boss'&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2.8;announce('Préparation interrompue ! Le Veilleur est vulnérable.')}damage(e,55);if(e.type!=='boss'){const d=Math.max(.1,distance(e,p));moveEntity(e,(e.x-p.x)/d*1.4,(e.z-p.z)/d*1.4)}}}
+function power(){if(state!=='playing'||p.power>0)return;if(hero==='voltigeur'){p.power=7;p.leap=.75;p.inv=.85;p.swing=0;observeTime=0;effect(p.x,p.z,2,'#ffb964');tone(240,.2);return;}p.power=9;p.shield=3;effect(p.x,p.z,5,'#76dcff',.7);tone(110,.3,'sine');for(const e of enemies)if(!e.dead&&distance(e,p)<5){if(e.type==='boss'&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2.8;announce('Préparation interrompue ! Le Veilleur est vulnérable.')}damage(e,55,null);if(e.type!=='boss'){const d=Math.max(.1,distance(e,p));moveEntity(e,(e.x-p.x)/d*1.4,(e.z-p.z)/d*1.4)}}}
 function hurt(n){
  if(state!=='playing')return;
  if(p.shield>0||(hero==='voltigeur'&&p.leap>0)){
@@ -168,17 +177,53 @@ function landLeap(){
  effect(p.x,p.z,4.6,'#ffac50',.65);effect(p.x,p.z,3.5,'#fff1b4',.4);tone(75,.25,'triangle');
  for(const e of enemies)if(!e.dead&&distance(e,p)<4.6+(e.type==='boss'?1:0)&&clearStrikeLine(e.x,e.z)){
   if(e.type==='boss'&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2;announce('Frappe au sol : le Veilleur est interrompu !')}
-  damage(e,95);
+  damage(e,95,null);
  }
 }
 function movement(){return{x:joy.x+Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('q')||keys.has('arrowleft')),z:joy.y+Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('z')||keys.has('arrowup'))}}
-function spawn(x,z,type='warden'){const root=new THREE.Group();scene.add(root);const robe=mesh(coneGeo,type==='boss'?enemyArmor:dark,0,.9,0,1,1,1,root);mesh(sphereGeo,joint,0,1.7,0,.4,.4,.4,root);box(type==='archer'?cyan:red,0,1.7,-.35,.45,.09,.1,root);if(type==='archer')box(cyan,.6,1.2,-.4,.14,.8,.14,root);if(type==='boss'){root.scale.setScalar(2.2);for(const x of [-.6,.6])box(bronze,x,1.65,0,.4,.4,.5,root);const crown=mesh(new THREE.TorusGeometry(.45,.08,6,16),gold,0,2.3,0,1,1,1,root);crown.rotation.x=Math.PI/2;crown.userData.ownedGeometry=true}root.position.set(x,0,z);const e={root,robe,x,z,hp:type==='boss'?700:80,max:type==='boss'?700:80,type,mode:'idle',timer:1.2,dead:false,flash:0};if(type==='archer'){e.sight=box(new THREE.MeshBasicMaterial({color:'#ff7154',transparent:true,opacity:.45,depthWrite:false}),0,.04,-7,.055,.02,14,root);e.sight.userData.ownedMaterial=true;e.sight.visible=false;}enemies.push(e);return e}
+function spawn(x,z,type='warden'){const root=new THREE.Group();scene.add(root);const robe=mesh(coneGeo,type==='boss'?enemyArmor:dark,0,.9,0,1,1,1,root);mesh(sphereGeo,joint,0,1.7,0,.4,.4,.4,root);box(type==='archer'?cyan:red,0,1.7,-.35,.45,.09,.1,root);if(type==='archer')box(cyan,.6,1.2,-.4,.14,.8,.14,root);if(type==='boss'){root.scale.setScalar(2.2);for(const x of [-.6,.6])box(bronze,x,1.65,0,.4,.4,.5,root);const crown=mesh(new THREE.TorusGeometry(.45,.08,6,16),gold,0,2.3,0,1,1,1,root);crown.rotation.x=Math.PI/2;crown.userData.ownedGeometry=true}root.position.set(x,0,z);const e={root,robe,x,z,hp:type==='boss'?700:80,max:type==='boss'?700:80,type,mode:'idle',timer:1.2,dead:false,flash:0};if(type==='archer'){e.sight=box(new THREE.MeshBasicMaterial({color:'#ff7154',transparent:true,opacity:.45,depthWrite:false}),0,.04,-7,.055,.02,14,root);e.sight.userData.ownedMaterial=true;e.sight.visible=false;}if(type==='sentinel'){e.hp=e.max=160;e.facing=Math.PI;e.blockHint=0;e.plate=box(bronze,0,1.3,-.65,1.25,1.7,.25,root);box(runeGold,0,1.3,-.79,.65,.75,.03,root);}enemies.push(e);return e}
 function enemyShot(e,angle,speed=7){const dx=-Math.sin(angle),dz=-Math.cos(angle),o=mesh(sphereGeo,red,e.x,1.25,e.z,.23,.23,.23);bullets.push({mesh:o,x:e.x,z:e.z,dx,dz,t:5,enemy:true,speed})}
 function updateBoss(e,dt){if(e.dead)return;e.timer-=dt;e.root.rotation.y=Math.atan2(e.x-p.x,e.z-p.z);if(e.hp<=e.max*.5&&e.phase===1){e.phase=2;announce('Phase II : le Veilleur ajoute une salve circulaire après chaque attaque.');effect(e.x,e.z,5,'#ff9c51',.8)}
 if(e.timer<=0){if(e.mode==='idle'){e.mode='windup';e.timer=1.3;if(secretFound)e.timer+=.45;const pattern=e.pattern++%2;if(pattern===0){addHazard(enemyTarget(e).x,enemyTarget(e).z,3.6,1.25+(secretFound?.45:0),30);if(e.phase===2)addHazard(clamp(enemyTarget(e).x+4,-12,12),enemyTarget(e).z,2.5,1.6+(secretFound?.45:0),25);announce('FRAPPE · quittez le cercle rouge, puis attaquez le gardien.')}else{const target=enemyTarget(e),dx=target.x-e.x,dz=target.z-e.z,n=Math.max(1,Math.hypot(dx,dz));for(let i=1;i<=6;i++)addHazard(clamp(e.x+dx/n*i*2.3,-13,13),clamp(e.z+dz/n*i*2.3,-14,14),1.7,1.2+i*.035+(secretFound?.45:0),26);announce('FISSURE · sortez de la ligne rouge.')}}else if(e.mode==='windup'){e.mode='recover';e.timer=e.phase===2?2.8:3.4;if(e.phase===2)for(let i=0;i<10;i++)enemyShot(e,i/10*Math.PI*2,5);tone(80,.2);}
 else{e.mode='idle';e.timer=1.3}}
 e.robe.material=e.flash>0?red:e.mode==='recover'?bronze:enemyArmor;}
-function updateEnemy(e,dt){if(e.dead)return;e.flash=Math.max(0,e.flash-dt);if(e.type==='boss'){updateBoss(e,dt);return}e.timer-=dt;const target=enemyTarget(e),d=distance(e,target);e.root.rotation.y=Math.atan2(e.x-target.x,e.z-target.z);
+// The sentinel locks its facing during an announced charge: a chance to flank it.
+function updateSentinel(e,dt){
+ e.timer-=dt;e.blockHint=Math.max(0,e.blockHint-dt);
+ const target=enemyTarget(e),desired=Math.atan2(e.x-target.x,e.z-target.z);
+ if(e.mode==='idle'){
+  e.facing+=clamp(wrap(desired-e.facing),-dt*1.15,dt*1.15);
+  if(distance(e,target)<13&&e.timer<=0){
+   e.mode='windup';e.timer=1;e.facing=desired;e.dx=-Math.sin(e.facing);e.dz=-Math.cos(e.facing);
+   for(let i=1;i<=5;i++)addHazard(e.x+e.dx*i*1.5,e.z+e.dz*i*1.5,.45,1.2,0,'#eeb481');
+  }
+ }else if(e.mode==='windup'&&e.timer<=0){e.mode='charge';e.timer=.55;}
+ else if(e.mode==='charge'){
+  const beforeX=e.x,beforeZ=e.z;moveEntity(e,e.dx*13*dt,e.dz*13*dt,.7);
+  if(distance(e,p)<1.4)hurt(25);
+  if(e.timer<=0||Math.hypot(e.x-beforeX,e.z-beforeZ)<.01){e.mode='recover';e.timer=2.6;effect(e.x,e.z,2,'#ffd191',.45);}
+ }else if(e.mode==='recover'&&e.timer<=0){e.mode='idle';e.timer=1.3;}
+ e.root.position.set(e.x,0,e.z);e.root.rotation.y=e.facing;
+ e.plate.rotation.x=e.mode==='recover'?-.8:0;
+ e.robe.material=e.flash>0?red:e.mode==='recover'?bronze:dark;
+}
+function buildBell(){
+ const root=new THREE.Group();root.position.set(0,0,5);scene.add(root);roomObject(root);
+ for(const x of [-1,1])box(stone,x,1.7,0,.28,3.4,.4,root);
+ box(bronze,0,3.3,0,2.3,.25,.5,root);
+ const body=mesh(cylGeo,bronze,0,2.3,0,.65,1.15,.65,root);
+ mesh(sphereGeo,gold,0,1.8,0,.18,.18,.18,root);
+ label('CLOCHE DU SILENCE · 1 USAGE',0,5,'#ffc98b',7);
+ bell={root,body,x:0,z:5,used:false,swing:0};
+}
+function ringBell(){
+ if(!bell||bell.used||!boss||boss.dead)return;
+ bell.used=true;bell.swing=1.6;clearHazards();
+ bullets.filter(b=>b.enemy).forEach(b=>scene.remove(b.mesh));bullets=bullets.filter(b=>!b.enemy);
+ boss.mode='recover';boss.timer=4;effect(0,5,14,'#f5cf8f',1);tone(440,.8,'sine',.045);
+ announce('La cloche impose le silence : 4 secondes pour approcher et frapper. Elle ne peut sonner qu’une fois.');
+}
+function updateEnemy(e,dt){if(e.dead)return;e.flash=Math.max(0,e.flash-dt);if(e.type==='boss'){updateBoss(e,dt);return}if(e.type==='sentinel'){updateSentinel(e,dt);return}e.timer-=dt;const target=enemyTarget(e),d=distance(e,target);e.root.rotation.y=Math.atan2(e.x-target.x,e.z-target.z);
 if(e.mode==='windup'){if(e.timer<=0){if(e.type==='archer'){enemyShot(e,e.lockAngle);effect(e.x,e.z,1,'#85d9ff',.2)}e.mode='recover';e.timer=1.1}}
 else if(e.mode==='recover'){if(e.timer<=0){e.mode='idle';e.timer=.5}}
 else if(e.timer<=0&&d<(e.type==='archer'?17:4)){e.mode='windup';e.timer=e.type==='archer'?1.1:.9;if(e.type==='archer'){e.lockAngle=Math.atan2(e.x-target.x,e.z-target.z);effect(e.x,e.z,1.4,'#85d9ff',1.1)}else addHazard(e.x,e.z,2.6,.85,22)}
@@ -203,6 +248,7 @@ function createDecoy(){
 }
 function enemyTarget(e){return decoy&&decoy.t>0&&distance(e,decoy)<17?decoy:p}
 function interactionTarget(){
+ if(room===2&&bell&&!bell.used&&boss&&!boss.dead&&distance(p,bell)<2.7)return{type:'bell',label:'Sonner · 1 usage'};
  if(room===0&&!boon){for(let i=0;i<shrines.length;i++)if(distance(p,shrines[i])<2.7)return{type:'pact',value:i===0?'vigor':'haste',label:'Examiner le serment'};}
  if(room===1&&secretMirror&&!secretFound&&distance(p,secretMirror)<2.6)return{type:'mirror',label:'Maintenir · observer'};
  return null;
@@ -225,7 +271,7 @@ function closePact(confirm){
 $('#sealPact').onclick=()=>closePact(true);$('#leavePact').onclick=()=>closePact(false);
 function interact(){
  if(state!=='playing')return;const target=interactionTarget();if(!target)return;
- if(target.type==='pact')openPact(target.value);else observing=true;
+ if(target.type==='pact')openPact(target.value);else if(target.type==='bell')ringBell();else observing=true;
 }
 $('#interact').onpointerdown=e=>{
  e.preventDefault();interactId=e.pointerId;try{$('#interact').setPointerCapture(e.pointerId)}catch(_){}interact();
@@ -253,6 +299,7 @@ function findSecret(){
  effect(12,-3,3,'#baa0ff',1);tone(860,.3);announce('Marque du Reflet retrouvée. Le Veilleur la reconnaîtra : ses préparations seront plus lentes. C’est un premier indice vers l’Éclipse.');
 }
 function updateDesign(dt){
+ if(bell){bell.swing=Math.max(0,bell.swing-dt);bell.body.rotation.z=Math.sin(bell.swing*17)*bell.swing*.2;}
  if(decoy){decoy.t-=dt;decoy.material.opacity=Math.max(0,decoy.t/1.8*.45);if(decoy.t<=0)clearDecoy()}
  const target=interactionTarget();
  if(target?.type==='mirror'&&observing&&Math.hypot(p.vx,p.vz)<.3&&!shooting&&!mouseDown&&p.recoil===0&&p.leap<=0){observeTime+=dt;if(observeTime>=1.5)findSecret()}
@@ -269,8 +316,8 @@ function update(dt){t+=dt;const wasLeaping=p.leap>0;for(const k of ['leap','swin
 if(coarse()){const target=enemies.filter(e=>!e.dead&&distance(e,p)<16).sort((a,b)=>distance(a,p)-distance(b,p))[0];if(target)targetAim=Math.atan2(p.x-target.x,p.z-target.z);else if(n>deadzone)targetAim=Math.atan2(-x,-z);reticle.visible=false}else{reticle.visible=mouseAim;if(mouseAim){ray.setFromCamera(pointer,camera);if(ray.ray.intersectPlane(ground,aimPoint)){targetAim=Math.atan2(p.x-aimPoint.x,p.z-aimPoint.z);reticle.position.set(aimPoint.x,.07,aimPoint.z)}}else if(n>deadzone)targetAim=Math.atan2(-x,-z)}
 aim+=wrap(targetAim-aim)*(1-Math.exp(-dt*20));const speed=Math.hypot(p.vx,p.vz);walkPhase+=speed*dt*1.9;const jumpHeight=p.leap>0?Math.sin((1-p.leap/.75)*Math.PI)*3.2:0;player.root.position.set(p.x,jumpHeight+Math.abs(Math.sin(walkPhase))*Math.min(.07,speed*.012),p.z);player.root.rotation.y=aim;player.legs.forEach((leg,i)=>leg.rotation.x=Math.sin(walkPhase+i*Math.PI)*.42*Math.min(1,speed/3));player.body.rotation.x=-p.recoil*.09;player.root.rotation.z=Math.sin(walkPhase)*.025*Math.min(1,speed/3);muzzle.visible=hero==='rempart'&&p.recoil>.55;slash.visible=hero==='voltigeur'&&p.swing>0;slashMaterial.opacity=p.swing/.28*.85;slash.rotation.z=(p.combo%2?1:-1)*(1-p.swing/.28)*.65;player.sword.rotation.z=p.swing>0?-1+(1-p.swing/.28)*2:.1;player.scarf.rotation.x=-.45-speed*.025;landingMarker.visible=p.leap>0;landingMarker.position.set(p.x,.08,p.z);shield.visible=p.shield>0;shield.rotation.y+=dt;player.body.material=p.inv>0?bronze:hero==='voltigeur'?cloth:armor;heroShadow.position.set(p.x,.035,p.z);trailTimer-=dt;if(p.dashT>0&&trailTimer<=0){effect(p.x,p.z,.8,'#baa4ef',.25);trailTimer=.055}if(shooting||mouseDown)fire();
 for(const e of enemies)updateEnemy(e,dt);
-for(const b of bullets){const oldX=b.x,oldZ=b.z;b.x+=b.dx*(b.enemy?b.speed:32)*dt;b.z+=b.dz*(b.enemy?b.speed:32)*dt;b.t-=dt;b.mesh.position.set(b.x,1.35,b.z);if(blocked(b.x,b.z,.1)){b.t=0;effect(b.x,b.z,.6,b.enemy?'#ff8065':'#ffc17b',.2)}if(b.t>0){if(b.enemy){if(distance(b,p)<.8){hurt(14);b.t=0}}else for(const e of enemies)if(!e.dead&&distance(e,b)<(e.type==='boss'?1.7:.85)){damage(e,b.damage||34);b.t=0;effect(b.x,b.z,.9,'#ffd292',.18);break}}if(b.t<=0){scene.remove(b.mesh)}}bullets=bullets.filter(b=>b.t>0);enemies=enemies.filter(e=>!e.dead);
-for(const h of hazards){h.delay-=dt;if(h.delay<=0&&!h.fired){h.fired=true;h.mesh.material.opacity=.85;if(distance(p,h)<h.r+.3)hurt(h.damage);effect(h.x,h.z,h.r,'#ff6542',.35)}if(h.fired)h.tail-=dt;else h.mesh.material.opacity=.16+(1-h.delay/h.max)*.3}hazards=hazards.filter(h=>{if(h.tail<=0){scene.remove(h.mesh);h.mesh.material.dispose();return false}return true});
+for(const b of bullets){const oldX=b.x,oldZ=b.z;b.x+=b.dx*(b.enemy?b.speed:32)*dt;b.z+=b.dz*(b.enemy?b.speed:32)*dt;b.t-=dt;b.mesh.position.set(b.x,1.35,b.z);if(blocked(b.x,b.z,.1)){b.t=0;effect(b.x,b.z,.6,b.enemy?'#ff8065':'#ffc17b',.2)}if(b.t>0){if(b.enemy){if(distance(b,p)<.8){hurt(14);b.t=0}}else for(const e of enemies)if(!e.dead&&distance(e,b)<(e.type==='boss'?1.7:.85)){damage(e,b.damage||34,{x:oldX,z:oldZ});b.t=0;effect(b.x,b.z,.9,'#ffd292',.18);break}}if(b.t<=0){scene.remove(b.mesh)}}bullets=bullets.filter(b=>b.t>0);enemies=enemies.filter(e=>!e.dead);
+for(const h of hazards){h.delay-=dt;if(h.delay<=0&&!h.fired){h.fired=true;h.mesh.material.opacity=.85;if(h.damage>0&&distance(p,h)<h.r+.3)hurt(h.damage);effect(h.x,h.z,h.r,'#ff6542',.35)}if(h.fired)h.tail-=dt;else h.mesh.material.opacity=.16+(1-h.delay/h.max)*.3}hazards=hazards.filter(h=>{if(h.tail<=0){scene.remove(h.mesh);h.mesh.material.dispose();return false}return true});
 for(const e of effects){e.t-=dt;e.mesh.scale.setScalar(Math.max(.01,e.r*(1-e.t/e.max)));e.mesh.material.opacity=Math.max(0,e.t/e.max)}effects=effects.filter(e=>{if(e.t<=0){scene.remove(e.mesh);e.mesh.material.dispose();return false}return true});for(const s of shrines){s.crystal.rotation.y+=dt;s.crystal.position.y=1.8+Math.sin(t*2)*.15}updateDesign(dt);if(state==='playing')updateRoom(dt);updateHUD()}
 // Focus changes are not a reliable indication of leaving the game on mobile.
 // Clear desktop inputs on blur; only real page visibility changes auto-pause.

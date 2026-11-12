@@ -1,41 +1,27 @@
-# La nef des serments — prototype 3D 0.5
+# La nef des serments — prototype 3D 0.6
 
-## Deux personnages accessibles immédiatement
+Deux héros, trois salles et désormais des adversaires qui demandent de lire une direction plutôt que de tirer continuellement.
 
-| Personnage | Combat | Pouvoir | PV de base | Esquive de base |
-| --- | --- | --- | --- | --- |
-| Dernier Rempart | Tirs à distance | Bouclier bleu 3 s et onde de choc ; recharge 9 s | 150 | 1,8 s |
-| Voltigeur | Combo de trois frappes en arc | Bond de 0,75 s puis frappe au sol ; recharge 7 s | 110 | 1,15 s |
+## Sentinelle
 
-Le choix au menu change la silhouette, la tenue, les armes, les effets et les noms des commandes. Le Voltigeur possède une écharpe rouge et une lame lumineuse. Le Rempart conserve son armure et son fusil. Modèles toujours procéduraux et provisoires.
+La Sentinelle a 160 PV et un bouclier frontal. Hors récupération, un impact venant de l’avant ne lui inflige que 15 % des dégâts normaux. Le flanc et l’arrière restent vulnérables. Les projectiles sont évalués selon leur direction d’arrivée ; les attaques de zone des pouvoirs ignorent le bouclier.
 
-## Voltigeur
+Elle tourne progressivement en garde. Avant une charge, elle annonce une direction puis la verrouille. La charge suit cette ligne, respecte les murs et obstacles et inflige 25 dégâts au contact. Une charge terminée ou bloquée laisse 2,6 secondes de récupération, bouclier abaissé. Les dégâts de contact ne se répètent pas sans respecter l’invulnérabilité normale du joueur.
 
-Les frappes font 44, 44 puis 66 dégâts, avant les modificateurs de serment et l’armure du boss. Le combo se réinitialise après 0,95 s sans attaque. Les coups ne touchent qu’à portée, devant le personnage et sans obstacle entre la cible et lui.
+Une Sentinelle remplace le gardien de la première salle, et une autre remplace un tireur dans la nef. Pas d’apparition infinie : les rencontres restent limitées et peuvent être contournées. Leur leurre cible les ombres d’Élan comme les autres ennemis.
 
-Le bond produit une vraie élévation visuelle et une frappe au sol de 95 dégâts à l’atterrissage. Il protège brièvement et peut interrompre une préparation du boss à courte portée. Le joueur peut se déplacer pendant le bond ; les murs restent infranchissables. Le cercle orange indique la zone de réception. Le pouvoir est annulé sans explosion si une transition de salle l’interrompt.
+## Cloche du Silence
 
-## Serments adaptés aux deux héros
+Dans l’arène du Veilleur, une cloche se trouve sur le chemin d’entrée. En s’approchant, utiliser F ou le bouton contextuel. Elle annule les zones dangereuses et les projectiles ennemis présents, puis force une récupération de quatre secondes du boss. C’est une ouverture à utiliser au moment choisi, une seule fois par tentative de cette salle.
 
-- Braise : +40 PV au maximum du personnage ; impacts absorbés par le pouvoir accumulés dans la prochaine attaque, jusqu’à trois charges de +20 dégâts. L’esquive prend 0,6 s de plus à se recharger. Pour le Voltigeur, les impacts sont absorbés pendant le bond, et les charges renforcent la prochaine frappe de lame.
-- Élan : -30 PV au maximum du personnage ; esquive accélérée (minimum 0,8 s) et leurre. Le Voltigeur passe donc à 80 PV ; le Rempart à 120 PV.
+La cloche ne donne pas de dégâts gratuits et ne se réactive pas en appuyant plusieurs fois. Elle est réinitialisée avec la salle après une défaite. Son mouvement et son onde dorée signalent son activation.
 
-Le dialogue de serment affiche les chiffres et conséquences correspondant au personnage choisi. Les deux héros disposent des mêmes trois salles, du secret facultatif et des reprises après défaite. Le choix du héros est conservé lors d’une reprise de salle.
+## Contrôles, héros et limites
 
-## Contrôles
+Les contrôles de la 0.5, les deux personnages, les serments, le secret et les points de reprise sont conservés. [Détails des héros](PROTOTYPE-0.5.md). Les graphismes restent des modèles procéduraux provisoires. Les autres niveaux, héros, comptes et modes réseau restent à développer.
 
-PC : ZQSD/WASD/flèches ; souris pour viser ; clic pour attaquer ; Espace pour esquiver ; E pour le pouvoir ; F pour examiner/observer ; Échap pour pause.
+## Vérifications
 
-Téléphone : joystick, visée automatique, boutons Frapper/Tirer, Esquive et Bond/Bouclier. Portrait et paysage pris en charge. L’interface est allégée sur les écrans courts ; les messages ne masquent plus le bouton d’interaction.
+`tests/tactics.py` vérifie le bouclier directionnel, le flanc, la récupération, la direction verrouillée, l’arrêt sur obstacle, l’usage unique de la cloche, l’annulation des dangers et sa réinitialisation au point de reprise. Il teste aussi l’interaction de la cloche avec le Voltigeur en portrait et paysage, sans régression de pause sur une perte de focus.
 
-## Vérification
-
-`tests/heroes.py` vérifie la sélection, les statistiques et silhouettes distinctes, le combo, les cibles devant/derrière, les obstacles, le bond, l’atterrissage unique, l’interruption du boss, les deux serments, la reprise, une victoire complète au corps à corps, le retour au Rempart et les gestes tactiles en portrait/paysage, y compris une perte de focus.
-
-Les tests de la version précédente restent présents. `tests/publication.py` contrôle la construction et les deux modes de publication (racine avec redirection, ou directement /docs). Les tests se font dans Chromium avec WebGL logiciel et mobile simulé, pas sur Safari/iPhone physique.
-
-## Publication et limites
-
-Modifier les sources puis lancer `python scripts/build.py`. Le site actuel reste dans `docs/index.html`, avec le lien historique conservé. Voir [PUBLICATION.md](PUBLICATION.md).
-
-Deux personnages, un niveau en trois salles. Les huit autres personnages ordinaires, le personnage secret complet, les deux grands niveaux suivants, les comptes, la coop, le battle et les modèles définitifs restent à développer. [Détails de la version 0.4](PROTOTYPE-0.4.md).
+`tests/heroes.py` vérifie les deux kits et la progression au corps à corps. `tests/publication.py` contrôle le paquet réellement publié et ses redirections. Vérifications dans Chromium avec mobile simulé ; le confort sur iPhone réel reste à confirmer.

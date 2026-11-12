@@ -7,7 +7,8 @@
 - `cathedrale-v0.3.html` : trois salles, pactes, pièges et boss.
 - `cathedrale-v0.3.1.html` : correctif de pause et reprise après défaite.
 - `cathedrale-v0.4.html` : serments, conséquences et secret.
-- `cathedrale-v0.5.html` : deuxième héros, combo de lame et bond ; version actuelle.
+- `cathedrale-v0.5.html` : deuxième héros, combo de lame et bond.
+- `cathedrale-v0.6.html` : Sentinelles directionnelles et cloche du Silence ; version actuelle.
 - `depot-avant-reorganisation/` : copies exactes des anciens jeux récupérés sur GitHub.
 - `livraisons-zip/` : tous les ZIP de livraison disponibles avant ce paquet complet, avec leurs sources et documents à chaque étape.
 - `INVENTAIRE.json` : tailles et empreintes des archives pour contrôler leur intégrité.

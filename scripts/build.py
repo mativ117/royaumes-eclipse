@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 version = (ROOT / 'VERSION').read_text().strip()
 template = (ROOT / 'src/template.html').read_text()
 engine = (ROOT / 'vendor/three.min.js').read_text()
-game = (ROOT / 'src/combat-motion.js').read_text() + '\n' + (ROOT / 'src/game.js').read_text()
+game = (ROOT / 'src/combat-motion.js').read_text() + '\n' + (ROOT / 'src/staging.js').read_text() + '\n' + (ROOT / 'src/game.js').read_text()
 art = (ROOT / 'src/world.js').read_text()
 campaign = (ROOT / 'src/expedition.js').read_text() + '\n' + (ROOT / 'src/readability.js').read_text() + '\n' + (ROOT / 'src/campaign.js').read_text()
 assert template.count('<!-- THREE_ENGINE -->') == 1

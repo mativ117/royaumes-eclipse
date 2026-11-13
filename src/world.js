@@ -21,7 +21,7 @@ function buildCampaign(THREE,scene,renderer,m){
  paving.wrapS=paving.wrapT=THREE.RepeatWrapping;paving.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
  function block(x,y,z,w,h,d,mat=m.stone,parent=root){const o=new THREE.Mesh(boxGeo,mat);o.position.set(x,y,z);o.scale.set(w,h,d);parent.add(o);return o;}
  const ground=[];
- for(const r of regions){const texture=paving.clone();texture.repeat.set((r.x1-r.x0)/12,(r.z1-r.z0)/12);const mat=new THREE.MeshStandardMaterial({color:r.color,map:texture,roughness:.65,metalness:.2});const f=block((r.x0+r.x1)/2,-.45,(r.z0+r.z1)/2,r.x1-r.x0,.9,r.z1-r.z0,mat);ground.push(f);block((r.x0+r.x1)/2,-1.5,(r.z0+r.z1)/2,r.x1-r.x0,2,r.z1-r.z0,m.dark);}
+ for(const r of regions){const texture=paving.clone();texture.repeat.set((r.x1-r.x0)/12,(r.z1-r.z0)/12);const palette={Atrium:'#776b69',Jardins:'#55716d',Pont:'#526966','Cloître':'#78655e','Croisée':'#69636f',Nef:'#5e6a77',Archives:'#565975',Forge:'#785b45',Cour:'#695860'};const mat=new THREE.MeshStandardMaterial({color:palette[r.name]||r.color,map:texture,roughness:.65,metalness:.2});const f=block((r.x0+r.x1)/2,-.45,(r.z0+r.z1)/2,r.x1-r.x0,.9,r.z1-r.z0,mat);ground.push(f);block((r.x0+r.x1)/2,-1.5,(r.z0+r.z1)/2,r.x1-r.x0,2,r.z1-r.z0,m.dark);}
  const wallTexture=tex((g,n)=>{g.fillStyle='#a89ca9';g.fillRect(0,0,n,n);for(let y=0;y<8;y++)for(let x=-1;x<5;x++){g.fillStyle='#665d6d';g.fillRect(x*128+(y%2)*64+3,y*64+3,122,58);}});m.stone.map=wallTexture;m.stone.color.set('#85788a');m.stone.needsUpdate=true;
  const pillarGeo=new THREE.CylinderGeometry(.5,.54,1,10);
  const colliders=[],gateMeshes=[];

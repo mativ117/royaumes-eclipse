@@ -12,7 +12,8 @@
 - `cathedrale-v0.7.html` : architecture, éclairage orange, textures et brume.
 - `cathedrale-v0.8.html` : monde relié, routes, refuges, carte et Oracle.
 - `cathedrale-v0.9.html` : Carillon des Âmes, épreuves liées, ailes, combat animé, sauvegarde et extraction.
-- `cathedrale-v0.9.1.html` : carte nommée, objets distincts, journal et guidage facultatif ; version actuelle.
+- `cathedrale-v0.9.1.html` : carte nommée, objets distincts, journal et guidage facultatif.
+- `cathedrale-v0.10.html` : guidage stabilisé, pieds articulés, silhouettes ennemies et mise en scène des ailes ; version actuelle.
 - `depot-avant-reorganisation/` : copies exactes des anciens jeux récupérés sur GitHub.
 - `livraisons-zip/` : tous les ZIP de livraison disponibles avant ce paquet complet, avec leurs sources et documents à chaque étape.
 - `INVENTAIRE.json` : tailles et empreintes des archives pour contrôler leur intégrité.

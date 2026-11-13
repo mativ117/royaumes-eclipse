@@ -53,6 +53,7 @@ function poseHero(dt){
   player.root.rotation.y=a.aim;
   if(a.melee){
    const side=a.combo%2?1:-1;
+   player.legs.forEach((leg,i)=>{leg.rotation.x=(i?-.12:.15)*(a.combo===3?1.4:1);});
    player.body.rotation.y=before?-side*.55*prep:side*(.8*(1-after));
    player.body.rotation.x=a.combo===3?(before?-.18*prep:.3*(1-after)):.05;
    player.arms[1].rotation.x=before?-.8*prep:1.2*(1-after);

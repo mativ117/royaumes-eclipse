@@ -2,21 +2,23 @@
 // Shapes, words and colour share the same meaning on the map and in the world.
 const SIGN_COLORS={soul:'#97efd7',lamp:'#ffe0a0',fresco:'#e8dcc8',archive:'#d9bcff',valve:'#ffca86',core:'#ffca86',ritual:'#a8e4ff',camp:'#97efd7',pact:'#ffe0a0',relic:'#d9bcff',boss:'#ffac9a'};
 let trackedGoal='',guidanceOn=true,mapThreats=true,navCache=null,readabilityAssets=null;
+let subgoalFocus={},guideHeading=null,guideLastTime=0,guideRevealUntil=0,guideRebuilds=0;
+function stableTarget(candidates,scope){const kept=candidates.find(q=>q.id===subgoalFocus[scope]);if(kept)return kept;const next=candidates.slice().sort((a,b)=>distance(a,p)-distance(b,p))[0];subgoalFocus[scope]=next?.id;return next;}
 try{guidanceOn=localStorage.getItem('royaumes-guidance')!=='off'}catch(_){}
 function missionGoals(){
  if(!campaign||!p)return[];
- const q=campaign.trials,goal=(id,title,action,kind,point)=>({id,title,action,kind,...point});
+ const q=campaign.trials,goal=(id,title,action,kind,point)=>({...point,id,title,action,kind,targetId:point.id||kind});
  if(!boon)return[goal('braise','Serment de Braise','Examiner le don et sa contrepartie.','pact',{x:-9,z:7}),goal('elan','Serment d’Élan','Examiner le don et sa contrepartie.','pact',{x:9,z:7})];
  if(campaign.keys.size<2){const a=[];
   if(!q.escort.done){const remaining=enemies.filter(e=>!e.dead&&trialActive(e)&&e.stage===ESCORT_PATH[q.escort.waypoint]?.gate);a.push(goal('soul','L’âme des jardins',!q.escort.started?'Accueillir l’âme, puis rester près d’elle.':remaining.length&&distance(q.escort,ESCORT_PATH[q.escort.waypoint])<1.5?'Éliminer l’embuscade pour libérer l’âme.':'Accompagner l’âme jusqu’à la croisée.','soul',q.escort));}
   if(!q.bells.done){const next=LAMPS.find(l=>l.id===q.bells.order[q.bells.step]);a.push(goal('bells','Le carillon du cloître',q.bells.read?`Accorder ${next.id} · ${q.bells.step}/3 accords justes.`:'Lire la fresque pour connaître la mélodie.',q.bells.read?'lamp':'fresco',q.bells.read?next:{x:16,z:-7}));}return a;
  }
  if(!q.archive||!q.forge.done){const a=[];
-  if(!q.archive){const foes=enemies.filter(e=>!e.dead&&e.stage==='shades').sort((a,b)=>distance(a,p)-distance(b,p));a.push(goal('archive','La lentille des Archives',foes.length?`Vaincre les Reflets · ${3-foes.length}/3. Le pouvoir les révèle.`:'Prendre la lentille au fond des Archives.','archive',foes[0]||{x:-52,z:-68}));}
-  if(!q.forge.done){const valves=VALVES.filter(v=>!q.forge.valves.includes(v.id)).sort((a,b)=>distance(a,p)-distance(b,p));a.push(goal('forge','Le noyau de la forge',q.forge.carrying?'Rapporter le noyau au refuge de la croisée.':valves.length?`Fermer les vannes · ${q.forge.valves.length}/3.`:'Prendre le noyau, puis le rapporter au refuge.',q.forge.carrying?'camp':valves.length?'valve':'core',q.forge.carrying?CAMPS[0]:valves[0]||q.forge));}return a;
+  if(!q.archive){const foes=enemies.filter(e=>!e.dead&&e.stage==='shades').sort((a,b)=>distance(a,p)-distance(b,p));a.push(goal('archive','La lentille des Archives',foes.length?`Vaincre les Reflets · ${3-foes.length}/3. Le pouvoir les révèle.`:'Prendre la lentille au fond des Archives.','archive',stableTarget(foes,'archive')||{x:-52,z:-68}));}
+  if(!q.forge.done){const valves=VALVES.filter(v=>!q.forge.valves.includes(v.id)).sort((a,b)=>distance(a,p)-distance(b,p));a.push(goal('forge','Le noyau de la forge',q.forge.carrying?'Rapporter le noyau au refuge de la croisée.':valves.length?`Fermer les vannes · ${q.forge.valves.length}/3.`:'Prendre le noyau, puis le rapporter au refuge.',q.forge.carrying?'camp':valves.length?'valve':'core',q.forge.carrying?CAMPS[0]:stableTarget(valves,'forge')||q.forge));}return a;
  }
  if(q.ritual.length<2)return SEALS.filter(s=>!q.ritual.includes(s.id)).map(s=>goal(s.id,'Sceau '+(s.id==='west'?'des mémoires':'du brasier'),'Charger le sceau avec l’offrande retrouvée.','ritual',s));
- if(!campaign.defeated.has('carillonneur')){const chains=enemies.filter(e=>e.type==='anchor'&&!e.dead).sort((a,b)=>distance(a,p)-distance(b,p));return[goal('porter','Le Carillonneur',chains.length?`Briser les chaînes · ${2-chains.length}/2.`:'Frapper le gardien pendant sa récupération.','boss',chains[0]||enemies.find(e=>e.type==='porter')||{x:0,z:-65})];}
+ if(!campaign.defeated.has('carillonneur')){const chains=enemies.filter(e=>e.type==='anchor'&&!e.dead).sort((a,b)=>distance(a,p)-distance(b,p));return[goal('porter','Le Carillonneur',chains.length?`Briser les chaînes · ${2-chains.length}/2.`:'Frapper le gardien pendant sa récupération.','boss',stableTarget(chains,'chains')||enemies.find(e=>e.type==='porter')||{x:0,z:-65})];}
  if(q.extraction)return[goal('return','L’ancre de retour',`Rejoindre l’âme au refuge · ${Math.ceil(campaign.escapeLeft)} s.`,'soul',CAMPS[0])];
  return[goal('boss','Le Veilleur du seuil',campaign.bossAwake?'Esquiver ses marques, puis frapper sa récupération.':'Traverser le seuil pour entrer dans la cour.','boss',campaign.bossAwake?boss:{x:0,z:-78})];
 }
@@ -45,12 +47,32 @@ function buildGuideRoute(goal){
  }
  if(end<0)return[];const route=[];while(end>=0){route.push(point(end));end=parent[end];}return route.reverse();
 }
+function routeDistance(route){let d=0;for(let i=1;i<route.length;i++)d+=distance(route[i-1],route[i]);return d;}
+function clearGuideLine(a,b,r=.65){const n=Math.ceil(distance(a,b)/.25);for(let i=0;i<=n;i++){const f=n?i/n:0;if(blocked(a.x+(b.x-a.x)*f,a.z+(b.z-a.z)*f,r))return false;}return true;}
+function guideAnchors(route){
+ const anchors=[];let i=0;
+ while(i<route.length-1){let next=i+1;for(let j=i+2;j<Math.min(route.length,i+15);j++){if(clearGuideLine(route[i],route[j]))next=j;}
+  const a=route[i],b=route[next],d=distance(a,b),steps=Math.max(1,Math.ceil(d/4));
+  for(let k=1;k<=steps;k++)anchors.push({x:a.x+(b.x-a.x)*k/steps,z:a.z+(b.z-a.z)*k/steps,index:i+(next-i)*k/steps});i=next;
+ }return anchors;
+}
 function guideRoute(goal=selectedMission()){
  if(!goal||!guidanceOn)return[];
- const key=[goal.id,Math.round(goal.x),Math.round(goal.z),boon,campaign.keys.size,campaign.trials.ritual.length,campaign.defeated.has('carillonneur'),campaign.bossAwake].join(':');
- if(!navCache||navCache.key!==key||Math.hypot(p.x-navCache.x,p.z-navCache.z)>3.5||t-navCache.time>2){navCache={key,x:p.x,z:p.z,time:t,route:buildGuideRoute(goal)};}
- return navCache.route;
+ const key=[goal.id,goal.targetId,boon,campaign.keys.size,campaign.trials.ritual.length,campaign.defeated.has('carillonneur'),campaign.bossAwake].join(':');
+ let mustBuild=!navCache||navCache.key!==key;
+ if(!mustBuild){
+  const path=navCache.route;let best=navCache.cursor,d=Infinity;
+  for(let i=Math.max(0,navCache.cursor-2);i<Math.min(path.length,navCache.cursor+22);i++){const gap=distance(p,path[i]);if(gap<d){d=gap;best=i;}}
+  // Progress trims the old route. Walking along it never starts a fresh search.
+  if(d<2.2){navCache.cursor=Math.max(navCache.cursor,best);navCache.offSince=null;}
+  else{if(navCache.offSince===null)navCache.offSince=t;mustBuild=t-navCache.offSince>1.1;}
+  if(distance(goal,navCache.target)>4&&t-navCache.time>2.5)mustBuild=true;
+ }
+ if(mustBuild){const route=buildGuideRoute(goal);navCache={key,target:{x:goal.x,z:goal.z},time:t,route,cursor:0,offSince:null,anchors:guideAnchors(route)};guideRebuilds++;}
+ return navCache.route.slice(navCache.cursor);
 }
+function revealGuide(){if(state!=='playing'||!guidanceOn)return;guideRevealUntil=t+7;guideRoute();}
+
 function landmarkState(m){
  const q=campaign.trials;
  if(m.kind==='valve')return q.forge.valves.includes(m.id)?'done':'ready';
@@ -65,7 +87,7 @@ function getLandmarkAssets(){
  return readabilityAssets;
 }
 function dressLandmarks(){
- navCache=null;const assets=getLandmarkAssets();
+ navCache=null;subgoalFocus={};guideHeading=null;guideLastTime=t;guideRevealUntil=0;const assets=getLandmarkAssets();
  for(const m of shrines)m.kind='pact';for(const m of campaign.campModels)m.kind='camp';
  const all=[...shrines,...campaign.trialModels,...campaign.campModels,...campaign.collectibles];
  campaign.landmarks=all;
@@ -93,12 +115,18 @@ function updateLandmarkReadability(){
   if(active&&d<3.1&&d<nearest){focus=m;nearest=d;}
  }
  if(campaign.focusRing){campaign.focusRing.visible=!!focus;if(focus)campaign.focusRing.position.set(focus.x,.07,focus.z);}
+ const anchors=(navCache?.anchors||[]).filter(a=>a.index>(navCache?.cursor||0)+1&&distance(a,p)<15);
  for(let i=0;i<(campaign.guidePointers||[]).length;i++){
-  const mesh=campaign.guidePointers[i],index=3+i*2,a=route[index],b=route[index+1];mesh.visible=guidanceOn&&!!a&&!!b&&state==='playing';
-  if(mesh.visible){mesh.position.set(a.x,.14,a.z);mesh.rotation.z=-Math.atan2(b.x-a.x,-(b.z-a.z));}
+  const marker=campaign.guidePointers[i],a=anchors[i],next=anchors[i+1]||goal;
+  marker.visible=guidanceOn&&t<guideRevealUntil&&!!a&&!!next&&state==='playing';
+  if(marker.visible){marker.position.set(a.x,.12,a.z);marker.rotation.z=-Math.atan2(next.x-a.x,-(next.z-a.z));}
  }
- if(goal){$('#trackedTitle').textContent=goal.title;$('#trackedAction').textContent=goal.action;$('#trackedDistance').textContent=!guidanceOn?'Repères désactivés':route.length?`${route.length} m de chemin`:'Consulter la carte';
-  const a=route[Math.min(5,route.length-1)];$('#guideArrow').hidden=!guidanceOn||!a;if(a)$('#guideArrow').style.rotate=Math.atan2(a.x-p.x,-(a.z-p.z))+'rad';}
+ if(goal){$('#trackedTitle').textContent=goal.title;$('#trackedAction').textContent=goal.action;$('#trackedDistance').textContent=!guidanceOn?'Repères désactivés':route.length?`${Math.round(routeDistance(route))} m de chemin`:'Consulter la carte';
+  const a=route[Math.min(5,route.length-1)],dt=Math.min(.1,Math.max(0,t-guideLastTime));guideLastTime=t;
+  $('#guideArrow').hidden=!guidanceOn||!a;
+  if(a){const desired=Math.atan2(a.x-p.x,-(a.z-p.z));if(guideHeading===null)guideHeading=desired;else guideHeading+=Math.max(-1.8*dt,Math.min(1.8*dt,Math.atan2(Math.sin(desired-guideHeading),Math.cos(desired-guideHeading))));$('#guideArrow').style.rotate=guideHeading+'rad';}
+ }
+
 }
 function journalRows(){
  const q=campaign.trials;return[
@@ -123,6 +151,8 @@ function renderMissionJournal(){
  $('#guidanceToggle').checked=guidanceOn;$('#threatToggle').checked=mapThreats;
 }
 function wireReadabilityUI(){
+ $('#guidePing').onclick=revealGuide;
+ addEventListener('keydown',e=>{if(e.key.toLowerCase()==='g'&&!e.repeat&&state==='playing'){e.preventDefault();revealGuide();}});
  $('#guidanceToggle').onchange=e=>{guidanceOn=e.target.checked;navCache=null;try{localStorage.setItem('royaumes-guidance',guidanceOn?'on':'off')}catch(_){}drawCampaignMap($('#largeMap'));};
  $('#threatToggle').onchange=e=>{mapThreats=e.target.checked;drawCampaignMap($('#largeMap'));};
 }

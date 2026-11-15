@@ -10,7 +10,7 @@ with sync_playwright() as pw:
  # Real route includes the wall detour, every step stays on ground and out of solids.
  run('soundOn=false;boon="haste";p.x=0;p.z=-38;campaign.keys=new Set(["west","east"]);')
  for x,z in [(-52,-68),(54,-68),(26,-47),(39,-68)]:
-  result=run(f'var route=buildGuideRoute({{x:{x},z:{z}}});({{count:route.length,safe:route.every(q=>!blocked(q.x,q.z,.55)),arrived:Math.hypot(route.at(-1)?.x-({x}),route.at(-1)?.z-({z}))<1.8}})')
+  result=run(f'var route=buildGuideRoute({{x:{x},z:{z}}});({{count:route.length,safe:route.every(q=>!blocked(q.x,q.z,.55)),arrived:Math.hypot(route.at(-1)?.x-({x}),route.at(-1)?.z-({z}))<2.1}})')
   assert result['count'] and result['safe'] and result['arrived'],result
  assert not run('buildGuideRoute({x:0,z:-80}).length'),'Closed ritual gate must block courtyard guidance'
  run('campaign.keys=new Set();campaign.trials=freshTrials();p.x=0;p.z=-38;toggleMap();')

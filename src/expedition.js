@@ -107,7 +107,7 @@ function updateTrials(dt){
  if(e.started&&!e.done){
   const waypoint=ESCORT_PATH[e.waypoint];
   if(distance(e,p)<12){
-   if(distance(e,waypoint)>.7)steerToward(e,waypoint,dt,2.6);
+   if(distance(e,waypoint)>.7){const d=distance(e,waypoint),step=Math.min(d,dt*2.6);e.x+=(waypoint.x-e.x)/d*step;e.z+=(waypoint.z-e.z)/d*step;}
    else if(!waypoint.gate||trialDead(waypoint.gate)){
     e.waypoint++;
     if(e.waypoint===ESCORT_PATH.length){e.done=true;e.x=0;e.z=-38;campaign.keys.add('west');retitleWorldLabel(campaign.soul,'ANCRE DE RETOUR');announce('L’âme a rejoint le refuge. Empreinte des jardins obtenue.');}
@@ -159,4 +159,4 @@ function wireExpeditionUI(){
  $('#continueRun').hidden=!readRun();$('#continueRun').onclick=continueRun;
  $('#copyReport').onclick=async()=>{const text=expeditionReport();try{await navigator.clipboard.writeText(text);$('#copyReport').textContent='Bilan copié';}catch(_){$('#endText').textContent+=' '+text;}};
 }
-function expeditionReport(){return JSON.stringify({version:'0.12',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
+function expeditionReport(){return JSON.stringify({version:'0.13',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}

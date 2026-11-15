@@ -32,7 +32,7 @@ function campaignGateClosed(gate){
  return gate==='pact'?!boon:gate==='ritual-entry'?campaign.keys.size<2:gate==='seals'?campaign.trials.ritual.length<2||!campaign.defeated.has('carillonneur'):gate==='boss'?campaign.bossAwake&&!boss?.dead:false;
 }
 function resetHeroAt(x,z){
- p.x=x;p.z=z;p.vx=p.vz=0;p.hp=p.max;
+ p.x=x;p.z=z;p.vx=p.vz=0;delete p.motionSpeed;p.hp=p.max;
  for(const k of ['shot','dash','dashT','power','shield','recoil','overcharge','absorbLock','leap','swing','combo','comboWindow','stagger'])p[k]=0;
  p.attack=null;p.attackBuffer=0;p.inv=1.5;aim=targetAim=0;player.root.position.set(x,0,z);
  const portrait=innerWidth<innerHeight;camera.position.set(x,portrait?9.2:6.7,z+(portrait?12.8:10.8));cameraLook.set(x,portrait?1.8:1.6,z-(portrait?4:5));camera.lookAt(cameraLook);resetAvatarPose();

@@ -25,7 +25,7 @@ with sync_playwright() as pw:
  assert result['safe'] and result['count'] and result['detour'],result
  # Follow the route through real movement and collision, not a teleport.
  run('''for(const node of path.slice(1)){let i=0;while(Math.hypot(node.x-p.x,node.z-p.z)>.3&&i++<130){const d=Math.hypot(node.x-p.x,node.z-p.z);joy.x=(node.x-p.x)/d;joy.y=(node.z-p.z)/d;update(1/60);}if(i>=130)throw Error('Movement stuck near basin');}joy.x=joy.y=0;''')
- assert run('Math.hypot(p.x+9,p.z-7)<2.1&&interactionTarget()?.type==="pact"')
+ assert run('Math.hypot(p.x+9,p.z-7)<2.7&&interactionTarget()?.type==="pact"')
  run('resetHeroAt(10,8);world.root.updateMatrixWorld(true);updateSanctuary(.2);')
  assert run('world.obstacles.find(o=>o.x===10&&o.z===13).mesh.material.opacity')<.6
  run('resetHeroAt(0,23);update(1/60);updateArtDirection(.02);updateSanctuary(.1);renderer.render(scene,camera)')

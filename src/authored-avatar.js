@@ -34,7 +34,7 @@ function updateRigAvatar(dt){
  if(avatarRuntime.status!=='ready'||!p)return;const avatar=avatarRuntime.current;
  for(const object of player.legacyParts)object.visible=false;
  if(avatar.weapon)avatar.weapon.visible=!campaign?.trials.forge.carrying;
- const speed=Math.hypot(p.vx,p.vz);
+ const speed=p.motionSpeed??Math.hypot(p.vx,p.vz);
  if(p.stagger>0){playAvatarAction(avatar,'hit',.035,false,.2);}
  else if(p.attack){const name=p.attack.melee?'attack'+p.attack.combo:'shot';if(avatar.lastAttack!==p.attack){playAvatarAction(avatar,name,.055,true,p.attack.duration);avatar.lastAttack=p.attack;}}
  else if(p.leap>0){playAvatarAction(avatar,'leap',.06,false,.75);}

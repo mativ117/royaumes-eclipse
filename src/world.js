@@ -44,7 +44,7 @@ function buildCampaign(THREE,scene,renderer,m){
  const ornament=new THREE.Group(),haze=new THREE.Group(),glows=new THREE.Group();root.add(ornament,haze,glows);
  const glowMap=tex((g,n)=>{const q=g.createRadialGradient(n/2,n/2,0,n/2,n/2,n/2);q.addColorStop(0,'rgba(255,229,175,.9)');q.addColorStop(.2,'rgba(255,136,39,.35)');q.addColorStop(1,'rgba(255,90,0,0)');g.fillStyle=q;g.fillRect(0,0,n,n)},128);
  for(const [x,z] of [[-14,22],[14,22],[-25,-2],[25,-2],[-25,-31],[25,-31],[-11,-40],[11,-40],[-11,-64],[11,-64],[-20,-80],[20,-80],[-20,-104],[20,-104]]){
-  const post=new THREE.Mesh(cylinder,m.bronze);post.scale.set(.45,1.8,.45);post.position.set(x,.9,z);root.add(post);
+  const post=new THREE.Mesh(cylinder,m.bronze);post.scale.set(.45,1.8,.45);post.position.set(x,.9,z);root.add(post);post.castShadow=true;colliders.push({x,z,w:.9,d:.9,radius:.45,mesh:post});
   const flame=new THREE.Mesh(sphere,m.gold);flame.scale.set(.15,.65,.15);flame.position.set(x,2.1,z);root.add(flame);
   const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowMap,color:'#ffac66',transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,opacity:.65}));glow.scale.set(7,8,1);glow.position.set(x,2.3,z);glows.add(glow);
  }

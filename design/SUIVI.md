@@ -1,4 +1,4 @@
-# Suivi du projet — état 0.12
+# Suivi du projet — état 0.13
 
 Ce document distingue ce qui est jouable de ce qui reste prévu. Il conserve les demandes du créateur ; la publication d’un prototype ne valide pas automatiquement toute la conception.
 
@@ -10,7 +10,7 @@ Ce document distingue ce qui est jouable de ce qui reste prévu. Il conserve les
 | Fantastique original, références Expédition 33 / Ghost of Tsushima | Direction inscrite ; première séquence visuellement reconstruite dans le parvis ; rendu final non achevé |
 | Niveau avec exploration et défis variés | Première Cathédrale jouable : âme escortée, mélodie, Reflets, vannes/noyau, sceaux, Carillonneur, Veilleur, extraction |
 | Parties de 10–15 minutes | Cible de conception ; durée active et bilan disponibles, durée humaine non confirmée |
-| Contrôles et mouvement fluides | Commandes simultanées, correctif de pause mobile, guidage stable à la demande ; essais sur appareil réel encore nécessaires |
+| Contrôles et mouvement fluides | Commandes simultanées, correctif de pause mobile, guidage stable à la demande, contacts avec glissement et marche selon déplacement réel ; essais sur appareil réel encore nécessaires |
 | Combat lisible et varié | Préparations, contacts différés, esquive, bouclier/bond, ennemis à règles distinctes et boss à trois phases |
 | Deux héros réellement distincts | Rempart et Voltigeur ; modèles originaux à squelette et treize clips chacun dans la 0.12 |
 | Carte, objets et prochaine action compréhensibles | Carte nommée avec obstacles, objets différenciés, journal et objectif suivi ; bassin indiqué dans la 0.12 |
@@ -40,3 +40,5 @@ Ce document distingue ce qui est jouable de ce qui reste prévu. Il conserve les
 ## Prochaine étape de production
 
 Faire jouer cette séquence représentative sur téléphone réel et recueillir les points précis de gêne, puis étendre le traitement visuel aux autres zones. Les fonctionnalités de compte, coop et battle restent des chantiers distincts ; elles ne sont pas annoncées comme livrées par cette passe graphique.
+
+Passe 0.13 : voir [mouvements, collisions et ombres](PHYSIQUE-0.13.md), avec les limites physiques restantes. Les engagements futurs ci-dessus restent ouverts.

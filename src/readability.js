@@ -39,10 +39,12 @@ function mapGlyph(ctx,kind,x,y,r,color,filled=true){
 // A walkable route, never a straight line through the void or a closed gate.
 function buildGuideRoute(goal){
  const W=129,H=143,N=W*H,idx=(x,z)=>(z+112)*W+x+64,point=i=>({x:i%W-64,z:Math.floor(i/W)-112});
- const sx=Math.round(p.x),sz=Math.round(p.z);if(sx<-64||sx>64||sz<-112||sz>30)return[];
+ let sx=Math.round(p.x),sz=Math.round(p.z);if(sx<-64||sx>64||sz<-112||sz>30)return[];
+ // Grid rounding can land inside a pedestal even when the actor is outside it.
+ if(blocked(sx,sz,.55)){let best=null;for(let dx=-3;dx<=3;dx++)for(let dz=-3;dz<=3;dz++){const x=sx+dx,z=sz+dz;if(blocked(x,z,.55))continue;const score=Math.hypot(x-p.x,z-p.z);if(!best||score<best.score)best={x,z,score};}if(!best)return[];sx=best.x;sz=best.z;}
  const queue=new Int32Array(N),parent=new Int32Array(N);parent.fill(-2);let head=0,tail=0,end=-1;
  const start=idx(sx,sz);queue[tail++]=start;parent[start]=-1;
- while(head<tail){const i=queue[head++],{x,z}=point(i);if(Math.hypot(x-goal.x,z-goal.z)<1.8&&!blocked(x,z,.55)){end=i;break;}
+ while(head<tail){const i=queue[head++],{x,z}=point(i);if(Math.hypot(x-goal.x,z-goal.z)<2.1&&!blocked(x,z,.55)){end=i;break;}
   for(const [dx,dz]of[[1,0],[-1,0],[0,-1],[0,1]]){const a=x+dx,b=z+dz;if(a<-64||a>64||b<-112||b>30)continue;const next=idx(a,b);if(parent[next]!==-2||blocked(a,b,.55))continue;parent[next]=i;queue[tail++]=next;}
  }
  if(end<0)return[];const route=[];while(end>=0){route.push(point(end));end=parent[end];}return route.reverse();

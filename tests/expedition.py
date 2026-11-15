@@ -11,7 +11,7 @@ class Quiet(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Quiet,directory=str(ROOT/'docs')))
 Thread(target=server.serve_forever,daemon=True).start()
-NAV='''function route(start,goal){const queue=[start],seen=new Set([start.join(',')]);for(let i=0;i<queue.length;i++){const[x,z]=queue[i];if(x===goal[0]&&z===goal[1])return true;for(const[dx,dz]of[[1,0],[-1,0],[0,1],[0,-1]]){const a=x+dx,b=z+dz,k=a+','+b;if(a<-65||a>65||b<-113||b>30||seen.has(k)||blocked(a,b))continue;seen.add(k);queue.push([a,b]);}}return false;}'''
+NAV='''function route(start,goal){const queue=[start],seen=new Set([start.join(',')]);for(let i=0;i<queue.length;i++){const[x,z]=queue[i];if(Math.hypot(x-goal[0],z-goal[1])<2.1&&!blocked(x,z))return true;for(const[dx,dz]of[[1,0],[-1,0],[0,1],[0,-1]]){const a=x+dx,b=z+dz,k=a+','+b;if(a<-65||a>65||b<-113||b>30||seen.has(k)||blocked(a,b))continue;seen.add(k);queue.push([a,b]);}}return false;}'''
 try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
@@ -23,7 +23,7 @@ try:
   assert run('route([0,23],[0,-38])') is False
   run('p.x=9;p.z=7;interact()');page.click('#sealPact');assert run('boon')=='haste'
   assert run('route([0,23],[-20,-8])')
-  assert not run('route([0,-38],[-52,-68])')
+  assert not run('route([0,-36],[-52,-68])')
   # Soul travels its actual route, stopping for finite ambushes, with player nearby.
   run('p.x=-20;p.z=-8;trialInteract(trialTarget());')
   run('''for(let i=0;i<4000&&!campaign.trials.escort.done;i++){
@@ -39,8 +39,8 @@ try:
   assert run('campaign.keys.size')==2
   # Both wings, every interactive object and ritual reachable; court still locked.
   for x,z in [(-52,-68),(-54,-51),(-40,-67),(-27,-53),(26,-47),(53,-47),(39,-68),(54,-68),(-9,-62),(9,-55)]:
-   assert run(f'route([0,-38],[{x},{z}])'),(x,z)
-  assert not run('route([0,-38],[0,-80])'),'Wing must not bypass the Carillonneur'
+   assert run(f'route([0,-36],[{x},{z}])'),(x,z)
+  assert not run('route([0,-36],[0,-80])'),'Wing must not bypass the Carillonneur'
   run('''var shade=enemies.find(e=>e.type==='shade');shade.reveal=0;shade.mode='idle';shade.phaseOffset=-t;var hp=shade.hp;damage(shade,50);''')
   assert run('shade.hp===hp')
   run('p.x=shade.x;p.z=shade.z;revealShades();damage(shade,50)');assert run('shade.hp<hp')

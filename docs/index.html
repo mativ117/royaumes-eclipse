@@ -27,8 +27,11 @@ button:disabled{opacity:.5;cursor:default}#menu{align-items:flex-start}#menu .pa
 #mapPanel{padding:24px;align-items:center;background:#0d1019fc}.mapLayout{display:grid;grid-template-columns:minmax(240px,450px) minmax(240px,330px);gap:28px;width:min(100%,850px);max-height:94dvh;overflow:auto}.mapDrawing h2{font:28px Georgia;margin:8px 0 14px}.mapDrawing #largeMap{width:100%;height:auto;max-height:none;border:1px solid #ac9b82;background:#10131d}.mapLegend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:#e9dfd0;margin-top:10px}.mapJournal{padding:8px 0}.mapJournal h3{font-size:15px;color:#f6e4c4;margin:12px 0}.mapJournal p{font-size:13px;line-height:1.6;color:#e4dcd1}.missionChoice{display:block;width:100%;text-align:left;background:#1d2330;border:1px solid #727d8e;border-radius:8px;padding:12px;margin:8px 0;color:#f5efe4;min-height:64px}.missionChoice[aria-pressed=true]{border:2px solid #ffdf9f;background:#332b22;padding:11px}.missionChoice strong{display:block;font-size:14px}.missionChoice span{display:block;font-size:13px;line-height:1.5;margin-top:5px;color:#e4dcd1}.mapOptions{display:flex;flex-direction:column;gap:10px;margin:16px 0;font-size:13px}.mapOptions label{display:flex;align-items:center;gap:9px;min-height:32px;cursor:pointer}.mapOptions input{width:19px;height:19px;accent-color:#ffdf9f}.mapJournal details{font-size:13px;margin:12px 0}.mapJournal summary{cursor:pointer;padding:8px 0}.mapJournal #closeMap{margin-top:14px;min-height:48px}#miniMap{width:120px;height:133px;top:82px;opacity:1;background:#10131d}#roomHint{display:none}
 @media(max-width:600px){.hud .plate{max-width:calc(100% - 83px);padding:9px 11px}#missionTracker{max-width:245px}#missionTracker strong{font-size:12px}#trackedAction{font-size:12px}#trackedDistance{font-size:10px}#cooldown{font-size:10px;line-height:1.45}#heroIdentity,#pactStatus,#runClock{display:none}#bossHUD{top:225px}#mapPanel{padding:16px;align-items:flex-start}.mapLayout{display:block;max-height:none;padding-bottom:20px}.mapDrawing{max-width:380px;margin:auto}.mapJournal{padding-top:14px}#notice{top:auto;bottom:230px;font-size:12px;max-width:92%}body.has-boss #notice{top:auto}#interact{bottom:172px;font-size:13px;max-width:270px}#zoneBanner{top:37%}}
 @media(max-height:500px){.hud .plate{max-width:290px;padding:8px 10px}#chapter{font-size:11px}#objective,#heroIdentity,#pactStatus,#runClock{display:none}#missionTracker{margin-top:5px;padding-top:5px;max-width:255px}#trackedAction{font-size:11px;max-width:220px}#missionTracker strong{font-size:12px}#trackedDistance{font-size:10px}#bossHUD{top:62px;right:16px;width:28%;left:auto;transform:none}#mapPanel{padding:10px;align-items:flex-start}.mapLayout{display:grid;grid-template-columns:minmax(230px,360px) minmax(220px,1fr);gap:18px;max-height:none;width:850px}.mapDrawing h2{font-size:22px;margin:5px 0}.mapDrawing .eyebrow{font-size:9px}.mapJournal{padding-top:0}.mapJournal h3{margin:6px 0}.mapLegend{font-size:11px}#notice{top:auto;bottom:14px;max-width:40%;font-size:11px}#interact{bottom:24px;font-size:12px;max-width:250px}#zoneBanner{top:45%}}
+
+/* Landscape first: the journal retains all detail in the immersive presentation. */
+body.immersive .hud .plate{background:linear-gradient(110deg,#10121bf0,#10121bd9);border-color:#ac916b55;max-width:310px}body.immersive #objective,body.immersive #runClock,body.immersive #heroIdentity,body.immersive #pactStatus,body.immersive #secretStatus{display:none}body.immersive #trackedDistance{display:none}body.immersive #miniMap{display:none}body.immersive #missionTracker{border-top:0;margin-top:5px;padding-top:0}body.immersive #trackedTitle{font-family:Georgia,serif;font-size:17px;letter-spacing:.02em}body.immersive #chapter{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#d7bf99}body.immersive #cooldown{font-size:11px;margin-top:8px;color:#e3d9c8}body.immersive #trackedAction{font-size:12px;color:#ece4d8}body.immersive #guideArrow{font-size:21px;color:#c8bba1}.presentationOption{margin:12px 0}.presentationOption label{margin-right:8px}@media(max-width:600px){body.immersive #trackedTitle{font-size:14px}body.immersive .hud .plate{max-width:calc(100% - 83px)}body.immersive #cooldown{font-size:10px}body.immersive #trackedAction{font-size:11px}}@media(max-height:500px){body.immersive .hud .plate{max-width:280px}body.immersive #trackedTitle{font-size:14px}}
 </style></head><body><canvas id="world" aria-label="Salle 3D de la cathédrale"></canvas>
-<section class="screen" id="menu"><div class="panel"><span class="eyebrow">Les Royaumes de l’Éclipse · Chapitre I · Version 0.10</span><h1>Le Carillon<br>des <em>Âmes.</em></h1><p id="intro">Le carillon qui relie les mondes s’est tu. Ramenez une âme à son refuge, restituez la mélodie du cloître, puis réunissez la mémoire des archives et le feu de la forge. Le Veilleur garde la dernière sonnerie. Après sa chute, l’âme sera votre chemin de retour.</p><div class="legend"><span style="--c:#ffd294">Tirs dorés</span><span style="--c:#79daff">Bouclier bleu</span><span style="--c:#ff654f">Danger rouge</span></div><p>Choisissez votre style : tirs et bouclier du Rempart, ou lame et bond du Voltigeur. Les serments s’adaptent à chaque personnage. Chaque don a un prix. Contournez les boucliers des Sentinelles et gardez la cloche du Silence pour le bon moment.</p><div class="heroChoices" role="group" aria-label="Choisir son personnage"><button type="button" class="heroCard" data-hero="rempart" aria-pressed="true"><span class="eyebrow">Distance · Protection</span><strong>Le Dernier Rempart</strong><small>150 PV · Tir doré · Bouclier bleu</small></button><button type="button" class="heroCard" data-hero="voltigeur" aria-pressed="false"><span class="eyebrow">Mêlée · Mobilité</span><strong>Le Voltigeur</strong><small>110 PV · Combo de lame · Bond explosif</small></button></div><p><label for="quality">Qualité graphique </label><select id="quality"><option value="standard">Standard</option><option value="light">Légère — téléphone</option></select></p><button id="start" class="primary">Nouvelle expédition →</button> <button id="continueRun" class="secondary" hidden>Continuer au refuge</button><p class="fine">Durée visée : 10–15 min pour une découverte. Sauvegarde locale aux refuges. La difficulté et la durée restent en cours d’équilibrage.</p><p class="fine">PC : ZQSD / WASD / flèches · souris : viser · clic : tirer · Espace : esquive · E : pouvoir · F : interagir · G : repères · M : carte · Échap : pause.<br>Téléphone : joystick et visée automatique. Bouton d’interaction près des offrandes. Paysage conseillé.<br>Expédition solo 0.10 · Une expédition en sept actes · Sans compte ni coop.</p></div></section>
+<section class="screen" id="menu"><div class="panel"><span class="eyebrow">Les Royaumes de l’Éclipse · Chapitre I · Version 0.11</span><h1>Le Carillon<br>des <em>Âmes.</em></h1><p id="intro">Le carillon qui relie les mondes s’est tu. Ramenez une âme à son refuge, restituez la mélodie du cloître, puis réunissez la mémoire des archives et le feu de la forge. Le Veilleur garde la dernière sonnerie. Après sa chute, l’âme sera votre chemin de retour.</p><div class="legend"><span style="--c:#ffd294">Tirs dorés</span><span style="--c:#79daff">Bouclier bleu</span><span style="--c:#ff654f">Danger rouge</span></div><p>Choisissez votre style : tirs et bouclier du Rempart, ou lame et bond du Voltigeur. Les serments s’adaptent à chaque personnage. Chaque don a un prix. Contournez les boucliers des Sentinelles et gardez la cloche du Silence pour le bon moment.</p><div class="heroChoices" role="group" aria-label="Choisir son personnage"><button type="button" class="heroCard" data-hero="rempart" aria-pressed="true"><span class="eyebrow">Distance · Protection</span><strong>Le Dernier Rempart</strong><small>150 PV · Tir doré · Bouclier bleu</small></button><button type="button" class="heroCard" data-hero="voltigeur" aria-pressed="false"><span class="eyebrow">Mêlée · Mobilité</span><strong>Le Voltigeur</strong><small>110 PV · Combo de lame · Bond explosif</small></button></div><p><label for="quality">Qualité graphique </label><select id="quality"><option value="standard">Standard</option><option value="light">Légère — téléphone</option></select></p><p class="presentationOption"><label for="presentation">Affichage </label><select id="presentation"><option value="immersive">Épuré</option><option value="detailed">Détaillé</option></select></p><button id="start" class="primary">Nouvelle expédition →</button> <button id="continueRun" class="secondary" hidden>Continuer au refuge</button><p class="fine">Durée visée : 10–15 min pour une découverte. Sauvegarde locale aux refuges. La difficulté et la durée restent en cours d’équilibrage.</p><p class="fine">PC : ZQSD / WASD / flèches · souris : viser · clic : tirer · Espace : esquive · E : pouvoir · F : interagir · G : repères · M : carte · Échap : pause.<br>Téléphone : joystick et visée automatique. Bouton d’interaction près des offrandes. Paysage conseillé.<br>Expédition solo 0.11 · Une expédition en sept actes · Sans compte ni coop.</p></div></section>
 <div class="hud" id="hud" hidden><div class="plate"><strong id="chapter">I · Le choix des cendres</strong><div id="hp"><i></i></div><div id="objective"></div><div id="missionTracker"><span id="guideArrow" aria-hidden="true">↑</span><div><strong id="trackedTitle"></strong><span id="trackedAction"></span><small id="trackedDistance"></small></div></div><div id="cooldown"></div><div id="roomHint"></div><div id="runClock"></div><div id="heroIdentity"></div><div id="combatHint"></div><div id="pactStatus"></div><div id="secretStatus"></div></div><div class="hudButtons"><button id="mapButton">Carte</button><button id="guidePing" title="Afficher les repères proches · G">Repère</button><button id="sound" aria-pressed="true">Son : oui</button><button id="pause">Pause</button></div></div><button id="interact" hidden aria-label="Interagir avec le monde">Examiner</button><canvas id="miniMap" width="150" height="170" aria-label="Carte de la zone"></canvas><div id="zoneBanner" aria-live="polite"></div><div id="damageFlash" aria-hidden="true"></div><div id="bossHUD" hidden><div>LE VEILLEUR DU SEUIL</div><div class="bossTrack"><i id="bossHP"></i></div><span id="bossState"></span></div><div id="notice" role="status" aria-live="polite" hidden></div><div id="controls" hidden>Clic : attaquer · Espace : esquive · E : pouvoir</div><div id="mobile"><div class="pad" id="stick"><div id="knob"></div></div><button class="pad" id="fire">Tirer</button><button class="pad" id="dash">Esquive</button><button class="pad" id="power" style="border-color:#79daff;color:#b8efff">Bouclier</button></div><section class="screen" id="pausePanel" hidden><div class="panel"><span class="eyebrow" id="endTag"></span><h1 id="endTitle"></h1><p id="endText"></p><button class="secondary" id="copyReport" hidden>Copier le bilan</button> <button class="primary" id="resume">Reprendre</button> <button class="secondary" id="back">Retour au menu</button></div></section><section id="choicePanel" class="screen" hidden role="dialog" aria-modal="true" aria-labelledby="pactTitle"><div class="panel"><span class="eyebrow">Un don. Un prix. Un chemin.</span><h1 id="pactTitle">Le serment</h1><div class="pactTerms"><div><span class="eyebrow">Le don</span><p id="pactGift"></p></div><div><span class="eyebrow">Le prix</span><p id="pactCost"></p></div><div><span class="eyebrow">Le monde répond</span><p id="pactWorld"></p></div></div><p class="fine">Ce choix vaut pour cette expédition. Vous pouvez revenir examiner l’autre offrande avant de décider.</p><div class="choiceActions"><button id="sealPact" class="primary">Sceller ce serment</button><button id="leavePact" class="secondary">Revenir</button></div></div></section><section id="mapPanel" class="screen" hidden role="dialog" aria-modal="true" aria-labelledby="mapTitle"><div class="mapLayout"><div class="mapDrawing"><span class="eyebrow">Les Marches de l’Éclipse</span><h2 id="mapTitle">Carte &amp; objectifs</h2><canvas id="largeMap" width="720" height="800" aria-label="Carte du niveau : chemins, obstacles, portes fermées, refuges et objectif suivi"></canvas><div class="mapLegend"><span>➤ Vous</span><span>◈ Objectif</span><span>⊞ Refuge</span><span>▲ Menace</span><span>━ Porte fermée</span></div></div><div class="mapJournal"><h3>Choisir un objectif à suivre</h3><div id="missionList"></div><div class="mapOptions"><label><input id="guidanceToggle" type="checkbox" checked> Guidage discret · repères avec G / Repère</label><label><input id="threatToggle" type="checkbox" checked> Menaces proches</label></div><h3>Objets de quête</h3><p id="questItems"></p><p id="melodyReminder"></p><details><summary>Progression de l’expédition</summary><p id="questProgress"></p></details><button id="closeMap" class="primary">Reprendre l’exploration</button></div></div></section><!-- Three.js 0.160.1
 The MIT License
 
@@ -127,7 +130,7 @@ function buildCampaign(THREE,scene,renderer,m){
  const halo=new THREE.Mesh(new THREE.TorusGeometry(7,.17,8,72),m.gold);halo.position.set(0,16,-116);root.add(halo);const eclipse=new THREE.Mesh(new THREE.CircleGeometry(6.8,64),new THREE.MeshBasicMaterial({color:'#080a12'}));eclipse.position.set(0,16,-116.1);root.add(eclipse);
  const exit=new THREE.Group();exit.position.set(0,0,-107);root.add(exit);for(const x of [-2,2])block(x,2.5,0,.4,5,.8,m.bronze,exit);block(0,5,0,4.4,.4,.8,m.bronze,exit);block(0,2.5,0,3.6,4.8,.1,m.gold,exit);exit.visible=false;
  let time=0;
- return {root,regions,obstacles:colliders,exit,dust,halo,floor:ground[0],
+ return {root,regions,abyss,floors:ground,obstacles:colliders,exit,dust,halo,floor:ground[0],
   onGround(x,z,r=.48){return [[x-r,z-r],[x+r,z-r],[x-r,z+r],[x+r,z+r]].every(([a,b])=>regions.some(q=>a>=q.x0&&a<=q.x1&&b>=q.z0&&b<=q.z1));},
   zoneAt(x,z){return x<-14&&z<-42&&z>=-74?'Archives du Reflet':x>14&&z<-42&&z>=-74?'Forge du brasier':z<-74?'Cour du Veilleur':z<-42?'Nef des marées':z<-28?'Croisée des pèlerins':z<0?(x<0?'Jardins suspendus':'Cloître des cendres'):'Atrium des serments';},
   art:{haze,detail:ornament,glows,setQuality(light){haze.visible=!light;ornament.visible=!light;dust.visible=!light;glows.children.forEach((o,i)=>o.visible=!light||i%2===0)},update(dt){time+=dt;haze.children.forEach((f,i)=>f.position.x=Math.sin(time*.12+i)*4);glows.children.forEach((g,i)=>g.material.opacity=.58+Math.sin(time*2+i)*.05)}}
@@ -186,7 +189,7 @@ function trialTarget(){
  return null;
 }
 function trialInteract(target){
- const q=campaign.trials;
+ const q=campaign.trials;animateWorldUse(target.type);
  if(target.type==='soul'){q.escort.started=true;announce('Restez près de l’âme. Elle attendra que les embuscades soient dispersées.');return;}
  if(target.type==='fresco'){q.bells.read=true;announce('La fresque chante : '+q.bells.order.join(' → ')+'. Accordez ces trois lanternes dans cet ordre.');return;}
  if(target.type==='lamp'){
@@ -294,7 +297,7 @@ function wireExpeditionUI(){
  $('#continueRun').hidden=!readRun();$('#continueRun').onclick=continueRun;
  $('#copyReport').onclick=async()=>{const text=expeditionReport();try{await navigator.clipboard.writeText(text);$('#copyReport').textContent='Bilan copié';}catch(_){$('#endText').textContent+=' '+text;}};
 }
-function expeditionReport(){return JSON.stringify({version:'0.10',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
+function expeditionReport(){return JSON.stringify({version:'0.11',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
 
 'use strict';
 // Shapes, words and colour share the same meaning on the map and in the world.
@@ -402,7 +405,7 @@ function dressLandmarks(){
  const focus=new THREE.Mesh(assets.focus,new THREE.MeshBasicMaterial({color:'#fff3cd',side:THREE.DoubleSide,transparent:true,opacity:.95,depthWrite:false}));focus.rotation.x=-Math.PI/2;focus.visible=false;scene.add(focus);roomObject(focus);campaign.focusRing=focus;focus.userData.ownedMaterial=true;
  const pointerMaterial=new THREE.MeshBasicMaterial({color:'#ffe9b2'});campaign.guidePointers=[];
  for(let i=0;i<4;i++){const mesh=new THREE.Mesh(assets.pointer,pointerMaterial);mesh.rotation.x=-Math.PI/2;mesh.visible=false;scene.add(mesh);roomObject(mesh);campaign.guidePointers.push(mesh);}
- campaign.guidePointers[0].userData.ownedMaterial=true;
+ campaign.guidePointers[0].userData.ownedMaterial=true;craftLandmarks();
 }
 function updateLandmarkReadability(){
  const goal=selectedMission(),route=guideRoute(goal);let focus=null,nearest=Infinity;
@@ -540,7 +543,7 @@ function restoreCampaign(){
  if(saved){rebuildCampaign(saved);resetHeroAt(saved.x,saved.z);}
  else {campaign.keys=new Set();campaign.completed=new Set();campaign.defeated=new Set();campaign.trials=freshTrials();kills=0;rebuildCampaign();resetHeroAt(0,23);}
 }
-function updateCampaignGates(){for(const o of world.obstacles)if(o.gate)o.mesh.visible=campaignGateClosed(o.gate);}
+function updateCampaignGates(){for(const o of world.obstacles)if(o.gate&&!o.craftedGate)o.mesh.visible=campaignGateClosed(o.gate);}
 function objectiveTargets(){
  const q=campaign.trials;
  if(!boon)return[{x:-9,z:7},{x:9,z:7}];
@@ -669,6 +672,7 @@ function strikeMelee(a){
 function poseHero(dt){
  const a=p.attack,melee=hero==='voltigeur';
  player.body.rotation.y=0;player.body.rotation.z=0;
+ if(artDirection){player.cape.rotation.x+=Math.sin(artDirection.clock*1.3)*.025;player.cape.rotation.z=Math.sin(artDirection.clock*.8)*.035;}
  player.arms.forEach((arm,i)=>{arm.rotation.z=i===0?.08:-.08;});
  if(a){
   const before=a.elapsed<a.hitAt,prep=Math.min(1,a.elapsed/a.hitAt),after=Math.min(1,(a.elapsed-a.hitAt)/Math.max(.01,a.duration-a.hitAt));
@@ -688,6 +692,7 @@ function poseHero(dt){
  if(p.leap>0){const progress=1-p.leap/.75;player.arms.forEach(arm=>arm.rotation.x=-1.2);player.body.rotation.x=progress<.6?-.15:.35;player.legs.forEach((leg,i)=>leg.rotation.x=(i?1:-1)*.55);}
  if(p.dashT>0){player.body.rotation.x=.22;player.arms.forEach(arm=>arm.rotation.x=.65);}
  if(campaign.trials.forge.carrying){player.arms.forEach((arm,i)=>{arm.rotation.x=1;arm.rotation.z=i?-.45:.45});player.sword.visible=false;player.rifle.visible=false;}else{player.sword.visible=melee;player.rifle.visible=!melee;}
+ if(!a&&p.leap<=0&&p.dashT<=0&&campaign.worldUse&&t-campaign.worldUse.started<.55){const reach=Math.sin((t-campaign.worldUse.started)/.55*Math.PI);player.arms[1].rotation.x=reach*1.3;player.body.rotation.y=-reach*.12;}
  if(p.stagger>0)player.body.rotation.z=Math.sin(p.stagger*55)*.1;
 }
 function poseEnemy(e){
@@ -777,6 +782,140 @@ function perceiveEnemy(e,dt){
   e.root.position.set(e.x,0,e.z);
  }
  return false;
+}
+
+'use strict';
+// Original models and textures for the world: painterly stone, copper mechanisms,
+// wind in living borders. No third-party game assets are embedded.
+let artDirection=null,craftAssets=null;
+function makeArtTexture(draw,size=256){const c=document.createElement('canvas');c.width=c.height=size;draw(c.getContext('2d'),size);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;}
+function makeCraftAssets(){
+ if(craftAssets)return craftAssets;
+ const pieces={},stoneColor='#514d56',copper='#a48661',darkMetal='#343942';
+ const part=(geo,pos,size,color=copper,rot=[0,0,0])=>({geo,pos,size,color,rot});
+ const base=[part(cylGeo,[0,.16,0],[.85,.3,.85],stoneColor),part(cylGeo,[0,.36,0],[.64,.12,.64],copper),part(cylGeo,[0,.63,0],[.33,.6,.33],stoneColor)];
+ pieces.pact=mergedStageParts([...base,part(new THREE.TorusGeometry(.65,.1,6,24),[0,1,0],[1,.55,1],copper,[Math.PI/2,0,0])]);
+ pieces.lamp=mergedStageParts([...base,part(cylGeo,[0,1.1,0],[.19,.6,.19],darkMetal),part(cylGeo,[0,2.32,0],[.65,.16,.65],copper),...[-1,1].map(x=>part(boxGeo,[x*.4,1.87,0],[.06,.95,.06],copper))]);
+ pieces.fresco=mergedStageParts([part(cylGeo,[0,.13,0],[1,.26,.7],stoneColor),part(boxGeo,[0,1.35,.14],[1.65,2.65,.26],stoneColor),part(boxGeo,[0,2.72,.14],[1.8,.12,.32],copper)]);
+ const pipe=new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(-.65,0,.1),new THREE.Vector3(-.65,1,.2),new THREE.Vector3(0,1.75,.2),new THREE.Vector3(.7,1.75,.2)]),14,.17,7,false);
+ pieces.valve=mergedStageParts([part(cylGeo,[0,.12,0],[.85,.24,.85],darkMetal),part(pipe,[0,0,0],[1,1,1],copper),part(cylGeo,[0,1.8,.25],[.35,.26,.35],darkMetal,[Math.PI/2,0,0])]);pipe.dispose();
+ const armillary=[];for(let i=0;i<3;i++)armillary.push(part(new THREE.TorusGeometry(.85,.055,5,28),[0,1.8,0],[1,1,1],copper,[i*Math.PI/3,Math.PI/2*i,0]));
+ pieces.archive=mergedStageParts([...base,...armillary]);
+ const ribs=[];for(let i=0;i<4;i++)ribs.push(part(new THREE.TorusGeometry(.7,.055,5,20,Math.PI),[0,1.8,0],[1,1,1],copper,[0,i*Math.PI/2,0]));
+ pieces.core=mergedStageParts([...base,part(cylGeo,[0,1.22,0],[.8,.16,.8],darkMetal),...ribs]);
+ pieces.ritual=mergedStageParts([part(cylGeo,[0,.18,0],[1.12,.36,1.12],stoneColor),...[-1,1].map(x=>part(boxGeo,[x*.85,1.1,0],[.15,2,.22],copper)),part(new THREE.TorusGeometry(.85,.09,6,26,Math.PI),[0,2,0],[1,1,1],copper)]);
+ pieces.camp=mergedStageParts([part(cylGeo,[0,.14,0],[1.25,.28,1.25],stoneColor),part(cylGeo,[0,.4,0],[.85,.34,.85],copper),part(new THREE.TorusGeometry(.85,.06,5,24),[0,.7,0],[1,1,1],copper,[Math.PI/2,0,0])]);
+ pieces.soul=mergedStageParts([part(new THREE.TorusGeometry(.5,.035,4,24,Math.PI*1.4),[0,1.45,0],[.7,1.25,1],'#d9e5db',[0,0,.4])]);
+ pieces.relic=pieces.pact;
+ const material=new THREE.MeshStandardMaterial({vertexColors:true,metalness:.35,roughness:.7});
+ // Etched fresco is a texture drawn here, not text baked from another game.
+ const fresco=makeArtTexture((g,n)=>{g.fillStyle='#3c3945';g.fillRect(0,0,n,n);g.strokeStyle='#bda57a';g.lineWidth=3;for(let i=0;i<3;i++){g.beginPath();g.arc(n*.5,n*(.25+i*.25),n*(.09+i*.025),0,Math.PI*2);g.stroke();}g.beginPath();g.moveTo(n*.5,n*.1);g.lineTo(n*.5,n*.9);g.stroke();g.strokeStyle='#847052';g.strokeRect(14,14,n-28,n-28);});
+ craftAssets={pieces,material,fresco};return craftAssets;
+}
+function craftLandmarks(){
+ const a=makeCraftAssets();
+ for(const m of campaign.landmarks){
+  const kind=m.kind||'relic',pedestal=m.root.children[0],geometry=a.pieces[kind];
+  if(geometry){pedestal.geometry=geometry;pedestal.material=a.material;pedestal.position.set(0,0,0);pedestal.scale.set(1,1,1);pedestal.visible=true;}
+  m.craft={turn:landmarkState(m)==='done'?1:0,pulse:0};m.root.userData.craftKind=kind;
+  // Original glow becomes a restrained footprint instead of a bright arcade halo.
+  const footprint=m.root.children.find(o=>o.geometry===ringGeo);if(footprint){footprint.scale.setScalar(1.05);footprint.material.opacity=.18;}
+  if(kind==='fresco'){m.crystal.scale.set(1.15,12,.3);m.crystal.position.set(0,1.4,-.08);m.crystal.rotation.set(0,0,0);m.crystal.children.forEach(c=>c.visible=false);m.crystal.material.map=a.fresco;m.crystal.material.emissive.set('#3c2c15');m.crystal.material.needsUpdate=true;}
+  if(kind==='valve'){m.crystal.rotation.z=m.craft.turn*Math.PI/2;m.crystal.position.z=-.08;}
+  if(kind==='core')m.crystal.scale.setScalar(.65);
+  if(kind==='camp'){m.crystal.scale.set(.38,.5,.38);m.crystal.position.y=1.05;}
+  if(kind==='soul')m.crystal.scale.setScalar(.3);
+ }
+ for(const pointer of campaign.guidePointers){pointer.geometry=artDirection.leafGeometry;pointer.scale.set(.45,.65,.45);pointer.material.opacity=.42;pointer.material.transparent=true;}
+}
+function animateWorldUse(type){
+ if(!campaign)return;
+ campaign.worldUse={type,started:t};
+ const nearest=(campaign.landmarks||[]).filter(m=>distance(m,p)<3.5).sort((a,b)=>distance(a,p)-distance(b,p))[0];if(nearest)nearest.craft.pulse=1;
+}
+function animateLandmarkCraft(dt){
+ if(!campaign?.landmarks)return;
+ for(const m of campaign.landmarks){if(!m.craft)continue;
+  m.craft.pulse=Math.max(0,m.craft.pulse-dt*1.4);const done=landmarkState(m)==='done';
+  m.craft.turn+=(Number(done)-m.craft.turn)*(1-Math.exp(-dt*3.5));
+  if(m.kind==='valve')m.crystal.rotation.z=m.craft.turn*Math.PI/2;
+  if(m.kind==='archive')m.crystal.rotation.y=Math.sin(t*.35)*.45;
+  if(m.kind==='soul'){m.crystal.position.y=1.65+Math.sin(t*1.1)*.09;m.crystal.material.emissiveIntensity=.7;}
+  if(m.kind==='core')m.crystal.rotation.y+=dt*.18;
+  if(m.craft.pulse>0&&m.kind!=='fresco')m.crystal.material.emissiveIntensity=(done?.12:landmarkState(m)==='locked'?.2:.7)+m.craft.pulse*.4;
+ }
+}
+function initArtDirection(){
+ const root=new THREE.Group();world.root.add(root);const detail=new THREE.Group();art.detail.add(detail);
+ const dummy=new THREE.Object3D(),windTime={value:0},windDirection={value:new THREE.Vector2(.6,-.2)};
+ function batch(geometry,material,items,parent=root){const mesh=new THREE.InstancedMesh(geometry,material,items.length);items.forEach((q,i)=>{dummy.position.set(...q.p);dummy.rotation.set(...(q.r||[0,0,0]));dummy.scale.set(...q.s);dummy.updateMatrix();mesh.setMatrixAt(i,dummy.matrix);if(q.c)mesh.setColorAt(i,new THREE.Color(q.c));});parent.add(mesh);return mesh;}
+ let seed=2233;const rand=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+ const stoneMap=makeArtTexture((g,n)=>{g.fillStyle='#696a6d';g.fillRect(0,0,n,n);for(let row=0;row<6;row++)for(let col=-1;col<5;col++){const x=col*n/4+(row%2)*n/8,y=row*n/6,v=140+rand()*30;g.fillStyle=`rgb(${v},${v},${v+3})`;g.fillRect(x+1,y+1,n/4-2,n/6-2);g.strokeStyle='#d4d0c644';g.strokeRect(x+3,y+3,n/4-6,n/6-6);g.strokeStyle='#3c414a55';g.beginPath();g.moveTo(x+n/8,y);g.lineTo(x+n/8+rand()*n/10,y+n/12);g.stroke();}for(let i=0;i<1800;i++){g.fillStyle=i%2?'#f4e8d70c':'#10182a18';g.fillRect(rand()*n,rand()*n,1,1);}},512);
+ for(let i=0;i<world.floors.length;i++){const floor=world.floors[i],region=world.regions[i],map=stoneMap.clone();map.wrapS=map.wrapT=THREE.RepeatWrapping;map.repeat.set((region.x1-region.x0)/6,(region.z1-region.z0)/6);map.needsUpdate=true;floor.material.map.dispose();floor.material.map=map;floor.material.roughness=['Cloître','Nef'].includes(region.name)?.4:.8;floor.material.metalness=.22;floor.material.needsUpdate=true;}
+
+ const blade=new THREE.BufferGeometry();blade.setAttribute('position',new THREE.Float32BufferAttribute([-.07,0,0,.07,0,0,-.04,.65,.06,.04,.65,.06,0,1,.14],3));blade.setIndex([0,1,2,1,3,2,2,3,4]);blade.computeVertexNormals();
+ const grassMaterial=new THREE.MeshStandardMaterial({color:'#a99c74',roughness:.95,side:THREE.DoubleSide});
+ grassMaterial.onBeforeCompile=shader=>{shader.uniforms.natureTime=windTime;shader.uniforms.natureDirection=windDirection;shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nuniform float natureTime;uniform vec2 natureDirection;');shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>',`#include <begin_vertex>
+ #ifdef USE_INSTANCING
+ float wave=sin(natureTime*1.3+instanceMatrix[3].x*.7+instanceMatrix[3].z*.4);
+ transformed.x+=position.y*position.y*(wave*.14+natureDirection.x*.13);
+ transformed.z+=position.y*position.y*(wave*.09+natureDirection.y*.13);
+ #endif`);};
+ const grass=[];for(let i=0;i<550;i++){const z=-rand()*35,x=-26.8+rand()*1.7;if(world.onGround(x,z,.08))grass.push({p:[x,.02,z],s:[.8,.45+rand()*.75,.8],r:[0,rand()*6.28,0],c:i%4?'#b1a27e':'#746c58'});}
+ for(let i=0;i<150;i++)grass.push({p:[-60+rand()*43,.03,-72-rand()],s:[.7,.35+rand()*.45,.7],r:[0,rand()*6.28,0],c:'#b9a584'});
+ const grassMesh=batch(blade,grassMaterial,grass,detail);
+ // A wind-swept grove outside the traversable garden, replacing blocky canopy masses.
+ const obsolete=[];art.detail.traverse(o=>{if(o.isInstancedMesh&&o.geometry.type==='IcosahedronGeometry'&&o.count===16)obsolete.push(o);if(o.isInstancedMesh&&o.geometry.type==='ConeGeometry'&&o.count===32){o.geometry.dispose();o.geometry=new THREE.IcosahedronGeometry(.8,0);o.material.color.set('#30484b');o.material.emissive.set('#0a1117');}});for(const o of obsolete){o.parent.remove(o);o.geometry.dispose();}
+ const trunks=[],leaves=[];
+ for(const [x,z]of[[-31,-8],[-32,-28]]){
+  const path=new THREE.CatmullRomCurve3([new THREE.Vector3(x,0,z),new THREE.Vector3(x-.4,3,z),new THREE.Vector3(x+1.1,6,z-.5)]);const tube=new THREE.TubeGeometry(path,10,.3,7,false);const trunk=new THREE.Mesh(tube,new THREE.MeshStandardMaterial({color:'#332c30',roughness:1}));detail.add(trunk);trunks.push(trunk);
+  for(let i=0;i<65;i++){const angle=rand()*6.28,r=rand()*4;leaves.push({p:[x+Math.cos(angle)*r,4.3+rand()*3,z+Math.sin(angle)*r],s:[1.5+rand(),1.1+rand(),1],r:[-.55+rand()*.3,rand()*.8-.4,rand()*.4],c:i%3?'#815958':'#a67d68'});}
+ }
+ const leafMap=makeArtTexture((g,n)=>{g.clearRect(0,0,n,n);for(let i=0;i<95;i++){const x=rand()*n,y=rand()*n,r=4+rand()*12;g.fillStyle=['#ded1bd','#ad947c','#f2dec0'][i%3];g.beginPath();g.ellipse(x,y,r,r*.5,rand()*3,0,Math.PI*2);g.fill();}},128);
+ batch(new THREE.PlaneGeometry(1,1),new THREE.MeshStandardMaterial({map:leafMap,color:'#ffffff',alphaTest:.35,side:THREE.DoubleSide,roughness:1}),leaves,detail);
+ // Broken monumental windows make a composed, distant silhouette, not a wall across a path.
+ const archParts=[];for(const side of [-1,1])for(const z of [-83,-103]){
+  const x=side*26;archParts.push({geo:new THREE.TorusGeometry(3,.18,6,24,Math.PI),pos:[x,7,z],size:[1,1.3,1],rot:[0,side*Math.PI/2,0],color:'#9d8266'});
+  for(const dz of [-3,3])archParts.push({pos:[x,3.5,z+dz],size:[.65,7,.65],color:'#49434c'});
+ }
+ const architecture=new THREE.Mesh(mergedStageParts(archParts),new THREE.MeshStandardMaterial({vertexColors:true,roughness:.78,metalness:.2}));root.add(architecture);for(const p of archParts)if(p.geo)p.geo.dispose();
+ const rose=new THREE.Mesh(new THREE.TorusGeometry(4,.12,6,48),new THREE.MeshBasicMaterial({color:'#bc9165'}));rose.position.set(0,9,-116);root.add(rose);
+ // Soft shadows ground actors with one instanced draw call on both quality levels.
+ const shadowMaterial=new THREE.MeshBasicMaterial({color:'#050711',transparent:true,opacity:.25,depthWrite:false});const contacts=new THREE.InstancedMesh(new THREE.CircleGeometry(1,16),shadowMaterial,32);contacts.instanceMatrix.setUsage(THREE.DynamicDrawUsage);root.add(contacts);contacts.count=0;contacts.frustumCulled=false;
+ const leafGeometry=new THREE.SphereGeometry(.15,6,4);leafGeometry.scale(.45,.12,1.6);
+ const windMaterial=new THREE.MeshBasicMaterial({color:'#f0ddbb',transparent:true,opacity:.48,depthWrite:false});const wind=new THREE.InstancedMesh(leafGeometry,windMaterial,22);wind.instanceMatrix.setUsage(THREE.DynamicDrawUsage);wind.visible=false;wind.frustumCulled=false;root.add(wind);
+ const palettes={};for(const [zone,color]of Object.entries({'Atrium des serments':'#29232e','Jardins suspendus':'#27363c','Cloître des cendres':'#3a2b29','Croisée des pèlerins':'#2c3039','Archives du Reflet':'#272b40','Forge du brasier':'#402b24','Nef des marées':'#29303d','Cour du Veilleur':'#34252e'})){const fog=new THREE.Color(color);palettes[zone]={fog,background:fog.clone().multiplyScalar(.3),abyss:fog.clone().multiplyScalar(.55)};}
+ scene.children.filter(o=>o.isAmbientLight).forEach(o=>o.color.set('#acadb8'));sun.color.set('#f0cda7');sun.intensity=3.1;
+ artDirection={palettes,root,detail,grassMesh,grassMaterial,windTime,windDirection,contacts,wind,leafGeometry,dummy,petalPhase:0,clock:0,gates:[]};
+ sculptGates();
+}
+function sculptGates(){
+ const ribs=[{pos:[0,-.37,0],size:[1,.26,.12],color:'#49434a'}];
+ for(const x of [-.46,0,.46])ribs.push({pos:[x,0,0],size:[.035,1,.07],color:'#b7a07b'});
+ for(const y of [-.48,-.22,.48])ribs.push({pos:[0,y,0],size:[1,.025,.07],color:'#b7a07b'});
+ for(const x of [-.23,.23])ribs.push({geo:new THREE.TorusGeometry(.21,.012,4,20,Math.PI),pos:[x,.22,0],size:[1,1,1],color:'#c9ad7d'});
+ ribs.push({geo:new THREE.TorusGeometry(.16,.012,4,24),pos:[0,.08,0],size:[1,1,1],color:'#c9ad7d'});
+ const geometry=mergedStageParts(ribs),empty=new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute([],3)),material=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.72,metalness:.38});for(const rib of ribs)if(rib.geo)rib.geo.dispose();
+
+ for(const o of world.obstacles.filter(o=>o.gate)){
+  const h=o.mesh.scale.y;for(const child of [...o.mesh.children])o.mesh.remove(child);o.mesh.geometry=empty;o.mesh.material.opacity=0;o.mesh.scale.set(1,1,1);o.mesh.position.set(o.x,0,o.z);
+  const hinges=[];for(const side of [-1,1]){const hinge=new THREE.Group();hinge.position.set(side*o.w/2,0,0);o.mesh.add(hinge);const leaf=new THREE.Mesh(geometry,material);leaf.scale.set(o.w/2,h,1);leaf.position.set(-side*o.w/4,h/2,0);hinge.add(leaf);hinges.push(hinge);}
+  o.craftedGate={hinges,open:0};artDirection.gates.push(o);
+ }
+}
+function updateArtDirection(dt){
+ if(!artDirection)return;const a=artDirection,dummy=a.dummy,zone=p?world.zoneAt(p.x,p.z):'Atrium des serments',palette=a.palettes[zone]||a.palettes['Atrium des serments'],blend=1-Math.exp(-dt*.7);scene.fog.color.lerp(palette.fog,blend);scene.background.lerp(palette.background,blend);world.abyss.material.color.lerp(palette.abyss,blend);a.clock+=dt;a.windTime.value=a.clock;
+ const guided=campaign&&state==='playing'&&guidanceOn&&t<guideRevealUntil,desired=guided&&guideHeading!==null?new THREE.Vector2(Math.sin(guideHeading),-Math.cos(guideHeading)):new THREE.Vector2(.6,-.2);a.windDirection.value.lerp(desired,1-Math.exp(-dt*1.2));
+ a.contacts.count=0;if(campaign)for(const e of enemies)if(!e.dead&&e.root.visible&&a.contacts.count<32){dummy.position.set(e.x,.025,e.z);dummy.rotation.set(-Math.PI/2,0,0);const r=['boss','porter'].includes(e.type)?1.5:.65;dummy.scale.set(r,r*.65,1);dummy.updateMatrix();a.contacts.setMatrixAt(a.contacts.count++,dummy.matrix);}a.contacts.instanceMatrix.needsUpdate=true;
+ a.wind.visible=guided;const path=navCache?.route.slice(navCache.cursor)||[];
+ if(guided&&path.length>1){const length=Math.min(routeDistance(path),12);for(let i=0;i<a.wind.count;i++){let distanceAlong=(i*.65+(a.clock*.6))%Math.max(.1,length),j=0;while(j<path.length-2&&distanceAlong>distance(path[j],path[j+1])){distanceAlong-=distance(path[j],path[j+1]);j++;}const from=path[j],to=path[j+1],f=Math.min(1,distanceAlong/Math.max(.01,distance(from,to)));dummy.position.set(from.x+(to.x-from.x)*f,.45+Math.sin(a.clock+i)*.18,from.z+(to.z-from.z)*f);dummy.rotation.set(0,Math.atan2(to.x-from.x,to.z-from.z),Math.sin(a.clock+i)*.3);dummy.scale.set(.7,.7,.7);dummy.updateMatrix();a.wind.setMatrixAt(i,dummy.matrix);}a.wind.instanceMatrix.needsUpdate=true;}else a.wind.visible=false;
+ for(const o of a.gates){const g=o.craftedGate,target=campaignGateClosed(o.gate)?0:1;g.open+=(target-g.open)*(1-Math.exp(-dt*4));g.hinges.forEach((hinge,i)=>hinge.rotation.y=(i?1:-1)*g.open*Math.PI*.5);o.mesh.visible=true;}
+ if(state==='playing')animateLandmarkCraft(dt);
+}
+function wireArtDirectionUI(){
+ const select=$('#presentation');try{select.value=localStorage.getItem('royaumes-presentation')||'immersive';}catch(_){}
+ function apply(){document.body.classList.toggle('immersive',select.value==='immersive');try{localStorage.setItem('royaumes-presentation',select.value)}catch(_){}}
+ select.onchange=apply;apply();
 }
 
 'use strict';
@@ -892,7 +1031,7 @@ function pause(reason='manual'){
  if(state!=='playing')return;
  pauseReason=reason;state='paused';clearInputs();$('#pausePanel').hidden=false;
  $('#resume').hidden=false;$('#resume').textContent='Reprendre';
- $('#endTag').textContent='Version 0.10 · Pause';$('#endTitle').textContent='En pause';
+ $('#endTag').textContent='Version 0.11 · Pause';$('#endTitle').textContent='En pause';
  $('#endText').textContent=reason==='hidden'?'La page a été masquée. Votre progression dans cette tentative est conservée.':reason==='graphics'?'Le rendu 3D a été interrompu. Rechargez la page et choisissez la qualité légère.':'Votre pacte et la progression de cette tentative sont conservés.';
  $('#mobile').classList.remove('playing');
 }
@@ -1154,6 +1293,6 @@ function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMa
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();pause('graphics');announce('La 3D a été interrompue. Rechargez la page et essayez la qualité légère.')});
 function frame(now){const rawElapsed=(now-(last||now))/1000,elapsed=Math.min(.1,rawElapsed);last=now;if(state==='playing'&&campaign)campaign.activeSeconds+=Math.max(0,rawElapsed);if(state==='playing'){accumulator+=elapsed;while(accumulator>=1/60&&state==='playing'){update(1/60);accumulator-=1/60}}else accumulator=0;
 if(state!=='playing')$('#interact').hidden=true;
-if(p){const portrait=innerWidth<innerHeight;camDesired.set(p.x+p.vx*.08,portrait?19:13,p.z+(portrait?20:16));camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(p.x+p.vx*.12,1,p.z-4+p.vz*.1);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);updateStageCraft(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}initCombatMotion();initStageCraft();wireCampaignUI();requestAnimationFrame(frame);
+if(p){const portrait=innerWidth<innerHeight;camDesired.set(p.x+p.vx*.08,portrait?19:13,p.z+(portrait?20:16));camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(p.x+p.vx*.12,1,p.z-4+p.vz*.1);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);updateStageCraft(elapsed);updateArtDirection(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}initCombatMotion();initStageCraft();initArtDirection();wireCampaignUI();wireArtDirectionUI();requestAnimationFrame(frame);
 </script>
 </body></html>

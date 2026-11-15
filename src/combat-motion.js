@@ -47,6 +47,7 @@ function strikeMelee(a){
 function poseHero(dt){
  const a=p.attack,melee=hero==='voltigeur';
  player.body.rotation.y=0;player.body.rotation.z=0;
+ if(artDirection){player.cape.rotation.x+=Math.sin(artDirection.clock*1.3)*.025;player.cape.rotation.z=Math.sin(artDirection.clock*.8)*.035;}
  player.arms.forEach((arm,i)=>{arm.rotation.z=i===0?.08:-.08;});
  if(a){
   const before=a.elapsed<a.hitAt,prep=Math.min(1,a.elapsed/a.hitAt),after=Math.min(1,(a.elapsed-a.hitAt)/Math.max(.01,a.duration-a.hitAt));
@@ -66,6 +67,7 @@ function poseHero(dt){
  if(p.leap>0){const progress=1-p.leap/.75;player.arms.forEach(arm=>arm.rotation.x=-1.2);player.body.rotation.x=progress<.6?-.15:.35;player.legs.forEach((leg,i)=>leg.rotation.x=(i?1:-1)*.55);}
  if(p.dashT>0){player.body.rotation.x=.22;player.arms.forEach(arm=>arm.rotation.x=.65);}
  if(campaign.trials.forge.carrying){player.arms.forEach((arm,i)=>{arm.rotation.x=1;arm.rotation.z=i?-.45:.45});player.sword.visible=false;player.rifle.visible=false;}else{player.sword.visible=melee;player.rifle.visible=!melee;}
+ if(!a&&p.leap<=0&&p.dashT<=0&&campaign.worldUse&&t-campaign.worldUse.started<.55){const reach=Math.sin((t-campaign.worldUse.started)/.55*Math.PI);player.arms[1].rotation.x=reach*1.3;player.body.rotation.y=-reach*.12;}
  if(p.stagger>0)player.body.rotation.z=Math.sin(p.stagger*55)*.1;
 }
 function poseEnemy(e){

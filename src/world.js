@@ -65,7 +65,7 @@ function buildCampaign(THREE,scene,renderer,m){
  const halo=new THREE.Mesh(new THREE.TorusGeometry(7,.17,8,72),m.gold);halo.position.set(0,16,-116);root.add(halo);const eclipse=new THREE.Mesh(new THREE.CircleGeometry(6.8,64),new THREE.MeshBasicMaterial({color:'#080a12'}));eclipse.position.set(0,16,-116.1);root.add(eclipse);
  const exit=new THREE.Group();exit.position.set(0,0,-107);root.add(exit);for(const x of [-2,2])block(x,2.5,0,.4,5,.8,m.bronze,exit);block(0,5,0,4.4,.4,.8,m.bronze,exit);block(0,2.5,0,3.6,4.8,.1,m.gold,exit);exit.visible=false;
  let time=0;
- return {root,regions,obstacles:colliders,exit,dust,halo,floor:ground[0],
+ return {root,regions,abyss,floors:ground,obstacles:colliders,exit,dust,halo,floor:ground[0],
   onGround(x,z,r=.48){return [[x-r,z-r],[x+r,z-r],[x-r,z+r],[x+r,z+r]].every(([a,b])=>regions.some(q=>a>=q.x0&&a<=q.x1&&b>=q.z0&&b<=q.z1));},
   zoneAt(x,z){return x<-14&&z<-42&&z>=-74?'Archives du Reflet':x>14&&z<-42&&z>=-74?'Forge du brasier':z<-74?'Cour du Veilleur':z<-42?'Nef des marées':z<-28?'Croisée des pèlerins':z<0?(x<0?'Jardins suspendus':'Cloître des cendres'):'Atrium des serments';},
   art:{haze,detail:ornament,glows,setQuality(light){haze.visible=!light;ornament.visible=!light;dust.visible=!light;glows.children.forEach((o,i)=>o.visible=!light||i%2===0)},update(dt){time+=dt;haze.children.forEach((f,i)=>f.position.x=Math.sin(time*.12+i)*4);glows.children.forEach((g,i)=>g.material.opacity=.58+Math.sin(time*2+i)*.05)}}

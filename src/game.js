@@ -111,7 +111,7 @@ function pause(reason='manual'){
  if(state!=='playing')return;
  pauseReason=reason;state='paused';clearInputs();$('#pausePanel').hidden=false;
  $('#resume').hidden=false;$('#resume').textContent='Reprendre';
- $('#endTag').textContent='Version 0.10 · Pause';$('#endTitle').textContent='En pause';
+ $('#endTag').textContent='Version 0.11 · Pause';$('#endTitle').textContent='En pause';
  $('#endText').textContent=reason==='hidden'?'La page a été masquée. Votre progression dans cette tentative est conservée.':reason==='graphics'?'Le rendu 3D a été interrompu. Rechargez la page et choisissez la qualité légère.':'Votre pacte et la progression de cette tentative sont conservés.';
  $('#mobile').classList.remove('playing');
 }
@@ -373,4 +373,4 @@ function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMa
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();pause('graphics');announce('La 3D a été interrompue. Rechargez la page et essayez la qualité légère.')});
 function frame(now){const rawElapsed=(now-(last||now))/1000,elapsed=Math.min(.1,rawElapsed);last=now;if(state==='playing'&&campaign)campaign.activeSeconds+=Math.max(0,rawElapsed);if(state==='playing'){accumulator+=elapsed;while(accumulator>=1/60&&state==='playing'){update(1/60);accumulator-=1/60}}else accumulator=0;
 if(state!=='playing')$('#interact').hidden=true;
-if(p){const portrait=innerWidth<innerHeight;camDesired.set(p.x+p.vx*.08,portrait?19:13,p.z+(portrait?20:16));camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(p.x+p.vx*.12,1,p.z-4+p.vz*.1);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);updateStageCraft(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}initCombatMotion();initStageCraft();wireCampaignUI();requestAnimationFrame(frame);
+if(p){const portrait=innerWidth<innerHeight;camDesired.set(p.x+p.vx*.08,portrait?19:13,p.z+(portrait?20:16));camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(p.x+p.vx*.12,1,p.z-4+p.vz*.1);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);updateStageCraft(elapsed);updateArtDirection(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}initCombatMotion();initStageCraft();initArtDirection();wireCampaignUI();wireArtDirectionUI();requestAnimationFrame(frame);

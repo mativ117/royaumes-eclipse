@@ -1,13 +1,18 @@
 [
   {
     "file": "historique/README.md",
-    "bytes": 1618,
-    "sha256": "1e42db448c545613c00c965adb955d74628ce04008b68413f3541056adcfc8ea"
+    "bytes": 1743,
+    "sha256": "f43a717f47441673958405ccd5bbe9b225c16dd214e10803c49ee680e31bfd60"
   },
   {
     "file": "historique/cathedrale-v0.10.html",
     "bytes": 802095,
     "sha256": "a0cb2110210162c0c344e0aebe0617074b01a78e657d42c0d0a2b1ca3a5992e1"
+  },
+  {
+    "file": "historique/cathedrale-v0.11.html",
+    "bytes": 820377,
+    "sha256": "17dd41bc47370f9d91b50679e811f61056230c4003b74d16815f0d51c938931c"
   },
   {
     "file": "historique/cathedrale-v0.3.1.html",
@@ -73,6 +78,11 @@
     "file": "historique/livraisons-zip/royaumes-eclipse-3d-v0.10.zip",
     "bytes": 467182,
     "sha256": "c5ee9b2a19d0143b746c588c45938dbc5ee6f2b80907e0a551471bc25d2743e1"
+  },
+  {
+    "file": "historique/livraisons-zip/royaumes-eclipse-3d-v0.11.zip",
+    "bytes": 484284,
+    "sha256": "f19cfe67ab4c5fff7b67db2a2b816849fe7af0c2b320812d3d2cfa515979674e"
   },
   {
     "file": "historique/livraisons-zip/royaumes-eclipse-3d-v0.2.zip",

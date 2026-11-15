@@ -51,7 +51,7 @@ function trialTarget(){
  return null;
 }
 function trialInteract(target){
- const q=campaign.trials;
+ const q=campaign.trials;animateWorldUse(target.type);
  if(target.type==='soul'){q.escort.started=true;announce('Restez près de l’âme. Elle attendra que les embuscades soient dispersées.');return;}
  if(target.type==='fresco'){q.bells.read=true;announce('La fresque chante : '+q.bells.order.join(' → ')+'. Accordez ces trois lanternes dans cet ordre.');return;}
  if(target.type==='lamp'){
@@ -159,4 +159,4 @@ function wireExpeditionUI(){
  $('#continueRun').hidden=!readRun();$('#continueRun').onclick=continueRun;
  $('#copyReport').onclick=async()=>{const text=expeditionReport();try{await navigator.clipboard.writeText(text);$('#copyReport').textContent='Bilan copié';}catch(_){$('#endText').textContent+=' '+text;}};
 }
-function expeditionReport(){return JSON.stringify({version:'0.10',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
+function expeditionReport(){return JSON.stringify({version:'0.11',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}

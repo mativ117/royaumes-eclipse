@@ -104,7 +104,7 @@ function dressLandmarks(){
  const focus=new THREE.Mesh(assets.focus,new THREE.MeshBasicMaterial({color:'#fff3cd',side:THREE.DoubleSide,transparent:true,opacity:.95,depthWrite:false}));focus.rotation.x=-Math.PI/2;focus.visible=false;scene.add(focus);roomObject(focus);campaign.focusRing=focus;focus.userData.ownedMaterial=true;
  const pointerMaterial=new THREE.MeshBasicMaterial({color:'#ffe9b2'});campaign.guidePointers=[];
  for(let i=0;i<4;i++){const mesh=new THREE.Mesh(assets.pointer,pointerMaterial);mesh.rotation.x=-Math.PI/2;mesh.visible=false;scene.add(mesh);roomObject(mesh);campaign.guidePointers.push(mesh);}
- campaign.guidePointers[0].userData.ownedMaterial=true;
+ campaign.guidePointers[0].userData.ownedMaterial=true;craftLandmarks();
 }
 function updateLandmarkReadability(){
  const goal=selectedMission(),route=guideRoute(goal);let focus=null,nearest=Infinity;

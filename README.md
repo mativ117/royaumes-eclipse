@@ -1,8 +1,8 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.10 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Carte nommée avec obstacles, objectifs à suivre et guidage stable à la demande. Silhouettes ennemies et mise en scène des zones retravaillées. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
+Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.11 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Carte nommée avec obstacles, objectifs à suivre et guidage stable à la demande. Direction picturale : végétation animée, vent de guidage, objets modelés et affichage épuré. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md) · [Recherche sur la lisibilité](design/LISIBILITE.md) · [Présence et rythme 0.10](design/FEEL-0.10.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md) · [Recherche sur la lisibilité](design/LISIBILITE.md) · [Présence et rythme 0.10](design/FEEL-0.10.md) · [Direction artistique 0.11](design/ART-DIRECTION-0.11.md)
 
 ## Jouer
 
@@ -39,6 +39,7 @@ Les tests utilisent Python Playwright et Chromium à `/usr/bin/chromium` :
 
 ```sh
 python -m pip install -r tests/requirements.txt
+python tests/art_direction.py
 python tests/feel.py
 python tests/expedition.py
 python tests/readability.py

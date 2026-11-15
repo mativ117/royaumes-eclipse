@@ -2,6 +2,10 @@
 
 Un premier niveau complet dans le monde relié des Marches : début calme, quatre épreuves liées, rituel, gardien intermédiaire, boss final et retour. Les deux autres grands niveaux restent à produire.
 
+## Direction artistique 0.11
+
+Première traduction de la référence Expédition 33 / Ghost of Tsushima : composition, matières, végétation et vent, objets intégrés au monde et affichage épuré. [Direction, réalisation et limites](ART-DIRECTION-0.11.md).
+
 ## Présence et rythme 0.10
 
 Guidage stabilisé, repères au sol à la demande, cibles conservées, pieds articulés et frappes plus engagées. Silhouettes ennemies différenciées et architecture propre aux ailes. [Détails et limites](FEEL-0.10.md).

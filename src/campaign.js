@@ -83,7 +83,7 @@ function restoreCampaign(){
  if(saved){rebuildCampaign(saved);resetHeroAt(saved.x,saved.z);}
  else {campaign.keys=new Set();campaign.completed=new Set();campaign.defeated=new Set();campaign.trials=freshTrials();kills=0;rebuildCampaign();resetHeroAt(0,23);}
 }
-function updateCampaignGates(){for(const o of world.obstacles)if(o.gate)o.mesh.visible=campaignGateClosed(o.gate);}
+function updateCampaignGates(){for(const o of world.obstacles)if(o.gate&&!o.craftedGate)o.mesh.visible=campaignGateClosed(o.gate);}
 function objectiveTargets(){
  const q=campaign.trials;
  if(!boon)return[{x:-9,z:7},{x:9,z:7}];

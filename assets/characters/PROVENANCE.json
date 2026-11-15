@@ -1,0 +1,29 @@
+{
+  "author": "Original models authored for Les Royaumes de l\u2019\u00c9clipse",
+  "generator": "scripts/author_characters.py",
+  "blender": "4.3.2",
+  "third_party_art": false,
+  "files": [
+    "rempart.glb",
+    "voltigeur.glb"
+  ],
+  "clips": [
+    "idle",
+    "walk",
+    "run",
+    "attack1",
+    "attack2",
+    "attack3",
+    "shot",
+    "dash",
+    "leap",
+    "shield",
+    "interact",
+    "carry",
+    "hit"
+  ],
+  "sha256": {
+    "rempart.glb": "4f9e544a89c25ba7e28fd9f08532f2536b190578bdca2017cbd8406bb8f973d0",
+    "voltigeur.glb": "d5105b285020298413a0155e9e292cffc092e3683714e5ba3bc8a37eb027c580"
+  }
+}

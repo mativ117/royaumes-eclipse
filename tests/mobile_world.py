@@ -13,6 +13,7 @@ with sync_playwright() as pw:
   assert m.evaluate('state')=='playing' and m.evaluate('p.x')>0 and m.evaluate('shotCount')>0
   cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});assert not m.evaluate('shooting')
   m.tap('#mapButton');assert m.evaluate('state')=='map';t=m.evaluate('t');m.wait_for_timeout(150);assert m.evaluate('t')==t
+  frames=m.evaluate('renderer.info.render.frame');m.wait_for_timeout(150);assert m.evaluate('renderer.info.render.frame')==frames
   m.screenshot(path='/tmp/royaumes-v08-map-'+str(viewport['width'])+'.png');m.tap('#closeMap');assert m.evaluate('state')=='playing'
   m.evaluate('p.x=9;p.z=7;p.vx=p.vz=0;update(1/60)');m.tap('#interact');assert m.evaluate('state')=='choice',m.evaluate('({state,boon,target:interactionTarget(),choice:document.querySelector("#choicePanel").hidden})');m.tap('#sealPact');assert m.evaluate('boon')=='haste'
   assert not m.evaluate('shrines[0].tag.visible')

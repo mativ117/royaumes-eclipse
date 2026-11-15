@@ -27,7 +27,7 @@ with sync_playwright() as pw:
  run('state="playing";t+=8;updateArtDirection(.1)');assert not run('artDirection.wind.visible')
  run('p.x=-40;p.z=-58;for(let i=0;i<12;i++)updateArtDirection(1)');assert run('Math.abs(scene.fog.color.r-artDirection.palettes["Archives du Reflet"].fog.r)+Math.abs(scene.fog.color.g-artDirection.palettes["Archives du Reflet"].fog.g)+Math.abs(scene.fog.color.b-artDirection.palettes["Archives du Reflet"].fog.b)<.01')
  # Compile the wind-animated grass shader in standard, then verify the light option.
- run('renderer.render(scene,camera)');assert run('renderer.info.render.calls')<400
+ run('updateSanctuary(.02);renderer.render(scene,camera)');assert run('renderer.info.render.calls')<650
  run('var resources=[];for(let i=0;i<4;i++){restoreCampaign();update(1/60);updateArtDirection(.02);renderer.render(scene,camera);resources.push(renderer.info.memory.geometries)}')
  assert run('Math.max(...resources.slice(1))-Math.min(...resources.slice(1))<8'),run('resources')
  run('p.x=-20;p.z=-15;resetHeroAt(-20,-15);boon="haste";campaign.trials.escort.started=true;update(1/60);updateArtDirection(.02);renderer.render(scene,camera)')

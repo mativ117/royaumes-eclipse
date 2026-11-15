@@ -1,8 +1,8 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.11 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Carte nommée avec obstacles, objectifs à suivre et guidage stable à la demande. Direction picturale : végétation animée, vent de guidage, objets modelés et affichage épuré. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
+Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.12 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Carte nommée avec obstacles, objectifs à suivre et guidage stable à la demande. Deux héros à squelette et treize animations chacun ; cour à bassin, caméra rapprochée, reflets et ombres en qualité Haute. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md) · [Recherche sur la lisibilité](design/LISIBILITE.md) · [Présence et rythme 0.10](design/FEEL-0.10.md) · [Direction artistique 0.11](design/ART-DIRECTION-0.11.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md) · [Recherche sur la lisibilité](design/LISIBILITE.md) · [Présence et rythme 0.10](design/FEEL-0.10.md) · [Direction artistique 0.11](design/ART-DIRECTION-0.11.md) · [Cour et héros 0.12](design/SANCTUAIRE-0.12.md) · [Suivi complet](design/SUIVI.md)
 
 ## Jouer
 
@@ -16,7 +16,8 @@ La reprise après défaite conserve le serment et restaure l’état du dernier 
 ```text
 docs/       Site publié par GitHub Pages, généré automatiquement
 src/        Monde, campagne, combat, contrôles et interface éditables
-vendor/     Moteur Three.js et licence MIT
+assets/     Modèles originaux GLB et provenance
+vendor/     Moteur et composants Three.js, sources et licence MIT
 scripts/    Construction du site
 tests/      Vérifications dans Chromium
 design/    Conception et documentation du projet
@@ -39,6 +40,7 @@ Les tests utilisent Python Playwright et Chromium à `/usr/bin/chromium` :
 
 ```sh
 python -m pip install -r tests/requirements.txt
+python tests/sanctuary.py
 python tests/art_direction.py
 python tests/feel.py
 python tests/expedition.py
@@ -46,6 +48,10 @@ python tests/readability.py
 python tests/mobile_world.py
 python tests/publication.py
 ```
+
+Pour régénérer les modèles : `blender --background --factory-startup --python scripts/author_characters.py`, puis reconstruire la page. Le bundle des composants est reproductible avec `python scripts/prepare_three_addons.py`. Le build ordinaire ne demande ni Blender ni réseau.
+
+[Comparer les captures 0.11 / 0.12](https://mativ117.github.io/royaumes-eclipse/docs/avant-apres.html).
 
 Les anciennes suites de tests sont conservées dans `historique/tests-v0.7` et `historique/tests-v0.8` avec les anciens prototypes.
 

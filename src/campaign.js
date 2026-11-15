@@ -35,7 +35,7 @@ function resetHeroAt(x,z){
  p.x=x;p.z=z;p.vx=p.vz=0;p.hp=p.max;
  for(const k of ['shot','dash','dashT','power','shield','recoil','overcharge','absorbLock','leap','swing','combo','comboWindow','stagger'])p[k]=0;
  p.attack=null;p.attackBuffer=0;p.inv=1.5;aim=targetAim=0;player.root.position.set(x,0,z);
- camera.position.set(x,innerWidth<innerHeight?19:13,z+18);cameraLook.set(x,1,z-4);
+ const portrait=innerWidth<innerHeight;camera.position.set(x,portrait?9.2:6.7,z+(portrait?12.8:10.8));cameraLook.set(x,portrait?1.8:1.6,z-(portrait?4:5));camera.lookAt(cameraLook);resetAvatarPose();
 }
 function beginCampaign(){
  t=0;campaign={keys:new Set(),completed:new Set(),checkpoint:null,bossAwake:false,zone:'',collectibles:[],campModels:[],traps:[],time:0,activeSeconds:0,deaths:0,chapterTimes:{},defeated:new Set(),trials:freshTrials()};
@@ -144,7 +144,7 @@ function drawCampaignMap(canvas){
  ctx.fillStyle='#10131d';ctx.fillRect(0,0,W,H);
  // Ground, void and solid cover are distinct. The map uses the same obstacles as movement.
  for(const region of world.regions){ctx.fillStyle=region.name==='Archives'?'#3b405a':region.name==='Forge'?'#554231':'#3f4755';ctx.fillRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);ctx.strokeStyle='#9ca9bc';ctx.lineWidth=large?1.5:.7;ctx.strokeRect(X(region.x0),Z(region.z0),(region.x1-region.x0)*s,(region.z1-region.z0)*s);}
- for(const o of obstacles){if(o.gate&&!campaignGateClosed(o.gate))continue;ctx.fillStyle=o.gate?'#f5c285':'#171c29';ctx.fillRect(X(o.x-o.w/2),Z(o.z-o.d/2),Math.max(large?2:1,o.w*s),Math.max(large?2:1,o.d*s));}
+ for(const o of obstacles){if(o.gate&&!campaignGateClosed(o.gate))continue;ctx.fillStyle=o.gate?'#f5c285':o.landmark==='basin'?'#38606a':'#171c29';ctx.fillRect(X(o.x-o.w/2),Z(o.z-o.d/2),Math.max(large?2:1,o.w*s),Math.max(large?2:1,o.d*s));}
  const goal=selectedMission(),route=guideRoute(goal);
  if(guidanceOn&&route.length){ctx.strokeStyle='#ffe3a2';ctx.lineWidth=large?3:1.5;ctx.setLineDash(large?[7,5]:[3,2]);ctx.beginPath();route.forEach((q,i)=>i?ctx.lineTo(X(q.x),Z(q.z)):ctx.moveTo(X(q.x),Z(q.z)));ctx.stroke();ctx.setLineDash([]);}
  function caption(text,x,z){ctx.font=`600 ${large?18:9}px system-ui`;const w=ctx.measureText(text).width;ctx.fillStyle='#10131ded';ctx.fillRect(X(x)-w/2-6,Z(z)-15,w+12,22);ctx.fillStyle='#e8edf7';ctx.textAlign='center';ctx.fillText(text,X(x),Z(z)+1);}

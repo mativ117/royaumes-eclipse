@@ -6,7 +6,7 @@ Titre : Les Royaumes de l’Éclipse. Dépôt : `royaumes-eclipse`.
 
 Jeu navigateur sans Unreal, destiné aux PC et téléphones, avec jeu entre appareils comme objectif. Fantastique étrange : architectures monumentales, eau noire, brume orange, éclipses, silhouettes encapuchonnées et armes lumineuses. Les personnages auront des noms, histoires et visuels originaux.
 
-La version 0.4 utilise une vraie scène 3D avec caméra inclinée, jouable au clavier/souris et au tactile. Les images de référence donnent une direction artistique ; leur fidélité graphique n’est pas encore démontrée par le prototype.
+La version 0.12 comporte une scène 3D, deux héros articulés et une première expédition solo, au clavier/souris et au tactile. La direction artistique finale mêle Expédition 33 et Ghost of Tsushima ; elle reste à développer au-delà de la séquence représentative. [État de réalisation complet](SUIVI.md).
 
 ## Structure d’une expédition
 
@@ -16,7 +16,7 @@ Trois niveaux successifs, chacun avec sa mécanique :
 2. **La Chasse aux Souverains** : traque, découverte des faiblesses et affrontement d’un gardien qui transforme le terrain.
 3. **Le Convoi de l’Impossible** : traversée sur une créature colossale, défense, escales et choix d’itinéraire.
 
-Les choix d’un niveau influencent les suivants. Cible proposée : 8 à 12 minutes par niveau, à ajuster après essais. Sauvegarde entre niveaux en solo ; reprise de groupe en coop à concevoir.
+Les choix d’un niveau influencent les suivants. Cible demandée : 10 à 15 minutes par niveau, à ajuster après essais humains. Sauvegarde entre niveaux en solo ; reprise de groupe en coop à concevoir.
 
 ## Combat
 

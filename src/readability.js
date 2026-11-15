@@ -110,7 +110,7 @@ function updateLandmarkReadability(){
  const goal=selectedMission(),route=guideRoute(goal);let focus=null,nearest=Infinity;
  for(const m of campaign.landmarks||[]){
   const d=distance(m,p),state=landmarkState(m),active=m.root.visible&&state!=='done';
-  if(m.tag){m.tag.visible=active&&d<7.5;m.tag.scale.set(4.5,.844,1);}
+  if(m.tag){m.tag.visible=active&&d<3.8;m.tag.scale.set(2.5,.47,1);m.tag.position.y=2.8;}
   if(m.crystal){m.crystal.material.emissiveIntensity=state==='done'?.12:state==='locked'?.2:.7;if(m.kind==='lamp')m.crystal.scale.setScalar(state==='done'?.65:1);}
   if(active&&d<3.1&&d<nearest){focus=m;nearest=d;}
  }

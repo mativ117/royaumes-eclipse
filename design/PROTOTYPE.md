@@ -2,6 +2,10 @@
 
 Un premier niveau complet dans le monde relié des Marches : début calme, quatre épreuves liées, rituel, gardien intermédiaire, boss final et retour. Les deux autres grands niveaux restent à produire.
 
+## Cour et héros 0.12
+
+Deux héros à squelette et treize actions exportés depuis Blender, caméra rapprochée, cour à bassin réfléchissant et traversée physique autour de l’eau. [Réalisation et limites](SANCTUAIRE-0.12.md) · [Suivi de toutes les demandes](SUIVI.md).
+
 ## Direction artistique 0.11
 
 Première traduction de la référence Expédition 33 / Ghost of Tsushima : composition, matières, végétation et vent, objets intégrés au monde et affichage épuré. [Direction, réalisation et limites](ART-DIRECTION-0.11.md).

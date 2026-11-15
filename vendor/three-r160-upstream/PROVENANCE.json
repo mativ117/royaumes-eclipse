@@ -1,0 +1,23 @@
+[
+  {
+    "file": "BufferGeometryUtils.js",
+    "version": "r160",
+    "source": "https://github.com/mrdoob/three.js/blob/r160/examples/jsm/utils/BufferGeometryUtils.js",
+    "sha256": "9be041e96308775d00e2695cc607645b9a9b64fd7c0e759dd8f7c00a8d92becb",
+    "license": "MIT; see vendor/THREE-LICENSE.txt"
+  },
+  {
+    "file": "GLTFLoader.js",
+    "version": "r160",
+    "source": "https://github.com/mrdoob/three.js/blob/r160/examples/jsm/loaders/GLTFLoader.js",
+    "sha256": "d073b438e6a07e1359741dd5d6c76c953420cc0d4fd84eb1bdde94315540e6a3",
+    "license": "MIT; see vendor/THREE-LICENSE.txt"
+  },
+  {
+    "file": "Reflector.js",
+    "version": "r160",
+    "source": "https://github.com/mrdoob/three.js/blob/r160/examples/jsm/objects/Reflector.js",
+    "sha256": "012ecf98f5fc9bd262871e33d79392a25c04c2573ed68852eb3b8d2d39f9808b",
+    "license": "MIT; see vendor/THREE-LICENSE.txt"
+  }
+]

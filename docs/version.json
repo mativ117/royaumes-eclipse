@@ -1,4 +1,17 @@
 {
-  "version": "0.15",
-  "source_sha256": "c095eb16d7f48c19f22702644ddb010bc4c3d6d6ca74d9193c5ba3886d81529e"
+  "version": "1.0-rc1",
+  "models": {
+    "accordeur.glb": "d9ed5a54f6535312c734a0e08af53a6f3b02e60bae437efbcc7063207a7e126b",
+    "bergere.glb": "a9104398a1b2646700a1b20fae3ece732153b2246b9f31979497c04ae227d2bf",
+    "cendres.glb": "d6e3099e08ea6526b244788d300a7bc0fe5c572537ecd15cb6673fa6c875485d",
+    "colosse.glb": "863b3fff61733db386e7d774ba33758af179ebe64697e3442c1301ac17214a26",
+    "eclipse.glb": "1330bb8da63beb5b9dc2b0d3855df048c5b43f4374e61778d59a5db090700181",
+    "lame.glb": "fa7dab45c7c3dfa9d93b7bb0708b4a3bd49e3322c99219b87f081e13c43329a4",
+    "neant.glb": "d3faed2a4d0a864482caf1fe7cbf1550d112cb71b3fd80785f5d072704310461",
+    "rempart.glb": "18432a4bfa69200c4196add79617f4058380d46449e55b0c93c227273e5bc75d",
+    "tisseuse.glb": "a3a64b5bb1759a610457d99fa052faf00fac2b541cb4a00cc144837c2cfb23e8",
+    "voleur.glb": "b96f0decf4d52bfbabd72742e499acb5fb3a7cdb3d130a854aab6da39ca00dcc",
+    "voltigeur.glb": "24d22b8876e8bb68bb50309f1d9b4afdb78fd895e1295461ca276b262177ef16"
+  },
+  "source_sha256": "927a874dd1f37c33b5928bce6b3bcba3a059ae6a08c68d5032e7d7e0cba48e2d"
 }

@@ -118,6 +118,7 @@ function sculptGates(){
  }
 }
 function updateArtDirection(dt){
+ if(journey.level>1)return;
  if(!artDirection)return;const a=artDirection,dummy=a.dummy,zone=p?world.zoneAt(p.x,p.z):'Atrium des serments',palette=a.palettes[zone]||a.palettes['Atrium des serments'],blend=1-Math.exp(-dt*.7);scene.fog.color.lerp(palette.fog,blend);scene.background.lerp(palette.background,blend);world.abyss.material.color.lerp(palette.abyss,blend);a.clock+=dt;a.windTime.value=a.clock;
  const guided=campaign&&state==='playing'&&guidanceOn&&t<guideRevealUntil,desired=guided&&guideHeading!==null?new THREE.Vector2(Math.sin(guideHeading),-Math.cos(guideHeading)):new THREE.Vector2(.6,-.2);a.windDirection.value.lerp(desired,1-Math.exp(-dt*1.2));
  a.contacts.visible=quality==='light';a.contacts.count=0;if(campaign)for(const e of enemies)if(!e.dead&&e.root.visible&&a.contacts.count<32){dummy.position.set(e.x,.025,e.z);dummy.rotation.set(-Math.PI/2,0,0);const r=['boss','porter'].includes(e.type)?1.5:.65;dummy.scale.set(r,r*.65,1);dummy.updateMatrix();a.contacts.setMatrixAt(a.contacts.count++,dummy.matrix);}a.contacts.instanceMatrix.needsUpdate=true;

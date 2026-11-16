@@ -1,28 +1,29 @@
 'use strict';
 const avatarRuntime={status:'loading',heroes:{},current:null,lastAttack:null,lastWorldUse:null,error:null};
+const heroLoads={};
+function makeHeroAvatar(root,clips,name,parent=player.root){
+ root.scale.setScalar(name==='neant'?.86:name==='colosse'?1.16:1.07);root.rotation.y=Math.PI;root.position.y=0;root.visible=false;
+ const mixer=new THREE.AnimationMixer(root),actions={},lowerActions={},materialCopies=new Map();
+ for(const clip of clips){const lower=q=>/^(root|pelvis|thigh[LR]|shin[LR]|foot[LR])$/.test(THREE.PropertyBinding.parseTrackName(q.name).nodeName);actions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name,clip.duration,clip.tracks.filter(q=>!lower(q))));lowerActions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name+'_lower',clip.duration,clip.tracks.filter(lower)));}
+ root.traverse(o=>{if(o.isMesh){const copy=m=>{if(!materialCopies.has(m)){const cloned=m.clone();if(cloned.userData.morphBase&&cloned.isMeshStandardMaterial){const base=cloned.userData.morphBase;cloned.color.copy(base.color);cloned.emissive.copy(base.emissive);cloned.emissiveIntensity=base.strength;}materialCopies.set(m,cloned);}return materialCopies.get(m);};o.material=Array.isArray(o.material)?o.material.map(copy):copy(o.material);o.castShadow=true;o.receiveShadow=true;o.frustumCulled=false;}});parent.add(root);
+ const avatar={ownedMaterials:[...materialCopies.values()],root,clips,mixer,actions,lowerActions,lowerAction:null,lowerState:'',state:'',action:null,muzzle:root.getObjectByName('muzzle'),blade:root.getObjectByName('blade_tip'),hand:root.getObjectByName('handR'),weapon:root.getObjectByName(name+'_Weapon'),lastAttack:null,lastUse:null,aimHold:0};const parentQuaternion=parent.quaternion.clone(),parentPosition=parent.position.clone();parent.quaternion.identity();parent.position.set(0,0,0);initAvatarKinematics(avatar);parent.quaternion.copy(parentQuaternion);parent.position.copy(parentPosition);parent.updateWorldMatrix(true,true);return avatar;
+}
+async function ensureHeroModel(name){
+ if(avatarRuntime.heroes[name])return avatarRuntime.heroes[name];if(heroLoads[name])return heroLoads[name];
+ heroLoads[name]=(async()=>{let buffer;if(ROYAUMES_CHARACTER_DATA[name])buffer=Uint8Array.from(atob(ROYAUMES_CHARACTER_DATA[name]),c=>c.charCodeAt(0)).buffer;else{const response=await fetch('./assets/characters/'+name+'.glb?v='+encodeURIComponent(ROYAUMES_VERSION));if(!response.ok)throw Error('Modèle indisponible : '+name);buffer=await response.arrayBuffer();}const gltf=await new Promise((resolve,reject)=>new RoyaumesGLTFLoader().parse(buffer,'',resolve,reject));const avatar=makeHeroAvatar(gltf.scene,gltf.animations,name);avatarRuntime.heroes[name]=avatar;return avatar;})();
+ try{return await heroLoads[name];}catch(e){delete heroLoads[name];throw e;}
+}
+async function prepareHeroSelection(){
+ const selected=hero;$('#start').disabled=true;$('#start').textContent='Préparation du héros…';
+ try{await ensureHeroModel(selected);if(hero!==selected)return;syncAvatarSelection();$('#start').disabled=false;$('#start').textContent='Commencer le voyage →';}catch(e){$('#intro').textContent='Ce héros ne peut pas être chargé. Vérifie la connexion et réessaie de le sélectionner.';avatarRuntime.error=String(e);}
+}
 async function loadAuthoredHeroes(){
  $('#start').disabled=true;$('#start').textContent='Préparation de l’expédition…';
- try{
-  for(const name of ['rempart','voltigeur']){
-   const bytes=Uint8Array.from(atob(ROYAUMES_CHARACTER_DATA[name]),c=>c.charCodeAt(0));
-   const gltf=await new Promise((resolve,reject)=>new RoyaumesGLTFLoader().parse(bytes.buffer,'',resolve,reject));
-   const root=gltf.scene;root.scale.setScalar(1.07);root.rotation.y=Math.PI;root.position.y=0;root.visible=false;
-   const mixer=new THREE.AnimationMixer(root),actions={},lowerActions={};
-   for(const clip of gltf.animations){
-    const lower=track=>/^(root|pelvis|thigh[LR]|shin[LR]|foot[LR])$/.test(THREE.PropertyBinding.parseTrackName(track.name).nodeName);
-    // Disjoint channels: no lower-body idle tracks may dilute the walking legs.
-    actions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name,clip.duration,clip.tracks.filter(q=>!lower(q))));
-    lowerActions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name+'_lower',clip.duration,clip.tracks.filter(lower)));
-   }
-   root.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.frustumCulled=false;}});
-   player.root.add(root);avatarRuntime.heroes[name]={root,mixer,actions,lowerActions,lowerAction:null,lowerState:'',state:'',action:null,muzzle:root.getObjectByName('muzzle'),blade:root.getObjectByName('blade_tip'),hand:root.getObjectByName('handR')||root.getObjectByName('hand.R'),weapon:root.getObjectByName(name+'_Weapon'),lastAttack:null,lastUse:null,aimHold:0};initAvatarKinematics(avatarRuntime.heroes[name]);
-  }
-  avatarRuntime.status='ready';syncAvatarSelection();
- }catch(e){avatarRuntime.status='error';avatarRuntime.error=String(e);$('#intro').textContent='Le modèle du héros ne s’est pas chargé. Rechargez la page pour retrouver la version complète.';console.error('Authored avatar:',e);}
- $('#start').disabled=avatarRuntime.status!=='ready';$('#start').textContent=avatarRuntime.status==='ready'?'Entrer dans la cathédrale →':'Recharger le jeu';
+ try{for(const name of ['rempart','voltigeur'])await ensureHeroModel(name);avatarRuntime.status='ready';syncAvatarSelection();$('#start').disabled=false;$('#start').textContent='Commencer le voyage →';}
+ catch(e){avatarRuntime.status='error';avatarRuntime.error=String(e);$('#intro').textContent='Le modèle du héros ne s’est pas chargé. Rechargez la page.';console.error(e);}
 }
 function syncAvatarSelection(){
- if(avatarRuntime.status!=='ready')return;
+ if(avatarRuntime.status!=='ready')return;if(!avatarRuntime.heroes[hero]){prepareHeroSelection();return;}
  for(const [name,avatar]of Object.entries(avatarRuntime.heroes))avatar.root.visible=name===hero;
  avatarRuntime.current=avatarRuntime.heroes[hero];
  for(const object of player.legacyParts)object.visible=false;
@@ -62,18 +63,18 @@ function updateRigAvatar(dt){
  else if(p.shield>0)playAvatarAction(avatar,'shield',.12);
  else if(campaign?.trials.forge.carrying)playAvatarAction(avatar,'carry',.12);
  else if(campaign?.worldUse&&t-campaign.worldUse.started<.55){if(avatar.lastUse!==campaign.worldUse){playAvatarAction(avatar,'interact',.1,true,.55);avatar.lastUse=campaign.worldUse;}}
- else if(hero==='rempart'&&avatar.aimHold>0){/* Keep the rifle ready between successive shots. */}
+ else if(isRifleHero()&&avatar.aimHold>0){/* Keep the rifle ready between successive shots. */}
  else{playAvatarAction(avatar,gait,.12);if(gait!=='idle')avatar.action.setEffectiveTimeScale(Math.max(.25,speed*avatar.action.getClip().duration/(gait==='run'?1.5:1.2)));}
  playLowerAction(avatar,lower,.1,lowerRestart,lowerDuration);
  if(['walk','run'].includes(lower))avatar.lowerAction.setEffectiveTimeScale(Math.max(.2,speed*avatar.lowerAction.getClip().duration/(lower==='run'?1.5:1.2)));
- avatar.mixer.update(dt);updateAvatarKinematics(avatar,dt,speed);updateBladeTrail(avatar,dt);
+ avatar.mixer.update(dt);updateHeroMorph(avatar,p,hero,dt);updateAvatarKinematics(avatar,dt,speed);updateBladeTrail(avatar,dt);
 }
 
 const bladeTrail={samples:[],mesh:null,lastTime:-1};
 function updateBladeTrail(avatar,dt){
  if(!bladeTrail.mesh){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(7*18),3));geometry.setAttribute('color',new THREE.BufferAttribute(new Float32Array(7*18),3));geometry.setDrawRange(0,0);bladeTrail.mesh=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,transparent:true,opacity:.5,depthWrite:false}));bladeTrail.mesh.frustumCulled=false;scene.add(bladeTrail.mesh);}
  slash.visible=false;
- const active=hero==='voltigeur'&&p.attack?.melee&&p.attack.elapsed>=p.attack.hitAt*.65&&p.attack.elapsed<p.attack.duration*.9;
+ const active=isMeleeHero()&&p.attack?.melee&&p.attack.elapsed>=p.attack.hitAt*.65&&p.attack.elapsed<p.attack.duration*.9;
  if(active&&avatar.blade&&avatar.hand){avatar.root.updateMatrixWorld(true);bladeTrail.samples.push({base:avatar.hand.getWorldPosition(new THREE.Vector3()),tip:avatar.blade.getWorldPosition(new THREE.Vector3()),time:t});}
  bladeTrail.samples=bladeTrail.samples.filter(s=>t>=s.time&&t-s.time<.13).slice(-8);const samples=bladeTrail.samples,g=bladeTrail.mesh.geometry;let count=0;
  for(let i=1;i<samples.length;i++){const a=samples[i-1],b=samples[i];for(const v of [a.base,a.tip,b.tip,a.base,b.tip,b.base]){g.attributes.position.setXYZ(count,v.x,v.y,v.z);const f=i/samples.length;g.attributes.color.setXYZ(count,.8*f,.48*f,.16*f);count++;}}
@@ -81,6 +82,9 @@ function updateBladeTrail(avatar,dt){
 }
 
 function resetAvatarPose(){
- for(const avatar of Object.values(avatarRuntime.heroes)){avatar.mixer.stopAllAction();avatar.action=avatar.lowerAction=null;avatar.lastAttack=avatar.lastUse=null;avatar.aimHold=0;avatar.root.position.y=0;resetAvatarKinematics(avatar);playAvatarAction(avatar,'idle',.05,true);playLowerAction(avatar,'idle',.05,true);avatar.mixer.update(0);}
+ for(const avatar of Object.values(avatarRuntime.heroes)){avatar.mixer.stopAllAction();avatar.action=avatar.lowerAction=null;avatar.lastAttack=avatar.lastUse=null;avatar.aimHold=0;avatar.root.position.y=0;avatar.morphWeight=0;avatar.morphActive=true;updateHeroMorph(avatar,{formT:0,incarnateT:0},hero,0);resetAvatarKinematics(avatar);playAvatarAction(avatar,'idle',.05,true);playLowerAction(avatar,'idle',.05,true);avatar.mixer.update(0);}
  bladeTrail.samples=[];if(bladeTrail.mesh)bladeTrail.mesh.visible=false;
 }
+
+const morphDark=new THREE.Color('#11172b'),morphBlue=new THREE.Color('#4566b0'),morphGold=new THREE.Color('#bb862d');
+function updateHeroMorph(a,actor,id,dt){const target=id==='neant'&&actor.formT>0||id==='eclipse'&&actor.incarnateT>0?1:0;a.morphWeight=(a.morphWeight||0)+(target-(a.morphWeight||0))*(1-Math.exp(-dt*9));if(a.morphWeight<.001&&!target){if(!a.morphActive)return;a.morphWeight=0;}for(const m of a.ownedMaterials||[]){if(!m.isMeshStandardMaterial)continue;if(!m.userData.morphBase)m.userData.morphBase={color:m.color.clone(),emissive:m.emissive.clone(),strength:m.emissiveIntensity};const base=m.userData.morphBase;m.color.copy(base.color).lerp(id==='eclipse'?morphGold:morphDark,a.morphWeight*.65);m.emissive.copy(base.emissive).lerp(id==='eclipse'?morphGold:morphBlue,a.morphWeight*.65);m.emissiveIntensity=base.strength+a.morphWeight*.6;}a.morphActive=target||a.morphWeight>0;}

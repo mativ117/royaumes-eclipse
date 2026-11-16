@@ -45,6 +45,6 @@ function updateSanctuary(dt){
  sun.position.copy(target).add(offset);sun.target.position.copy(target);sun.target.updateMatrixWorld();
  if(p){s.target.set(p.x,1.4,p.z);s.direction.copy(s.target).sub(camera.position);const length=s.direction.length();s.direction.normalize();s.ray.set(camera.position,s.direction);s.ray.far=Math.max(0,length-.3);const hit=new Set(s.ray.intersectObjects(s.occluders,false).map(h=>h.object));for(const mesh of s.occluders){const opacity=hit.has(mesh)?.18:1;mesh.material.opacity+=(opacity-mesh.material.opacity)*(1-Math.exp(-dt*9));mesh.material.depthWrite=mesh.material.opacity>.95;}}
  // No expensive off-screen mirror pass once the expedition leaves the court.
- s.reflection.visible=quality!=='light'&&(!p||p.z>-10);s.fallback.visible=!s.reflection.visible;
+ s.reflection.visible=journey.level===1&&quality!=='light'&&(!p||p.z>-10);s.fallback.visible=!s.reflection.visible;
 }
 function cameraVisibleTarget(e){const point=new THREE.Vector3(e.x,1,e.z).project(camera);return point.z>-1&&point.z<1&&Math.abs(point.x)<1.1&&Math.abs(point.y)<1.1;}

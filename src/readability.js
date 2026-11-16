@@ -6,6 +6,7 @@ let subgoalFocus={},guideHeading=null,guideLastTime=0,guideRevealUntil=0,guideRe
 function stableTarget(candidates,scope){const kept=candidates.find(q=>q.id===subgoalFocus[scope]);if(kept)return kept;const next=candidates.slice().sort((a,b)=>distance(a,p)-distance(b,p))[0];subgoalFocus[scope]=next?.id;return next;}
 try{guidanceOn=localStorage.getItem('royaumes-guidance')!=='off'}catch(_){}
 function missionGoals(){
+ if(battle)return [];if(journey.level>1)return journeyGoals();
  if(!campaign||!p)return[];
  const q=campaign.trials,goal=(id,title,action,kind,point)=>({...point,id,title,action,kind,targetId:point.id||kind});
  if(!boon)return[goal('braise','Serment de Braise','Examiner le don et sa contrepartie.','pact',{x:-9,z:7}),goal('elan','Serment d’Élan','Examiner le don et sa contrepartie.','pact',{x:9,z:7})];
@@ -131,6 +132,7 @@ function updateLandmarkReadability(){
 
 }
 function journalRows(){
+ if(journey.level>1)return journeyGoals().map(g=>({title:g.title,done:false}));
  const q=campaign.trials;return[
   {title:'Âme des jardins',done:q.escort.done},
   {title:'Carillon du cloître',done:q.bells.done},
@@ -142,13 +144,14 @@ function journalRows(){
   {title:'Retour à l’âme',done:state==='won'}];
 }
 function renderMissionJournal(){
+ if(battle){$('#missionList').textContent=battle.mode==='crown'?'Couronne vivante : atteindre 60 points de possession. Le porteur ne peut pas attaquer ; un impact fait tomber la couronne.':'Duel d’Éclipse : trois manches gagnantes. Tous les héros partent sans bonus de serment.';$('#questItems').textContent='Match local, sur le même appareil.';$('#melodyReminder').textContent='';$('#questProgress').textContent='Score : '+battle.wins.join(' — ');return;}
  const goal=selectedMission(),container=$('#missionList');container.replaceChildren();
  for(const g of missionGoals()){
   const button=document.createElement('button');button.className='missionChoice';button.setAttribute('aria-pressed',String(g.id===goal?.id));
   const title=document.createElement('strong'),description=document.createElement('span');title.textContent=(g.id===goal?.id?'◈ Suivi · ':'◇ ')+g.title;description.textContent=g.action;button.append(title,description);button.onclick=()=>setTrackedGoal(g.id);container.append(button);
  }
  $('#questProgress').textContent=journalRows().map(r=>(r.done?'✓ ':'○ ')+r.title).join(' · ');
- const q=campaign.trials;$('#questItems').textContent=`Empreintes : ${campaign.keys.size}/2 · Lentille : ${q.archive?'obtenue':'à retrouver'} · Noyau : ${q.forge.done?'livré':q.forge.carrying?'transporté':'à retrouver'}`;
+ if(journey.level>1){$('#questItems').textContent=journey.level===3?'Intégrité du cœur : '+Math.ceil(journey.core):'Faiblesses : fer → silence ; cendre → pluie.';$('#melodyReminder').textContent='Chapitre '+journey.level+' · '+CHAPTERS[journey.level].title;return;}const q=campaign.trials;$('#questItems').textContent=`Empreintes : ${campaign.keys.size}/2 · Lentille : ${q.archive?'obtenue':'à retrouver'} · Noyau : ${q.forge.done?'livré':q.forge.carrying?'transporté':'à retrouver'}`;
  if(q.bells.read)$('#melodyReminder').textContent='Mélodie de la fresque : '+q.bells.order.join(' → ')+(q.bells.done?' · Accordée':'');else $('#melodyReminder').textContent='La mélodie apparaîtra ici après lecture de la fresque.';
  $('#guidanceToggle').checked=guidanceOn;$('#threatToggle').checked=mapThreats;
 }

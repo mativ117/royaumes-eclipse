@@ -1,8 +1,8 @@
 [
   {
     "file": "historique/README.md",
-    "bytes": 2249,
-    "sha256": "434e47c37b6d79cbcca9394241fc316197a704ffa2180772a7d2294503c76afd"
+    "bytes": 2601,
+    "sha256": "074c2d9cd8813c801873d0d7241313f1f38b94d2d0802f51ff4e07b3200654bb"
   },
   {
     "file": "historique/cathedrale-v0.10.html",
@@ -93,6 +93,11 @@
     "file": "historique/depot-avant-reorganisation/relay-raid.html",
     "bytes": 17958,
     "sha256": "e3a4412644a3f1d30e608f6a2a33f3520b3e1a09023ead9eb73d64b51f82e77a"
+  },
+  {
+    "file": "historique/livraisons-zip/royaumes-eclipse-1.0-rc1.zip",
+    "bytes": 10179864,
+    "sha256": "7433cfd8c1807163711456d7e1972d978d4ea9133e3851cc8a230eeed43eeba0"
   },
   {
     "file": "historique/livraisons-zip/royaumes-eclipse-3d-v0.10.zip",
@@ -213,6 +218,11 @@
     "file": "historique/relay-raid-original.html",
     "bytes": 17958,
     "sha256": "e3a4412644a3f1d30e608f6a2a33f3520b3e1a09023ead9eb73d64b51f82e77a"
+  },
+  {
+    "file": "historique/royaumes-v1.0-rc1.html",
+    "bytes": 9501585,
+    "sha256": "717056ef73135a89dbb3ab5a1ffd04b76cd1046e6c7426bc072ca0ac5d5e3406"
   },
   {
     "file": "historique/sources-v0.7/art.js",

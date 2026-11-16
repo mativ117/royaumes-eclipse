@@ -8,7 +8,7 @@ function initAvatarKinematics(a){
   const h=limb.upper.getWorldPosition(new THREE.Vector3()),k=limb.middle.getWorldPosition(new THREE.Vector3()),f=limb.end.getWorldPosition(new THREE.Vector3());
   limb.length1=h.distanceTo(k);limb.length2=k.distanceTo(f);limb.bind=limb.end.getWorldQuaternion(new THREE.Quaternion());limb.anchor=f.clone();limb.destination=f.clone();limb.lastPhase=0;
  }
- a.foregrip=avatarBone(a,'foregrip');a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;
+ a.groundHeight=a.legs.reduce((sum,leg)=>sum+leg.end.getWorldPosition(new THREE.Vector3()).y,0)/a.legs.length;a.foregrip=avatarBone(a,'foregrip');a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;
 }
 function resetAvatarKinematics(a){a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;}
 function pointJointAt(joint,child,target,weight){
@@ -25,20 +25,20 @@ function solveAvatarLimb(limb,target,pole,weight,endOrientation=null){
  pointJointAt(limb.upper,limb.middle,knee,weight);pointJointAt(limb.middle,limb.end,end,weight);
  if(endOrientation){limb.end.parent.getWorldQuaternion(s.parent).invert();s.q.copy(s.parent).multiply(endOrientation);limb.end.quaternion.slerp(s.q,weight);limb.end.updateWorldMatrix(false,true);}
 }
-function updateAvatarKinematics(a,dt,speed){
- a.root.updateWorldMatrix(true,true);const current=new THREE.Vector3(p.x,0,p.z),delta=a.lastPosition?current.clone().sub(a.lastPosition):new THREE.Vector3();a.lastPosition=current;
- const distance=delta.length(),special=p.dashT>0||p.leap>0||p.stagger>0;
+function updateAvatarKinematics(a,dt,speed,actor=p,heroId=hero,heading=aim){
+ a.root.updateWorldMatrix(true,true);const current=new THREE.Vector3(actor.x,0,actor.z),delta=a.lastPosition?current.clone().sub(a.lastPosition):new THREE.Vector3();a.lastPosition=current;
+ const distance=delta.length(),special=actor.dashT>0||actor.leap>0||actor.stagger>0;
  if(distance>1.5||special){a.feetWeight=0;a.stepPhase=0;for(const leg of a.legs){leg.end.getWorldPosition(leg.anchor);leg.destination.copy(leg.anchor);leg.lastPhase=0;}}
  const walking=!special&&distance>.0005&&speed>.18,blend=1-Math.exp(-dt*18);a.feetWeight+=((walking?1:0)-a.feetWeight)*blend;
  a.root.position.y=-.10*a.feetWeight;a.root.updateWorldMatrix(true,true);
  if(walking||a.feetWeight>.02){
   const stride=speed>3?1.5:1.2;a.stepPhase+=distance/stride;
-  const forward=delta.lengthSq()>.000001?delta.normalize():new THREE.Vector3(-Math.sin(aim),0,-Math.cos(aim)),right=new THREE.Vector3(Math.cos(aim),0,-Math.sin(aim));
-  const pole=new THREE.Vector3(-Math.sin(aim),0,-Math.cos(aim)),yaw=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),aim);
+  const forward=delta.lengthSq()>.000001?delta.normalize():new THREE.Vector3(-Math.sin(heading),0,-Math.cos(heading)),right=new THREE.Vector3(Math.cos(heading),0,-Math.sin(heading));
+  const pole=new THREE.Vector3(-Math.sin(heading),0,-Math.cos(heading)),yaw=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),heading);
   for(let i=0;i<a.legs.length;i++){
    const leg=a.legs[i],phase=(a.stepPhase+i*.5)%1;
-   if(a.feetWeight<.3){leg.end.getWorldPosition(leg.anchor);leg.anchor.y=.15;leg.destination.copy(leg.anchor);}
-   if(phase>=.55&&leg.lastPhase<.55){leg.destination.copy(current).addScaledVector(right,leg.side*.16).addScaledVector(forward,stride*.65);leg.destination.y=.15;}
+   if(a.feetWeight<.3){leg.end.getWorldPosition(leg.anchor);leg.anchor.y=a.groundHeight;leg.destination.copy(leg.anchor);}
+   if(phase>=.55&&leg.lastPhase<.55){leg.destination.copy(current).addScaledVector(right,leg.side*.16).addScaledVector(forward,stride*.65);leg.destination.y=a.groundHeight;}
    if(phase<leg.lastPhase){leg.anchor.copy(leg.destination);}
    const target=leg.anchor.clone();if(phase>=.55){const u=(phase-.55)/.45,f=u*u*(3-2*u);target.lerp(leg.destination,f);target.y+=Math.sin(u*Math.PI)*(speed>3?.19:.11);}
    // Keep a stance target on the floor when a late step reaches leg extension.
@@ -48,11 +48,11 @@ function updateAvatarKinematics(a,dt,speed){
   }
  }
  // Two-handed rifle grip, independent of the walking legs and torso recoil.
- const armed=hero==='rempart'&&!special&&!campaign?.trials.forge.carrying&&p.shield<=0&&(p.attack&&!p.attack.melee||a.aimHold>0);
+ const armed=isRifleHero(heroId)&&!special&&!(actor===p&&campaign?.trials.forge.carrying)&&actor.shield<=0&&(actor.attack&&!actor.attack.melee||a.aimHold>0);
  a.weaponWeight+=((armed?1:0)-a.weaponWeight)*(1-Math.exp(-dt*24));
  if(a.weaponWeight>.01){
-  const firing=p.attack&&!p.attack.melee,phase=firing?p.attack.elapsed:1,pulse=firing&&phase>=p.attack.hitAt?Math.exp(-(phase-p.attack.hitAt)*26):0;
-  const yawAngle=p.attack?.aim??aim,yaw=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),yawAngle),right=new THREE.Vector3(Math.cos(yawAngle),0,-Math.sin(yawAngle)),forward=new THREE.Vector3(-Math.sin(yawAngle),0,-Math.cos(yawAngle));
+  const firing=actor.attack&&!actor.attack.melee,phase=firing?actor.attack.elapsed:1,pulse=firing&&phase>=actor.attack.hitAt?Math.exp(-(phase-actor.attack.hitAt)*26):0;
+  const yawAngle=actor.attack?.heading??heading,yaw=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),yawAngle),right=new THREE.Vector3(Math.cos(yawAngle),0,-Math.sin(yawAngle)),forward=new THREE.Vector3(-Math.sin(yawAngle),0,-Math.cos(yawAngle));
   const wrist=current.clone().addScaledVector(right,.12).addScaledVector(forward,.02-pulse*.055);wrist.y=1.33+pulse*.015;
   const orientation=yaw.clone().multiply(a.arms[0].bind),pitch=new THREE.Quaternion().setFromAxisAngle(right,pulse*.075);orientation.premultiply(pitch);
   solveAvatarLimb(a.arms[0],wrist,right,a.weaponWeight,orientation);

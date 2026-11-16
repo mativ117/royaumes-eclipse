@@ -5,11 +5,29 @@
   "third_party_art": false,
   "files": [
     "rempart.glb",
-    "voltigeur.glb"
+    "voltigeur.glb",
+    "lame.glb",
+    "tisseuse.glb",
+    "cendres.glb",
+    "voleur.glb",
+    "bergere.glb",
+    "colosse.glb",
+    "accordeur.glb",
+    "neant.glb",
+    "eclipse.glb"
   ],
   "sha256": {
-    "rempart.glb": "5f18cfa59b974464b2528b7ecaee34b9994bc9a5ea7834c53bb67ea550753643",
-    "voltigeur.glb": "11786a25825160e19683fb1d021dadc34c19116bfbfc3e59df36347f1b377744"
+    "rempart.glb": "18432a4bfa69200c4196add79617f4058380d46449e55b0c93c227273e5bc75d",
+    "voltigeur.glb": "24d22b8876e8bb68bb50309f1d9b4afdb78fd895e1295461ca276b262177ef16",
+    "lame.glb": "fa7dab45c7c3dfa9d93b7bb0708b4a3bd49e3322c99219b87f081e13c43329a4",
+    "tisseuse.glb": "a3a64b5bb1759a610457d99fa052faf00fac2b541cb4a00cc144837c2cfb23e8",
+    "cendres.glb": "d6e3099e08ea6526b244788d300a7bc0fe5c572537ecd15cb6673fa6c875485d",
+    "voleur.glb": "b96f0decf4d52bfbabd72742e499acb5fb3a7cdb3d130a854aab6da39ca00dcc",
+    "bergere.glb": "a9104398a1b2646700a1b20fae3ece732153b2246b9f31979497c04ae227d2bf",
+    "colosse.glb": "863b3fff61733db386e7d774ba33758af179ebe64697e3442c1301ac17214a26",
+    "accordeur.glb": "d9ed5a54f6535312c734a0e08af53a6f3b02e60bae437efbcc7063207a7e126b",
+    "neant.glb": "d3faed2a4d0a864482caf1fe7cbf1550d112cb71b3fd80785f5d072704310461",
+    "eclipse.glb": "1330bb8da63beb5b9dc2b0d3855df048c5b43f4374e61778d59a5db090700181"
   },
   "clips": [
     "idle",

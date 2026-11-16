@@ -32,8 +32,8 @@ function campaignGateClosed(gate){
  return gate==='pact'?!boon:gate==='ritual-entry'?campaign.keys.size<2:gate==='seals'?campaign.trials.ritual.length<2||!campaign.defeated.has('carillonneur'):gate==='boss'?campaign.bossAwake&&!boss?.dead:false;
 }
 function resetHeroAt(x,z){
- p.x=x;p.z=z;p.vx=p.vz=0;delete p.motionSpeed;delete p.dashElapsed;p.dodgeBuffer=0;p.hp=p.max;
- for(const k of ['shot','dash','dashT','power','shield','recoil','overcharge','absorbLock','leap','swing','combo','comboWindow','stagger'])p[k]=0;
+ p.x=x;p.z=z;p.vx=p.vz=0;p.downed=false;p.revive=0;delete p.motionSpeed;delete p.dashElapsed;p.dodgeBuffer=0;p.hp=p.max;
+ for(const k of ['shot','dash','dashT','power','shield','recoil','overcharge','absorbLock','leap','swing','combo','comboWindow','stagger','formT','incarnateT','fragileT','wardT'])p[k]=0;
  p.attack=null;p.attackBuffer=0;p.inv=1.5;aim=targetAim=0;player.root.position.set(x,0,z);
  const portrait=innerWidth<innerHeight;camera.position.set(x,portrait?9.2:6.7,z+(portrait?12.8:10.8));cameraLook.set(x,portrait?1.8:1.6,z-(portrait?4:5));camera.lookAt(cameraLook);resetAvatarPose();
 }
@@ -148,10 +148,12 @@ function drawCampaignMap(canvas){
  const goal=selectedMission(),route=guideRoute(goal);
  if(guidanceOn&&route.length){ctx.strokeStyle='#ffe3a2';ctx.lineWidth=large?3:1.5;ctx.setLineDash(large?[7,5]:[3,2]);ctx.beginPath();route.forEach((q,i)=>i?ctx.lineTo(X(q.x),Z(q.z)):ctx.moveTo(X(q.x),Z(q.z)));ctx.stroke();ctx.setLineDash([]);}
  function caption(text,x,z){ctx.font=`600 ${large?18:9}px system-ui`;const w=ctx.measureText(text).width;ctx.fillStyle='#10131ded';ctx.fillRect(X(x)-w/2-6,Z(z)-15,w+12,22);ctx.fillStyle='#e8edf7';ctx.textAlign='center';ctx.fillText(text,X(x),Z(z)+1);}
- if(large){for(const [name,x,z]of[['ATRIUM',0,26],['JARDINS',-18,-31],['CLOÎTRE',18,-30],['CROISÉE',0,-38],['ARCHIVES',-40,-71],['FORGE',39,-71],['NEF',0,-47],['COUR DU VEILLEUR',0,-107]])caption(name,x,z);}
- for(const camp of CAMPS){const visited=campaign.completed.has('camp-'+camp.id);mapGlyph(ctx,'camp',X(camp.x),Z(camp.z),large?7:3.5,visited?'#97efd7':'#acb9c9',visited);}
+ if(large&&journey.level===1){for(const [name,x,z]of[['ATRIUM',0,26],['JARDINS',-18,-31],['CLOÎTRE',18,-30],['CROISÉE',0,-38],['ARCHIVES',-40,-71],['FORGE',39,-71],['NEF',0,-47],['COUR DU VEILLEUR',0,-107]])caption(name,x,z);}
+ if(large&&journey.level>1)for(const region of world.regions)caption(region.name,(region.x0+region.x1)/2,region.z1-2);
+ for(const camp of (journey.level>1?[]:CAMPS)){const visited=campaign.completed.has('camp-'+camp.id);mapGlyph(ctx,'camp',X(camp.x),Z(camp.z),large?7:3.5,visited?'#97efd7':'#acb9c9',visited);}
  const goals=missionGoals();for(const g of goals){const selected=g.id===goal?.id;if(selected){ctx.strokeStyle='#fff6de';ctx.lineWidth=large?2:1;ctx.beginPath();ctx.arc(X(g.x),Z(g.z),large?13:6.5,0,Math.PI*2);ctx.stroke();}mapGlyph(ctx,g.kind,X(g.x),Z(g.z),large?7:3.5,SIGN_COLORS[g.kind]||'#ffe0a0');}
  if(mapThreats)for(const e of enemies)if(!e.dead&&trialActive(e)&&distance(e,p)<17)mapGlyph(ctx,'enemy',X(e.x),Z(e.z),large?4:2,'#ffac9a');
+ for(const actor of localParty)if(!actor.downed)mapGlyph(ctx,'player',X(actor.x),Z(actor.z),large?6:3,actor.team?'#ff9c88':'#9de3d9');
  ctx.save();ctx.translate(X(p.x),Z(p.z));ctx.rotate(-aim);mapGlyph(ctx,'player',0,0,large?7:4,'#ffffff');ctx.restore();
  ctx.fillStyle='#f5e4c7';ctx.font=`600 ${large?17:11}px system-ui`;ctx.textAlign='right';ctx.fillText('N ↑',W-9,large?24:15);
  if(large){ctx.textAlign='left';ctx.font='16px system-ui';ctx.fillText('Vous : flèche blanche',16,H-12);}

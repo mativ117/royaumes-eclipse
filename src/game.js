@@ -13,10 +13,7 @@ function box(m,x,y,z,sx,sy,sz,parent){return mesh(boxGeo,m,x,y,z,sx,sy,sz,parent
 const world=buildCampaign(THREE,scene,renderer,{stone,bronze,gold,dark});const art=world.art,floor=world.floor,portal=world.exit,dust=world.dust,halo=world.halo;
 const ember=mat('#ad4935',.2,.65),cloth=mat('#342d45',.05,.9),bladeMaterial=mat('#ffd09a',.5,.25,'#f47320');
 let hero='rempart';
-const HEROES={
- rempart:{name:'Le Dernier Rempart',hp:150,speed:4.9,dash:1.8,power:9,powerName:'Bouclier'},
- voltigeur:{name:'Le Voltigeur',hp:110,speed:6.1,dash:1.15,power:7,powerName:'Bond'}
-};
+const HEROES=HERO_DEFS;
 function soldier(){
  const root=new THREE.Group();scene.add(root);
  const body=mesh(new THREE.CylinderGeometry(.53,.38,1,6),armor,0,1.35,0,.95,1,.68,root);
@@ -42,9 +39,9 @@ function soldier(){
  arms[1].add(sword,rifle);sword.position.set(0,-.65,0);rifle.position.set(0,-.6,0);rifle.rotation.x=-1.2;return{root,legs,body,helmet,heavy,light,sword,scarf,cape,arms,rifle,legacyParts:root.children.slice()};
 }
 function applyHero(){
- const light=hero==='voltigeur';player.heavy.visible=!light;player.light.visible=light;player.sword.visible=light;player.rifle.visible=!light;
+ const light=isMeleeHero();player.heavy.visible=!light;player.light.visible=light;player.sword.visible=light;player.rifle.visible=!light;
  player.body.material=light?cloth:armor;player.helmet.material=light?cloth:armor;
- player.legs.forEach(l=>l.traverse(o=>{if(o.userData.heroLimb)o.material=light?cloth:armor}));player.root.scale.setScalar(light?.92:1);
+ player.legs.forEach(l=>l.traverse(o=>{if(o.userData.heroLimb)o.material=light?cloth:armor}));player.root.scale.setScalar(1);
  $('#heroIdentity').textContent=HEROES[hero].name;
  document.querySelectorAll('[data-hero]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.hero===hero)));syncAvatarSelection();
 }
@@ -54,7 +51,7 @@ const carriedCore=mesh(sphereGeo,gold,0,1.2,-.8,.35,.35,.35,player.root);carried
 const reticle=new THREE.Mesh(new THREE.RingGeometry(.26,.34,24),new THREE.MeshBasicMaterial({color:'#ffe1a3',side:THREE.DoubleSide}));reticle.rotation.x=-Math.PI/2;reticle.position.y=.05;scene.add(reticle);
 
 // Simulation at a fixed timestep; rendering remains independent of display refresh.
-let state='menu',p,enemies=[],bullets=[],effects=[],hazards=[],obstacles=[],roomMeshes=[],shrines=[],t=0,kills=0,last=0,accumulator=0,noticeUntil=0,aim=0,targetAim=0,shotCount=0,quality=matchMedia('(pointer:coarse)').matches?'light':'standard',room=0,boon='',shard=false,boss=null,walkPhase=0,trailTimer=0;
+let state='menu',p,enemies=[],bullets=[],effects=[],hazards=[],obstacles=[],roomMeshes=[],shrines=[],t=0,kills=0,last=0,accumulator=0,noticeUntil=0,aim=0,targetAim=0,shotCount=0,quality='standard',room=0,boon='',shard=false,boss=null,walkPhase=0,trailTimer=0;
 let bell=null;
 let decoy=null,secretMirror=null,secretFound=false,observing=false,observeTime=0,pendingPact='',interactId=null,secretNewThisRun=false;
 const SECRET_KEY='royaumes-eclipse-reflet-v1';
@@ -72,11 +69,11 @@ const slash=new THREE.Mesh(new THREE.RingGeometry(.7,1,36,1,Math.PI/2-1.15,2.3),
 const landingMarker=new THREE.Mesh(new THREE.RingGeometry(.94,1,48),new THREE.MeshBasicMaterial({color:'#ffb763',side:THREE.DoubleSide,transparent:true,opacity:.65,depthWrite:false}));landingMarker.rotation.x=-Math.PI/2;landingMarker.position.y=.08;landingMarker.scale.setScalar(4.6);scene.add(landingMarker);landingMarker.visible=false;
 const heroShadow=new THREE.Mesh(new THREE.CircleGeometry(.95,24),new THREE.MeshBasicMaterial({color:'#05040a',transparent:true,opacity:.55,depthWrite:false}));const contactCanvas=document.createElement('canvas');contactCanvas.width=contactCanvas.height=64;const contactContext=contactCanvas.getContext('2d'),contactGradient=contactContext.createRadialGradient(32,32,3,32,32,32);contactGradient.addColorStop(0,'rgba(255,255,255,.9)');contactGradient.addColorStop(.45,'rgba(255,255,255,.5)');contactGradient.addColorStop(1,'rgba(255,255,255,0)');contactContext.fillStyle=contactGradient;contactContext.fillRect(0,0,64,64);const contactTexture=new THREE.CanvasTexture(contactCanvas);heroShadow.material.map=contactTexture;heroShadow.material.needsUpdate=true;heroShadow.rotation.x=-Math.PI/2;heroShadow.position.y=.04;scene.add(heroShadow);
 let audio=null,soundOn=true;
-function tone(freq,dur=.06,type='sine',volume=.025){if(!soundOn||!audio||audio.state!=='running')return;const o=audio.createOscillator(),gain=audio.createGain();o.type=type;o.frequency.setValueAtTime(freq,audio.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(35,freq*.5),audio.currentTime+dur);gain.gain.setValueAtTime(volume,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+dur);o.connect(gain);gain.connect(audio.destination);o.start();o.stop(audio.currentTime+dur)}
+function tone(freq,dur=.06,type='sine',volume=.025){if(!soundOn||!audio||audio.state!=='running')return;const o=audio.createOscillator(),gain=audio.createGain();o.type=type;o.frequency.setValueAtTime(freq,audio.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(35,freq*.5),audio.currentTime+dur);gain.gain.setValueAtTime(volume*localProfile.settings.volume,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+dur);o.connect(gain);gain.connect(audio.destination);o.start();o.stop(audio.currentTime+dur)}
 function unlockAudio(){try{if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();audio.resume().catch(()=>{})}catch(_){soundOn=false}}
 $('#sound').onclick=()=>{soundOn=!soundOn;$('#sound').textContent=soundOn?'Son : oui':'Son : non';$('#sound').setAttribute('aria-pressed',String(soundOn));if(soundOn)unlockAudio()};
 function announce(s){$('#notice').textContent=s;$('#notice').hidden=false;noticeUntil=performance.now()+6000}
-function clearInputs(){
+function clearInputs(){primaryPadFire=false;primaryPadAim=null;padPrevious=[];
  observing=false;interactId=null;
  keys.clear();joy.x=joy.y=0;shooting=mouseDown=false;
  const oldStick=stickId,oldFire=fireId;stickId=fireId=null;
@@ -89,9 +86,9 @@ function releaseMenuFocus(){
  // A hidden menu button must not receive the gameplay Space key as a click.
  const el=document.activeElement;if(el&&el!==document.body&&typeof el.blur==='function')el.blur();
 }
-function cleanupObject(o){scene.remove(o);o.traverse(child=>{if(child.userData.labelTexture){child.userData.labelTexture.dispose();child.material.dispose()}if(child.userData.ownedMaterial)child.material.dispose();if(child.userData.ownedGeometry)child.geometry.dispose()})}
+function cleanupObject(o){o.removeFromParent();o.traverse(child=>{if(child.userData.enemySkin)child.skeleton.dispose();if(child.userData.labelTexture){child.userData.labelTexture.dispose();child.material.dispose()}if(child.userData.ownedMaterial)child.material.dispose();if(child.userData.ownedGeometry)child.geometry.dispose()})}
 function clearFX(){effects.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});effects=[];hazards.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});hazards=[]}
-function clearRoom(){bell=null;clearDecoy();secretMirror=null;observeTime=0;observing=false;enemies.forEach(e=>cleanupObject(e.root));enemies=[];bullets.forEach(b=>scene.remove(b.mesh));bullets=[];clearFX();roomMeshes.forEach(o=>cleanupObject(o));roomMeshes=[];obstacles=[];shrines=[];boss=null}
+function clearRoom(){clearClassAbilities();bell=null;clearDecoy();secretMirror=null;observeTime=0;observing=false;enemies.forEach(e=>cleanupObject(e.root));enemies=[];bullets.forEach(b=>scene.remove(b.mesh));bullets=[];clearFX();roomMeshes.forEach(o=>cleanupObject(o));roomMeshes=[];obstacles=[];shrines=[];boss=null}
 function roomObject(o){roomMeshes.push(o);return o}
 function label(text,x,z,color='#ffd496',width=6){const c=document.createElement('canvas');c.width=512;c.height=96;const ctx=c.getContext('2d');ctx.fillStyle='#100d19d9';ctx.fillRect(0,0,512,96);ctx.font='bold 30px system-ui';ctx.textAlign='center';ctx.fillStyle=color;ctx.fillText(text,256,60,480);const texture=new THREE.CanvasTexture(c),material=new THREE.SpriteMaterial({map:texture,depthTest:false});const sprite=new THREE.Sprite(material);sprite.position.set(x,3.6,z);sprite.scale.set(width,width*96/512,1);scene.add(sprite);sprite.userData.labelTexture=texture;roomObject(sprite);return sprite}
 function obstacle(x,z,w,d,height=2.4){const o=box(stone,x,height/2,z,w,height,d);roomObject(o);box(bronze,0,0,0,1.015,.035,1.015,o);obstacles.push({x,z,w,d});return o}
@@ -105,7 +102,7 @@ function collisionContact(o,x,z,r){
  if(d>0)return d<r?{nx:ux/d,nz:uz/d,depth:r-d}:null;
  const ax=hx-Math.abs(dx),az=hz-Math.abs(dz);return ax<az?{nx:dx>=0?1:-1,nz:0,depth:ax+r}:{nx:0,nz:dz>=0?1:-1,depth:az+r};
 }
-function solidActive(o,projectile){return !o.intangible&&!(projectile&&o.projectilePass)&&(!o.root||o.root.visible)&&(!o.gate||campaignGateClosed(o.gate));}
+function solidActive(o,projectile){return (!o.enabled||o.enabled())&&!o.intangible&&!(projectile&&o.projectilePass)&&(!o.root||o.root.visible)&&(!o.gate||campaignGateClosed(o.gate));}
 function blocked(x,z,r=.48,projectile=false){
  if(!projectile&&!world.onGround(x,z,r))return true;
  if(x<-70||x>70||z<-120||z>38)return true;
@@ -121,36 +118,36 @@ function moveEntity(e,dx,dz,r=.48){
  }
 }
 function makeShrine(x,z,color,name){const group=new THREE.Group();group.position.set(x,0,z);scene.add(group);roomObject(group);box(bronze,0,.45,0,1.8,.9,1.8,group);const crystal=mesh(new THREE.OctahedronGeometry(.65),mat(color,.4,.25,color),0,1.8,0,1,1,1,group);crystal.userData.ownedMaterial=true;crystal.userData.ownedGeometry=true;const glow=mesh(ringGeo,new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide,transparent:true,opacity:.7}),0,.05,0,2,2,2,group);glow.rotation.x=-Math.PI/2;glow.userData.ownedMaterial=true;const tag=label(name,x,z, color);obstacles.push({root:group,x,z,w:1.7,d:1.7,radius:.85,projectilePass:true});return{root:group,crystal,x,z,tag}}
-function start(){unlockAudio();applyHero();p={x:0,z:12,vx:0,vz:0,hp:HEROES[hero].hp,max:HEROES[hero].hp,shot:0,dash:0,dashT:0,dx:0,dz:-1,power:0,shield:0,inv:0,recoil:0,overcharge:0,absorbLock:0,leap:0,swing:0,combo:0,comboWindow:0};kills=shotCount=walkPhase=0;secretNewThisRun=false;boon='';clearInputs();beginCampaign();state='playing';$('#menu').hidden=true;$('#pausePanel').hidden=true;$('#hud').hidden=false;$('#controls').hidden=false;$('#mobile').classList.add('playing');accumulator=0;last=performance.now();updateHUD();updateLandmarkReadability()}
+function start(){clearLocalParty();battle=null;resetJourneyWorld();p&&(p.downed=false);unlockAudio();applyHero();p={x:0,z:12,vx:0,vz:0,hp:HEROES[hero].hp,max:HEROES[hero].hp,shot:0,dash:0,dashT:0,dx:0,dz:-1,power:0,shield:0,inv:0,recoil:0,overcharge:0,absorbLock:0,leap:0,swing:0,combo:0,comboWindow:0};kills=shotCount=walkPhase=0;secretNewThisRun=false;boon='';clearInputs();beginCampaign();state='playing';$('#menu').hidden=true;$('#pausePanel').hidden=true;$('#hud').hidden=false;$('#controls').hidden=false;$('#mobile').classList.add('playing');accumulator=0;last=performance.now();updateHUD();updateLandmarkReadability()}
 let pauseReason='',pactConfirmTimer=null;
 function pause(reason='manual'){
  if(state!=='playing')return;
  pauseReason=reason;state='paused';clearInputs();$('#pausePanel').hidden=false;
  $('#resume').hidden=false;$('#resume').textContent='Reprendre';
- $('#endTag').textContent='Version 0.15 · Pause';$('#endTitle').textContent='En pause';
+ $('#endTag').textContent='Version 1.0-rc1 · Pause';$('#endTitle').textContent='En pause';
  $('#endText').textContent=reason==='hidden'?'La page a été masquée. Votre progression dans cette tentative est conservée.':reason==='graphics'?'Le rendu 3D a été interrompu. Rechargez la page et choisissez la qualité légère.':'Votre pacte et la progression de cette tentative sont conservés.';
  $('#mobile').classList.remove('playing');
 }
-function finish(won){if(!won)campaign.deaths=(campaign.deaths||0)+1;else try{localStorage.removeItem(RUN_KEY)}catch(_){}$('#copyReport').hidden=false;$('#copyReport').textContent='Copier le bilan';state=won?'won':'lost';clearInputs();$('#pausePanel').hidden=false;$('#resume').hidden=won;$('#resume').textContent='Réessayer cette salle';$('#endTag').textContent=won?'Premier chapitre terminé':'La cathédrale se souvient';$('#endTitle').textContent=won?'Le Veilleur s’incline.':'Votre héros est tombé.';$('#endText').textContent=won?`Les Marches traversées · ${kills} adversaires vaincus · Durée active ${Math.floor((campaign.activeSeconds||campaign.time)/60)} min ${Math.floor((campaign.activeSeconds||campaign.time)%60)} s · ${campaign.deaths||0} défaite(s) · Serment ${boon==='vigor'?'de Braise':'d’Élan'} · ${secretFound?'Marque du Reflet trouvée':'Un secret reste à découvrir'}. Expédition terminée. Le bilan permet de mesurer la durée réelle et d’affiner l’équilibrage.`:'Observez les préparations rouges, utilisez les abris et gardez votre bouclier pour les moments difficiles. Vous pouvez reprendre au dernier refuge atteint, avec votre serment.';$('#mobile').classList.remove('playing');tone(won?660:100,.4)}
+function finish(won){if(battle)return;localProfile.stats.deaths+=won?0:1;if(!won)campaign.deaths=(campaign.deaths||0)+1;else try{localStorage.removeItem(RUN_KEY)}catch(_){}$('#copyReport').hidden=false;$('#copyReport').textContent='Copier le bilan';state=won?'won':'lost';clearInputs();$('#pausePanel').hidden=false;$('#resume').hidden=won;$('#resume').textContent='Réessayer cette salle';$('#endTag').textContent=won?'Premier chapitre terminé':'La cathédrale se souvient';$('#endTitle').textContent=won?'Le Veilleur s’incline.':'Votre héros est tombé.';$('#endText').textContent=won?`Les Marches traversées · ${kills} adversaires vaincus · Durée active ${Math.floor((campaign.activeSeconds||campaign.time)/60)} min ${Math.floor((campaign.activeSeconds||campaign.time)%60)} s · ${campaign.deaths||0} défaite(s) · Serment ${boon==='vigor'?'de Braise':'d’Élan'} · ${secretFound?'Marque du Reflet trouvée':'Un secret reste à découvrir'}. Expédition terminée. Le bilan permet de mesurer la durée réelle et d’affiner l’équilibrage.`:'Observez les préparations rouges, utilisez les abris et gardez votre bouclier pour les moments difficiles. Vous pouvez reprendre au dernier refuge atteint, avec votre serment.';$('#mobile').classList.remove('playing');tone(won?660:100,.4);configureCompleteEnding(won)}
 function resume(){
  if(document.hidden)return;
  if(state==='lost'){
-  restoreCampaign();
+  if(journey.level>1)restoreJourney();else{restoreCampaign();resetLocalPartyAtLeader();}
  }else if(state!=='paused')return;
  state='playing';pauseReason='';$('#pausePanel').hidden=true;
  $('#mobile').classList.add('playing');releaseMenuFocus();last=performance.now();accumulator=0;
 }
-$('#start').onclick=()=>{start();releaseMenuFocus()};
+$('#start').onclick=()=>{beginCompleteRun();releaseMenuFocus()};
 $('#pause').onclick=()=>pause('manual');
 $('#resume').onclick=resume;
-$('#back').onclick=()=>{state='menu';clearInputs();resetAvatarPose();$('#menu').hidden=false;$('#pausePanel').hidden=true;$('#hud').hidden=true;$('#controls').hidden=true;$('#mobile').classList.remove('playing');$('#notice').hidden=true;$('#bossHUD').hidden=true};
+$('#back').onclick=()=>{clearLocalParty();state='menu';refreshProfileUI();clearInputs();resetAvatarPose();$('#menu').hidden=false;$('#pausePanel').hidden=true;$('#hud').hidden=true;$('#controls').hidden=true;$('#mobile').classList.remove('playing');$('#notice').hidden=true;$('#bossHUD').hidden=true};
 document.querySelectorAll('[data-hero]').forEach(b=>b.onclick=()=>{if(state==='menu'){hero=b.dataset.hero;applyHero()}});
 applyHero();
 $('#quality').onchange=e=>{quality=e.target.value;renderer.setPixelRatio(quality==='light'?1:Math.min(devicePixelRatio||1,1.5));renderer.setSize(innerWidth,innerHeight);dust.visible=quality!=='light';art.setQuality(quality==='light');setSanctuaryQuality(quality)};
-function effect(x,z,r,color,duration=.45){const o=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.8,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.09,z);scene.add(o);effects.push({mesh:o,r,t:duration,max:duration})}
+function effect(x,z,r,color,duration=.45){if(localProfile.settings.reduced){r*=.7;duration*=.7;}const o=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.8,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.09,z);scene.add(o);effects.push({mesh:o,r,t:duration,max:duration})}
 function addHazard(x,z,r,delay,damageAmount=26,color='#ff6049'){const o=new THREE.Mesh(discGeo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.22,side:THREE.DoubleSide,depthWrite:false}));o.rotation.x=-Math.PI/2;o.position.set(x,.07,z);o.scale.setScalar(r);scene.add(o);const h={mesh:o,x,z,r,delay,max:delay,damage:damageAmount,fired:false,tail:.3};hazards.push(h);return h}
 function clearHazards(){hazards.forEach(e=>{scene.remove(e.mesh);e.mesh.material.dispose()});hazards=[]}
-function damage(e,n,source=p){if(e.dead||!trialActive(e))return;if(e.type==='shade'&&!shadeVulnerable(e)){effect(e.x,e.z,1.3,'#c6a3ff',.2);return;}if(e.type==='porter'&&enemies.some(q=>q.type==='anchor'&&!q.dead)){effect(e.x,e.z,2,'#a8cdff');return;}if(e.type==='boss'&&!campaign.bossAwake){effect(e.x,e.z,2.5,'#a3b7ff',.2);return;}
+function damage(e,n,source=p){if(e.partyOwner){battleDamage(e.partyOwner,n,source);return;}if(e.dead||!trialActive(e))return;if(e.type==='shade'&&!shadeVulnerable(e)){effect(e.x,e.z,1.3,'#c6a3ff',.2);return;}if(e.type==='porter'&&enemies.some(q=>q.type==='anchor'&&!q.dead)){effect(e.x,e.z,2,'#a8cdff');return;}if(e.type==='boss'&&!campaign.bossAwake){effect(e.x,e.z,2.5,'#a3b7ff',.2);return;}
  if(e.type==='sentinel'&&e.mode!=='recover'&&source){
   const dx=source.x-e.x,dz=source.z-e.z,d=Math.max(.01,Math.hypot(dx,dz));
   if((dx*-Math.sin(e.facing)+dz*-Math.cos(e.facing))/d>.35){
@@ -158,17 +155,17 @@ function damage(e,n,source=p){if(e.dead||!trialActive(e))return;if(e.type==='sha
    if(e.blockHint<=0){announce('La Sentinelle bloque de face. Contournez-la ou attendez sa charge.');e.blockHint=6;}
   }
  }
-if(['boss','porter'].includes(e.type)&&e.mode!=='recover')n*=.25;e.hp-=n;e.flash=.12;if(e.type!=='boss')e.alert=10;tone(e.type==='boss'?150:260,.04,'triangle',.012);if(e.hp<=0){e.dead=true;kills++;if(e.id)campaign.defeated.add(e.id);effect(e.x,e.z,e.type==='boss'?5:2,'#ffc17b');cleanupObject(e.root);if(e.type==='boss'){clearHazards();bullets.filter(b=>b.enemy).forEach(b=>scene.remove(b.mesh));bullets=bullets.filter(b=>!b.enemy);portal.visible=true;announce('Le Veilleur est vaincu. La porte du fond est ouverte.')}else if(kills%2===0)p.hp=Math.min(p.max,p.hp+8)}}
+if(['boss','porter'].includes(e.type)&&e.mode!=='recover')n*=.25;if((source?.owner||source)===p&&p.incarnateT>0)n*=1.5;if((source?.heroId||((source===p)?hero:''))==='eclipse')p.incarnation=Math.min(100,(p.incarnation||0)+n*.12);e.hp-=n;e.flash=.12;if(e.type!=='boss')e.alert=10;tone(e.type==='boss'?150:260,.04,'triangle',.012);if(e.hp<=0){e.dead=true;kills++;if(e.id)campaign.defeated.add(e.id);effect(e.x,e.z,e.type==='boss'?5:2,'#ffc17b');cleanupObject(e.root);if(e.type==='boss'){clearHazards();bullets.filter(b=>b.enemy).forEach(b=>scene.remove(b.mesh));bullets=bullets.filter(b=>!b.enemy);portal.visible=true;announce('Le Veilleur est vaincu. La porte du fond est ouverte.')}else if(kills%2===0){const recipient=source?.owner||p;recipient.hp=Math.min(recipient.max,recipient.hp+8);}}}
 function fire(){beginAttack()}
-function dash(){if(state!=='playing'||p.dash>0)return;cancelAttack();if(campaign.trials.forge.carrying)dropCore();const v=movement(),n=Math.hypot(v.x,v.z);p.dx=n?v.x/n:-Math.sin(aim);p.dz=n?v.z/n:-Math.cos(aim);p.dash=dodgeCooldown();if(boon==='haste')createDecoy();p.dashT=DODGE_DURATION;p.dashElapsed=0;p.dodgeBuffer=0;p.inv=.28;effect(p.x,p.z,1.5,'#c4abff');tone(200,.1,'sine')}
-function power(){if(state!=='playing'||p.power>0)return;cancelAttack();revealShades();if(hero==='voltigeur'&&campaign.trials.forge.carrying)dropCore();if(hero==='voltigeur'){p.power=7;p.leap=.75;p.inv=.85;p.swing=0;observeTime=0;effect(p.x,p.z,2,'#ffb964');tone(240,.2);return;}p.power=9;p.shield=3;effect(p.x,p.z,5,'#76dcff',.7);tone(110,.3,'sine');for(const e of enemies)if(!e.dead&&distance(e,p)<5){if(['boss','porter'].includes(e.type)&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2.8;announce('Préparation interrompue ! Le Veilleur est vulnérable.')}damage(e,55,null);if(e.type!=='boss'){const d=Math.max(.1,distance(e,p));moveEntity(e,(e.x-p.x)/d*1.4,(e.z-p.z)/d*1.4)}}}
+function dash(){if(state!=='playing'||p.downed||p.dash>0)return;cancelAttack();if(campaign.trials.forge.carrying)dropCore();const v=movement(),n=Math.hypot(v.x,v.z);p.dx=n?v.x/n:-Math.sin(aim);p.dz=n?v.z/n:-Math.cos(aim);p.dash=dodgeCooldown();if(boon==='haste')createDecoy();p.dashT=DODGE_DURATION;p.dashElapsed=0;p.dodgeBuffer=0;p.inv=.28;effect(p.x,p.z,1.5,'#c4abff');tone(200,.1,'sine')}
+function power(){if(state!=='playing'||p.downed||battle?.crownOwner===p||(p.power>0&&!(hero==='voleur'&&classEffects.some(f=>f.kind==='double'&&f.owner===p)&&!(p.doubleSwapLock>0))))return;cancelAttack();revealShades();if(!['rempart','voltigeur'].includes(hero)){castClassPower(p,hero,aim);return;}if(hero==='voltigeur'&&campaign.trials.forge.carrying)dropCore();if(hero==='voltigeur'){p.power=7;p.leap=.75;p.inv=.85;p.swing=0;observeTime=0;effect(p.x,p.z,2,'#ffb964');tone(240,.2);return;}p.power=9;p.shield=3;effect(p.x,p.z,5,'#76dcff',.7);tone(110,.3,'sine');for(const e of enemies)if(!e.dead&&distance(e,p)<5){if(['boss','porter'].includes(e.type)&&e.mode==='windup'){clearHazards();e.mode='recover';e.timer=2.8;announce('Préparation interrompue ! Le Veilleur est vulnérable.')}damage(e,55,null);if(e.type!=='boss'){const d=Math.max(.1,distance(e,p));moveEntity(e,(e.x-p.x)/d*1.4,(e.z-p.z)/d*1.4)}}}
 function hurt(n){
  if(state!=='playing')return;
- if(p.shield>0||(hero==='voltigeur'&&p.leap>0)){
+ if(p.shield>0||(p.leap>0)){
   if(boon==='vigor'&&p.absorbLock<=0){p.overcharge=Math.min(3,p.overcharge+1);p.absorbLock=.35;effect(p.x,p.z,2.1,'#91ecff',.25);tone(580,.08,'sine')}
   return;
  }
- if(p.inv>0||p.dashT>0)return;if(campaign.trials.forge.carrying)dropCore();p.stagger=.2;cancelAttack();p.hp=Math.max(0,p.hp-n);p.inv=.65;observeTime=0;effect(p.x,p.z,1.6,'#ff564b');tone(70,.15,'triangle');$('#damageFlash').classList.remove('hit');void $('#damageFlash').offsetWidth;$('#damageFlash').classList.add('hit');if(p.hp<=0)finish(false)}
+ if(p.inv>0||p.dashT>0)return;if(battle?.crownOwner===p)dropCrown();if(campaign.trials.forge.carrying)dropCore();p.stagger=.2;cancelAttack();n*=p.formT>0?.55:p.incarnateT>0?.5:p.wardT>0?.6:p.fragileT>0?1.5:1;p.hp=Math.max(0,p.hp-n);p.inv=.65;observeTime=0;effect(p.x,p.z,1.6,'#ff564b');tone(70,.15,'triangle');if(!localProfile.settings.reduced){$('#damageFlash').classList.remove('hit');void $('#damageFlash').offsetWidth;$('#damageFlash').classList.add('hit');}if(p.hp<=0){if(battle){p.downed=true;p.respawn=5;if(battle.crownOwner===p)dropCrown();}else if(localParty.some(a=>!a.downed)){p.downed=true;announce('À terre · un compagnon peut vous relever en maintenant son interaction près de vous.');}else finish(false)}}
 // Melee respects facing and cover; it never damages through a wall.
 function clearStrikeLine(x,z){
  const d=Math.hypot(x-p.x,z-p.z),steps=Math.max(1,Math.ceil(d/.3));
@@ -182,10 +179,11 @@ function landLeap(){
   damage(e,95,null);
  }
 }
-function movement(){return{x:joy.x+Number(keys.has('d')||keys.has('arrowright'))-Number(keys.has('a')||keys.has('q')||keys.has('arrowleft')),z:joy.y+Number(keys.has('s')||keys.has('arrowdown'))-Number(keys.has('w')||keys.has('z')||keys.has('arrowup'))}}
+function movement(){const arrows=selectedMode()==='solo';const pad=primaryPadMovement();return{x:joy.x+pad.x+Number(keys.has('d')||arrows&&keys.has('arrowright'))-Number(keys.has('a')||keys.has('q')||arrows&&keys.has('arrowleft')),z:joy.y+pad.z+Number(keys.has('s')||arrows&&keys.has('arrowdown'))-Number(keys.has('w')||keys.has('z')||arrows&&keys.has('arrowup'))}}
 function spawn(x,z,type='warden'){const root=new THREE.Group();scene.add(root);const robe=mesh(enemyRobeGeo,type==='boss'?enemyArmor:dark,0,.9,0,1,1,1,root);mesh(sphereGeo,joint,0,1.7,0,.4,.4,.4,root);box(type==='archer'?cyan:red,0,1.7,-.35,.45,.09,.1,root);const armBones=[];for(const x of [-.5,.5]){const a=new THREE.Group();a.position.set(x,1.45,0);root.add(a);mesh(cylGeo,joint,0,-.3,0,.13,.65,.13,a);armBones.push(a);}if(type==='oracle'){const crown=mesh(new THREE.TorusGeometry(.65,.08,6,16),cyan,0,2.2,0,1,1,1,root);crown.rotation.x=Math.PI/2;crown.userData.ownedGeometry=true;}if(type==='archer')box(cyan,.6,1.2,-.4,.14,.8,.14,root);if(type==='boss'){root.scale.setScalar(2.2);for(const x of [-.6,.6])box(bronze,x,1.65,0,.4,.4,.5,root);const crown=mesh(new THREE.TorusGeometry(.45,.08,6,16),gold,0,2.3,0,1,1,1,root);crown.rotation.x=Math.PI/2;crown.userData.ownedGeometry=true}root.position.set(x,0,z);const e={root,robe,rig:{arms:armBones},x,z,hp:type==='boss'?700:80,max:type==='boss'?700:80,type,mode:'idle',timer:1.2,dead:false,flash:0};if(type==='archer'){e.sight=box(new THREE.MeshBasicMaterial({color:'#ff7154',transparent:true,opacity:.45,depthWrite:false}),0,.04,-7,.055,.02,14,root);e.sight.userData.ownedMaterial=true;e.sight.visible=false;}if(type!=='boss'){const health=new THREE.Sprite(new THREE.SpriteMaterial({color:'#f5a391',depthTest:false}));health.position.set(0,2.5,0);health.scale.set(1.2,.07,1);health.visible=false;health.userData.ownedMaterial=true;root.add(health);e.healthBar=health;}if(type==='shade'){e.hp=e.max=120;e.reveal=0;e.phaseOffset=Math.random()*6;e.robe.material=cloth.clone();e.robe.material.transparent=true;e.robe.userData.ownedMaterial=true;}if(type==='porter'){e.hp=e.max=380;e.root.scale.setScalar(1.6);}if(type==='anchor'){e.hp=e.max=65;root.children.forEach(c=>c.visible=c===e.robe||c===e.healthBar);e.robe.geometry=new THREE.OctahedronGeometry(.8);e.robe.material=cyan;e.robe.userData.ownedGeometry=true;e.robe.position.y=1.5;}if(type==='oracle')e.hp=e.max=110;if(type==='sentinel'){e.hp=e.max=160;e.facing=Math.PI;e.blockHint=0;e.plate=box(bronze,0,1.3,-.65,1.25,1.7,.25,root);box(runeGold,0,1.3,-.79,.65,.75,.03,root);}dressEnemy(e);e.approachSide=enemies.length%2?1:-1;root.traverse(o=>{if(o.isMesh&&!o.userData.ownedMaterial)o.castShadow=true;});enemies.push(e);return e}
 function enemyShot(e,angle,speed=7){const dx=-Math.sin(angle),dz=-Math.cos(angle),o=mesh(sphereGeo,red,e.x,1.25,e.z,.23,.23,.23);bullets.push({mesh:o,x:e.x,z:e.z,dx,dz,t:5,enemy:true,speed})}
 function updateBoss(e,dt){
+ if(journey.level>1){updateJourneyBoss(e,dt);return;}
  if(e.dead)return;e.timer-=dt;e.root.rotation.y=Math.atan2(e.x-p.x,e.z-p.z);
  const next=e.hp<e.max*.3?3:e.hp<e.max*.65?2:1;
  if(next>e.phase){e.phase=next;announce(next===2?'Le Veilleur appelle deux Oracles. Vous pouvez les éliminer pour libérer la cour.':'Dernière sonnerie : les fissures se croisent. Gardez une esquive pour la seconde marque.');effect(e.x,e.z,6,'#ffb16b',.8);}
@@ -240,7 +238,7 @@ function ringBell(){
  boss.mode='recover';boss.timer=4;effect(bell.x,bell.z,14,'#f5cf8f',1);tone(440,.8,'sine',.045);
  announce('La cloche impose le silence : 4 secondes pour approcher et frapper. Elle ne peut sonner qu’une fois.');
 }
-function updateEnemy(e,dt){if(e.dead||!trialActive(e))return;if(e.type==='anchor')return;if(e.type==='shade'){updateShade(e,dt);return;}if(e.type==='porter'){if(distance(e,p)<24)updatePorter(e,dt);return;}e.alert=Math.max(0,(e.alert||0)-dt);if(e.type==='boss'&&!campaign.bossAwake)return;if(e.type!=='boss'&&distance(e,p)>26&&e.alert<=0)return;if(e.type!=='boss'&&!perceiveEnemy(e,dt))return;if(e.type==='oracle'){updateOracle(e,dt);return;}if(e.type==='boss'){updateBoss(e,dt);return}if(e.type==='sentinel'){updateSentinel(e,dt);return}e.timer-=dt;const target=enemyTarget(e),d=distance(e,target);e.root.rotation.y=Math.atan2(e.x-target.x,e.z-target.z);
+function updateEnemy(e,dt){if(e.type==='duelist')return;if(e.dead||!trialActive(e))return;if(e.type==='anchor')return;if(e.type==='shade'){updateShade(e,dt);return;}if(e.type==='porter'){if(distance(e,p)<24)updatePorter(e,dt);return;}e.alert=Math.max(0,(e.alert||0)-dt);if(e.type==='boss'&&!campaign.bossAwake)return;if(e.type!=='boss'&&distance(e,p)>26&&e.alert<=0)return;if(e.type!=='boss'&&!perceiveEnemy(e,dt))return;if(e.type==='oracle'){updateOracle(e,dt);return;}if(e.type==='boss'){updateBoss(e,dt);return}if(e.type==='sentinel'){updateSentinel(e,dt);return}e.timer-=dt;const target=enemyTarget(e),d=distance(e,target);e.root.rotation.y=Math.atan2(e.x-target.x,e.z-target.z);
 if(e.mode==='windup'){if(e.timer<=0){if(e.type==='archer'){enemyShot(e,e.lockAngle);effect(e.x,e.z,1,'#85d9ff',.2)}e.mode='recover';e.timer=1.1}}
 else if(e.mode==='recover'){if(e.timer<=0){e.mode='idle';e.timer=.5}}
 else if(e.timer<=0&&d<(e.type==='archer'?17:4)&&(e.type!=='warden'||canCommitMelee(e))){e.mode='windup';e.timer=e.type==='archer'?1.1:.9;if(e.type==='archer'){e.lockAngle=Math.atan2(e.x-target.x,e.z-target.z);effect(e.x,e.z,1.4,'#85d9ff',1.1)}else addHazard(e.x,e.z,2.6,.85,22)}
@@ -249,7 +247,7 @@ if(e.sight){e.sight.visible=e.mode==='windup';if(e.mode==='windup')e.root.rotati
 // Pact effects are mechanical changes, with explicit trade-offs.
 function chooseBoon(value){
  if(boon||!['vigor','haste'].includes(value))return;
- boon=value;
+ boon=value;applyPartyPact(value);
  if(value==='vigor'){p.max=HEROES[hero].hp+40;p.hp=p.max}else{p.max=HEROES[hero].hp-30;p.hp=Math.min(p.hp,p.max)}
  shrines.forEach(s=>s.root.visible=false);
  announce(value==='vigor'?'Braise : les impacts absorbés par votre pouvoir chargent votre prochaine attaque. Esquive plus lente. Les portes des deux chemins sont ouvertes.':'Élan : vos esquives laissent un leurre. Vous êtes plus fragile. Les portes des deux chemins sont ouvertes.');
@@ -264,8 +262,9 @@ function createDecoy(){
  mesh(sphereGeo,material,0,2,0,.3,.3,.3,root);
  decoy={root,x:p.x,z:p.z,t:1.8,material};effect(p.x,p.z,1.5,'#c7abff',.4);
 }
-function enemyTarget(e){return decoy&&decoy.t>0&&distance(e,decoy)<17?decoy:p}
+function enemyTarget(e){if(journey.level===3&&journey.step===4&&e.sabotage)return{x:0,z:-73};if(decoy&&decoy.t>0&&distance(e,decoy)<17)return decoy;return [p,...localParty].filter(a=>!a.downed).sort((a,b)=>distance(a,e)-distance(b,e))[0]||p;}
 function interactionTarget(){
+ if(battle)return battle.mode==='crown'&&(battle.crownOwner===p||!battle.crownOwner&&Math.hypot(p.x-battle.crown.position.x,p.z-battle.crown.position.z)<2)?{type:'crown',label:battle.crownOwner===p?'Passer ou poser la couronne':'Prendre la couronne'}:null;if(journey.level>1)return journeyInteraction();
  const trial=trialTarget();if(trial)return trial;
  if(room===2&&bell&&!bell.used&&boss&&!boss.dead&&distance(p,bell)<2.7)return{type:'bell',label:'Sonner · 1 usage'};
  if(!boon){for(let i=0;i<shrines.length;i++)if(distance(p,shrines[i])<2.7)return{type:'pact',value:i===0?'vigor':'haste',label:'Examiner le serment'};}
@@ -275,7 +274,7 @@ function interactionTarget(){
 function openPact(value){
  if(state!=='playing'||boon)return;
  pendingPact=value;state='choice';clearTimeout(pactConfirmTimer);$('#sealPact').disabled=true;pactConfirmTimer=setTimeout(()=>{if(state==='choice')$('#sealPact').disabled=false;},250);clearInputs();$('#choicePanel').hidden=false;$('#mobile').classList.remove('playing');$('#interact').hidden=true;
- const heavy=value==='vigor',isLight=hero==='voltigeur';
+ const heavy=value==='vigor',isLight=isMeleeHero();
  $('#pactTitle').textContent=heavy?'Serment de Braise':'Serment d’Élan';
  $('#pactGift').textContent=heavy?`${HEROES[hero].hp+40} PV maximum. Les impacts absorbés ${isLight?'pendant le bond':'par le bouclier'} renforcent la prochaine ${isLight?'frappe':'attaque'}, jusqu’à trois charges.`:`L’esquive se recharge en ${Math.max(.8,HEROES[hero].dash*.583333).toFixed(2).replace('.',',')} seconde et laisse une ombre de 1,8 seconde qui détourne les ennemis.`;
  $('#pactCost').textContent=heavy?`L’esquive se recharge en ${(HEROES[hero].dash+.6).toFixed(hero==='rempart'?1:2).replace('.',',')} secondes.`:`Corps fragile : vos PV maximum passent à ${HEROES[hero].hp-30}.`;
@@ -290,7 +289,7 @@ function closePact(confirm){
 $('#sealPact').onclick=()=>closePact(true);$('#leavePact').onclick=()=>closePact(false);
 function interact(){
  if(state!=='playing')return;const target=interactionTarget();if(!target)return;
- if(!['pact','bell','mirror'].includes(target.type)){trialInteract(target);return;}if(target.type==='pact')openPact(target.value);else if(target.type==='bell')ringBell();else observing=true;
+ if(target.type==='journey'){performJourneyInteraction(target);return;}if(target.type==='crown'){crownInteract();return;}if(!['pact','bell','mirror'].includes(target.type)){trialInteract(target);return;}if(target.type==='pact')openPact(target.value);else if(target.type==='bell')ringBell();else observing=true;
 }
 $('#interact').onpointerdown=e=>{
  e.preventDefault();if(state!=='playing')return;interactId=e.pointerId;
@@ -310,7 +309,7 @@ function updateInteraction(){
  const target=state==='playing'?interactionTarget():null;
  $('#interact').hidden=!target;document.body.classList.toggle('has-interaction',!!target);
  if(target)$('#interact').textContent=target.type==='mirror'&&observing?`Observer · ${Math.min(100,Math.floor(observeTime/1.5*100))}%`:(coarse()?'':'F · ')+target.label;
- $('#pactStatus').textContent=!boon?'Serment : à choisir':boon==='vigor'?`Braise · charges ${p.overcharge}/3`:'Élan · leurre à chaque esquive';
+ $('#pactStatus').textContent=battle?'Arène · aucun serment':!boon?'Serment : à choisir':boon==='vigor'?`Braise · charges ${p.overcharge}/3`:'Élan · leurre à chaque esquive';
  $('#secretStatus').textContent=secretFound?'✧ Marque du Reflet retrouvée':'';
 }
 function buildMirror(x=-23,z=-29){
@@ -322,7 +321,7 @@ function buildMirror(x=-23,z=-29){
  label('REFLET',x,z,'#bba8e2',3);
 }
 function findSecret(){
- if(secretFound)return;secretFound=true;secretNewThisRun=true;observing=false;observeTime=0;
+ if(secretFound)return;recordSecret(0);secretFound=true;secretNewThisRun=true;observing=false;observeTime=0;
  try{localStorage.setItem(SECRET_KEY,'found')}catch(_){}
  effect(secretMirror.x,secretMirror.z,3,'#baa0ff',1);tone(860,.3);announce('Marque du Reflet retrouvée. Le Veilleur la reconnaîtra : ses préparations seront plus lentes. C’est un premier indice vers l’Éclipse.');
 }
@@ -334,27 +333,28 @@ function updateDesign(dt){
  else observeTime=0;
  updateInteraction();
 }
-function updateRoom(dt){return updateCampaign(dt)}
+function updateRoom(dt){if(battle)return false;if(journey.level>1)return updateJourney(dt);return updateCampaign(dt)}
 function updateHUD(){
+ if(journey.level>1||battle){updateCompleteHUD();return;}
  $('#hp i').style.width=p.hp/p.max*100+'%';
  const q=campaign.trials;
  $('#objective').textContent=!boon?'I · Choisir un serment':campaign.keys.size<2?`II · Âme ${q.escort.done?'✓':'à guider'} · Carillon ${q.bells.done?'✓':q.bells.step+'/3'}`:!q.archive||!q.forge.done?`III · Archives ${q.archive?'✓':'à purifier'} · Forge ${q.forge.done?'✓':q.forge.carrying?'noyau à rapporter':q.forge.valves.length+'/3 vannes'}`:q.ritual.length<2?`IV · Charger les sceaux ${q.ritual.length}/2`:!campaign.defeated.has('carillonneur')?'V · Briser les chaînes et vaincre le Carillonneur':q.extraction?`VII · Extraction · ${Math.ceil(campaign.escapeLeft)} s`:'VI · Affronter le Veilleur';
  const active=campaign.activeSeconds||campaign.time;$('#runClock').textContent=`${Math.floor(active/60)}:${String(Math.floor(active%60)).padStart(2,'0')} · cible 10–15 min`;
  $('#cooldown').textContent=`${Math.ceil(p.hp)}/${p.max} PV · Esquive ${p.dash>0?p.dash.toFixed(1)+' s':'prête'} · ${HEROES[hero].powerName} ${(p.shield>0||p.leap>0)?'ACTIF':p.power>0?Math.ceil(p.power)+' s':'prêt'}`;
  $('#power').textContent=(p.shield>0||p.leap>0)?'Actif':p.power>0?Math.ceil(p.power)+' s':HEROES[hero].powerName;
- $('#fire').textContent=hero==='voltigeur'?'Frapper':'Tirer';$('#heroIdentity').textContent=HEROES[hero].name;
+ $('#fire').textContent=isMeleeHero()?'Frapper':'Tirer';$('#heroIdentity').textContent=HEROES[hero].name;
  $('#combatHint').textContent=p.attack?.melee?`Enchaînement ${p.attack.combo}/3 · ${p.attack.struck?'récupération':'préparation'}`:'';
  const zone=world.zoneAt(p.x,p.z);
  $('#roomHint').textContent=q.extraction?'Rejoignez l’âme à la croisée.':zone==='Jardins suspendus'&&!q.escort.done?(q.escort.started?'Restez près de l’âme ; libérez ses passages.':'Approchez l’âme et accueillez-la.'):zone==='Cloître des cendres'&&!q.bells.done?(q.bells.read?q.bells.order.join(' → '):'La fresque révèle l’ordre des lanternes.'):zone==='Archives du Reflet'&&!q.archive?'Frappez les Reflets matérialisés ; le pouvoir les révèle.':zone==='Forge du brasier'&&!q.forge.done?(q.forge.carrying?'Retour au refuge · attaquer pose le noyau.':'Fermez les vannes, puis rapportez le noyau.'):zone==='Nef des marées'&&q.ritual.length===2&&!campaign.defeated.has('carillonneur')?'Les deux chaînes protègent le Carillonneur.':'';$('#dash').textContent=p.dash>0?p.dash.toFixed(1):'Esquive';
  $('#bossHUD').hidden=!campaign.bossAwake||!boss||boss.dead;document.body.classList.toggle('has-boss',!$('#bossHUD').hidden);
  if(boss&&!boss.dead){$('#bossHP').style.width=Math.max(0,boss.hp/boss.max*100)+'%';$('#bossState').textContent=boss.mode==='recover'?'VULNÉRABLE · attaquez !':boss.mode==='windup'?'PRÉPARATION · esquivez':'GARDE · dégâts réduits';}
-}
-function update(dt){if(hitPause>0){hitPause=Math.max(0,hitPause-dt);return;}t+=dt;updateSparks(dt);const wasLeaping=p.leap>0;for(const k of ['stagger','leap','swing','comboWindow','shot','dash','dashT','power','shield','inv','absorbLock'])p[k]=Math.max(0,p[k]-dt);p.recoil=Math.max(0,p.recoil-dt*7);if(wasLeaping&&p.leap===0)landLeap();const v=movement(),n=Math.hypot(v.x,v.z),deadzone=.12;let x=n<deadzone?0:v.x,z=n<deadzone?0:v.z;if(n>deadzone){const magnitude=Math.min(1,(n-deadzone)/(1-deadzone));x=x/n*magnitude;z=z/n*magnitude;}const response=1-Math.exp(-dt*(n>deadzone?18:26));const engagement=p.attack?.melee?(p.attack.struck?.72:.55):p.attack&&p.attack.elapsed<.1?.8:1;const carry=(campaign.trials.forge.carrying?.72:1)*engagement;p.vx+=(x*HEROES[hero].speed*carry-p.vx)*response;p.vz+=(z*HEROES[hero].speed*carry-p.vz)*response;if(p.dodgeBuffer>t&&p.dash<=0)dash();const oldPX=p.x,oldPZ=p.z;advanceHeroMotion(dt);p.motionSpeed=Math.hypot(p.x-oldPX,p.z-oldPZ)/dt;
+updateClassMeters();}
+function update(dt){pollPrimaryGamepad();if(hitPause>0){hitPause=Math.max(0,hitPause-dt);return;}t+=dt;updateSparks(dt);const wasLeaping=p.leap>0;for(const k of ['stagger','leap','swing','comboWindow','shot','dash','dashT','power','shield','inv','absorbLock'])p[k]=Math.max(0,p[k]-dt);p.recoil=Math.max(0,p.recoil-dt*7);if(wasLeaping&&p.leap===0)landLeap();const v=movement(),n=Math.hypot(v.x,v.z),deadzone=.12;let x=p.downed?0:n<deadzone?0:v.x,z=p.downed?0:n<deadzone?0:v.z;if(n>deadzone&&!p.downed){const magnitude=Math.min(1,(n-deadzone)/(1-deadzone));x=x/n*magnitude;z=z/n*magnitude;}const response=1-Math.exp(-dt*(n>deadzone?18:26));const engagement=p.attack?.melee?(p.attack.struck?.72:.55):p.attack&&p.attack.elapsed<.1?.8:1;const carry=(campaign.trials.forge.carrying?.72:1)*engagement;p.vx+=(x*HEROES[hero].speed*carry-p.vx)*response;p.vz+=(z*HEROES[hero].speed*carry-p.vz)*response;if(p.dodgeBuffer>t&&p.dash<=0)dash();const oldPX=p.x,oldPZ=p.z;advanceHeroMotion(dt);p.motionSpeed=Math.hypot(p.x-oldPX,p.z-oldPZ)/dt;
 if(coarse()){const target=enemies.filter(e=>!e.dead&&trialActive(e)&&(e.type!=='shade'||shadeVulnerable(e))&&distance(e,p)<16&&(e.type!=='boss'||campaign.bossAwake)&&cameraVisibleTarget(e)&&clearStrikeLine(e.x,e.z)).sort((a,b)=>distance(a,p)-distance(b,p))[0];if(target)targetAim=Math.atan2(p.x-target.x,p.z-target.z);else if(n>deadzone)targetAim=Math.atan2(-x,-z);reticle.visible=false}else{reticle.visible=mouseAim;if(mouseAim){ray.setFromCamera(pointer,camera);if(ray.ray.intersectPlane(ground,aimPoint)){targetAim=Math.atan2(p.x-aimPoint.x,p.z-aimPoint.z);reticle.position.set(aimPoint.x,.07,aimPoint.z)}}else if(n>deadzone)targetAim=Math.atan2(-x,-z)}
-aim+=wrap(targetAim-aim)*(1-Math.exp(-dt*20));const speed=p.motionSpeed;walkPhase+=(p.dashT>0?12:speed)*dt*1.9;player.root.rotation.x=p.dashT>0?-.22*(p.dx*-Math.sin(aim)+p.dz*-Math.cos(aim)):0;const jumpHeight=p.leap>0?Math.sin((1-p.leap/.75)*Math.PI)*3.2:0;player.root.position.set(p.x,jumpHeight+(avatarRuntime.status==='ready'?0:Math.abs(Math.sin(walkPhase))*Math.min(.035,speed*.006)),p.z);player.root.rotation.y=aim;player.legs.forEach((leg,i)=>leg.rotation.x=Math.sin(walkPhase+i*Math.PI)*.42*Math.min(1,speed/3));player.arms.forEach((a,i)=>a.rotation.x=hero==='rempart'&&i===1?1.2+p.recoil*.1:Math.sin(walkPhase+i*Math.PI)*.28*Math.min(1,speed/3));player.body.rotation.x=-p.recoil*.09;player.root.rotation.z=Math.sin(walkPhase)*.025*Math.min(1,speed/3);muzzle.visible=hero==='rempart'&&p.recoil>.65&&!campaign.trials.forge.carrying;muzzle.material.opacity=Math.min(.95,p.recoil);slash.visible=hero==='voltigeur'&&p.swing>0;slashMaterial.opacity=p.swing/.28*.85;slash.rotation.z=(p.combo%2?1:-1)*(1-p.swing/.28)*.65;player.sword.rotation.z=p.swing>0?-1+(1-p.swing/.28)*2:.1;player.scarf.rotation.x=-.45-speed*.025+Math.sin(walkPhase*.7)*.08;player.cape.rotation.x=.12+speed*.035+Math.sin(walkPhase*.6)*.05;landingMarker.visible=p.leap>0;landingMarker.position.set(p.x,.08,p.z);shield.visible=p.shield>0;shield.rotation.y+=dt;player.body.material=p.inv>0?bronze:hero==='voltigeur'?cloth:armor;heroShadow.position.set(p.x,.035,p.z);heroShadow.scale.setScalar(1+jumpHeight*.18);heroShadow.material.opacity=.5/(1+jumpHeight*1.4);trailTimer-=dt;if(p.dashT>0&&trailTimer<=0){effect(p.x,p.z,.8,'#baa4ef',.25);trailTimer=.055}carriedCore.visible=campaign.trials.forge.carrying;poseHero(dt);if(shooting||mouseDown||p.attackBuffer>t)fire();updateAttack(dt);
-for(const e of enemies){e.root.visible=trialActive(e)&&distance(e,p)<52;e.flash=Math.max(0,e.flash-dt);updateEnemy(e,dt);poseEnemy(e);e.root.rotation.z=e.flash>0?Math.sin(t*75)*.06:0;if(e.healthBar){e.healthBar.visible=e.hp<e.max;e.healthBar.scale.x=1.2*Math.max(0,e.hp/e.max);}}
-resolveActorContacts(dt);for(const b of bullets){const oldX=b.x,oldZ=b.z;b.x+=b.dx*(b.enemy?b.speed:32)*dt;b.z+=b.dz*(b.enemy?b.speed:32)*dt;b.t-=dt;b.mesh.position.set(b.x,b.y??1.35,b.z);if(blocked(b.x,b.z,.1,true)){b.t=0;effect(b.x,b.z,.6,b.enemy?'#ff8065':'#ffc17b',.2)}if(b.t>0){if(b.enemy){if(distance(b,p)<.8){hurt(14);b.t=0}}else for(const e of enemies)if(!e.dead&&distance(e,b)<(e.type==='boss'?1.7:.85)){const previousHP=e.hp;damage(e,b.damage||34,{x:oldX,z:oldZ});if(e.hp<previousHP)sparks(e.x,e.z);b.t=0;effect(b.x,b.z,.9,'#ffd292',.18);break}}if(b.t<=0){scene.remove(b.mesh)}}bullets=bullets.filter(b=>b.t>0);enemies=enemies.filter(e=>!e.dead);
-for(const h of hazards){h.delay-=dt;if(h.delay<=0&&!h.fired){h.fired=true;h.mesh.material.opacity=.85;if(h.damage>0&&distance(p,h)<h.r+.3)hurt(h.damage);effect(h.x,h.z,h.r,'#ff6542',.35)}if(h.fired)h.tail-=dt;else h.mesh.material.opacity=.16+(1-h.delay/h.max)*.3}hazards=hazards.filter(h=>{if(h.tail<=0){scene.remove(h.mesh);h.mesh.material.dispose();return false}return true});
+if(primaryPadAim!==null)targetAim=primaryPadAim;aim+=wrap(targetAim-aim)*(1-Math.exp(-dt*20));const speed=p.motionSpeed;walkPhase+=(p.dashT>0?12:speed)*dt*1.9;player.root.rotation.x=p.dashT>0?-.22*(p.dx*-Math.sin(aim)+p.dz*-Math.cos(aim)):0;const jumpHeight=p.leap>0?Math.sin((1-p.leap/.75)*Math.PI)*3.2:0;player.root.position.set(p.x,jumpHeight+(avatarRuntime.status==='ready'?0:Math.abs(Math.sin(walkPhase))*Math.min(.035,speed*.006)),p.z);player.root.rotation.y=aim;player.legs.forEach((leg,i)=>leg.rotation.x=Math.sin(walkPhase+i*Math.PI)*.42*Math.min(1,speed/3));player.arms.forEach((a,i)=>a.rotation.x=isRifleHero()&&i===1?1.2+p.recoil*.1:Math.sin(walkPhase+i*Math.PI)*.28*Math.min(1,speed/3));player.body.rotation.x=-p.recoil*.09;player.root.rotation.z=Math.sin(walkPhase)*.025*Math.min(1,speed/3);muzzle.visible=isRifleHero()&&p.recoil>.65&&!campaign.trials.forge.carrying;muzzle.material.opacity=Math.min(.95,p.recoil);slash.visible=isMeleeHero()&&p.swing>0;slashMaterial.opacity=p.swing/.28*.85;slash.rotation.z=(p.combo%2?1:-1)*(1-p.swing/.28)*.65;player.sword.rotation.z=p.swing>0?-1+(1-p.swing/.28)*2:.1;player.scarf.rotation.x=-.45-speed*.025+Math.sin(walkPhase*.7)*.08;player.cape.rotation.x=.12+speed*.035+Math.sin(walkPhase*.6)*.05;landingMarker.visible=p.leap>0;landingMarker.position.set(p.x,.08,p.z);shield.visible=p.shield>0;shield.rotation.y+=dt;player.body.material=p.inv>0?bronze:isMeleeHero()?cloth:armor;heroShadow.position.set(p.x,.035,p.z);heroShadow.scale.setScalar(1+jumpHeight*.18);heroShadow.material.opacity=.5/(1+jumpHeight*1.4);trailTimer-=dt;if(p.dashT>0&&trailTimer<=0){effect(p.x,p.z,.8,'#baa4ef',.25);trailTimer=.055}carriedCore.visible=campaign.trials.forge.carrying;poseHero(dt);if(p.downed)player.root.rotation.z=1.15;if(shooting||mouseDown||primaryPadFire||p.attackBuffer>t)fire();updateAttack(dt);updateClassAbilities(dt);updateLocalParty(dt);
+for(const e of enemies){e.root.visible=!e.dead&&trialActive(e)&&distance(e,p)<52;e.flash=Math.max(0,e.flash-dt);updateEnemy(e,dt);poseEnemy(e);e.root.rotation.z=e.flash>0?Math.sin(t*75)*.06:0;if(e.healthBar){e.healthBar.visible=e.hp<e.max;e.healthBar.scale.x=1.2*Math.max(0,e.hp/e.max);}}
+resolveActorContacts(dt);for(const b of bullets){const oldX=b.x,oldZ=b.z;b.x+=b.dx*(b.enemy?b.speed:32)*dt;b.z+=b.dz*(b.enemy?b.speed:32)*dt;b.t-=dt;if(b.arcStart){b.travelled=(b.travelled||0)+32*dt;b.y=1.35+(b.arcStart-1.35)*Math.exp(-b.travelled*.8);}b.mesh.position.set(b.x,b.y??1.35,b.z);if(blocked(b.x,b.z,.1,true)){b.t=0;effect(b.x,b.z,.6,b.enemy?'#ff8065':'#ffc17b',.2)}if(b.t>0){if(b.partyShot&&battle){hitBattleProjectile(b);}else if(b.enemy){if(hitPartyProjectile(b)){}else if(distance(b,p)<.8){hurt(14);b.t=0}}else for(const e of enemies)if(!e.dead&&distance(e,b)<(e.type==='boss'?1.7:.85)){const previousHP=e.hp;damage(e,b.damage||34,{x:oldX,z:oldZ,heroId:b.heroId||hero,owner:b.owner||p});if(e.hp<previousHP)sparks(e.x,e.z);b.t=0;effect(b.x,b.z,.9,'#ffd292',.18);break}}if(b.t<=0){scene.remove(b.mesh)}}bullets=bullets.filter(b=>b.t>0);enemies=enemies.filter(e=>!e.dead);
+for(const h of hazards){h.delay-=dt;if(h.delay<=0&&!h.fired){h.fired=true;h.mesh.material.opacity=.85;if(h.damage>0&&distance(p,h)<h.r+.3)hurt(h.damage);if(h.damage>0){hurtPartyFromHazard(h);onJourneyHazard(h);}effect(h.x,h.z,h.r,'#ff6542',.35)}if(h.fired)h.tail-=dt;else h.mesh.material.opacity=.16+(1-h.delay/h.max)*.3}hazards=hazards.filter(h=>{if(h.tail<=0){scene.remove(h.mesh);h.mesh.material.dispose();return false}return true});
 for(const e of effects){e.t-=dt;e.mesh.scale.setScalar(Math.max(.01,e.r*(1-e.t/e.max)));e.mesh.material.opacity=Math.max(0,e.t/e.max)}effects=effects.filter(e=>{if(e.t<=0){scene.remove(e.mesh);e.mesh.material.dispose();return false}return true});for(const s of shrines){s.crystal.rotation.y+=dt;s.crystal.position.y=1.8+Math.sin(t*2)*.15}updateDesign(dt);if(state==='playing')updateRoom(dt);updateHUD()}
 // Focus changes are not a reliable indication of leaving the game on mobile.
 // Clear desktop inputs on blur; only real page visibility changes auto-pause.
@@ -365,7 +365,7 @@ addEventListener('keydown',e=>{
  const k=e.key.toLowerCase();
  if(k==='escape'&&state==='map'&&!e.repeat){e.preventDefault();toggleMap();return;}
  if(k==='m'&&state==='playing'&&!e.repeat){e.preventDefault();toggleMap();return;}
- if(k==='escape'&&state==='choice'&&!e.repeat){e.preventDefault();closePact(false);return;}
+ if(k==='escape'&&state==='choice'&&!e.repeat){e.preventDefault();if(!$('#journeyChoice').hidden){$('#journeyChoice').hidden=true;state='playing';releaseMenuFocus();return;}closePact(false);return;}
  if(k==='escape'&&!e.repeat){
   if(state==='paused'){e.preventDefault();resume()}
   else if(state==='playing'){e.preventDefault();pause('manual')}
@@ -391,4 +391,4 @@ let lastRenderedState=null;
 function frame(now){const rawElapsed=(now-(last||now))/1000,elapsed=Math.min(.1,rawElapsed);last=now;if(state==='playing'&&campaign)campaign.activeSeconds+=Math.max(0,rawElapsed);if(state==='playing'){accumulator+=elapsed;while(accumulator>=1/60&&state==='playing'){update(1/60);accumulator-=1/60}}else accumulator=0;
 if(!['playing','menu'].includes(state)&&lastRenderedState===state){requestAnimationFrame(frame);return;}
 if(state!=='playing')$('#interact').hidden=true;if(state==='menu'&&avatarRuntime.current)avatarRuntime.current.mixer.update(elapsed);
-if(p){const portrait=innerWidth<innerHeight;camDesired.set(p.x+p.vx*.06,portrait?9.2:6.7,p.z+(portrait?12.8:10.8));camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(p.x+p.vx*.08,portrait?1.8:1.6,p.z-(portrait?4:5)+p.vz*.08);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);updateStageCraft(elapsed);updateArtDirection(elapsed);updateSanctuary(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);lastRenderedState=state;if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}initCombatMotion();initStageCraft();initArtDirection();initSanctuary();wireCampaignUI();wireArtDirectionUI();$('#quality').value=quality;$('#quality').onchange({target:$('#quality')});loadAuthoredHeroes();requestAnimationFrame(frame);
+if(p){const portrait=innerWidth<innerHeight,group=localParty.length?partyCameraCenter():{x:p.x,z:p.z,radius:0};camDesired.set(group.x+p.vx*.06,(portrait?9.2:6.7)+group.radius*1.1,group.z+(portrait?12.8:10.8)+group.radius*.9);camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(group.x+p.vx*.08,portrait?1.8:1.6,group.z-(portrait?4:5)+p.vz*.08);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);updateStageCraft(elapsed);updateArtDirection(elapsed);updateJourneyScenery(elapsed);updateAmbientMusic(elapsed);updateSanctuary(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;renderer.render(scene,camera);lastRenderedState=state;if(now>noticeUntil)$('#notice').hidden=true;requestAnimationFrame(frame)}initCombatMotion();initStageCraft();initArtDirection();initSanctuary();wireCampaignUI();wireArtDirectionUI();$('#quality').value=quality;$('#quality').onchange({target:$('#quality')});initCompleteUI();loadAuthoredHeroes();requestAnimationFrame(frame);

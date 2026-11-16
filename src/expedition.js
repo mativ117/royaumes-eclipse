@@ -136,12 +136,12 @@ function saveRun(){
  if(!campaign?.checkpoint)return;
  try{localStorage.setItem(RUN_KEY,JSON.stringify({version:'0.9',hero,boon,snapshot:campaign.checkpoint,time:campaign.activeSeconds||campaign.time,deaths:campaign.deaths||0}));$('#continueRun').hidden=false;}catch(_){}
 }
-function readRun(){
+function readRun(rawOverride=null){
  try{
-  const raw=localStorage.getItem(RUN_KEY);if(!raw||raw.length>60000)return null;
+  const raw=rawOverride||localStorage.getItem(RUN_KEY);if(!raw||raw.length>60000)return null;
   const d=JSON.parse(raw),s=d.snapshot,q=s?.trials;
-  if(d.version!=='0.9'||!['rempart','voltigeur'].includes(d.hero)||!['vigor','haste'].includes(d.boon)||!q?.escort||!q?.bells||!q?.forge||!Array.isArray(q.ritual))return null;
-  if(!Number.isFinite(s.x)||!Number.isFinite(s.z)||!world.onGround(s.x,s.z))return null;
+  if(d.version!=='0.9'||!HERO_DEFS[d.hero]||!['vigor','haste'].includes(d.boon)||!q?.escort||!q?.bells||!q?.forge||!Array.isArray(q.ritual))return null;
+  if(!Number.isFinite(s.x)||!Number.isFinite(s.z)||!(baseWorld?.onGround||world.onGround)(s.x,s.z))return null;
   if(!Array.isArray(s.keys)||s.keys.some(x=>!['west','east'].includes(x))||!Array.isArray(s.completed)||!Array.isArray(s.dead)||s.dead.some(id=>!ENCOUNTERS.some(e=>e.id===id)))return null;
   if(!Array.isArray(q.bells.order)||q.bells.order.length!==3||new Set(q.bells.order).size!==3||q.bells.order.some(x=>!LAMPS.some(l=>l.id===x)))return null;
   if(!Number.isInteger(q.bells.step)||q.bells.step<0||q.bells.step>3||!q.bells.done&&q.bells.step===3)return null;
@@ -151,12 +151,12 @@ function readRun(){
   return d;
  }catch(_){return null;}
 }
-function continueRun(){
- const saved=readRun();if(!saved)return;
+async function continueRun(){
+ const saved=readRun();if(!saved)return;$('#continueRun').disabled=true;try{await ensureHeroModel(saved.hero);}catch(_){$('#continueRun').disabled=false;$('#menuFeedback').textContent='Le héros de cette sauvegarde ne peut pas être chargé.';return;}$('#continueRun').disabled=false;
  hero=saved.hero;start();boon=saved.boon;p.max=HEROES[hero].hp+(boon==='vigor'?40:-30);campaign.checkpoint=saved.snapshot;campaign.time=Math.max(0,Number(saved.time)||0);campaign.activeSeconds=campaign.time;campaign.deaths=Math.max(0,Number(saved.deaths)||0);restoreCampaign();updateHUD();
 }
 function wireExpeditionUI(){
  $('#continueRun').hidden=!readRun();$('#continueRun').onclick=continueRun;
  $('#copyReport').onclick=async()=>{const text=expeditionReport();try{await navigator.clipboard.writeText(text);$('#copyReport').textContent='Bilan copié';}catch(_){$('#endText').textContent+=' '+text;}};
 }
-function expeditionReport(){return JSON.stringify({version:'0.15',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
+function expeditionReport(){return JSON.stringify({version:'1.0-rc1',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}

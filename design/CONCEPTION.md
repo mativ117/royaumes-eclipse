@@ -6,7 +6,7 @@ Titre : Les Royaumes de l’Éclipse. Dépôt : `royaumes-eclipse`.
 
 Jeu navigateur sans Unreal, destiné aux PC et téléphones, avec jeu entre appareils comme objectif. Fantastique étrange : architectures monumentales, eau noire, brume orange, éclipses, silhouettes encapuchonnées et armes lumineuses. Les personnages auront des noms, histoires et visuels originaux.
 
-La version 0.12 comporte une scène 3D, deux héros articulés et une première expédition solo, au clavier/souris et au tactile. La direction artistique finale mêle Expédition 33 et Ghost of Tsushima ; elle reste à développer au-delà de la séquence représentative. [État de réalisation complet](SUIVI.md).
+La version candidate 1.0-rc1 relie les trois chapitres, les dix héros et le secret. Pour cette livraison, le choix confirmé est de rester sans serveur : coopération et battle sont locaux, et le profil est sauvegardé sur l’appareil. Les fonctionnalités réseau et de compte ci-dessous restent la conception future. [État de réalisation complet](SUIVI.md).
 
 ## Structure d’une expédition
 

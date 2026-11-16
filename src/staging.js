@@ -15,7 +15,7 @@ function getStageAssets(){
   const heavy=['sentinel','porter','boss'].includes(role),caster=['oracle','shade'].includes(role),color=caster?'#6f668b':role==='archer'?'#667c79':heavy?'#73777d':'#6e6157',metal=heavy?'#bd9870':'#b2aaa0';
   const parts=[orb([0,.35,0],[heavy?.58:.43,.59,.34],color),box([0,-.15,0],[.68,.22,.48],metal),orb([0,.9,0],[.4,.38,.36],color),box([0,.84,-.33],[.52,.12,.08],'#121723')];
   if(caster){parts.push({geo:coneGeo,pos:[0,-.2,0],size:[.8,.7,.7],color},box([0,1.16,0],[.08,.55,.08],metal));}
-  else for(const x of [-.24,.24])parts.push(orb([x,-.5,0],[.19,.44,.2],color),box([x,-.83,-.13],[.32,.17,.5],'#282b34'));
+  // Walking enemies receive articulated legs in dressEnemy, not static legs baked into the torso.
   if(heavy)for(const x of [-.68,.68])parts.push(orb([x,.62,0],[.27,.3,.4],metal));
   if(role==='archer')parts.push(box([.32,.35,.37],[.23,.95,.25],'#9f7856'));
   if(role==='boss')for(const x of [-.22,0,.22])parts.push(box([x,1.3,0],[.09,.5,.13],'#d9b277'));
@@ -25,14 +25,20 @@ function getStageAssets(){
   for(const part of w)if(part.geo&&part.geo!==sphereGeo&&part.geo!==coneGeo)part.geo.dispose();
   material[role]=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.63,metalness:heavy?.48:.15});
  }
- stageAssets={body,weapon,material};return stageAssets;
+ const legParts=[];for(const x of [-.24,.24])legParts.push(orb([x,.57,0],[.14,.2,.15],'#6b7377'),orb([x,.25,0],[.115,.18,.12],'#626970'),box([x,.09,-.08],[.25,.14,.36],'#282b34'));
+ const legGeometry=mergedStageParts(legParts),count=legGeometry.attributes.position.count,indices=new Uint16Array(count*4),weights=new Float32Array(count*4);
+ for(let i=0;i<count;i++){const x=legGeometry.attributes.position.getX(i),y=legGeometry.attributes.position.getY(i),side=x<0?0:2,w=Math.max(0,Math.min(1,(y-.38)/.1));indices[i*4]=side;indices[i*4+1]=side+1;weights[i*4]=w;weights[i*4+1]=1-w;}legGeometry.setAttribute('skinIndex',new THREE.Uint16BufferAttribute(indices,4));legGeometry.setAttribute('skinWeight',new THREE.Float32BufferAttribute(weights,4));
+ stageAssets={body,weapon,material,legGeometry};return stageAssets;
 }
 function dressEnemy(e){
  if(e.type==='anchor')return;const a=getStageAssets();e.robe.geometry=a.body[e.type]||a.body.warden;e.robe.userData.ownedGeometry=false;e.root.children[1].visible=false;
  if(e.type==='shade'){e.robe.material.vertexColors=true;e.robe.material.color.set('#ffffff');e.roleMaterial=e.robe.material;}
  else e.robe.material=e.roleMaterial=a.material[e.type]||a.material.warden;
  const weapon=new THREE.Mesh(a.weapon[e.type]||a.weapon.warden,a.material[e.type]||a.material.warden);e.rig.arms[1].add(weapon);if(!['archer','oracle','shade'].includes(e.type))weapon.position.y=.35;e.rig.weapon=weapon;
- e.home={x:e.x,z:e.z};e.awareness=0;e.patrolSide=0;e.idleFacing=e.root.rotation.y;
+ if(!['oracle','shade'].includes(e.type)){
+  e.rig.legs=[];const bones=[];for(const side of [-1,1]){const leg=new THREE.Bone();leg.position.set(side*.24,.75,0);e.root.add(leg);const shin=new THREE.Bone();shin.position.y=-.32;leg.add(shin);bones.push(leg,shin);e.rig.legs.push({root:leg,shin});}
+  const legs=new THREE.SkinnedMesh(a.legGeometry,a.material[e.type]||a.material.warden);e.root.add(legs);e.root.updateWorldMatrix(true,true);legs.bind(new THREE.Skeleton(bones));legs.castShadow=true;legs.receiveShadow=true;legs.frustumCulled=false;legs.userData.enemySkin=true;
+ }e.home={x:e.x,z:e.z};e.awareness=0;e.patrolSide=0;e.idleFacing=e.root.rotation.y;
 }
 function initStageCraft(){
  const root=new THREE.Group();world.root.add(root);const detail=new THREE.Group();art.detail.add(detail);const dummy=new THREE.Object3D();
@@ -59,6 +65,7 @@ function initStageCraft(){
  world.stage={root,embers};
 }
 function updateStageCraft(dt){
+ if(journey.level>1)return;
  if(!world.stage)return;world.stage.embers.material.color.setRGB(.7+Math.sin(t*1.8)*.04,.22,.05);
 }
 // Patrols remain in the same small encounter; perception respects solid cover.

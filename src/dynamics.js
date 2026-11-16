@@ -3,6 +3,7 @@
 const DODGE_DURATION=.28,DODGE_DISTANCE=4.2;
 function dodgeTravel(from,to){const f=u=>2*u-u*u;return DODGE_DISTANCE*(f(Math.min(1,to/DODGE_DURATION))-f(Math.min(1,from/DODGE_DURATION)));}
 function advanceHeroMotion(dt){
+ if(p.downed)return;
  if(p.dashElapsed!==undefined&&p.dashElapsed<DODGE_DURATION){const next=Math.min(DODGE_DURATION,p.dashElapsed+dt),travel=dodgeTravel(p.dashElapsed,next);moveEntity(p,p.dx*travel,p.dz*travel);p.dashElapsed=next;}
  else moveEntity(p,p.vx*dt,p.vz*dt);
 }
@@ -24,7 +25,7 @@ function approachWarden(e,target,dt){
  steerToward(e,{x:p.x+Math.cos(angle)*radius,z:p.z+Math.sin(angle)*radius},dt,waiting?2:3.1);
 }
 function resolveActorContacts(dt){
- const bodies=enemies.filter(e=>!e.dead&&trialActive(e)&&e.type!=='shade'&&e.type!=='anchor'&&distance(e,p)<18);
+ const bodies=enemies.filter(e=>!e.dead&&trialActive(e)&&e.type!=='shade'&&e.type!=='anchor'&&e.type!=='duelist'&&distance(e,p)<18);
  const radius=e=>e.type==='boss'?1.3:e.type==='porter'?.85:.48;
  for(let i=0;i<bodies.length;i++)for(let j=i+1;j<bodies.length;j++){
   const a=bodies[i],b=bodies[j],dx=b.x-a.x,dz=b.z-a.z,d=Math.hypot(dx,dz),limit=radius(a)+radius(b);if(d>=limit)continue;

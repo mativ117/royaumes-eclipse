@@ -1,68 +1,70 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.15 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Carte nommée avec obstacles, objectifs à suivre et guidage stable à la demande. Deux héros à squelette et treize animations chacun ; cour à bassin, caméra rapprochée, reflets et ombres en qualité Haute. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
+**Version candidate 1.0-rc1 — Le voyage des trois reflets.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md) · [Recherche sur la lisibilité](design/LISIBILITE.md) · [Présence et rythme 0.10](design/FEEL-0.10.md) · [Direction artistique 0.11](design/ART-DIRECTION-0.11.md) · [Cour et héros 0.12](design/SANCTUAIRE-0.12.md) · [Mouvements et ombres 0.13](design/PHYSIQUE-0.13.md) · [Dynamique 0.14](design/DYNAMIQUE-0.14.md) · [Appuis et armes 0.15](design/ANIMATIONS-0.15.md) · [Suivi complet](design/SUIVI.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1-rc1)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.0-rc1.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
 
-## Jouer
+## Le voyage
 
-- PC : ZQSD / WASD / flèches ; souris pour viser ; clic pour tirer ; Espace pour esquiver ; E pour le bouclier ; F pour examiner ou maintenir pour observer ; G pour les repères ; M pour la carte ; Échap pour la pause.
-- Téléphone : joystick et boutons tactiles ; visée automatique. Un bouton contextuel apparaît près des objets. Paysage conseillé ; qualité légère disponible.
+| Chapitre | Défis |
+|---|---|
+| La Cathédrale vivante | Serment, escorte d’une âme, carillon, Archives du Reflet, noyau à transporter, Carillonneur, Veilleur et extraction |
+| La Chasse aux Souverains | Deux traces à retrouver, faiblesses à interpréter, appels du jardin, duel, terrain qui change avec les phases du Souverain |
+| Le Convoi de l’Impossible | Liens du colosse à réparer, rafales, route du couchant ou de l’orage, don d’escale, cœur à défendre, Mange-Aube et fin du voyage |
 
-La reprise après défaite conserve le serment et restaure l’état du dernier refuge atteint. Les actions réalisées après ce refuge sont réinitialisées. La Marque du Reflet peut être conservée sur l’appareil ; le bouton Continuer restaure le dernier refuge après rechargement. Le bilan copiable mesure le temps actif et les défaites, sans envoi réseau.
+Les serments accompagnent l’aventure. Chaque niveau dispose d’ancres de reprise, d’une carte et d’objectifs suivis. La cible de conception reste **10–15 minutes par chapitre** ; elle n’est pas une durée mesurée en parties humaines. Les chapitres peuvent aussi être choisis directement pour les essayer.
 
-## Organisation
+## Héros et animation
 
-```text
-docs/       Site publié par GitHub Pages, généré automatiquement
-src/        Monde, campagne, combat, contrôles et interface éditables
-assets/     Modèles originaux GLB et provenance
-vendor/     Moteur et composants Three.js, sources et licence MIT
-scripts/    Construction du site
-tests/      Vérifications dans Chromium
-design/    Conception et documentation du projet
-historique/    Anciens prototypes, hors du site publié
-VERSION     Version du jeu
-```
+Voltigeur, Dernier Rempart, Lame d’Éclipse, Tisseuse de Failles, Porte-Cendres, Voleur d’Ombres, Bergère des Astres, Colosse de Porcelaine, Accordeur et Enfant du Néant : armes, silhouettes, statistiques et pouvoirs distincts. Le secret des trois reflets ouvre l’Éclipse incarnée et son pouvoir supplémentaire Incarnation.
 
-## Modifier et tester
+Onze modèles GLB originaux, treize clips par modèle, haut et bas du corps indépendants, appuis au sol, prise du fusil à deux mains, recul/culasse et gestes de lame. Les ennemis marcheurs disposent aussi de jambes articulées. Les modèles supplémentaires sont chargés à la sélection ; les deux premiers sont intégrés au jeu pour réduire les dépendances au démarrage.
 
-Modifier `src/game.js` ou `src/template.html`, puis lancer :
+## Modes sans serveur
+
+- **Solo** : les trois chapitres sur PC et téléphone.
+- **Coopération locale, 2–4 joueurs** : même écran et même appareil. J1/J2 peuvent partager le clavier ; J3/J4 nécessitent des manettes. Relevage des compagnons et reprise du groupe.
+- **Duel d’Éclipse** : entraînement contre une IA, duel entre deux joueurs ou équipes J1/J2 contre deux IA ou J3/J4 ; trois manches gagnantes.
+- **Couronne vivante** : J1/J2 contre deux IA ou J3/J4. Porter marque des points et empêche d’attaquer ; la couronne peut être passée et tombe lors d’un coup reçu. Objectif : 60 points.
+
+Les arènes utilisent les statistiques de base, sans bonus de serment, et préservent la sauvegarde d’aventure. Coop et battle sont recommandés sur PC ou tablette avec manettes. **Il n’y a ni jeu entre appareils, ni compte e-mail/Google, ni synchronisation en ligne** dans cette livraison, conformément au choix de rester sans serveur.
+
+## Commandes
+
+- J1 : ZQSD/WASD ou flèches en solo ; souris ; clic pour attaquer ; Espace pour esquiver ; E pour le pouvoir ; F pour interagir ; G pour les repères ; M pour la carte ; Échap pour la pause. Incarnation : **R**.
+- J2 clavier : flèches ; **J** pour attaquer ; Maj droite pour esquiver ; Ctrl droite pour le pouvoir ; Entrée pour interagir ou maintenir pour relever. Incarnation : **U**.
+- Manette : stick gauche pour marcher, droit pour viser, X/gâchette pour attaquer, A pour esquiver, Y pour le pouvoir, B pour interagir, RB pour Incarnation. En solo, la première manette contrôle J1 ; en groupe, les manettes sont affectées selon le choix de commandes de J2.
+- Téléphone : joystick, visée automatique et boutons tactiles. Paysage conseillé. Qualité Haute ou variante Légère.
+
+## Sauvegarde et réglages
+
+Profil local nommé, statistiques, chapitres terminés, étapes du secret et ancres de reprise sont conservés sur cet appareil. Les refuges de l’ancienne Cathédrale restent compatibles. Export/import JSON permet de conserver ou transférer le profil ; l’import remplace les données du jeu sur cet appareil. Aucun e-mail n’est collecté.
+
+Guide intégré, carte, choix de présentation, ambiance musicale procédurale, volume et réduction des effets d’impact. Le son démarre après une action volontaire.
+
+## Exécuter et modifier
+
+Le site généré est dans `docs/`, avec ses modèles dans `docs/assets/characters/`. **Conserver les dossiers** lors d’un transfert.
 
 ```sh
 python scripts/build.py
 python -m http.server 8000 --directory docs
 ```
 
-Ouvrir http://localhost:8000. Le moteur est intégré à la page générée : aucun CDN ni téléchargement de modèle n’est requis au lancement.
+Ouvrir `http://localhost:8000`. Le serveur local évite les restrictions des navigateurs sur le chargement de modèles depuis un fichier HTML ouvert directement. GitHub Pages sert les mêmes fichiers sans serveur applicatif.
 
-Les tests utilisent Python Playwright et Chromium à `/usr/bin/chromium` :
-
-```sh
-python -m pip install -r tests/requirements.txt
-python tests/sanctuary.py
-python tests/art_direction.py
-python tests/feel.py
-python tests/expedition.py
-python tests/readability.py
-python tests/mobile_world.py
-python tests/publication.py
+```text
+src/        Niveaux, campagne, héros, animation, modes locaux et interface
+assets/     Modèles originaux GLB et provenance
+vendor/     Three.js et composants, sources et licence MIT
+scripts/    Construction du site et génération Blender des personnages
+tests/      Tests de parcours, classes, contrôles, rendu et publication
+design/     Conception, suivi, guide et notes techniques
+historique/ Anciens jeux, snapshots et ZIP de livraison
 ```
 
-Pour régénérer les modèles : `blender --background --factory-startup --python scripts/author_characters.py`, puis reconstruire la page. Le bundle des composants est reproductible avec `python scripts/prepare_three_addons.py`. Le build ordinaire ne demande ni Blender ni réseau.
+## Validation
 
-[Comparer les captures 0.11 / 0.12](https://mativ117.github.io/royaumes-eclipse/docs/avant-apres.html).
+Les tests couvrent les chapitres jusqu’à leur fin, tous les modèles et pouvoirs, le secret, les sauvegardes, les commandes locales, deux manettes simulées, les règles d’arène, l’animation, les collisions, les cartes et le rendu Haute/Légère en desktop/portrait/paysage. Les vérifications de mission utilisent notamment des positions et dégâts contrôlés ; elles ne constituent pas une partie humaine de 30–45 minutes. Les tests tactiles et manettes sont simulés dans Chromium, pas sur un téléphone ou une manette physiques.
 
-Les anciennes suites de tests sont conservées dans `historique/tests-v0.7` et `historique/tests-v0.8` avec les anciens prototypes.
-
-## Publier
-
-Le réglage souhaité est **`main` → `/docs`**. La connexion ne peut pas changer ce réglage d’administration ; tant que Pages utilise la racine, les redirections fournies ouvrent le jeu dans `docs`. Le propriétaire peut sélectionner `/docs` une seule fois dans Settings → Pages. Après une modification, régénérer le site et envoyer sources et `docs/` dans le même commit. GitHub publie alors les pages de ce dossier. [Procédure](design/PUBLICATION.md).
-
-Le lien historique `cathedrale-v03.html` redirige vers le jeu actuel. Pour ajouter une autre page indépendante, la placer dans `docs/` avec un nom distinct.
-
-## Suite du projet
-
-Les huit autres personnages du casting initial, le personnage secret complet, les deux autres grands niveaux, les comptes, la coop et le battle restent à développer. Les graphismes actuels sont provisoires. Les tests de navigateur simulé ne remplacent pas les essais de fluidité sur téléphone réel.
-
-Three.js est sous licence MIT, conservée dans `vendor/THREE-LICENSE.txt` et dans la page générée. Aucune licence n’a encore été choisie pour les créations du jeu.
+Le rendu stylisé, les transitions, l’équilibrage des onze kits et le rythme des rencontres restent à réviser en parties. La physique reste au sol : pas de pentes, d’escaliers ou de corps rigides poussables. Voir [le suivi](design/SUIVI.md) pour les limites conservées et les fonctions en ligne reportées.

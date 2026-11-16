@@ -1,4 +1,4 @@
-# Suivi du projet — état 0.13
+# Suivi du projet — état 0.14
 
 Ce document distingue ce qui est jouable de ce qui reste prévu. Il conserve les demandes du créateur ; la publication d’un prototype ne valide pas automatiquement toute la conception.
 
@@ -42,3 +42,5 @@ Ce document distingue ce qui est jouable de ce qui reste prévu. Il conserve les
 Faire jouer cette séquence représentative sur téléphone réel et recueillir les points précis de gêne, puis étendre le traitement visuel aux autres zones. Les fonctionnalités de compte, coop et battle restent des chantiers distincts ; elles ne sont pas annoncées comme livrées par cette passe graphique.
 
 Passe 0.13 : voir [mouvements, collisions et ombres](PHYSIQUE-0.13.md), avec les limites physiques restantes. Les engagements futurs ci-dessus restent ouverts.
+
+Passe 0.14 : [dynamique des affrontements](DYNAMIQUE-0.14.md) — esquive décélérée et mémorisée, avancée de mêlée, séparation des acteurs et approches des gardiens ; ombres des ornements suspendus retirées du parvis. Les objectifs de rendu et de dynamique finaux restent ouverts.

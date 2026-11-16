@@ -38,7 +38,7 @@ function updateRigAvatar(dt){
  if(p.stagger>0){playAvatarAction(avatar,'hit',.035,false,.2);}
  else if(p.attack){const name=p.attack.melee?'attack'+p.attack.combo:'shot';if(avatar.lastAttack!==p.attack){playAvatarAction(avatar,name,.055,true,p.attack.duration);avatar.lastAttack=p.attack;}}
  else if(p.leap>0){playAvatarAction(avatar,'leap',.06,false,.75);}
- else if(p.dashT>0){playAvatarAction(avatar,'dash',.045,false,.2);}
+ else if(p.dashT>0){playAvatarAction(avatar,'dash',.045,false,DODGE_DURATION);}
  else if(p.shield>0){playAvatarAction(avatar,'shield',.15);}
  else if(campaign?.trials.forge.carrying){playAvatarAction(avatar,'carry',.15);}
  else if(campaign?.worldUse&&t-campaign.worldUse.started<.55){if(avatar.lastUse!==campaign.worldUse){playAvatarAction(avatar,'interact',.1,true,.55);avatar.lastUse=campaign.worldUse;}}

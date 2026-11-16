@@ -4,7 +4,7 @@ function initSanctuary(){
  const root=new THREE.Group();world.root.add(root);const limestone=new THREE.MeshStandardMaterial({color:'#b3aa98',roughness:.82,metalness:.08}),copper=new THREE.MeshStandardMaterial({color:'#a3855c',roughness:.4,metalness:.72}),basalt=new THREE.MeshStandardMaterial({color:'#333b43',roughness:.9});
  const stoneTexture=makeArtTexture((g,n)=>{g.fillStyle='#c8c5ba';g.fillRect(0,0,n,n);let seed=93;const r=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};for(let i=0;i<4500;i++){g.fillStyle=i%3?'#ebe7da22':'#313e4533';g.fillRect(r()*n,r()*n,1+r()*2,1+r()*2);}for(let i=0;i<20;i++){const y=r()*n;g.strokeStyle='#767b7e33';g.lineWidth=.6;g.beginPath();g.moveTo(0,y);g.bezierCurveTo(n*.3,y+20,n*.6,y-30,n,y+50);g.stroke();}},512);limestone.map=stoneTexture;limestone.bumpMap=stoneTexture;limestone.bumpScale=.035;
  const archGeo=new THREE.TorusGeometry(1,.06,8,40,Math.PI),columnGeo=new THREE.LatheGeometry([new THREE.Vector2(1,0),new THREE.Vector2(1,.16),new THREE.Vector2(.74,.23),new THREE.Vector2(.64,.4),new THREE.Vector2(.54,.6),new THREE.Vector2(.5,5.5),new THREE.Vector2(.58,5.7),new THREE.Vector2(.8,5.9),new THREE.Vector2(.8,6.2)],20);
- const batch=(geo,mat,items)=>{const obj=new THREE.InstancedMesh(geo,mat,items.length),dummy=new THREE.Object3D();items.forEach((q,i)=>{dummy.position.set(...q.p);dummy.rotation.set(...(q.r||[0,0,0]));dummy.scale.set(...q.s);dummy.updateMatrix();obj.setMatrixAt(i,dummy.matrix);});obj.castShadow=true;obj.receiveShadow=true;root.add(obj);return obj;};
+ const batch=(geo,mat,items)=>{const obj=new THREE.InstancedMesh(geo,mat,items.length),dummy=new THREE.Object3D();items.forEach((q,i)=>{dummy.position.set(...q.p);dummy.rotation.set(...(q.r||[0,0,0]));dummy.scale.set(...q.s);dummy.updateMatrix();obj.setMatrixAt(i,dummy.matrix);});obj.castShadow=items.some(q=>q.p[1]<1);obj.userData.shadowRole=obj.castShadow?'grounded':'overhead';obj.receiveShadow=true;root.add(obj);return obj;};
  const piers=[],arches=[],ribs=[];
  for(const side of [-1,1])for(const z of [3,15,27]){piers.push({p:[side*18.2,-.2,z],s:[1,1.7,1]});arches.push({p:[side*18.2,8.8,z-6],s:[6,5,1],r:[0,Math.PI/2,0]});}
  batch(columnGeo,limestone,piers);batch(archGeo,copper,arches);
@@ -14,7 +14,7 @@ function initSanctuary(){
  // A fractured rose and suspended monolith form a strong destination in the central void.
  const ring=new THREE.Mesh(new THREE.TorusGeometry(6,.16,8,80),copper);ring.position.set(0,10,-14);root.add(ring);
  const spokes=[];for(let i=0;i<12;i++){const a=i*Math.PI/6;spokes.push({p:[Math.cos(a)*3,10+Math.sin(a)*3,-14],s:[.09,6,.1],r:[0,0,a-Math.PI/2]});}batch(boxGeo,copper,spokes);
- const monumentGeo=new THREE.IcosahedronGeometry(1,1),monument=new THREE.Mesh(monumentGeo,basalt);monument.position.set(0,8,-13);monument.scale.set(1.1,5,1.4);monument.rotation.z=.12;monument.castShadow=true;root.add(monument);
+ const monumentGeo=new THREE.IcosahedronGeometry(1,1),monument=new THREE.Mesh(monumentGeo,basalt);monument.position.set(0,8,-13);monument.scale.set(1.1,5,1.4);monument.rotation.z=.12;monument.castShadow=false;root.add(monument);
  // Basin: real non-traversable water and one collision source for both movement and map.
  const pool={x:0,z:13,w:7.6,d:10.2};const rim=[];
  for(const x of [-4.15,4.15])rim.push({p:[x,.1,13],s:[.52,.28,11.2]});for(const z of [7.4,18.6])rim.push({p:[0,.1,z],s:[8.8,.28,.52]});batch(boxGeo,limestone,rim);

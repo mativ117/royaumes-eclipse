@@ -22,7 +22,7 @@ function beginAttack(){
  p.overcharge=0;p.shot=duration;p.attackBuffer=0;observeTime=0;
 }
 function updateAttack(dt){
- const a=p.attack;if(!a)return;a.elapsed+=dt;
+ const a=p.attack;if(!a)return;const previous=a.elapsed;a.elapsed+=dt;attackAdvance(a,previous);
  if(!a.struck&&a.elapsed>=a.hitAt){
   if(campaign.trials.forge.carrying)dropCore();a.struck=true;shotCount++;p.recoil=1;
   if(a.melee)strikeMelee(a);else shootRifle(a);

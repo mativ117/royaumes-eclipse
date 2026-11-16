@@ -1,8 +1,8 @@
 # Les Royaumes de l’Éclipse
 
-Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.13 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Carte nommée avec obstacles, objectifs à suivre et guidage stable à la demande. Deux héros à squelette et treize animations chacun ; cour à bassin, caméra rapprochée, reflets et ombres en qualité Haute. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
+Jeu d’action fantastique en 3D pour navigateur, sur PC et téléphone. **Expédition 0.14 — Le Carillon des Âmes** : escorte, énigme musicale, Archives du Reflet, transport du noyau, Carillonneur, Veilleur à trois phases et extraction. Deux héros, attaques animées avec contact différé et reprise locale aux refuges. Carte nommée avec obstacles, objectifs à suivre et guidage stable à la demande. Deux héros à squelette et treize animations chacun ; cour à bassin, caméra rapprochée, reflets et ombres en qualité Haute. Première partie ciblée : **10–15 minutes**, à confirmer par les essais humains.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md) · [Recherche sur la lisibilité](design/LISIBILITE.md) · [Présence et rythme 0.10](design/FEEL-0.10.md) · [Direction artistique 0.11](design/ART-DIRECTION-0.11.md) · [Cour et héros 0.12](design/SANCTUAIRE-0.12.md) · [Mouvements et ombres 0.13](design/PHYSIQUE-0.13.md) · [Suivi complet](design/SUIVI.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/)** · [Conception](design/CONCEPTION.md) · [Détails de la version](design/PROTOTYPE.md) · [Recherche sur la lisibilité](design/LISIBILITE.md) · [Présence et rythme 0.10](design/FEEL-0.10.md) · [Direction artistique 0.11](design/ART-DIRECTION-0.11.md) · [Cour et héros 0.12](design/SANCTUAIRE-0.12.md) · [Mouvements et ombres 0.13](design/PHYSIQUE-0.13.md) · [Dynamique 0.14](design/DYNAMIQUE-0.14.md) · [Suivi complet](design/SUIVI.md)
 
 ## Jouer
 

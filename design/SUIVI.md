@@ -1,4 +1,4 @@
-# Suivi du projet — état 0.14
+# Suivi du projet — état 0.15
 
 Ce document distingue ce qui est jouable de ce qui reste prévu. Il conserve les demandes du créateur ; la publication d’un prototype ne valide pas automatiquement toute la conception.
 
@@ -44,3 +44,5 @@ Faire jouer cette séquence représentative sur téléphone réel et recueillir 
 Passe 0.13 : voir [mouvements, collisions et ombres](PHYSIQUE-0.13.md), avec les limites physiques restantes. Les engagements futurs ci-dessus restent ouverts.
 
 Passe 0.14 : [dynamique des affrontements](DYNAMIQUE-0.14.md) — esquive décélérée et mémorisée, avancée de mêlée, séparation des acteurs et approches des gardiens ; ombres des ornements suspendus retirées du parvis. Les objectifs de rendu et de dynamique finaux restent ouverts.
+
+Passe 0.15 : [appuis et armes](ANIMATIONS-0.15.md) — animation séparée des jambes et du haut du corps, appuis cinématiques sur sol plat, prise du fusil à deux mains, recul/culasse et gestes de lame révisés. Le rendu final, les transitions avancées et les réactions des ennemis restent ouverts.

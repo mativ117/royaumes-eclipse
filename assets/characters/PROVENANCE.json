@@ -7,6 +7,10 @@
     "rempart.glb",
     "voltigeur.glb"
   ],
+  "sha256": {
+    "rempart.glb": "5f18cfa59b974464b2528b7ecaee34b9994bc9a5ea7834c53bb67ea550753643",
+    "voltigeur.glb": "11786a25825160e19683fb1d021dadc34c19116bfbfc3e59df36347f1b377744"
+  },
   "clips": [
     "idle",
     "walk",
@@ -21,9 +25,5 @@
     "interact",
     "carry",
     "hit"
-  ],
-  "sha256": {
-    "rempart.glb": "4f9e544a89c25ba7e28fd9f08532f2536b190578bdca2017cbd8406bb8f973d0",
-    "voltigeur.glb": "d5105b285020298413a0155e9e292cffc092e3683714e5ba3bc8a37eb027c580"
-  }
+  ]
 }

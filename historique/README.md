@@ -17,7 +17,8 @@
 - `cathedrale-v0.11.html` : direction picturale, nature et vent, mécanismes modelés, portes animées et affichage épuré.
 - `cathedrale-v0.12.html` : héros GLB articulés, parvis reconstruit, bassin, caméra rapprochée et comparaison avant/après.
 - `cathedrale-v0.13.html` : collisions des objets, glissement, marche selon déplacement réel et ombres stabilisées.
-- `cathedrale-v0.14.html` : esquive décélérée, avancée des frappes, espacement des acteurs et gardiens coordonnés ; version actuelle.
+- `cathedrale-v0.14.html` : esquive décélérée, avancée des frappes, espacement des acteurs et gardiens coordonnés.
+- `cathedrale-v0.15.html` : jambes et haut du corps indépendants, appuis au sol, prise à deux mains et animations des armes révisées ; version actuelle.
 - `depot-avant-reorganisation/` : copies exactes des anciens jeux récupérés sur GitHub.
 - `livraisons-zip/` : tous les ZIP de livraison disponibles avant ce paquet complet, avec leurs sources et documents à chaque étape.
 - `INVENTAIRE.json` : tailles et empreintes des archives pour contrôler leur intégrité.

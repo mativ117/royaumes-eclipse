@@ -23,7 +23,7 @@ def create(role):
  specs=[('root',(0,0,0),(0,0,.15),None),('pelvis',(0,0,1.02),(0,0,1.23),'root'),('spine',(0,0,1.23),(0,0,1.48),'pelvis'),('chest',(0,0,1.48),(0,0,1.73),'spine'),('neck',(0,0,1.73),(0,0,1.86),'chest'),('head',(0,0,1.86),(0,0,2.12),'neck'),('cape_mid',(0,.18,1.65),(0,.28,1.1),'chest'),('cape_tip',(0,.28,1.1),(0,.43,.45),'cape_mid')]
  for side,sign in [('L',1),('R',-1)]:
   specs.extend([(f'upper_arm.{side}',(sign*.27,0,1.66),(sign*.45,0,1.35),'chest'),(f'forearm.{side}',(sign*.45,0,1.35),(sign*.48,-.03,1.06),f'upper_arm.{side}'),(f'hand.{side}',(sign*.48,-.03,1.06),(sign*.48,-.04,.94),f'forearm.{side}'),(f'thigh.{side}',(sign*.145,0,1.02),(sign*.15,-.015,.57),'pelvis'),(f'shin.{side}',(sign*.15,-.015,.57),(sign*.15,.015,.14),f'thigh.{side}'),(f'foot.{side}',(sign*.15,.015,.14),(sign*.15,-.20,.08),f'shin.{side}')])
- specs.extend([('muzzle',(-.48,-.89,1.26),(-.48,-.99,1.26),'hand.R'),('blade_tip',(-.48,-.04,.05),(-.48,-.04,.01),'hand.R')])
+ specs.extend([('bolt',(-.48,-.22,1.25),(-.48,-.32,1.25),'hand.R'),('foregrip',(-.48,-.38,1.18),(-.48,-.43,1.18),'hand.R'),('muzzle',(-.48,-.89,1.26),(-.48,-.99,1.26),'hand.R'),('blade_tip',(-.48,-.04,.05),(-.48,-.04,.01),'hand.R')])
  for name,head,tail,parent in specs:
   b=arm.edit_bones.new(name);b.head=head;b.tail=tail
   if parent:b.parent=arm.edit_bones[parent]
@@ -97,6 +97,7 @@ def create(role):
   plate('Rifle receiver',(-.48,-.22,1.18),(.12,.38,.14),'hand.R','steel')
   shaft('Rifle barrel',(-.48,-.35,1.25),(-.48,-.88,1.25),.028,'hand.R','steel')
   shaft('Copper shroud',(-.48,-.40,1.25),(-.48,-.70,1.25),.04,'hand.R','gold')
+  plate('Sliding breech',(-.405,-.22,1.25),(.028,.14,.06),'bolt','gold')
   plate('Stock',(-.48,.02,1.16),(.10,.25,.13),'hand.R','leather')
   plate('Bracer shield',(.48,-.09,1.27),(.22,.09,.34),'forearm.L','steel')
  else:
@@ -119,7 +120,7 @@ def create(role):
  for p in rig.pose.bones:p.rotation_mode='XYZ'
  # Continuous, in-place cycles; actual displacement belongs to the controller.
  def pose(name,phase):
-  P=rig.pose.bones;D={bn:[0,0,0] for bn in P.keys()};Z=0
+  P=rig.pose.bones;D={bn:[0,0,0] for bn in P.keys()};Z=0;B=0
   D['cape_mid'][0]=.06*math.sin(phase*math.tau);D['cape_tip'][0]=.10*math.sin(phase*math.tau+.5)
   if name in ['walk','run']:
    amp=.45 if name=='walk' else .68;cycle=math.sin(phase*math.tau)
@@ -128,20 +129,23 @@ def create(role):
     D['upper_arm.'+side][0]=-.35*cycle*s;D['forearm.'+side][0]=-.18
    D['chest'][2]=cycle*.07;Z=abs(math.sin(phase*math.tau))*(.025 if name=='walk' else .045)
   elif name.startswith('attack'):
-   number=int(name[-1]);side=1 if number!=2 else -1
-   if phase<.26:
-    k=phase/.26;D['upper_arm.R']=[-1.1*k,.2*k,-side*.6*k];D['forearm.R']=[-.75*k,0,0];D['chest'][2]=-side*.45*k
-   elif phase<.55:
-    k=(phase-.26)/.29;k=k*k*(3-2*k);D['upper_arm.R']=[-1.1+2*k,.2-.4*k,side*(-.6+1.2*k)];D['forearm.R']=[-.75+.55*k,0,0];D['chest'][2]=side*(-.45+1*k)
+   number=int(name[-1]);side=1 if number!=2 else -1;contact=.39 if number==3 else .37
+   if phase<contact-.12:
+    k=phase/(contact-.12);D['upper_arm.R']=[-1.1*k,.2*k,-side*.6*k];D['forearm.R']=[-.75*k,0,0];D['chest'][2]=-side*.45*k
+   elif phase<contact+.08:
+    k=(phase-(contact-.12))/.20;k=k*k*(3-2*k);D['upper_arm.R']=[-1.1+2*k,.2-.4*k,side*(-.6+1.2*k)];D['forearm.R']=[-.75+.55*k,0,0];D['chest'][2]=side*(-.45+1*k)
    else:
-    k=(1-phase)/.45;D['upper_arm.R']=[.9*k,-.2*k,side*.6*k];D['forearm.R']=[-.2*k,0,0];D['chest'][2]=side*.55*k
-   if number==3:D['chest'][0]=-.2*math.sin(phase*math.pi);D['upper_arm.R'][0]*=1.25
+    k=(1-phase)/(1-contact-.08);D['upper_arm.R']=[.9*k,-.2*k,side*.6*k];D['forearm.R']=[-.2*k,0,0];D['chest'][2]=side*.55*k
+   if number==3:
+    D['chest'][0]=-.24*math.sin(phase*math.pi);D['upper_arm.R'][0]*=1.35;D['upper_arm.R'][2]*=.35
+   D['forearm.R'][2]=side*.22*math.sin(phase*math.pi);D['hand.R'][0]=-.25*math.sin(phase*math.pi);D['spine'][2]=D['chest'][2]*.45
+   D['upper_arm.L'][0]=-.25-.35*math.sin(phase*math.pi);D['forearm.L'][0]=-.4;D['head'][2]=-D['chest'][2]*.4
    D['thigh.L'][0]=.12;D['thigh.R'][0]=-.12
   elif name=='hit':
    f=math.sin(phase*math.pi);D['chest'][0]=.20*f;D['chest'][2]=-.14*f;D['neck'][0]=-.1*f
   elif name=='shot':
-   pulse=math.exp(-((phase-.25)/.10)**2)
-   D['chest'][0]=-.045*pulse;D['upper_arm.R'][0]=-.18-.07*pulse;D['forearm.R'][0]=-.08;D['upper_arm.L'][0]=-.5;D['forearm.L'][0]=-.65
+   pulse=0 if phase<.25 else math.exp(-(phase-.25)*12)
+   B=-.04*pulse;D['chest'][0]=-.085*pulse;D['spine'][0]=-.035*pulse;D['chest'][2]=.035*pulse;D['neck'][0]=.035*pulse;D['upper_arm.R'][0]=-.4-.15*pulse;D['forearm.R'][0]=-.4;D['hand.R'][0]=-.07*pulse;D['upper_arm.L'][0]=-.65;D['forearm.L'][0]=-.85
   elif name in ['dash','leap']:
    f=math.sin(phase*math.pi);D['chest'][0]=.3*f;D['thigh.L'][0]=-.6*f;D['thigh.R'][0]=.6*f;D['shin.L'][0]=.8*f;D['shin.R'][0]=.9*f;D['upper_arm.R'][0]=.5*f
   elif name=='shield':
@@ -152,8 +156,8 @@ def create(role):
    D['upper_arm.L'][0]=D['upper_arm.R'][0]=-.7;D['forearm.L'][0]=D['forearm.R'][0]=-.9
   else:D['chest'][0]=.012*math.sin(phase*math.tau);D['head'][2]=.025*math.sin(phase*math.tau)
   for bn,rot in D.items():P[bn].rotation_euler=rot
-  P['root'].location.z=Z
- clips={'idle':2,'walk':1.1,'run':.75,'attack1':.65,'attack2':.65,'attack3':.9,'shot':.45,'dash':.3,'leap':.75,'shield':1,'interact':.65,'carry':1.2,'hit':.3}
+  P['root'].location.z=Z;P['bolt'].location.y=B
+ clips={'idle':2,'walk':1.1,'run':.75,'attack1':.65,'attack2':.65,'attack3':.9,'shot':.28,'dash':.3,'leap':.75,'shield':1,'interact':.65,'carry':1.2,'hit':.3}
  for name,duration in clips.items():
   action=bpy.data.actions.new(name);rig.animation_data_create();rig.animation_data.action=action;n=round(duration*FPS)
   for frame in range(n+1):
@@ -161,6 +165,7 @@ def create(role):
    for bone in rig.pose.bones:
     bone.keyframe_insert(data_path='rotation_euler',frame=frame+1,group=bone.name)
    rig.pose.bones['root'].keyframe_insert(data_path='location',frame=frame+1,group='root')
+   rig.pose.bones['bolt'].keyframe_insert(data_path='location',frame=frame+1,group='bolt')
   action.use_fake_user=True
  rig.animation_data.action=None
  for p in rig.pose.bones:p.rotation_euler=(0,0,0);p.location=(0,0,0)

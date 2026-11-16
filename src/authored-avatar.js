@@ -7,9 +7,15 @@ async function loadAuthoredHeroes(){
    const bytes=Uint8Array.from(atob(ROYAUMES_CHARACTER_DATA[name]),c=>c.charCodeAt(0));
    const gltf=await new Promise((resolve,reject)=>new RoyaumesGLTFLoader().parse(bytes.buffer,'',resolve,reject));
    const root=gltf.scene;root.scale.setScalar(1.07);root.rotation.y=Math.PI;root.position.y=0;root.visible=false;
-   const mixer=new THREE.AnimationMixer(root),actions={};for(const clip of gltf.animations)actions[clip.name]=mixer.clipAction(clip);
+   const mixer=new THREE.AnimationMixer(root),actions={},lowerActions={};
+   for(const clip of gltf.animations){
+    const lower=track=>/^(root|pelvis|thigh[LR]|shin[LR]|foot[LR])$/.test(THREE.PropertyBinding.parseTrackName(track.name).nodeName);
+    // Disjoint channels: no lower-body idle tracks may dilute the walking legs.
+    actions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name,clip.duration,clip.tracks.filter(q=>!lower(q))));
+    lowerActions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name+'_lower',clip.duration,clip.tracks.filter(lower)));
+   }
    root.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.frustumCulled=false;}});
-   player.root.add(root);avatarRuntime.heroes[name]={root,mixer,actions,state:'',action:null,muzzle:root.getObjectByName('muzzle'),blade:root.getObjectByName('blade_tip'),hand:root.getObjectByName('handR')||root.getObjectByName('hand.R'),weapon:root.getObjectByName(name+'_Weapon'),lastAttack:null,lastUse:null};
+   player.root.add(root);avatarRuntime.heroes[name]={root,mixer,actions,lowerActions,lowerAction:null,lowerState:'',state:'',action:null,muzzle:root.getObjectByName('muzzle'),blade:root.getObjectByName('blade_tip'),hand:root.getObjectByName('handR')||root.getObjectByName('hand.R'),weapon:root.getObjectByName(name+'_Weapon'),lastAttack:null,lastUse:null,aimHold:0};initAvatarKinematics(avatarRuntime.heroes[name]);
   }
   avatarRuntime.status='ready';syncAvatarSelection();
  }catch(e){avatarRuntime.status='error';avatarRuntime.error=String(e);$('#intro').textContent='Le modèle du héros ne s’est pas chargé. Rechargez la page pour retrouver la version complète.';console.error('Authored avatar:',e);}
@@ -20,8 +26,8 @@ function syncAvatarSelection(){
  for(const [name,avatar]of Object.entries(avatarRuntime.heroes))avatar.root.visible=name===hero;
  avatarRuntime.current=avatarRuntime.heroes[hero];
  for(const object of player.legacyParts)object.visible=false;
- if(avatarRuntime.current.muzzle){avatarRuntime.current.muzzle.add(muzzle);muzzle.position.set(0,0,0);muzzle.scale.set(.12,.12,.22);}
- playAvatarAction(avatarRuntime.current,'idle',.12,true);
+ if(avatarRuntime.current.muzzle){avatarRuntime.current.muzzle.add(muzzle);muzzle.position.set(0,.1,0);muzzle.scale.set(.12,.14,.12);}
+ resetAvatarPose();
 }
 function playAvatarAction(avatar,name,fade=.13,restart=false,duration=null){
  const action=avatar.actions[name]||avatar.actions.idle;if(avatar.action===action&&!restart)return;
@@ -30,20 +36,37 @@ function playAvatarAction(avatar,name,fade=.13,restart=false,duration=null){
  if(['attack1','attack2','attack3','shot','dash','leap','interact','hit'].includes(name)){action.setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;}else{action.setLoop(THREE.LoopRepeat,Infinity);action.clampWhenFinished=false;}
  action.play();if(previous&&previous!==action){previous.fadeOut(fade);action.fadeIn(fade);}avatar.action=action;avatar.state=name;
 }
+function playLowerAction(avatar,name,fade=.11,restart=false,duration=null){
+ const action=avatar.lowerActions[name]||avatar.lowerActions.idle;if(avatar.lowerAction===action&&!restart)return;
+ const previous=avatar.lowerAction,phase=previous?previous.time/previous.getClip().duration:0;
+ action.reset().setEffectiveWeight(1).setEffectiveTimeScale(duration?action.getClip().duration/duration:1);
+ const once=['attack1','attack2','attack3','dash','leap','interact','hit'].includes(name);action.setLoop(once?THREE.LoopOnce:THREE.LoopRepeat,once?1:Infinity);action.clampWhenFinished=once;
+ if(['walk','run'].includes(name)&&['walk','run'].includes(avatar.lowerState))action.time=phase*action.getClip().duration;
+ action.play();if(previous&&previous!==action){previous.fadeOut(fade);action.fadeIn(fade);}avatar.lowerAction=action;avatar.lowerState=name;
+}
 function updateRigAvatar(dt){
  if(avatarRuntime.status!=='ready'||!p)return;const avatar=avatarRuntime.current;
  for(const object of player.legacyParts)object.visible=false;
  if(avatar.weapon)avatar.weapon.visible=!campaign?.trials.forge.carrying;
- const speed=p.motionSpeed??Math.hypot(p.vx,p.vz);
- if(p.stagger>0){playAvatarAction(avatar,'hit',.035,false,.2);}
- else if(p.attack){const name=p.attack.melee?'attack'+p.attack.combo:'shot';if(avatar.lastAttack!==p.attack){playAvatarAction(avatar,name,.055,true,p.attack.duration);avatar.lastAttack=p.attack;}}
- else if(p.leap>0){playAvatarAction(avatar,'leap',.06,false,.75);}
- else if(p.dashT>0){playAvatarAction(avatar,'dash',.045,false,DODGE_DURATION);}
- else if(p.shield>0){playAvatarAction(avatar,'shield',.15);}
- else if(campaign?.trials.forge.carrying){playAvatarAction(avatar,'carry',.15);}
+ const travel=avatar.lastPosition?Math.hypot(p.x-avatar.lastPosition.x,p.z-avatar.lastPosition.z):0;const speed=p.motionSpeed===undefined?Math.hypot(p.vx,p.vz):travel>1.5?0:Math.max(p.motionSpeed,travel/dt),gait=speed>3?'run':speed>.18?'walk':'idle';
+ avatar.aimHold=Math.max(0,avatar.aimHold-dt);let lower=gait,lowerRestart=false,lowerDuration=null;
+ if(p.stagger>0){playAvatarAction(avatar,'hit',.035,false,.2);lower='hit';lowerDuration=.2;}
+ else if(p.leap>0){playAvatarAction(avatar,'leap',.06,false,.75);lower='leap';lowerDuration=.75;}
+ else if(p.dashT>0){playAvatarAction(avatar,'dash',.045,false,DODGE_DURATION);lower='dash';lowerDuration=DODGE_DURATION;}
+ else if(p.attack){
+  const name=p.attack.melee?'attack'+p.attack.combo:'shot',fresh=avatar.lastAttack!==p.attack;
+  if(fresh){playAvatarAction(avatar,name,.035,true,p.attack.duration);avatar.lastAttack=p.attack;}
+  if(!p.attack.melee)avatar.aimHold=.24;
+  else if(gait==='idle'){lower=name;lowerRestart=fresh;lowerDuration=p.attack.duration;}
+ }
+ else if(p.shield>0)playAvatarAction(avatar,'shield',.12);
+ else if(campaign?.trials.forge.carrying)playAvatarAction(avatar,'carry',.12);
  else if(campaign?.worldUse&&t-campaign.worldUse.started<.55){if(avatar.lastUse!==campaign.worldUse){playAvatarAction(avatar,'interact',.1,true,.55);avatar.lastUse=campaign.worldUse;}}
- else{const gait=speed>3?'run':speed>.2?'walk':'idle';playAvatarAction(avatar,gait,.16);if(gait!=='idle')avatar.action.setEffectiveTimeScale(Math.max(.6,speed/(gait==='run'?5:2.4)));}
- avatar.mixer.update(dt);updateBladeTrail(avatar,dt);
+ else if(hero==='rempart'&&avatar.aimHold>0){/* Keep the rifle ready between successive shots. */}
+ else{playAvatarAction(avatar,gait,.12);if(gait!=='idle')avatar.action.setEffectiveTimeScale(Math.max(.25,speed*avatar.action.getClip().duration/(gait==='run'?1.5:1.2)));}
+ playLowerAction(avatar,lower,.1,lowerRestart,lowerDuration);
+ if(['walk','run'].includes(lower))avatar.lowerAction.setEffectiveTimeScale(Math.max(.2,speed*avatar.lowerAction.getClip().duration/(lower==='run'?1.5:1.2)));
+ avatar.mixer.update(dt);updateAvatarKinematics(avatar,dt,speed);updateBladeTrail(avatar,dt);
 }
 
 const bladeTrail={samples:[],mesh:null,lastTime:-1};
@@ -58,6 +81,6 @@ function updateBladeTrail(avatar,dt){
 }
 
 function resetAvatarPose(){
- if(avatarRuntime.current){avatarRuntime.current.lastAttack=null;avatarRuntime.current.lastUse=null;playAvatarAction(avatarRuntime.current,'idle',.05,true);avatarRuntime.current.mixer.update(0);}
+ for(const avatar of Object.values(avatarRuntime.heroes)){avatar.mixer.stopAllAction();avatar.action=avatar.lowerAction=null;avatar.lastAttack=avatar.lastUse=null;avatar.aimHold=0;avatar.root.position.y=0;resetAvatarKinematics(avatar);playAvatarAction(avatar,'idle',.05,true);playLowerAction(avatar,'idle',.05,true);avatar.mixer.update(0);}
  bladeTrail.samples=[];if(bladeTrail.mesh)bladeTrail.mesh.visible=false;
 }

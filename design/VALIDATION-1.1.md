@@ -38,3 +38,9 @@ Les captures comparatives 1.0/1.1 sont réalisées dans le moteur, mêmes positi
 Les tests de campagne contrôlent les états et les règles. Ils ne démontrent ni une durée humaine de 10–15 minutes, ni une qualité artistique équivalente aux grands jeux cités. Chromium et les entrées simulées ne remplacent pas un essai sur téléphone et manettes physiques. Le mix musical nécessite encore une écoute critique en situation.
 
 La publication effective sera contrôlée par `scripts/verify_live.py` (HTML, onze modèles, comparaison et ZIP identiques aux fichiers locaux) et `scripts/smoke_live.py` (jeu public, chargement d’un héros distant, chapitre II, récit et musique).
+
+## Publication distante confirmée
+
+GitHub Pages a terminé le déploiement du commit `cfb9501d37b002fcf739e962bf8a27e7d992734d`. HTML, onze modèles, page comparative, sept captures et ZIP publics sont identiques aux fichiers validés. Le navigateur a ouvert le jeu à son adresse principale, chargé la Tisseuse à distance et démarré le chapitre II ; rendu, programmation musicale et ouverture/fermeture de la chronique ont passé le contrôle sans erreur JavaScript ni requête manquante.
+
+Les empreintes et la date de vérification figurent dans [PUBLICATION-1.1.json](PUBLICATION-1.1.json). Ce relevé est ajouté après publication ; le ZIP reste l’artefact validé du commit de livraison.

@@ -1,0 +1,11 @@
+{
+  "version": "1.1-rc2",
+  "html_sha256": "0b9467268ee21870775019d9ab7e66caba5c9e370d45614c00cb1b20efb9a9a4",
+  "verified_models": 11,
+  "zip_bytes": 13057311,
+  "zip_sha256": "d63ab2a51117711f9afe27539a40d1ccb9fa6fe018328122b5ccee0dcf69efdb",
+  "comparison_verified": true,
+  "published_commit": "cfb9501d37b002fcf739e962bf8a27e7d992734d",
+  "verified_at_utc": "2026-11-17T01:16:42.911600+00:00",
+  "live_browser_smoke": "PASS: root redirect, lazy Tisseuse model, chapter II, postprocessing, score and chronicle pause/resume"
+}

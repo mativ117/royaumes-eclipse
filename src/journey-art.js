@@ -9,7 +9,7 @@ function makeJourneyTree(){
 function dressJourneyEnvironment(){
  const root=new THREE.Group(),detail=new THREE.Group();journey.root.add(root);root.add(detail);journey.artRoot=root;journey.detailRoot=detail;
  journey.roughRails&&(journey.roughRails.visible=false);journey.roughRock&&(journey.roughRock.visible=false);journey.roughCanopy&&(journey.roughCanopy.visible=false);
- const rock=makeJourneyRock(),stone=journeyMaterial('#7a7d75',.1,.93),darkStone=journeyMaterial('#424c51',.15,.8),copper=journeyMaterial('#9d7c50',.6,.45),ivory=journeyMaterial('#c7bc9f',.1,.8),wood=journeyMaterial('#605145',.05,.9);
+ const rock=makeJourneyRock(),stone=journeyMaterial('#7a7d75',.1,.93),darkStone=journeyMaterial('#424c51',.15,.8),copper=journeyMaterial('#9d7c50',.6,.45),ivory=journeyMaterial('#c7bc9f',.1,.8),wood=journeyMaterial('#605145',.05,.9,'wood');
  const edges=[],posts=[],ropes=[],pavers=[],cliffs=[],trees=[],leaves=[];let seed=1937;const random=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
  for(const region of world.regions){
   for(const [axis,sign]of[['x',-1],['x',1],['z',-1],['z',1]]){
@@ -35,7 +35,7 @@ function dressJourneyEnvironment(){
   if(node.kind==='camp'){const canopy=mesh(new THREE.TorusGeometry(.8,.04,5,24,Math.PI),copper,0,1.55,0,1,1,1,node.root);journey.geometries.push(canopy.geometry);}
  }
  if(journey.level===2){
-  const treeGeometry=makeJourneyTree(),treeMaterial=journeyMaterial('#ffffff',.03,.95),leafMaterial=journeyMaterial('#a24132',.03,.9);treeMaterial.vertexColors=true;
+  const treeGeometry=makeJourneyTree(),treeMaterial=journeyMaterial('#ffffff',.03,.95,'wood'),leafMaterial=journeyMaterial('#a24132',.03,.9);treeMaterial.vertexColors=true;
   for(const side of [-1,1])for(let i=0;i<16;i++){const z=22-i*8.1,x=side*(i<8?30.5:27.8),scale=.8+random()*.55;trees.push({p:[x,0,z],s:[scale,scale,scale],r:[0,random()*6,side*.07]});for(let j=0;j<23;j++){const a=random()*Math.PI*2,r=1+random()*2.4;leaves.push({p:[x+Math.cos(a)*r*scale,(4.7+random()*1.6)*scale,z+Math.sin(a)*r*scale],s:[.8+random(),.35+random()*.45,.7+random()]});}}
   journey.treeTransforms=trees;journeyBatch(treeGeometry,treeMaterial,trees);journey.foliage=journeyBatch(rock,leafMaterial,leaves,false);
   const columns=[];for(const side of [-1,1])for(let i=0;i<7;i++)columns.push({p:[side*(21+i*.6),2.5,-85-i*3],s:[.5,5+i*.3,.5],r:[0,0,side*.08]});journeyBatch(cylGeo,ivory,columns);
@@ -47,7 +47,7 @@ function dressJourneyEnvironment(){
   for(let i=0;i<24;i++)for(let j=0;j<16;j++){const a=i*16+j,b=i*16+(j+1)%16,c=a+16,d=b+16;indices.push(a,c,b,b,c,d);}const bodyGeometry=new THREE.BufferGeometry();bodyGeometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));bodyGeometry.setIndex(indices);bodyGeometry.computeVertexNormals();journey.geometries.push(bodyGeometry);const body=mesh(bodyGeometry,darkStone,0,0,0,1,1,1,root);body.castShadow=true;
   const plates=[];for(let z=18;z>-110;z-=7)for(const side of [-1,1])plates.push({p:[side*10,-1.6,z],s:[1.8,.6,3],r:[0,side*.1,side*.3]});journeyBatch(rock,ivory,plates);
   const brow=[];for(const side of [-1,1]){brow.push({p:[side*7,-.4,-116],s:[4,1.4,4],r:[0,side*.3,0]});const horn=mesh(coneGeo,copper,side*9,-.8,-119,.8,3,.8,root);horn.rotation.x=-.8;mesh(sphereGeo,classProjectileMaterial('eclipse'),side*7,-1,-120,.55,.35,.65,root);}journeyBatch(rock,ivory,brow);
-  const flags=[];for(const side of [-1,1])for(const z of [-25,-42,-87,-104]){const x=side*(z<-80?20:17);journeyBox(x,2.3,z,.09,4.6,.09,copper);flags.push({p:[x+side*.8,3.1,z],s:[1.4,2,.035],r:[0,side*.2,side*.07]});}journey.banners=journeyBatch(boxGeo,journeyMaterial('#753c36'),flags,false);
+  const flags=[];for(const side of [-1,1])for(const z of [-25,-42,-87,-104]){const x=side*(z<-80?20:17);journeyBox(x,2.3,z,.09,4.6,.09,copper);flags.push({p:[x+side*.8,3.1,z],s:[1.4,2,.035],r:[0,side*.2,side*.07]});}journey.banners=journeyBatch(boxGeo,journeyMaterial('#753c36',.1,.8,'cloth'),flags,false);
  }
  journey.artRoot.userData.completeArt=true;
 }

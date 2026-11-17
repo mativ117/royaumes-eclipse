@@ -1,6 +1,6 @@
-# La Lame d’Éclipse — recherche 01, à revoir avant production
+# La Lame d’Éclipse — recherche 01 et production de référence
 
-État : **direction validée par l’utilisateur le 17 novembre 2026 ; première version 3D à revoir**. La planche est une illustration de recherche générée le 17 novembre 2026 ; elle n’est ni un modèle 3D ni une capture du jeu. Le nouveau modèle est produit pour cette seule classe, après validation de la planche. Il reste plus simple que l’illustration et n’est pas présenté comme une finition artistique acquise.
+État : **direction validée par l’utilisateur le 17 novembre 2026 ; seconde version 3D à revoir**. La planche est une illustration de recherche générée le 17 novembre 2026 ; elle n’est ni un modèle 3D ni une capture du jeu. Le nouveau modèle est produit pour cette seule classe, après validation de la planche. Il reste plus simple que l’illustration et n’est pas présenté comme une finition artistique acquise.
 
 ![Recherche de la Lame d’Éclipse](recherche-01.png)
 
@@ -54,3 +54,13 @@ Le budget des meshes, matières, os, textures et ombres sera établi à partir d
 - Atelier : `docs/atelier-lame.html`, rotation du modèle et choix des gestes. La planche validée y reste distincte du rendu réel.
 
 La modélisation de la coiffure, la finesse des drapés et des matériaux, les déformations et les transitions restent à retravailler. Il n’y a pas de simulation physique complète du tissu ni de capture de mouvement.
+
+## Reprise de production — 1.3-rc1
+
+La géométrie vise désormais des proportions adultes d’environ 7,34 longueurs de tête : tête moins volumineuse, épaulières moins larges, poignets et bottes affinés. Les pans du costume sont allongés et moins réguliers ; masque, mèches et col sont retravaillés. Le squelette et les 23 clips restent compatibles avec la version précédente. Ce travail réduit les proportions de poupée sans constituer une validation artistique finale.
+
+Les cartes de couleur, normale et rugosité du cuir sont préservées dans le jeu ; un remplacement par le tissu générique altérait précédemment ces surfaces. Les transitions de départ, d’arrêt et de pivot deviennent interrompables, et la phase des appuis est maintenue lors des changements de locomotion. Les trois attaques de la Lame suivent leur durée exportée — environ 0,65 seconde pour les deux premières et 0,90 pour la troisième — au lieu d’être accélérées. Les autres classes gardent leur rythme antérieur.
+
+L’atelier est intégré à la sélection initiale, avec le modèle réel et le choix de gestes ; l’adresse séparée reste disponible pour une revue plus large. Son sol et son socle sont texturés, avec une maçonnerie en arrière-plan. Les dix autres modèles présentés restent ceux du prototype.
+
+À revoir dans la caméra du jeu : contacts et poids des attaques, drapés, coiffure, déformations aux épaules et à la hanche, lisibilité des appuis, effets et son. La planche validée reste une référence de direction, pas une capture du résultat obtenu.

@@ -19,7 +19,7 @@
   "sha256": {
     "rempart.glb": "c62628451115d6ff74a5020929c88ae09d09539a9812ad407941a04c80580f2d",
     "voltigeur.glb": "2b43894464fc30a5df8d7e2427c2c7957f46900aada55a2cb614d14745978757",
-    "lame.glb": "d6c2066da95dac821b39632f59b2a524ef43d64ef82bd7d6280a1652927c2ec5",
+    "lame.glb": "0df1360b65020c33ae6eebcb623070ad37e6eef5617d5bbf48822c2f2d0e1b38",
     "tisseuse.glb": "ee7b2bcbef93e388e467937fe801dd64a38f17559e232a02762b990892e12c24",
     "cendres.glb": "e5e9db64c7a4f39113788360c6791f8a67af979cec048db8d753fcd4b9f4236f",
     "voleur.glb": "ee69d2e4bdbc544162a6068478d8921c713f10ee95f11a83523610fde3a38778",
@@ -50,7 +50,7 @@
       "base_rig": "scripts/author_characters.py",
       "concept": "design/personnages/lame-eclipse/recherche-01.png",
       "original_art": true,
-      "status": "first 3D production following approved concept; not final art parity",
+      "status": "second 3D production: adult proportions, tailored silhouette and preserved PBR atlas; not final concept parity",
       "clips": [
         "idle",
         "guard",
@@ -76,9 +76,15 @@
         "carry",
         "hit"
       ],
-      "vertices": 41890,
-      "polygons": 40508,
-      "sha256": "d6c2066da95dac821b39632f59b2a524ef43d64ef82bd7d6280a1652927c2ec5"
+      "adult_proportion": {
+        "anatomical_head_height": 0.288,
+        "anatomical_height": 2.114,
+        "head_lengths": 7.34,
+        "head_bone_unchanged": true
+      },
+      "vertices": 43742,
+      "polygons": 42556,
+      "sha256": "0df1360b65020c33ae6eebcb623070ad37e6eef5617d5bbf48822c2f2d0e1b38"
     }
   }
 }

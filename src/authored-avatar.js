@@ -6,7 +6,7 @@ function makeHeroAvatar(root,clips,name,parent=player.root){
  const mixer=new THREE.AnimationMixer(root),actions={},lowerActions={},materialCopies=new Map();
  for(const clip of clips){const lower=q=>/^(root|pelvis|thigh[LR]|shin[LR]|foot[LR])$/.test(THREE.PropertyBinding.parseTrackName(q.name).nodeName);actions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name,clip.duration,clip.tracks.filter(q=>!lower(q))));lowerActions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name+'_lower',clip.duration,clip.tracks.filter(lower)));}
  root.traverse(o=>{if(o.isMesh){const copy=m=>{if(!materialCopies.has(m)){const cloned=m.clone();if(cloned.userData.morphBase&&cloned.isMeshStandardMaterial){const base=cloned.userData.morphBase;cloned.color.copy(base.color);cloned.emissive.copy(base.emissive);cloned.emissiveIntensity=base.strength;}materialCopies.set(m,cloned);}return materialCopies.get(m);};o.material=Array.isArray(o.material)?o.material.map(copy):copy(o.material);o.castShadow=true;o.receiveShadow=true;o.frustumCulled=false;}});parent.add(root);
- const avatar={ownedMaterials:[...materialCopies.values()],root,clips,mixer,actions,lowerActions,lowerAction:null,lowerState:'',state:'',action:null,muzzle:root.getObjectByName('muzzle'),blade:root.getObjectByName('blade_tip'),hand:root.getObjectByName('handR'),weapon:root.getObjectByName(name+'_Weapon'),lastAttack:null,lastUse:null,aimHold:0};const parentQuaternion=parent.quaternion.clone(),parentPosition=parent.position.clone();parent.quaternion.identity();parent.position.set(0,0,0);initAvatarKinematics(avatar);refineHeroMaterials(avatar);parent.quaternion.copy(parentQuaternion);parent.position.copy(parentPosition);parent.updateWorldMatrix(true,true);return avatar;
+ const avatar={heroId:name,ownedMaterials:[...materialCopies.values()],root,clips,mixer,actions,lowerActions,lowerAction:null,lowerState:'',state:'',action:null,muzzle:root.getObjectByName('muzzle'),blade:root.getObjectByName('blade_tip'),hand:root.getObjectByName('handR'),weapon:root.getObjectByName(name+'_Weapon'),lastAttack:null,lastUse:null,aimHold:0};const parentQuaternion=parent.quaternion.clone(),parentPosition=parent.position.clone();parent.quaternion.identity();parent.position.set(0,0,0);initAvatarKinematics(avatar);refineHeroMaterials(avatar);parent.quaternion.copy(parentQuaternion);parent.position.copy(parentPosition);parent.updateWorldMatrix(true,true);return avatar;
 }
 async function ensureHeroModel(name){
  if(avatarRuntime.heroes[name])return avatarRuntime.heroes[name];if(heroLoads[name])return heroLoads[name];
@@ -19,7 +19,7 @@ async function prepareHeroSelection(){
 }
 async function loadAuthoredHeroes(){
  $('#start').disabled=true;$('#start').textContent='Préparation de l’expédition…';
- try{for(const name of new Set(['rempart','voltigeur',hero]))await ensureHeroModel(name);avatarRuntime.status='ready';syncAvatarSelection();$('#start').disabled=false;$('#start').textContent='Commencer le voyage →';}
+ try{await waitReferenceMaterials();for(const name of new Set(['rempart','voltigeur',hero]))await ensureHeroModel(name);avatarRuntime.status='ready';syncAvatarSelection();$('#start').disabled=false;$('#start').textContent='Commencer le voyage →';}
  catch(e){avatarRuntime.status='error';avatarRuntime.error=String(e);$('#intro').textContent='Le modèle du héros ne s’est pas chargé. Rechargez la page.';console.error(e);}
 }
 function syncAvatarSelection(){
@@ -32,10 +32,10 @@ function syncAvatarSelection(){
 }
 function playAvatarAction(avatar,name,fade=.13,restart=false,duration=null){
  const action=avatar.actions[name]||avatar.actions.idle;if(avatar.action===action&&!restart)return;
- const previous=avatar.action;action.reset().setEffectiveWeight(1).setEffectiveTimeScale(1);
+ const previous=avatar.action,phase=previous&&avatar.heroId==='lame'&&LOCOMOTION_CLIPS.includes(avatar.state)&&LOCOMOTION_CLIPS.includes(name)?previous.time/previous.getClip().duration:null;action.reset().setEffectiveWeight(1).setEffectiveTimeScale(1);
  if(duration)action.setEffectiveTimeScale(action.getClip().duration/duration);
  if(['attack1','attack2','attack3','shot','dash','leap','interact','hit','start','stop','turn_left','turn_right','dodge_left','dodge_right'].includes(name)){action.setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;}else{action.setLoop(THREE.LoopRepeat,Infinity);action.clampWhenFinished=false;}
- action.play();if(previous&&previous!==action){previous.fadeOut(fade);action.fadeIn(fade);}avatar.action=action;avatar.state=name;
+ if(phase!==null)action.time=phase*action.getClip().duration;action.play();if(previous&&previous!==action){previous.fadeOut(fade);action.fadeIn(fade);}avatar.action=action;avatar.state=name;
 }
 function playLowerAction(avatar,name,fade=.11,restart=false,duration=null){
  const action=avatar.lowerActions[name]||avatar.lowerActions.idle;if(avatar.lowerAction===action&&!restart)return;
@@ -51,7 +51,7 @@ function updateRigAvatar(dt){
  if(avatar.weapon)avatar.weapon.visible=!campaign?.trials.forge.carrying;
  const travel=avatar.lastPosition?Math.hypot(p.x-avatar.lastPosition.x,p.z-avatar.lastPosition.z):0;const speed=p.motionSpeed===undefined?Math.hypot(p.vx,p.vz):travel>1.5?0:Math.max(p.motionSpeed,travel/dt),gait=speed>3?'run':speed>.18?'walk':'idle';
  const locomotion=hero==='lame'?lameLocomotion(avatar,dt,speed,gait):{name:gait,duration:null};
- avatar.aimHold=Math.max(0,avatar.aimHold-dt);let lower=locomotion.name,lowerRestart=false,lowerDuration=locomotion.duration;
+ avatar.aimHold=Math.max(0,avatar.aimHold-dt);let lower=locomotion.name,lowerRestart=!!locomotion.restart,lowerDuration=locomotion.duration;
  if(p.stagger>0){playAvatarAction(avatar,'hit',.035,false,.2);lower=speed>.18?gait:'hit';lowerDuration=lower==='hit'?.2:null;}
  else if(p.leap>0){playAvatarAction(avatar,'leap',.06,false,.75);lower='leap';lowerDuration=.75;}
  else if(p.dashT>0){const dodge=hero==='lame'?lameDodgeClip(avatar):'dash';playAvatarAction(avatar,dodge,.045,false,DODGE_DURATION);lower=dodge;lowerDuration=DODGE_DURATION;}
@@ -65,7 +65,7 @@ function updateRigAvatar(dt){
  else if(campaign?.trials.forge.carrying)playAvatarAction(avatar,'carry',.12);
  else if(campaign?.worldUse&&t-campaign.worldUse.started<.55){if(avatar.lastUse!==campaign.worldUse){playAvatarAction(avatar,'interact',.1,true,.55);avatar.lastUse=campaign.worldUse;}}
  else if(isRifleHero()&&avatar.aimHold>0){/* Keep the rifle ready between successive shots. */}
- else{playAvatarAction(avatar,locomotion.name,.12,false,locomotion.duration);if(LOCOMOTION_CLIPS.includes(locomotion.name))avatar.action.setEffectiveTimeScale(Math.max(.25,speed*avatar.action.getClip().duration/(locomotion.name==='run'?1.5:1.2)));}
+ else{playAvatarAction(avatar,locomotion.name,.12,!!locomotion.restart,locomotion.duration);if(LOCOMOTION_CLIPS.includes(locomotion.name))avatar.action.setEffectiveTimeScale(Math.max(.25,speed*avatar.action.getClip().duration/(locomotion.name==='run'?1.5:1.2)));}
  playLowerAction(avatar,lower,.1,lowerRestart,lowerDuration);
  if(LOCOMOTION_CLIPS.includes(lower))avatar.lowerAction.setEffectiveTimeScale(Math.max(.2,speed*avatar.lowerAction.getClip().duration/(lower==='run'?1.5:1.2)));
  avatar.mixer.update(dt);updateHeroMorph(avatar,p,hero,dt);updateBodyDynamics(avatar,p,dt);updateAvatarKinematics(avatar,dt,speed);updateBladeTrail(avatar,dt);
@@ -83,7 +83,7 @@ function updateBladeTrail(avatar,dt){
 }
 
 function resetAvatarPose(){
- for(const avatar of Object.values(avatarRuntime.heroes)){avatar.mixer.stopAllAction();avatar.action=avatar.lowerAction=null;avatar.lastAttack=avatar.lastUse=null;avatar.aimHold=0;avatar.root.position.y=0;avatar.lameMotion=null;avatar.morphWeight=0;avatar.morphActive=true;updateHeroMorph(avatar,{formT:0,incarnateT:0},hero,0);resetAvatarKinematics(avatar);playAvatarAction(avatar,'idle',.05,true);playLowerAction(avatar,'idle',.05,true);avatar.mixer.update(0);}
+ for(const avatar of Object.values(avatarRuntime.heroes)){avatar.mixer.stopAllAction();avatar.action=avatar.lowerAction=null;avatar.lastAttack=avatar.lastUse=null;avatar.aimHold=0;avatar.root.position.y=0;avatar.lameMotion=null;avatar.morphWeight=0;avatar.morphActive=true;updateHeroMorph(avatar,{formT:0,incarnateT:0},hero,0);resetAvatarKinematics(avatar);const baseline=avatar.heroId==='lame'&&avatar.actions.guard?'guard':'idle';playAvatarAction(avatar,baseline,.05,true);playLowerAction(avatar,baseline,.05,true);avatar.mixer.update(0);}
  bladeTrail.samples=[];if(bladeTrail.mesh)bladeTrail.mesh.visible=false;
 }
 

@@ -9,7 +9,9 @@ version = (ROOT / 'VERSION').read_text().strip()
 template = (ROOT / 'src/template.html').read_text()
 engine = (ROOT / 'vendor/three.min.js').read_text() + '\n' + (ROOT / 'vendor/three-addons.js').read_text()
 models = 'const ROYAUMES_VERSION='+json.dumps(version)+';\nconst ROYAUMES_CHARACTER_DATA=' + json.dumps({name:base64.b64encode((ROOT/'assets/characters'/f'{name}.glb').read_bytes()).decode() for name in ['rempart','voltigeur']},separators=(',',':')) + ';\n'
-game = (ROOT/'src/input-settings.js').read_text() + '\n' + (ROOT/'src/story-audio.js').read_text() + '\n' + (ROOT/'src/presentation.js').read_text() + '\n' + (ROOT/'src/visual-world.js').read_text() + '\n' + (ROOT/'src/roster.js').read_text() + '\n' + (ROOT/'src/dynamics.js').read_text() + '\n' + (ROOT/'src/class-abilities.js').read_text() + '\n' + (ROOT/'src/journey.js').read_text() + '\n' + (ROOT/'src/journey-art.js').read_text() + '\n' + (ROOT/'src/local-party.js').read_text() + '\n' + (ROOT/'src/complete-ui.js').read_text() + '\n' + models + (ROOT/'src/lame-motion.js').read_text() + '\n' + (ROOT/'src/avatar-kinematics.js').read_text() + '\n' + (ROOT/'src/authored-avatar.js').read_text() + '\n' + (ROOT/'src/sanctuary.js').read_text() + '\n' + (ROOT / 'src/combat-motion.js').read_text() + '\n' + (ROOT / 'src/staging.js').read_text() + '\n' + (ROOT / 'src/art-direction.js').read_text() + '\n' + (ROOT / 'src/game.js').read_text()
+surface_data={role:{field:'data:image/jpeg;base64,'+base64.b64encode((ROOT/'assets/materials'/f'{role}-{field}.jpg').read_bytes()).decode() for field in ['map','normal','rough']} for role in ['stone','masonry']}
+material_data='const ROYAUMES_SURFACES='+json.dumps(surface_data,separators=(',',':'))+';\n'
+game = (ROOT/'src/hero-preview.js').read_text()+'\n'+material_data + (ROOT/'src/material-surfaces.js').read_text()+'\n'+ (ROOT/'src/environment-finish.js').read_text()+'\n'+ (ROOT/'src/input-settings.js').read_text() + '\n' + (ROOT/'src/story-audio.js').read_text() + '\n' + (ROOT/'src/presentation.js').read_text() + '\n' + (ROOT/'src/visual-world.js').read_text() + '\n' + (ROOT/'src/roster.js').read_text() + '\n' + (ROOT/'src/dynamics.js').read_text() + '\n' + (ROOT/'src/class-abilities.js').read_text() + '\n' + (ROOT/'src/journey.js').read_text() + '\n' + (ROOT/'src/journey-art.js').read_text() + '\n' + (ROOT/'src/local-party.js').read_text() + '\n' + (ROOT/'src/complete-ui.js').read_text() + '\n' + models + (ROOT/'src/lame-motion.js').read_text() + '\n' + (ROOT/'src/avatar-kinematics.js').read_text() + '\n' + (ROOT/'src/authored-avatar.js').read_text() + '\n' + (ROOT/'src/sanctuary.js').read_text() + '\n' + (ROOT / 'src/combat-motion.js').read_text() + '\n' + (ROOT / 'src/staging.js').read_text() + '\n' + (ROOT / 'src/art-direction.js').read_text() + '\n' + (ROOT / 'src/game.js').read_text()
 art = (ROOT / 'src/world.js').read_text()
 campaign = (ROOT / 'src/expedition.js').read_text() + '\n' + (ROOT / 'src/readability.js').read_text() + '\n' + (ROOT / 'src/campaign.js').read_text()
 assert template.count('<!-- THREE_ENGINE -->') == 1
@@ -47,7 +49,8 @@ for source in (ROOT/'assets/characters').glob('*.glb'):shutil.copyfile(source,mo
 print(f'Built version {version} in docs/')
 
 # Dedicated live 3D review for the first approved hero.
-review=(ROOT/"src/character-review.html").read_text().replace("<!-- THREE_ENGINE -->","<script>"+engine+"</script>").replace("__VERSION__",version)
+hero_meta=(ROOT/'src/roster.js').read_text().split('function isMeleeHero')[0]
+review=(ROOT/"src/character-review.html").read_text().replace("<!-- THREE_ENGINE -->","<script>"+engine+"</script>").replace("__VERSION__",version).replace('<!-- HERO_META -->','<script>'+hero_meta+'</script>').replace('<!-- MATERIAL_DATA -->','<script>'+material_data+(ROOT/'src/material-surfaces.js').read_text()+'</script>')
 (output/"atelier-lame.html").write_text(review)
 (output/"assets/concepts").mkdir(exist_ok=True)
 shutil.copyfile(ROOT/"design/personnages/lame-eclipse/recherche-01.png",output/"assets/concepts/lame-01.png")

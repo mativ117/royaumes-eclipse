@@ -13,7 +13,7 @@ function box(m,x,y,z,sx,sy,sz,parent){return mesh(boxGeo,m,x,y,z,sx,sy,sz,parent
 const world=buildCampaign(THREE,scene,renderer,{stone,bronze,gold,dark});const art=world.art,floor=world.floor,portal=world.exit,dust=world.dust,halo=world.halo;
 const ember=mat('#ad4935',.2,.65),cloth=mat('#342d45',.05,.9),bladeMaterial=mat('#ffd09a',.5,.25,'#f47320');
 const requestedHero=new URLSearchParams(location.search).get('hero');
-let hero=requestedHero&&HERO_DEFS[requestedHero]&&!HERO_DEFS[requestedHero].secret?requestedHero:'rempart';
+let hero=requestedHero&&Object.hasOwn(HERO_DEFS,requestedHero)&&!HERO_DEFS[requestedHero].secret?requestedHero:'rempart';
 const HEROES=HERO_DEFS;
 function soldier(){
  const root=new THREE.Group();scene.add(root);
@@ -129,7 +129,7 @@ function pause(reason='manual'){
  if(state!=='playing')return;
  pauseReason=reason;state='paused';updateSoundscape(0);clearInputs();$('#pausePanel').hidden=false;
  $('#resume').hidden=false;$('#resume').textContent='Reprendre';
- $('#endTag').textContent='Version 1.2-rc1 · Pause';$('#endTitle').textContent='En pause';
+ $('#endTag').textContent='Version 1.3-rc1 · Pause';$('#endTitle').textContent='En pause';
  $('#endText').textContent=reason==='hidden'?'La page a été masquée. Votre progression dans cette tentative est conservée.':reason==='graphics'?'Le rendu 3D a été interrompu. Rechargez la page et choisissez la qualité légère.':'Votre pacte et la progression de cette tentative sont conservés.';
  $('#mobile').classList.remove('playing');
 }
@@ -394,6 +394,7 @@ function resize(){noticeNeedsLayout=true;lastRenderedState=null;camera.aspect=in
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();pause('graphics');announce('La 3D a été interrompue. Rechargez la page et essayez la qualité légère.')});
 let lastRenderedState=null;
 function frame(now){const rawElapsed=(now-(last||now))/1000,elapsed=Math.min(.1,rawElapsed);last=now;if(state==='playing'&&campaign)campaign.activeSeconds+=Math.max(0,rawElapsed);if(state==='playing'){accumulator+=elapsed;while(accumulator>=1/60&&state==='playing'){update(1/60);accumulator-=1/60}}else accumulator=0;
+if(state==='menu'&&heroPreviewActive()){requestAnimationFrame(frame);return;}
 if(!['playing','menu'].includes(state)&&lastRenderedState===state){updateSoundscape(elapsed);requestAnimationFrame(frame);return;}
 if(state!=='playing')$('#interact').hidden=true;if(state==='menu'&&avatarRuntime.current)avatarRuntime.current.mixer.update(elapsed);
-if(p){const portrait=innerWidth<innerHeight,group=localParty.length?partyCameraCenter():{x:p.x,z:p.z,radius:0};camDesired.set(group.x+p.vx*.06,(portrait?9.2:6.7)+group.radius*1.1,group.z+(portrait?12.8:10.8)+group.radius*.9);camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(group.x+p.vx*.08,portrait?1.8:1.6,group.z-(portrait?4:5)+p.vz*.08);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);updateStageCraft(elapsed);updateArtDirection(elapsed);updateJourneyScenery(elapsed);updateSoundscape(elapsed);updateSanctuary(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;updateVisualWorld();renderPresentation();lastRenderedState=state;updateNotice(now);requestAnimationFrame(frame)}initCombatMotion();initStageCraft();initArtDirection();initSanctuary();wireCampaignUI();wireArtDirectionUI();$('#quality').value=quality;$('#quality').onchange({target:$('#quality')});initPresentation();initCompleteUI();initStoryPresentation();initInputSettings();loadAuthoredHeroes();requestAnimationFrame(frame);
+if(p){const portrait=innerWidth<innerHeight,group=localParty.length?partyCameraCenter():{x:p.x,z:p.z,radius:0};camDesired.set(group.x+p.vx*.06,(portrait?9.2:6.7)+group.radius*1.1,group.z+(portrait?12.8:10.8)+group.radius*.9);camera.position.lerp(camDesired,1-Math.exp(-elapsed*5));cameraTarget.set(group.x+p.vx*.08,portrait?1.8:1.6,group.z-(portrait?4:5)+p.vz*.08);cameraLook.lerp(cameraTarget,1-Math.exp(-elapsed*7));camera.lookAt(cameraLook)}art.update(elapsed);updateStageCraft(elapsed);updateArtDirection(elapsed);updateJourneyScenery(elapsed);updateSoundscape(elapsed);updateSanctuary(elapsed);dust.rotation.y+=elapsed*.015;halo.rotation.z+=elapsed*.02;updateVisualWorld();renderPresentation();lastRenderedState=state;updateNotice(now);requestAnimationFrame(frame)}initCombatMotion();initStageCraft();initArtDirection();initSanctuary();wireCampaignUI();wireArtDirectionUI();$('#quality').value=quality;$('#quality').onchange({target:$('#quality')});initPresentation();initCompleteUI();initStoryPresentation();initInputSettings();initHeroPreview();loadAuthoredHeroes();requestAnimationFrame(frame);

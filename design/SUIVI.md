@@ -1,4 +1,4 @@
-# Suivi du projet — version candidate 1.2-rc1
+# Suivi du projet — version candidate 1.3-rc1
 
 Les choix confirmés pour cette livraison sont : **sans serveur**, détails visuels avec réglage léger, aventure complète puis révision du résultat. La version livrée relie le contenu de jeu ; le rendu et l’équilibrage restent à éprouver en parties humaines.
 
@@ -8,7 +8,7 @@ Les choix confirmés pour cette livraison sont : **sans serveur**, détails visu
 | Trois chapitres | Cathédrale, Chasse aux Souverains et Convoi de l’Impossible, avec objectifs, rencontres, boss, conclusions et reprises |
 | Dix héros disponibles dès le début | Dix kits, statistiques, armes et modèles distincts ; aucune progression obligatoire pour ces dix héros |
 | Onzième personnage secret | Trois étapes réparties dans les niveaux ; Éclipse incarnée, Soleil noir et Incarnation supplémentaire |
-| Animation et mouvement | Treize clips par héros, corps séparé en couches, appuis, prise à deux mains, recul/culasse, gestes de lame ; ennemis marcheurs articulés |
+| Animation et mouvement | Treize clips de base par héros, 23 pour la Lame ; corps séparé en couches, appuis, prise à deux mains, recul/culasse. Départs/arrêts/pivots de la Lame interrompables et phase marche/course conservée ; ennemis marcheurs articulés |
 | Physique | Contrôleur au sol, contacts/glissement, socles et décors solides, couvert temporaire et garde-fous des capacités aux seuils de quête |
 | Solo | Voyage complet et sélection directe des chapitres |
 | Coopération | Locale 2–4, même écran/appareil, clavier et manettes, relevage et reprise du groupe |
@@ -44,3 +44,11 @@ Les retours des captures ont conduit au [correctif rc3](CORRECTIFS-1.1-rc3.md). 
 ## Revue du premier personnage
 
 La [direction de la Lame](personnages/lame-eclipse/REVUE-01.md) est validée et sa première production 3D est intégrée avec un atelier de revue. Le niveau artistique de la planche n’est pas atteint. Les autres héros et la refonte anatomique des créatures restent à traiter après cette revue. Le navigateur est conservé pour cette étape. Les commandes J1 solo sont configurables ; les dispositions fixes coop/manettes restent inchangées.
+
+## Atelier et matières — 1.3-rc1
+
+L’atelier est maintenant intégré au choix du personnage au début. Il utilise les modèles réels et conserve l’atelier séparé pour la revue. Son rendu se suspend hors vue et sa scène se libère au lancement du jeu. Les dix héros ordinaires restent disponibles ; l’aperçu ne contourne pas le secret du onzième.
+
+La seconde production de la Lame vise une silhouette adulte : environ 7,34 longueurs de tête, épaules et extrémités affinées, masque et costume moins réguliers. Squelette et 23 clips sont conservés. Les trois attaques suivent leurs durées de clip plutôt qu’une lecture accélérée. Cela corrige le rythme de lecture, sans valider la qualité finale des gestes ou leur équilibrage.
+
+Les matières PBR du modèle ne sont plus écrasées par le tissu générique. La [passe de finition](FINITION-1.3.md) ajoute aussi des cartes photographiques CC0 aux sols et à la maçonnerie du niveau et de l’atelier, ainsi que des bordures, supports, niches d’Archives et cheminées de forge. Les chemins et collisions ne sont pas refaits dans cette passe. Le modelage des dix autres personnages, l’anatomie des ennemis, la composition de chaque zone, le rythme et les essais sur appareil restent à poursuivre.

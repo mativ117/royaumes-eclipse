@@ -1,16 +1,20 @@
 # Les Royaumes de l’Éclipse
 
-**Version candidate 1.2-rc1 — Première production de la Lame.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
+**Version candidate 1.3-rc1 — Atelier intégré et matières révisées.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.2-rc1)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.2-rc1.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.3-rc1)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.3-rc1.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
 
-## Première production de personnage
+## Atelier au choix du personnage
 
-La direction de la Lame d’Éclipse a été validée avant fabrication. Sa première version 3D possède un masque céramique, un costume articulé, un manteau fendu, un sabre courbe, des matières intégrées et 23 clips. Le résultat est encore nettement plus simple que le concept et doit être revu en mouvement.
+L’atelier 3D est intégré à la sélection de départ : le modèle du personnage choisi peut être tourné et ses gestes examinés avant de jouer. Il se charge à l’approche de la zone, suspend son rendu hors vue et se libère au lancement de la partie. La refonte détaillée concerne la Lame ; les dix autres modèles restent provisoires.
 
-**[Ouvrir l’atelier 3D](https://mativ117.github.io/royaumes-eclipse/docs/atelier-lame.html?v=1.2-rc1)** · [Fiche et planche validées](design/personnages/lame-eclipse/REVUE-01.md) · [Outils et plateforme](design/OUTILS-PRODUCTION-3D.md)
+La Lame reçoit des proportions adultes plus élancées, des épaules et des extrémités affinées, un masque céramique retravaillé et un costume moins régulier. Ses 23 clips et son squelette sont conservés. Départ, arrêt et pivots peuvent être interrompus ; marche et course conservent leur phase. Ses attaques suivent désormais la durée des clips, ce qui modifie leur rythme et demande une nouvelle revue de l’équilibrage.
 
-La mini-carte suit maintenant la barre de menu sur PC. Le bouton **Commandes**, accessible au menu, en pause et en jeu, permet de modifier les touches J1 solo. Elles restent sur cet appareil ; le clavier partagé coop conserve ses commandes fixes. Les indications du guide et des boutons suivent les réglages.
+Les textures de cuir intégrées au modèle sont conservées au lieu d’être remplacées par une matière de tissu. Sols et maçonnerie du jeu et de l’atelier utilisent six cartes PBR photographiques Poly Haven. Des bordures et supports encadrent les plates-formes de la Cathédrale ; les Archives et la forge gagnent du contexte. [Détail de la passe et limites](design/FINITION-1.3.md).
+
+**[Essayer la Lame](https://mativ117.github.io/royaumes-eclipse/?hero=lame&v=1.3-rc1)** · [Ouvrir l’atelier séparément](https://mativ117.github.io/royaumes-eclipse/docs/atelier-lame.html?v=1.3-rc1) · [Fiche et planche validées](design/personnages/lame-eclipse/REVUE-01.md) · [Outils gratuits et plateforme](design/OUTILS-PRODUCTION-3D.md)
+
+La mini-carte suit la barre de menu sur PC. Le bouton **Commandes**, accessible au menu, en pause et en jeu, permet de modifier les touches J1 solo. Elles restent sur cet appareil ; le clavier partagé coop conserve ses commandes fixes. Les indications du guide et des boutons suivent les réglages.
 
 ## Dernier correctif et méthode de finition
 
@@ -75,7 +79,7 @@ Ouvrir `http://localhost:8000`. Le serveur local évite les restrictions des nav
 
 ```text
 src/        Niveaux, campagne, héros, animation, modes locaux et interface
-assets/     Modèles originaux GLB et provenance
+assets/     Modèles GLB, source Blender, matières et provenance
 vendor/     Three.js et composants, sources et licence MIT
 scripts/    Construction du site et génération Blender des personnages
 tests/      Tests de parcours, classes, contrôles, rendu et publication
@@ -88,3 +92,7 @@ historique/ Anciens jeux, snapshots et ZIP de livraison
 Les tests couvrent les chapitres jusqu’à leur fin, tous les modèles et pouvoirs, le secret, les sauvegardes, les commandes locales, deux manettes simulées, les règles d’arène, l’animation, les collisions, les cartes et le rendu Haute/Légère en desktop/portrait/paysage. Les vérifications de mission utilisent notamment des positions et dégâts contrôlés ; elles ne constituent pas une partie humaine de 30–45 minutes. Les tests tactiles et manettes sont simulés dans Chromium, pas sur un téléphone ou une manette physiques.
 
 Le rendu stylisé, les transitions, l’équilibrage des onze kits et le rythme des rencontres restent à réviser en parties. La physique reste au sol : pas de pentes, d’escaliers ou de corps rigides poussables. Voir [le suivi](design/SUIVI.md) pour les limites conservées et les fonctions en ligne reportées.
+
+## Crédits des nouvelles matières
+
+Textures [pavement_01](https://polyhaven.com/a/pavement_01), Rob Tuytel, et [castle_wall_slates](https://polyhaven.com/a/castle_wall_slates), Rob Tuytel, distribuées par Poly Haven sous CC0. Les cartes de couleur, normale et rugosité sont adaptées en 512 × 512 et intégrées au site. [Licence et provenance](assets/materials/LICENSE.md).

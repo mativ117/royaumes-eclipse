@@ -7,7 +7,7 @@ function resetJourneyWorld(){
  journey={level:1,step:0,root:null,route:'',checkpoint:0,nodes:[],core:180,elapsed:0};Object.assign(world,{regions:baseWorld.regions,onGround:baseWorld.onGround,zoneAt:baseWorld.zoneAt,obstacles:baseWorld.obstacles});world.root.visible=true;if(sanctuary)sanctuary.occluders=baseWorld.occluders;navCache=null;
 }
 function chapterGround(regions,x,z,r=.48){return [[x-r,z-r],[x+r,z-r],[x-r,z+r],[x+r,z+r]].every(([a,b])=>regions.some(q=>a>=q.x0&&a<=q.x1&&b>=q.z0&&b<=q.z1));}
-function journeyMaterial(color,metal=.1,rough=.8){const m=new THREE.MeshStandardMaterial({color,metalness:metal,roughness:rough});journey.materials.push(m);return m;}
+function journeyMaterial(color,metal=.1,rough=.8,surface='masonry'){const m=new THREE.MeshStandardMaterial({color,metalness:metal,roughness:rough});m.userData.surface=surface;journey.materials.push(m);return m;}
 function journeyBox(x,y,z,w,h,d,material,solid=false){const o=mesh(boxGeo,material,x,y,z,w,h,d,journey.root);o.castShadow=h>1&&y<4;o.receiveShadow=true;if(solid){o.material=material.clone();o.material.transparent=true;journey.materials.push(o.material);const c={x,z,w,d,mesh:o};obstacles.push(c);journey.occluders.push(o);}return o;}
 function journeyNode(id,x,z,title,color='#b8eedb',kind='ritual'){
  const root=new THREE.Group();root.position.set(x,0,z);journey.root.add(root);const material=journeyMaterial(color,.4,.4),base=mesh(cylGeo,journey.stone,0,.2,0,.8,.4,.8,root);base.castShadow=true;const shape=getLandmarkAssets()[kind==='fresco'?'book':kind==='relic'?'lens':kind]||sphereGeo,scale=shape===sphereGeo?.3:.7;const crystal=mesh(shape,material,0,1.2,0,scale,scale,scale,root);const ring=mesh(ringGeo,material,0,.035,0,1.2,1.2,1.2,root);ring.rotation.x=-Math.PI/2;const tag=label(title,x,z,color,3.5);tag.visible=false;const node={id,x,z,title,kind,root,crystal,material,tag};journey.nodes.push(node);obstacles.push({x,z,w:1.9,d:1.9,radius:.95,root,projectilePass:true});return node;
@@ -26,7 +26,7 @@ function buildJourneyScenery(level,regions){
   for(let i=0;i<18;i++)stones.push({p:[Math.sin(i*2.4)*39,3+(i%5),-126-i*2],s:[3+(i%4),8+(i%6),3],r:[0,i,0]});
  }else{
   // Visible articulated colossus beneath the walkable decks, with a village on its back.
-  const body=journeyMaterial('#252d36',.35,.65),bone=journeyMaterial('#a69b83',.2,.7);journeyBox(0,-4.5,-35,19,6,100,body);
+  const body=journeyMaterial('#252d36',.35,.65,'cloth'),bone=journeyMaterial('#a69b83',.2,.7);journeyBox(0,-4.5,-35,19,6,100,body);
   for(let i=0;i<14;i++)journeyBox(0,-1.35,20-i*9,23,.6,1.2,bone);
   for(const side of [-1,1])for(let i=0;i<5;i++){const leg=journeyBox(side*15,-7,3-i*22,13,2,5,body);leg.rotation.z=side*.22;journey.legs.push({mesh:leg,side,index:i});}
   const head=mesh(sphereGeo,body,0,-2,-112,13,5,16,journey.root);head.castShadow=true;for(const side of [-1,1])mesh(sphereGeo,classProjectileMaterial('eclipse'),side*8,0,-117,.4,.3,1,journey.root);

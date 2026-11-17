@@ -34,3 +34,5 @@ Les archives ne sont pas publiées par GitHub Pages lorsque la source est /docs.
 - `royaumes-v1.1-rc3.html` et `livraisons-zip/royaumes-eclipse-1.1-rc3.zip` : correctif des messages masqués, cibles proches, occultations et appuis ; contenu antérieur conservé.
 
 - `royaumes-v1.2-rc1.html` et `livraisons-zip/royaumes-eclipse-1.2-rc1.zip` : première production 3D de la Lame après validation du concept, atelier animé, disposition PC et touches solo configurables. Les personnages et créatures restants gardent leurs ressources précédentes.
+
+- `royaumes-v1.3-rc1.html` et `livraisons-zip/royaumes-eclipse-1.3-rc1.zip` : atelier réel intégré au choix du personnage, seconde production de la Lame, transitions révisées et matières photographiques CC0 dans le niveau et l’atelier. Les autres personnages et créatures restent en attente de leur refonte détaillée. Les anciennes archives ne sont pas remplacées.

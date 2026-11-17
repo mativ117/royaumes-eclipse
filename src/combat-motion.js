@@ -12,12 +12,13 @@ function sparks(x,z,color='#ffd69a'){
 function updateSparks(dt){for(const s of sparkPool)if(s.life>0){s.life-=dt;s.vy-=12*dt;s.mesh.position.x+=s.vx*dt;s.mesh.position.y+=s.vy*dt;s.mesh.position.z+=s.vz*dt;s.mesh.visible=s.life>0;}impactTime=Math.max(0,impactTime-dt);}
 function requestAttack(){if(state==='playing')p.attackBuffer=t+.22;}
 function cancelAttack(){if(p.attack&&!p.attack.struck)p.overcharge=Math.min(3,p.overcharge+(p.attack.charge||0));p.attack=null;}
+function meleeClipDuration(id,combo,fallback){const clip=id==='lame'?avatarRuntime.heroes.lame?.actions['attack'+combo]?.getClip():null;return clip?.duration||fallback;}
 function beginAttack(){
  if(state!=='playing'||p.downed||battle?.crownOwner===p||p.shot>0||p.leap>0||p.attack)return;
  if(campaign.trials.forge.carrying)dropCore();
  const melee=isMeleeHero();
  p.combo=melee?(p.comboWindow>0?p.combo%3+1:1):0;p.comboWindow=1.05;
- const duration=(melee?(p.combo===3?.64:.43):.28)*(HEROES[hero].attackRate||1)*(hero==='cendres'&&p.heat>=100?1.6:1);
+ const baseDuration=(melee?(p.combo===3?.64:.43):.28)*(HEROES[hero].attackRate||1)*(hero==='cendres'&&p.heat>=100?1.6:1),duration=melee?meleeClipDuration(hero,p.combo,baseDuration):baseDuration;
  p.attack={melee,elapsed:0,duration,hitAt:melee?duration*(p.combo===3?.390625:.372093):duration*.25,struck:false,combo:p.combo,charge:p.overcharge,aim,};
  if(hero==='accordeur'&&classEffects.some(f=>f.kind==='rhythm'&&f.owner===p&&t-(f.lastPulse||-100)<.13))p.attack.charge=Math.min(3,p.attack.charge+1);p.overcharge=0;p.shot=duration;p.attackBuffer=0;observeTime=0;
 }

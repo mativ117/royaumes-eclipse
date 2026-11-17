@@ -1,0 +1,105 @@
+{
+  "provider": "Poly Haven",
+  "license": "CC0",
+  "license_url": "https://polyhaven.com/license",
+  "license_verified_url": "https://docs.polyhaven.com/en/faq",
+  "license_verified_date": "2026-11-17",
+  "assets": [
+    {
+      "role": "stone",
+      "field": "map",
+      "asset": "pavement_01",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pavement_01/pavement_01_diff_1k.jpg",
+      "source_md5": "873548d5e922973bd0cbe799f8e25853",
+      "runtime": "stone-map.jpg",
+      "runtime_sha256": "07e2ec0625abd3cf7759f984894718d4b618f51690fbd4ec8b8c50773171f2e0",
+      "runtime_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "role": "stone",
+      "field": "normal",
+      "asset": "pavement_01",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pavement_01/pavement_01_nor_gl_1k.jpg",
+      "source_md5": "cfcd1136976394bc8e81d448574c4879",
+      "runtime": "stone-normal.jpg",
+      "runtime_sha256": "6ae5738c18c84fc7f28f674651d54c7946c601222957808e7ed156a7a11e3bfa",
+      "runtime_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "role": "stone",
+      "field": "rough",
+      "asset": "pavement_01",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pavement_01/pavement_01_rough_1k.jpg",
+      "source_md5": "867dd4eb91870f5cda6c2fa05a753719",
+      "runtime": "stone-rough.jpg",
+      "runtime_sha256": "1e36b8e191642953f77da48569239c8900e76b6d47d8dc4aaf50850ed6da96cb",
+      "runtime_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "role": "masonry",
+      "field": "map",
+      "asset": "castle_wall_slates",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/castle_wall_slates/castle_wall_slates_diff_1k.jpg",
+      "source_md5": "0f32f47b63c6303ba0d2c79d6672a402",
+      "runtime": "masonry-map.jpg",
+      "runtime_sha256": "80c913d5d19e42ff28cc6fd22d8d586ddbf073f62728286ea48ecad2514d227e",
+      "runtime_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "role": "masonry",
+      "field": "normal",
+      "asset": "castle_wall_slates",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/castle_wall_slates/castle_wall_slates_nor_gl_1k.jpg",
+      "source_md5": "e2909f4123b3dce0a4774de14e5f8685",
+      "runtime": "masonry-normal.jpg",
+      "runtime_sha256": "3c464d14afffb872ac46599c5c88d7cc68acae4e762a79ec3e25c46026f6fb47",
+      "runtime_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "role": "masonry",
+      "field": "rough",
+      "asset": "castle_wall_slates",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/castle_wall_slates/castle_wall_slates_rough_1k.jpg",
+      "source_md5": "d8bf1af4754dea48327002d4ec417925",
+      "runtime": "masonry-rough.jpg",
+      "runtime_sha256": "0dbb967fcc89a942bd65afbcef332ee9743b06ca6f392c1b0f61850e776b082f",
+      "runtime_size": [
+        512,
+        512
+      ]
+    }
+  ]
+}

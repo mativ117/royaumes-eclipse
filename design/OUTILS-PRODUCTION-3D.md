@@ -31,6 +31,8 @@ Les ennemis suivent la même exigence. Une créature demande une anatomie, un mo
 
 ## Outils gratuits utilisables maintenant
 
+- **[Quaternius Universal Animation Library Standard](https://quaternius.itch.io/universal-animation-library)** et **[Library 2 Standard](https://quaternius.itch.io/universal-animation-library-2)** : ressources CC0 effectivement utilisées en 1.4. Les fichiers d’origine, licences et animations adaptées restent dans le dépôt. Elles passent par Blender et le contrôleur de contact, sans connexion de compte pendant une partie. [Intégration et limites](RETARGET-1.4.md).
+
 - **[Blender](https://www.blender.org/)** est déjà disponible dans l’environnement de production, en version 4.3. Il sert au modèle, aux UV, aux matières, au squelette et à l’export GLB. La source éditable de la Lame est conservée dans `assets/source/lame-reference.blend`. Aucun connecteur supplémentaire n’est nécessaire pour ce travail.
 - **[Poly Haven](https://polyhaven.com/)** fournit des matières sous CC0. La passe 1.3 utilise `pavement_01` et `castle_wall_slates`, téléchargées par l’API puis adaptées pour le navigateur. Les cartes sont embarquées dans le jeu ; la partie n’appelle pas ce service. Voir la [provenance des fichiers](../assets/materials/PROVENANCE.json) et les [crédits](../assets/materials/LICENSE.md).
 - **[Mixamo](https://www.mixamo.com/)** peut aider à préparer des animations humanoïdes via un compte Adobe gratuit et des exports FBX. Aucun connecteur direct à cet espace n’a été vérifié. Un export de fichier est la voie proposée ; les animations doivent ensuite être retargetées et adaptées au personnage et à son arme. Mixamo n’est pas utilisé dans les clips livrés ici.
@@ -38,3 +40,9 @@ Les ennemis suivent la même exigence. Une créature demande une anatomie, un mo
 L’accès gratuit à ces outils ne produit pas automatiquement une finition de grand jeu. La suite reste un travail de direction artistique, de modelage, de gestes, de transitions, de contacts, de composition des scènes et d’essais sur l’appareil cible. Le navigateur et la livraison sans serveur sont conservés.
 
 Référence officielle Poly Haven consultée le 17 novembre 2026 : [FAQ et licence CC0](https://docs.polyhaven.com/en/faq). La page `polyhaven.com/license` a répondu HTTP 403 depuis cet environnement ; la FAQ officielle permet de vérifier la licence des ressources. L’origine et les empreintes des six fichiers runtime sont enregistrées dans la provenance.
+
+## Physique 3D : outil évalué pour la suite
+
+Le [contrôleur de personnage Rapier JavaScript 0.21](https://rapier.rs/docs/user_guides/javascript/character_controller/) a été consulté le 17 novembre 2026. Il calcule un déplacement corrigé par les obstacles, avec glissement, paramètres de pente, franchissement de marches et maintien au sol. Sa capsule est adaptée au contrôle d’un personnage ; les rotations et le style de mouvement restent à traiter séparément. La [licence du moteur](https://github.com/dimforge/rapier/blob/master/LICENSE) est Apache 2.0.
+
+**Évalué, pas intégré.** Les collisions 1.4 restent au sol, avec sous-pas, volumes de corps et balayage de la lame. Passer à Rapier demanderait de reconstruire les colliders, le sol et les événements des quêtes puis de vérifier pentes, marches, plateformes et sauvegardes. Aucun téléchargement ni coût de bibliothèque physique supplémentaire n’est ajouté à cette livraison. Cette piste répond au besoin futur de vrai relief ; elle ne remplace ni l’animation ni les mesures sur téléphone.

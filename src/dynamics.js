@@ -1,22 +1,22 @@
 'use strict';
 // Gameplay motion: time-integrated dodge and authored attack advancement.
 const DODGE_DURATION=.28,DODGE_DISTANCE=4.2;
-function dodgeTravel(from,to){const f=u=>2*u-u*u;return DODGE_DISTANCE*(f(Math.min(1,to/DODGE_DURATION))-f(Math.min(1,from/DODGE_DURATION)));}
+function dodgeTravel(from,to,config=null){const distance=config?.distance||DODGE_DISTANCE,duration=config?.duration||DODGE_DURATION,f=config?.profile==='step'?u=>u*u*(3-2*u):u=>2*u-u*u;return distance*(f(Math.max(0,Math.min(1,to/duration)))-f(Math.max(0,Math.min(1,from/duration))));}
 function advanceHeroMotion(dt){
  if(p.downed)return;
- if(p.dashElapsed!==undefined&&p.dashElapsed<DODGE_DURATION){const next=Math.min(DODGE_DURATION,p.dashElapsed+dt),travel=dodgeTravel(p.dashElapsed,next);moveEntity(p,p.dx*travel,p.dz*travel);p.dashElapsed=next;}
- else moveEntity(p,p.vx*dt,p.vz*dt);
+ const config=actorDodgeConfig(p);if(p.dashElapsed!==undefined&&p.dashElapsed<config.duration){const next=Math.min(config.duration,p.dashElapsed+dt),travel=dodgeTravel(p.dashElapsed,next,config);moveEntity(p,p.dx*travel,p.dz*travel);p.dashElapsed=next;}
+ else{const scale=motionSpeedScale(avatarRuntime.current,hero,p,aim);moveEntity(p,p.vx*scale*dt,p.vz*scale*dt);}
 }
 function requestDodge(){if(state!=='playing')return;p.dodgeBuffer=t+.16;if(p.dash<=0)dash();}
 function attackAdvance(a,previous){
- if(!a.melee)return;const f=time=>{const u=Math.max(0,Math.min(1,time/a.hitAt));return u*u*(3-2*u);};
- const travel=(a.combo===3?.95:.6)*(f(a.elapsed)-f(previous));if(travel<=0)return;
+ if(!a.melee)return;const f=time=>{const u=Math.max(0,Math.min(1,time/Math.max(.001,a.hitAt)));return u*u*(3-2*u);};
+ const definition=typeof sourceAttackDefinition==='function'?sourceAttackDefinition(a):null,distance=definition?definition.travel*motionModelScale(avatarRuntime.current):(a.combo===3?.95:.6),travel=distance*(f(a.elapsed)-f(previous));if(travel<=0)return;
  // Stop short of a target instead of moving through it on contact.
  const dx=-Math.sin(a.aim),dz=-Math.cos(a.aim);let allowed=travel;
  for(const e of enemies){if(e.dead||!trialActive(e))continue;const along=(e.x-p.x)*dx+(e.z-p.z)*dz,side=Math.abs((e.x-p.x)*dz-(e.z-p.z)*dx);if(along>0&&side<.9)allowed=Math.min(allowed,Math.max(0,along-(e.type==='boss'?1.9:1.05)));}
  moveEntity(p,dx*allowed,dz*allowed);
 }
-function canCommitMelee(e){return enemies.filter(q=>q!==e&&!q.dead&&q.type==='warden'&&q.mode==='windup'&&distance(q,p)<6).length<2;}
+function canCommitMelee(e){return enemies.filter(q=>q!==e&&!q.dead&&q.type==='warden'&&['windup','charge'].includes(q.mode)&&distance(q,p)<6).length<2;}
 function approachWarden(e,target,dt){
  if(target!==p||distance(e,p)>8){steerToward(e,target,dt,3.3);return;}
  // Reserve different approach lanes instead of sending every actor to the same point.
@@ -26,7 +26,7 @@ function approachWarden(e,target,dt){
 }
 function resolveActorContacts(dt){
  const bodies=enemies.filter(e=>!e.dead&&trialActive(e)&&e.type!=='shade'&&e.type!=='anchor'&&e.type!=='duelist'&&distance(e,p)<18);
- const radius=e=>e.type==='boss'?1.3:e.type==='porter'?.85:.48;
+ const radius=e=>e.type==='boss'?1.3:e.type==='porter'?.85:e.creatureReference?.65:.48;
  for(let i=0;i<bodies.length;i++)for(let j=i+1;j<bodies.length;j++){
   const a=bodies[i],b=bodies[j],dx=b.x-a.x,dz=b.z-a.z,d=Math.hypot(dx,dz),limit=radius(a)+radius(b);if(d>=limit)continue;
   const nx=d?dx/d:1,nz=d?dz/d:0,push=Math.min((limit-d)*.5,dt*2);

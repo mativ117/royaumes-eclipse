@@ -17,6 +17,15 @@ function inputKeyLabel(event){return ({' ':'Espace',ArrowUp:'↑',ArrowDown:'↓
 function inputActionForEvent(event){for(const [action,binding]of Object.entries(inputBindings))if(binding.code===event.code)return action;const key=event.key.toLowerCase();return Object.keys(INPUT_ACTIONS).find(action=>!inputBindings[action]&&INPUT_ACTIONS[action].keys.includes(key));}
 function persistInputBindings(){try{localStorage.setItem(INPUT_STORAGE_KEY,JSON.stringify(inputBindings));}catch(_){$('#inputFeedback').textContent='Les touches sont actives, mais ce navigateur ne permet pas leur enregistrement.';}}
 function inputEditable(target){return target?.isContentEditable||['INPUT','SELECT','TEXTAREA'].includes(target?.tagName);}
+function inputMapShortcut(event){
+ // Checkboxes own Space/Enter; text fields and selects own their typing keys.
+ // A letter assigned to the map may still close it from a non-text form control.
+ if(state!=='map'||inputActionForEvent(event)!=='map'||event.ctrlKey||event.metaKey||event.altKey||event.isComposing)return false;
+ const target=event.target,key=event.key;
+ if(target?.isContentEditable||target?.tagName==='TEXTAREA'||target?.tagName==='SELECT')return false;
+ if(target?.tagName==='INPUT')return ['checkbox','radio','range','color','file','button','submit','reset'].includes(target.type)&&![' ','Enter','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(key);
+ return true;
+}
 function cancelInputCapture(message='Modification annulée.'){inputCapture=null;$('#inputCancelCapture').hidden=true;$('#inputFeedback').textContent=message;renderInputRows();}
 function assignInputBinding(action,event){
  const code=event.code,key=event.key.toLowerCase();if(!INPUT_CODE_PATTERN.test(code)){ $('#inputFeedback').textContent='Cette touche est réservée au navigateur. Choisissez une lettre, une flèche, un chiffre, Maj, Espace ou Entrée.';return false;}
@@ -28,7 +37,7 @@ function handleConfiguredKeyDown(event){
  if(inputCapture){event.preventDefault();event.stopImmediatePropagation();if(event.repeat)return true;if(event.key==='Escape'){inputSuppressedCodes.add(event.code);cancelInputCapture();return true;}assignInputBinding(inputCapture,event);return true;}
  if(inputSuppressedCodes.has(event.code)){event.preventDefault();event.stopImmediatePropagation();return true;}
  // Text entry and browser shortcuts must never trigger combat or a map behind a form.
- if(inputEditable(event.target)){event.stopImmediatePropagation();return true;}
+ if(inputEditable(event.target)&&!(event.key==='Escape'&&['map','choice'].includes(state))&&!inputMapShortcut(event)){event.stopImmediatePropagation();return true;}
  if(state==='input-settings'){if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();closeInputSettings();}return true;}
  if($('#helpDialog').open){if(event.key==='Escape'){event.preventDefault();event.stopImmediatePropagation();$('#closeHelp').click();}return true;}
  if(!inputSolo())return false;
@@ -46,6 +55,7 @@ function handleConfiguredKeyDown(event){
 function handleConfiguredKeyUp(event){
  inputHeldCodes.delete(event.code);keys.delete(event.key.toLowerCase());if(inputBindings.attack?.code===event.code)inputKeyboardAttack=false;if(inputBindings.interact?.code===event.code||!inputBindings.interact&&event.key.toLowerCase()==='f')observing=false;
  if(inputSuppressedCodes.delete(event.code)){event.preventDefault();event.stopImmediatePropagation();return;}
+ if(inputEditable(event.target))return;
  if(inputSolo()&&['playing','map'].includes(state)&&(inputActionForEvent(event)||Object.keys(inputBindings).some(a=>INPUT_ACTIONS[a].keys.includes(event.key.toLowerCase())))){event.preventDefault();event.stopImmediatePropagation();}
 }
 function openInputSettings(){
@@ -62,7 +72,7 @@ function refreshInputHints(){
  $('#controls').textContent='Déplacer : '+(inputSolo()&&['forward','back','left','right'].some(a=>inputBindings[a])?['forward','left','back','right'].map(label).join(' / '):inputSolo()?'ZQSD / WASD / flèches':'ZQSD / WASD')+' · Attaquer : clic'+(inputSolo()&&inputBindings.attack?' / '+label('attack'):'')+' · Esquiver : '+label('dodge')+' · Pouvoir : '+label('power')+' · Interagir : '+label('interact');
  const menuLine=[...$('#menu').querySelectorAll('p.fine')].map(p=>p.firstChild).find(node=>node?.nodeType===Node.TEXT_NODE&&node.nodeValue.trimStart().startsWith('PC :'));if(menuLine)menuLine.nodeValue='PC : '+$('#controls').textContent+' · Carte : '+label('map')+' · Repères : '+label('guide')+' · Pouvoir supplémentaire : '+label('extra')+' · Échap : pause.';const guidanceText=[...$('#guidanceToggle').parentNode.childNodes].find(node=>node.nodeType===Node.TEXT_NODE);if(guidanceText)guidanceText.nodeValue=' Guidage discret · repères avec '+label('guide')+' / Repère';
  const help=$('#inputHelpSummary');help.textContent='Touches actives : esquive '+label('dodge')+' · pouvoir '+label('power')+' · interaction '+label('interact')+' · carte '+label('map')+' · repères '+label('guide')+'. Les boutons Commandes permettent de les revoir.';
- const instructions=[...$('#helpDialog').querySelectorAll('p')].filter(p=>p.id!=='inputHelpSummary');instructions[0].textContent='Marchez avec '+(inputSolo()&&['forward','back','left','right'].some(a=>inputBindings[a])?['forward','left','back','right'].map(label).join(' / '):inputSolo()?'ZQSD / WASD / les flèches':'ZQSD / WASD')+' ou le joystick. Visez et attaquez avec la souris. Esquivez avec '+label('dodge')+' ; utilisez votre pouvoir avec '+label('power')+'. Sur téléphone, la cible visible la plus proche est choisie.';instructions[1].textContent='Approchez les objets et utilisez '+label('interact')+' / le bouton contextuel. La carte ('+label('map')+') présente les objectifs ; les repères ('+label('guide')+') indiquent un chemin praticable. Aux ancres, la santé et la reprise sont enregistrées. En coopération, maintenez l’interaction près d’un compagnon à terre pour le relever.';instructions[2].textContent='Manette : stick gauche pour marcher, droit pour viser, X/gâchette pour attaquer, A pour esquiver, Y pour le pouvoir, B pour interagir. Pouvoir supplémentaire : '+label('extra')+' pour J1 solo, U pour J2 clavier ou RB à la manette.';
+ const instructions=[...$('#helpDialog').querySelectorAll('p')].filter(p=>p.id!=='inputHelpSummary');instructions[0].textContent='Marchez avec '+(inputSolo()&&['forward','back','left','right'].some(a=>inputBindings[a])?['forward','left','back','right'].map(label).join(' / '):inputSolo()?'ZQSD / WASD / les flèches':'ZQSD / WASD')+' ou le joystick. Visez et attaquez avec la souris. Esquivez avec '+label('dodge')+' ; utilisez votre pouvoir avec '+label('power')+'. Sur téléphone, la cible visible la plus proche est choisie.';instructions[1].textContent='Approchez les objets et utilisez '+label('interact')+' / le bouton contextuel. La carte ('+label('map')+') présente les objectifs ; les repères ('+label('guide')+') indiquent un chemin praticable. Aux ancres, la santé et la reprise sont enregistrées.'+(inputSolo()?'':' En coopération, maintenez l’interaction près d’un compagnon à terre pour le relever.');instructions[2].textContent='Manette : stick gauche pour marcher, droit pour viser, X/gâchette pour attaquer, A pour esquiver, Y pour le pouvoir, B pour interagir. Pouvoir supplémentaire : '+label('extra')+(inputSolo()?' au clavier ou RB à la manette.':' pour J1 solo, U pour J2 clavier ou RB à la manette.');
 }
 function updateInputLayout(){
  const overlay=[...document.querySelectorAll('.screen')].some(panel=>!panel.hidden)||$('#helpDialog').open;document.body.classList.toggle('ui-overlay-open',overlay);

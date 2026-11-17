@@ -1,17 +1,23 @@
 {
-  "version": "1.3-rc1",
+  "version": "1.4-rc1",
+  "modes": [
+    "solo"
+  ],
+  "creatures": {
+    "obsidian-warden.glb": "8e03fef66e9198fa786e567a1e5b976fb6fd5f648985d443148a84d35a9f91e7"
+  },
   "models": {
     "accordeur.glb": "01680004c41145f62ef84ab03dff96699946bb4c9c9e26821f7909eec3e90a04",
     "bergere.glb": "57dbe8c466f70449cb0c1f9cefa0b67eec13242d39a5c4684bce598a6d40c5a9",
     "cendres.glb": "e5e9db64c7a4f39113788360c6791f8a67af979cec048db8d753fcd4b9f4236f",
     "colosse.glb": "8ee09985650705a0a80ed1b3caf667c5e2d822e62ae3f635f52fedcd413ce579",
     "eclipse.glb": "287e799203668e64f502d9d6afd836224b9cecf9a8a0a63a56b5e69bff4936d1",
-    "lame.glb": "0df1360b65020c33ae6eebcb623070ad37e6eef5617d5bbf48822c2f2d0e1b38",
+    "lame.glb": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
     "neant.glb": "6a657b62a0a8ab11113f3fd130275f422e6f047419c2dfa1acb71dd5bec72ab3",
     "rempart.glb": "c62628451115d6ff74a5020929c88ae09d09539a9812ad407941a04c80580f2d",
     "tisseuse.glb": "ee7b2bcbef93e388e467937fe801dd64a38f17559e232a02762b990892e12c24",
     "voleur.glb": "ee69d2e4bdbc544162a6068478d8921c713f10ee95f11a83523610fde3a38778",
     "voltigeur.glb": "2b43894464fc30a5df8d7e2427c2c7957f46900aada55a2cb614d14745978757"
   },
-  "source_sha256": "0bf13149f2f0806e195a5f824c5c725b43b6fdf16e3b9333e06c0744748aced7"
+  "source_sha256": "6378000ed4fe62ffb818faaeda3c7c804e7087803bfb766d66155b4e9740d469"
 }

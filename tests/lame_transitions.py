@@ -18,7 +18,7 @@ try:
   run('''window.poseStep=function(speed,heading=0,dx=0,dz=-1){const dt=1/60;p.motionSpeed=speed;p.x+=dx*speed*dt;p.z+=dz*speed*dt;aim=heading;player.root.position.set(p.x,0,p.z);player.root.rotation.set(0,heading,0);t+=dt;updateRigAvatar(dt);return a.state;};resetHeroAt(0,24);poseStep(0);''')
   assert run('poseStep(2)==="start"')
   assert run('poseStep(0)==="stop"&&a.lowerState==="stop"'),'A stop must interrupt an unfinished start'
-  assert run('poseStep(2)==="start"&&a.lowerState==="start"'),'Moving again must interrupt the braking clip'
+  assert run('poseStep(2)==="start"&&a.lowerState===(a.motionCalibration?"walk":"start")'),'Moving again must interrupt braking; calibrated feet already follow actual translation'
   assert run('Math.abs(a.action.getEffectiveTimeScale()-1)<1e-5'),'Transition timing must follow the authored duration'
   run('for(let i=0;i<40;i++)poseStep(2)');assert run('a.state==="walk"')
   run('for(let i=0;i<40;i++)poseStep(0)');assert run('a.state==="guard"&&a.lowerState==="guard"')

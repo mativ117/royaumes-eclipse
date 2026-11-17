@@ -1,0 +1,271 @@
+{
+  "test": "tests/lame_attack_timing.py",
+  "fixed_step_seconds": 0.008333333333333333,
+  "controlled_stationary_targets": true,
+  "results": [
+    {
+      "combo": 1,
+      "source": {
+        "duration": 0.9333333373069763,
+        "hitAt": 0.233333,
+        "activeEnd": 0.333333
+      },
+      "expected": 0.9333333373069763,
+      "point": {
+        "x": 1.1050146880592568,
+        "z": 21.98584441810331
+      },
+      "contact": {
+        "duration": 0.9333333373069763,
+        "hitAt": 0.233333,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 9956,
+        "contacts": [
+          {
+            "elapsed": 0.2333333333333333,
+            "amount": 44
+          }
+        ],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "wall": {
+        "duration": 0.9333333373069763,
+        "hitAt": 0.233333,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "late": {
+        "duration": 0.9333333373069763,
+        "hitAt": 0.233333,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "miss": {
+        "duration": 0.9333333373069763,
+        "hitAt": 0.233333,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "vertical": {
+        "duration": 0.9333333373069763,
+        "hitAt": 0.233333,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 10.660000026226044
+      }
+    },
+    {
+      "combo": 2,
+      "source": {
+        "duration": 1.0333333015441895,
+        "hitAt": 0.2,
+        "activeEnd": 0.333333
+      },
+      "expected": 1.0333333015441895,
+      "point": {
+        "x": 0.20288435428053264,
+        "z": 22.6231832249606
+      },
+      "contact": {
+        "duration": 1.0333333015441895,
+        "hitAt": 0.2,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 9956,
+        "contacts": [
+          {
+            "elapsed": 0.24999999999999997,
+            "amount": 44
+          }
+        ],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "wall": {
+        "duration": 1.0333333015441895,
+        "hitAt": 0.2,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "late": {
+        "duration": 1.0333333015441895,
+        "hitAt": 0.2,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "miss": {
+        "duration": 1.0333333015441895,
+        "hitAt": 0.2,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "vertical": {
+        "duration": 1.0333333015441895,
+        "hitAt": 0.2,
+        "activeEnd": 0.333333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 10.660000026226044
+      }
+    },
+    {
+      "combo": 3,
+      "source": {
+        "duration": 1.399999976158142,
+        "hitAt": 0.6,
+        "activeEnd": 0.733333
+      },
+      "expected": 1.399999976158142,
+      "point": {
+        "x": 0.1617775636526892,
+        "z": 23.753851630324355
+      },
+      "contact": {
+        "duration": 1.399999976158142,
+        "hitAt": 0.6,
+        "activeEnd": 0.733333,
+        "before": 10000,
+        "after": 9928,
+        "contacts": [
+          {
+            "elapsed": 0.6000000000000003,
+            "amount": 72
+          }
+        ],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "wall": {
+        "duration": 1.399999976158142,
+        "hitAt": 0.6,
+        "activeEnd": 0.733333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "late": {
+        "duration": 1.399999976158142,
+        "hitAt": 0.6,
+        "activeEnd": 0.733333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "miss": {
+        "duration": 1.399999976158142,
+        "hitAt": 0.6,
+        "activeEnd": 0.733333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 0.45
+      },
+      "vertical": {
+        "duration": 1.399999976158142,
+        "hitAt": 0.6,
+        "activeEnd": 0.733333,
+        "before": 10000,
+        "after": 10000,
+        "contacts": [],
+        "early": true,
+        "recovery": true,
+        "scale": 1,
+        "shotDelta": 1,
+        "ended": true,
+        "bodyMinY": 10.660000026226044
+      }
+    }
+  ]
+}

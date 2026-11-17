@@ -3,7 +3,7 @@
   "base_rig": "scripts/author_characters.py",
   "concept": "design/personnages/lame-eclipse/recherche-01.png",
   "original_art": true,
-  "status": "second 3D production: adult proportions, tailored silhouette and preserved PBR atlas; not final concept parity",
+  "status": "third production: CC0 animation retarget and measured motion calibration; artistic review ongoing",
   "clips": [
     "idle",
     "guard",
@@ -37,5 +37,93 @@
   },
   "vertices": 43742,
   "polygons": 42556,
-  "sha256": "0df1360b65020c33ae6eebcb623070ad37e6eef5617d5bbf48822c2f2d0e1b38"
+  "sha256": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
+  "animation_generator": "scripts/retarget_lame_animations.py",
+  "retargeted_clips": [
+    "idle",
+    "guard",
+    "walk",
+    "run",
+    "attack1",
+    "attack2",
+    "attack3"
+  ],
+  "motion_calibration": {
+    "version": 1,
+    "units": "model",
+    "source": "Quaternius Universal Animation Library Standard CC0",
+    "gaits": {
+      "walk": {
+        "cycleDistance": 1.380735,
+        "duration": 1.333333,
+        "contacts": {
+          "L": [
+            [
+              0.0,
+              0.425
+            ]
+          ],
+          "R": [
+            [
+              0.5,
+              1.0
+            ]
+          ]
+        },
+        "sourceClip": "Walk_Loop"
+      },
+      "run": {
+        "cycleDistance": 5.310519,
+        "duration": 0.933333,
+        "contacts": {
+          "L": [
+            [
+              0.0,
+              0.21429
+            ]
+          ],
+          "R": [
+            [
+              0.5,
+              0.67857
+            ]
+          ]
+        },
+        "sourceClip": "Jog_Fwd_Loop"
+      }
+    },
+    "dodge": {
+      "distance": 1.6,
+      "duration": 0.4
+    },
+    "attacks": {
+      "attack1": {
+        "hitAt": 0.233333,
+        "activeEnd": 0.333333,
+        "duration": 0.933333,
+        "travel": 0.872115,
+        "sourceClip": "Sword_Regular_A + A_Rec"
+      },
+      "attack2": {
+        "hitAt": 0.2,
+        "activeEnd": 0.333333,
+        "duration": 1.033333,
+        "travel": 0.15,
+        "sourceClip": "Sword_Regular_B + B_Rec"
+      },
+      "attack3": {
+        "hitAt": 0.6,
+        "activeEnd": 0.733333,
+        "duration": 1.4,
+        "travel": 1.2,
+        "sourceClip": "Sword_Regular_C"
+      }
+    }
+  },
+  "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+  "weapon_socket": "weaponGrip, blade_base and blade_tip; all previous rest joints retained",
+  "cloth_skinning": "front panels 85%+ pelvis; gravity-oriented and crouch-compressed cape joints, no cloth simulation",
+  "base_geometry_uv_sha256": "a332df546c1f3e0d989a57cb28b33589fdd97dcc156c7d05695b4816fc4ec011",
+  "art_scope": "Original geometry and materials; seven retargeted CC0 Quaternius animations, remaining actions authored in the base generator",
+  "original_geometry": true
 }

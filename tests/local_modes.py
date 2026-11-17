@@ -5,6 +5,11 @@ from functools import partial
 from threading import Thread
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
+# This regression describes archived 1.3 modes, intentionally absent from 1.4.
+import json,sys
+if json.loads((ROOT/'docs/version.json').read_text()).get('modes')==['solo']:
+ print('SKIP: local coop/arena modes are archived in 1.3 and excluded from the published solo bundle.')
+ sys.exit(0)
 class Quiet(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Quiet,directory=str(ROOT/'docs')));Thread(target=server.serve_forever,daemon=True).start()

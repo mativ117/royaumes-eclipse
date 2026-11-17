@@ -19,7 +19,8 @@ function beginAttack(){
  const melee=isMeleeHero();
  p.combo=melee?(p.comboWindow>0?p.combo%3+1:1):0;p.comboWindow=1.05;
  const baseDuration=(melee?(p.combo===3?.64:.43):.28)*(HEROES[hero].attackRate||1)*(hero==='cendres'&&p.heat>=100?1.6:1),duration=melee?meleeClipDuration(hero,p.combo,baseDuration):baseDuration;
- p.attack={melee,elapsed:0,duration,hitAt:melee?duration*(p.combo===3?.390625:.372093):duration*.25,struck:false,combo:p.combo,charge:p.overcharge,aim,};
+ const definition=melee&&hero==='lame'?avatarRuntime.current?.motionCalibration?.attacks?.['attack'+p.combo]:null;
+ p.attack={melee,elapsed:0,duration,hitAt:definition?.hitAt??(melee?duration*(p.combo===3?.390625:.372093):duration*.25),activeEnd:definition?.activeEnd,struck:false,combo:p.combo,charge:p.overcharge,aim,};
  if(hero==='accordeur'&&classEffects.some(f=>f.kind==='rhythm'&&f.owner===p&&t-(f.lastPulse||-100)<.13))p.attack.charge=Math.min(3,p.attack.charge+1);p.overcharge=0;p.shot=duration;p.attackBuffer=0;observeTime=0;
 }
 function updateAttack(dt){
@@ -37,6 +38,7 @@ function shootRifle(a){
  bullets.push({mesh:o,x,z,y,dx,dz,t:1.8,enemy:false,heroId:hero,owner:p,arcStart:isRifleHero()?null:y,damage:(hero==='cendres'?30:hero==='accordeur'?32:34)+a.charge*20});
 }
 function strikeMelee(a){
+ if(usesBladeContacts(a)){p.swing=.25;return;}
  const dx=-Math.sin(a.aim),dz=-Math.cos(a.aim);let hits=0;
  for(const e of enemies){const d=distance(e,p);if(e.dead||!trialActive(e)||e.type==='boss'&&!campaign.bossAwake)continue;
   if(d<2.7+(e.type==='boss'?1.2:0)&&((e.x-p.x)*dx+(e.z-p.z)*dz)/Math.max(.01,d)>.15&&clearStrikeLine(e.x,e.z)){
@@ -73,6 +75,7 @@ function poseHero(dt){
  if(p.stagger>0)player.body.rotation.z=Math.sin(p.stagger*55)*.1;updateRigAvatar(dt);
 }
 function poseEnemy(e){
+ if(updateCreatureReference(e,1/60))return;
  if(!e.rig)return;
  const moved=e.poseX===undefined?0:Math.hypot(e.x-e.poseX,e.z-e.poseZ),poseDt=Math.max(.001,t-(e.poseTime??t-1/60));e.poseX=e.x;e.poseZ=e.z;e.poseTime=t;e.gaitPhase=(e.gaitPhase||0)+moved/(['boss','porter'].includes(e.type)?1.8:1.3)*Math.PI*2;
  const walking=Math.min(1,moved/poseDt/2.5);for(let i=0;i<(e.rig.legs||[]).length;i++){const leg=e.rig.legs[i],wave=Math.sin(e.gaitPhase+i*Math.PI);leg.root.rotation.x=wave*.5*walking;leg.shin.rotation.x=Math.max(0,-wave)*.8*walking;}

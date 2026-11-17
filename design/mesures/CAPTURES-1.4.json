@@ -1,0 +1,90 @@
+{
+  "captured_at_utc": "2026-11-17T15:25:12Z",
+  "before_commit": "8f787ee328eb2396ee00da7067123159e22cdef5",
+  "outputs": [
+    {
+      "file": "docs/previews/r4-motion-before.mp4",
+      "sha256": "482d6cbbb65f0b5bdf002869eb1789bc85a09ab91a038ca02961fdcab22d8923",
+      "duration": 4.0,
+      "width": 720,
+      "height": 480,
+      "fps": 30,
+      "audio": false,
+      "playback_speed": 1,
+      "hardware_fps_measured": false,
+      "version": "1.3-rc1",
+      "html_sha256": "4ab2e8c99d4b57d4788347ad008c6a9038d084b30d923e8bf504bd1d77440131",
+      "lame_sha256": "0df1360b65020c33ae6eebcb623070ad37e6eef5617d5bbf48822c2f2d0e1b38",
+      "frames": 120,
+      "simulation_calls": 240,
+      "simulation_seconds": 3.9999999999999907,
+      "camera": "ordinary gameplay",
+      "combos_seen": [
+        0,
+        1,
+        2
+      ],
+      "hud_hidden": true
+    },
+    {
+      "file": "docs/previews/r4-motion-after.mp4",
+      "sha256": "f423d678c16347f60e31733f0147197e3c10966eb0a900dce9de2790300ec602",
+      "duration": 4.0,
+      "width": 720,
+      "height": 480,
+      "fps": 30,
+      "audio": false,
+      "playback_speed": 1,
+      "hardware_fps_measured": false,
+      "version": "1.4-rc1",
+      "html_sha256": "6d4a7102f33449fc16a5b5354c49336731f1e0cfeedcce13e523a492c5410085",
+      "lame_sha256": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
+      "frames": 120,
+      "simulation_calls": 240,
+      "simulation_seconds": 3.9999999999999907,
+      "camera": "ordinary gameplay",
+      "combos_seen": [
+        0,
+        1,
+        2
+      ],
+      "hud_hidden": true
+    },
+    {
+      "file": "docs/previews/r4-creature.mp4",
+      "sha256": "d7e74b568385646da8e6a6fde255d7b671d9929f58f899214763917813df8d23",
+      "duration": 2.5,
+      "width": 720,
+      "height": 480,
+      "fps": 30,
+      "audio": false,
+      "playback_speed": 1,
+      "hardware_fps_measured": false,
+      "version": "1.4-rc1",
+      "creature_sha256": "8e03fef66e9198fa786e567a1e5b976fb6fd5f648985d443148a84d35a9f91e7",
+      "frames": 75,
+      "simulation_calls": 150,
+      "camera": "fixed spectator three-quarter; actors retain actual positions",
+      "states_seen": [
+        "charge",
+        "recover",
+        "windup"
+      ],
+      "hud_hidden": true
+    },
+    {
+      "file": "docs/previews/r4-lame-studio.jpg",
+      "sha256": "531f44fcd28a5fcc0d5eaf88f7ada516aac9684320fc9b0a01878f85586595fc",
+      "width": 1000,
+      "height": 760,
+      "version": "1.4-rc1",
+      "kind": "actual in-engine studio still"
+    }
+  ],
+  "notes": [
+    "Actual game frames; fixed 60Hz simulation exported at 30fps, playback 1x; not measured device performance.",
+    "Same Lame input timeline and normal gameplay camera before/after; HUD hidden identically.",
+    "Quiet existing Atrium; quest context, colliders and distant actors retained.",
+    "Creature clip uses a fixed spectator three-quarter camera; actual actor positions and AI charge, no visual relocation."
+  ]
+}

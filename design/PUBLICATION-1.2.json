@@ -1,0 +1,12 @@
+{
+  "version": "1.2-rc1",
+  "html_sha256": "04d5af3b4e96b7f4ae1a2b580f9f8cfea303ee1d40837600e09cfa1806bb183c",
+  "verified_models": 11,
+  "zip_bytes": 41486199,
+  "zip_sha256": "57cebf1a51a35543f53a7b4d2005760ab2c4ee1bdd1aeff93c594859e585ec41",
+  "comparison_verified": true,
+  "published_commit": "425530fcdd84401d1dfd8e023b39723494018331",
+  "verified_at_utc": "2026-11-17T10:31:22.737550+00:00",
+  "studio_live_smoke": "PASS: model, 23 clips, three attacks, dodge, direct Lame selection and Commands panel",
+  "campaign_live_smoke": "PASS: remote Tisseuse model, chapter II, score, render and chronicle"
+}

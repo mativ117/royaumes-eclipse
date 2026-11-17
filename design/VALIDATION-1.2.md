@@ -19,3 +19,9 @@ Source intégrée SHA-256 : `136e25772c3432784362533a315c713644d2b1c483dbb460af1
 Lame GLB SHA-256 : `d6c2066da95dac821b39632f59b2a524ef43d64ef82bd7d6280a1652927c2ec5`.
 
 La publication distante est vérifiée ensuite avec verify_live, smoke_live et smoke_lame_live. Le ZIP garde le contenu local validé avant le relevé distant.
+
+## Publication confirmée
+
+GitHub Pages sert le commit `425530fcdd84401d1dfd8e023b39723494018331`. Jeu, onze modèles, atelier 3D, concept et ZIP correspondent aux fichiers locaux. Les deux contrôles navigateur publics passent : sélection de gestes dans l’atelier puis démarrage avec la Lame et panneau Commandes ; chargement distant de la Tisseuse et chapitre II avec rendu, musique et récit. Aucun fichier manquant ni erreur JavaScript constaté dans ces parcours.
+
+Voir [PUBLICATION-1.2.json](PUBLICATION-1.2.json). Ce relevé est ajouté après publication ; le ZIP reste l’artefact validé du commit de livraison.

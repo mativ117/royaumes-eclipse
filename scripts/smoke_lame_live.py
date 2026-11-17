@@ -8,7 +8,7 @@ with sync_playwright() as pw:
  page.goto('https://mativ117.github.io/royaumes-eclipse/docs/atelier-lame.html?v='+version);page.wait_for_function('window.reviewReady===true',polling=50);assert page.evaluate('Object.keys(actions).length')==23
  for name in ['idle','attack1','attack2','attack3','dodge_left']:
   page.select_option('#motion',name);page.evaluate('mixer.update(.16);frame(performance.now())')
- page.click('a.play');page.wait_for_function('avatarRuntime.status==="ready"',polling=50);assert page.evaluate('hero')=='lame';page.click('#start');page.evaluate('soundOn=false;p.inv=999;for(let i=0;i<20;i++)update(1/60);updateVisualWorld();renderPresentation()')
+ page.click('a.play');page.wait_for_url('**/index.html?hero=lame&v=*');page.wait_for_load_state('load');page.wait_for_function('typeof avatarRuntime!=="undefined"&&avatarRuntime.status==="ready"',polling=50);assert page.evaluate('hero')=='lame';page.click('#start');page.evaluate('soundOn=false;p.inv=999;for(let i=0;i<20;i++)update(1/60);updateVisualWorld();renderPresentation()')
  assert page.evaluate('avatarRuntime.current.state')=='guard'
  page.click('#inputSettingsButton');assert page.evaluate('state')=='input-settings';page.keyboard.press('Escape');assert page.evaluate('state')=='playing'
  assert not errors,errors

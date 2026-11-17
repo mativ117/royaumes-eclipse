@@ -1,0 +1,13 @@
+{
+  "version": "1.3-rc1",
+  "html_sha256": "4ab2e8c99d4b57d4788347ad008c6a9038d084b30d923e8bf504bd1d77440131",
+  "verified_models": 11,
+  "zip_bytes": 51481052,
+  "zip_sha256": "10acb170a7427c7d6694ec0879c6ec993951cd890c5b8ddf6600b247c44b6507",
+  "comparison_verified": true,
+  "published_commit": "d855bbdbc082664ad0e759532ff942962679a7d0",
+  "verified_at_utc": "2026-11-17T11:44:38.287843+00:00",
+  "inline_studio_live_smoke": "PASS: actual models and attack, rapid selection, parent/offscreen render suspension, dispose/recreate and invalid hero URL fallback",
+  "studio_live_smoke": "PASS: 23 clips, attacks, dodge, link to Lame game and Commands panel; no missing responses or JS errors",
+  "campaign_live_smoke": "PASS: root redirect, remote Tisseuse, chapter II, render, score and chronicle"
+}

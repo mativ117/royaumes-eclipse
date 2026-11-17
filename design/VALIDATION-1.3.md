@@ -21,3 +21,9 @@ Source intégrée SHA-256 : `0bf13149f2f0806e195a5f824c5c725b43b6fdf16e3b9333e06
 Lame GLB SHA-256 : `0df1360b65020c33ae6eebcb623070ad37e6eef5617d5bbf48822c2f2d0e1b38`.
 
 La publication distante est relevée ensuite. Le ZIP conserve les fichiers validés avant ce relevé.
+
+## Publication confirmée
+
+GitHub Pages a servi le commit `d855bbdbc082664ad0e759532ff942962679a7d0`. Le HTML, les onze modèles, l’atelier, le concept, les captures et le ZIP correspondent aux fichiers de livraison. Les trois contrôles publics passent : atelier intégré et changements de héros ; atelier séparé et démarrage de la Lame ; Tisseuse et chapitre II avec récit et audio. Aucun fichier manquant ni erreur JavaScript constaté dans ces parcours.
+
+Voir [PUBLICATION-1.3.json](PUBLICATION-1.3.json). Le relevé et les ajustements des scripts de contrôle public sont ajoutés après la livraison ; le ZIP conserve le paquet validé et son empreinte initiale.

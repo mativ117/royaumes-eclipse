@@ -6,7 +6,7 @@ function makeHeroAvatar(root,clips,name,parent=player.root){
  const mixer=new THREE.AnimationMixer(root),actions={},lowerActions={},materialCopies=new Map();
  for(const clip of clips){const lower=q=>/^(root|pelvis|thigh[LR]|shin[LR]|foot[LR])$/.test(THREE.PropertyBinding.parseTrackName(q.name).nodeName);actions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name,clip.duration,clip.tracks.filter(q=>!lower(q))));lowerActions[clip.name]=mixer.clipAction(new THREE.AnimationClip(clip.name+'_lower',clip.duration,clip.tracks.filter(lower)));}
  root.traverse(o=>{if(o.isMesh){const copy=m=>{if(!materialCopies.has(m)){const cloned=m.clone();if(cloned.userData.morphBase&&cloned.isMeshStandardMaterial){const base=cloned.userData.morphBase;cloned.color.copy(base.color);cloned.emissive.copy(base.emissive);cloned.emissiveIntensity=base.strength;}materialCopies.set(m,cloned);}return materialCopies.get(m);};o.material=Array.isArray(o.material)?o.material.map(copy):copy(o.material);o.castShadow=true;o.receiveShadow=true;o.frustumCulled=false;}});parent.add(root);
- const avatar={ownedMaterials:[...materialCopies.values()],root,clips,mixer,actions,lowerActions,lowerAction:null,lowerState:'',state:'',action:null,muzzle:root.getObjectByName('muzzle'),blade:root.getObjectByName('blade_tip'),hand:root.getObjectByName('handR'),weapon:root.getObjectByName(name+'_Weapon'),lastAttack:null,lastUse:null,aimHold:0};const parentQuaternion=parent.quaternion.clone(),parentPosition=parent.position.clone();parent.quaternion.identity();parent.position.set(0,0,0);initAvatarKinematics(avatar);parent.quaternion.copy(parentQuaternion);parent.position.copy(parentPosition);parent.updateWorldMatrix(true,true);return avatar;
+ const avatar={ownedMaterials:[...materialCopies.values()],root,clips,mixer,actions,lowerActions,lowerAction:null,lowerState:'',state:'',action:null,muzzle:root.getObjectByName('muzzle'),blade:root.getObjectByName('blade_tip'),hand:root.getObjectByName('handR'),weapon:root.getObjectByName(name+'_Weapon'),lastAttack:null,lastUse:null,aimHold:0};const parentQuaternion=parent.quaternion.clone(),parentPosition=parent.position.clone();parent.quaternion.identity();parent.position.set(0,0,0);initAvatarKinematics(avatar);refineHeroMaterials(avatar);parent.quaternion.copy(parentQuaternion);parent.position.copy(parentPosition);parent.updateWorldMatrix(true,true);return avatar;
 }
 async function ensureHeroModel(name){
  if(avatarRuntime.heroes[name])return avatarRuntime.heroes[name];if(heroLoads[name])return heroLoads[name];
@@ -51,7 +51,7 @@ function updateRigAvatar(dt){
  if(avatar.weapon)avatar.weapon.visible=!campaign?.trials.forge.carrying;
  const travel=avatar.lastPosition?Math.hypot(p.x-avatar.lastPosition.x,p.z-avatar.lastPosition.z):0;const speed=p.motionSpeed===undefined?Math.hypot(p.vx,p.vz):travel>1.5?0:Math.max(p.motionSpeed,travel/dt),gait=speed>3?'run':speed>.18?'walk':'idle';
  avatar.aimHold=Math.max(0,avatar.aimHold-dt);let lower=gait,lowerRestart=false,lowerDuration=null;
- if(p.stagger>0){playAvatarAction(avatar,'hit',.035,false,.2);lower='hit';lowerDuration=.2;}
+ if(p.stagger>0){playAvatarAction(avatar,'hit',.035,false,.2);lower=speed>.18?gait:'hit';lowerDuration=lower==='hit'?.2:null;}
  else if(p.leap>0){playAvatarAction(avatar,'leap',.06,false,.75);lower='leap';lowerDuration=.75;}
  else if(p.dashT>0){playAvatarAction(avatar,'dash',.045,false,DODGE_DURATION);lower='dash';lowerDuration=DODGE_DURATION;}
  else if(p.attack){
@@ -67,7 +67,7 @@ function updateRigAvatar(dt){
  else{playAvatarAction(avatar,gait,.12);if(gait!=='idle')avatar.action.setEffectiveTimeScale(Math.max(.25,speed*avatar.action.getClip().duration/(gait==='run'?1.5:1.2)));}
  playLowerAction(avatar,lower,.1,lowerRestart,lowerDuration);
  if(['walk','run'].includes(lower))avatar.lowerAction.setEffectiveTimeScale(Math.max(.2,speed*avatar.lowerAction.getClip().duration/(lower==='run'?1.5:1.2)));
- avatar.mixer.update(dt);updateHeroMorph(avatar,p,hero,dt);updateAvatarKinematics(avatar,dt,speed);updateBladeTrail(avatar,dt);
+ avatar.mixer.update(dt);updateHeroMorph(avatar,p,hero,dt);updateBodyDynamics(avatar,p,dt);updateAvatarKinematics(avatar,dt,speed);updateBladeTrail(avatar,dt);
 }
 
 const bladeTrail={samples:[],mesh:null,lastTime:-1};

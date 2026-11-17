@@ -38,7 +38,7 @@ function setSanctuaryQuality(mode){
 function updateSanctuary(dt){
  if(!sanctuary)return;const s=sanctuary;s.age+=dt;s.waterTime.value=s.age;
  // Snap in the light's projection plane, not world axes: stable shadow texels.
- const target=new THREE.Vector3(p?.x??0,0,p?.z??13),offset=new THREE.Vector3(-10,24,10);
+ const target=new THREE.Vector3(p?.x??0,0,p?.z??13),offset=new THREE.Vector3(-10,24,-18);
  const basis=new THREE.Matrix4().lookAt(offset,new THREE.Vector3(),new THREE.Vector3(0,1,0));
  const right=new THREE.Vector3().setFromMatrixColumn(basis,0),up=new THREE.Vector3().setFromMatrixColumn(basis,1),texel=38/sun.shadow.mapSize.x;
  for(const axis of [right,up]){const value=target.dot(axis);target.addScaledVector(axis,Math.round(value/texel)*texel-value);}

@@ -10,7 +10,7 @@ function initAvatarKinematics(a){
  }
  a.groundHeight=a.legs.reduce((sum,leg)=>sum+leg.end.getWorldPosition(new THREE.Vector3()).y,0)/a.legs.length;a.foregrip=avatarBone(a,'foregrip');a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;
 }
-function resetAvatarKinematics(a){a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;}
+function resetAvatarKinematics(a){a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;a.motion=null;}
 function pointJointAt(joint,child,target,weight){
  const s=ikScratch; joint.getWorldPosition(s.h);child.getWorldPosition(s.f);s.from.copy(s.f).sub(s.h).normalize();s.to.copy(target).sub(s.h).normalize();
  if(s.from.lengthSq()<.9||s.to.lengthSq()<.9)return;
@@ -27,7 +27,7 @@ function solveAvatarLimb(limb,target,pole,weight,endOrientation=null){
 }
 function updateAvatarKinematics(a,dt,speed,actor=p,heroId=hero,heading=aim){
  a.root.updateWorldMatrix(true,true);const current=new THREE.Vector3(actor.x,0,actor.z),delta=a.lastPosition?current.clone().sub(a.lastPosition):new THREE.Vector3();a.lastPosition=current;
- const distance=delta.length(),special=actor.dashT>0||actor.leap>0||actor.stagger>0;
+ heading=actor.attack?.aim??heading;const distance=delta.length(),special=actor.dashT>0||actor.leap>0;
  if(distance>1.5||special){a.feetWeight=0;a.stepPhase=0;for(const leg of a.legs){leg.end.getWorldPosition(leg.anchor);leg.destination.copy(leg.anchor);leg.lastPhase=0;}}
  const walking=!special&&distance>.0005&&speed>.18,blend=1-Math.exp(-dt*18);a.feetWeight+=((walking?1:0)-a.feetWeight)*blend;
  a.root.position.y=-.10*a.feetWeight;a.root.updateWorldMatrix(true,true);
@@ -52,11 +52,16 @@ function updateAvatarKinematics(a,dt,speed,actor=p,heroId=hero,heading=aim){
  a.weaponWeight+=((armed?1:0)-a.weaponWeight)*(1-Math.exp(-dt*24));
  if(a.weaponWeight>.01){
   const firing=actor.attack&&!actor.attack.melee,phase=firing?actor.attack.elapsed:1,pulse=firing&&phase>=actor.attack.hitAt?Math.exp(-(phase-actor.attack.hitAt)*26):0;
-  const yawAngle=actor.attack?.heading??heading,yaw=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),yawAngle),right=new THREE.Vector3(Math.cos(yawAngle),0,-Math.sin(yawAngle)),forward=new THREE.Vector3(-Math.sin(yawAngle),0,-Math.cos(yawAngle));
+  const yawAngle=actor.attack?.aim??heading,yaw=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),yawAngle),right=new THREE.Vector3(Math.cos(yawAngle),0,-Math.sin(yawAngle)),forward=new THREE.Vector3(-Math.sin(yawAngle),0,-Math.cos(yawAngle));
   const wrist=current.clone().addScaledVector(right,.12).addScaledVector(forward,.02-pulse*.055);wrist.y=1.33+pulse*.015;
   const orientation=yaw.clone().multiply(a.arms[0].bind),pitch=new THREE.Quaternion().setFromAxisAngle(right,pulse*.075);orientation.premultiply(pitch);
   solveAvatarLimb(a.arms[0],wrist,right,a.weaponWeight,orientation);
   if(a.foregrip){const grip=a.foregrip.getWorldPosition(new THREE.Vector3());solveAvatarLimb(a.arms[1],grip,right.clone().negate(),a.weaponWeight,yaw.clone().multiply(a.arms[1].bind));}
  }
  a.root.updateWorldMatrix(true,true);
+}
+
+function updateBodyDynamics(a,actor,dt){
+ const heading=actor.attack?.aim??actor.aim??aim,m=a.motion||(a.motion={x:actor.x,z:actor.z,vx:0,vz:0,lean:0,side:0}),step=Math.max(.001,dt),dx=actor.x-m.x,dz=actor.z-m.z;let vx=dx/step,vz=dz/step;if(Math.hypot(dx,dz)>1.5)vx=vz=0;const ax=(vx-m.vx)/step,az=(vz-m.vz)/step,blend=1-Math.exp(-dt*12);m.x=actor.x;m.z=actor.z;m.vx+=(vx-m.vx)*blend;m.vz+=(vz-m.vz)*blend;m.lean+=(THREE.MathUtils.clamp((-Math.sin(heading)*ax-Math.cos(heading)*az)*.0025,-.085,.085)-m.lean)*blend;m.side+=(THREE.MathUtils.clamp((Math.cos(heading)*ax-Math.sin(heading)*az)*.002,-.07,.07)-m.side)*blend;
+ if(actor.leap>0||actor.dashT>0)return;const spine=avatarBone(a,'spine'),chest=avatarBone(a,'chest');spine.rotation.x+=m.lean;chest.rotation.z-=m.side;const cape=avatarBone(a,'cape_mid'),tip=avatarBone(a,'cape_tip');if(cape){cape.rotation.x+=.035*Math.sin(t*1.4)+(Math.hypot(m.vx,m.vz)*.018);tip.rotation.x+=.065*Math.sin(t*1.6+.6)+Math.hypot(m.vx,m.vz)*.022;}
 }

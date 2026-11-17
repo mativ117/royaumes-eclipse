@@ -1,8 +1,14 @@
 # Les Royaumes de l’Éclipse
 
-**Version candidate 1.0-rc1 — Le voyage des trois reflets.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
+**Version candidate 1.1-rc2 — Ambre et obsidienne.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1-rc1)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.0-rc1.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1-rc2)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.1-rc2.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
+
+## La nouvelle direction visuelle
+
+Noir profond, soleil ambré, dunes lointaines et silhouettes drapées : cette passe reprend les nouvelles références transmises. Matières avec relief et rugosité, lumière en contre-jour, composition HDR, capes retravaillées et réactions de mouvement. Une chronique présente les enjeux et suit la progression ; trois thèmes musicaux originaux évoluent en combat, avec des effets de pas et d’armes distincts. [Récit et son](design/RECIT-SON-1.1.md). Le réglage Léger est conservé. Le rendu reste stylisé et ne constitue pas encore une finition AAA.
+
+[Captures comparatives du jeu](https://mativ117.github.io/royaumes-eclipse/docs/ambre-obsidienne.html) · [Détails et limites de la passe](design/ESTHETIQUE-1.1.md)
 
 ## Le voyage
 
@@ -40,7 +46,7 @@ Les arènes utilisent les statistiques de base, sans bonus de serment, et prése
 
 Profil local nommé, statistiques, chapitres terminés, étapes du secret et ancres de reprise sont conservés sur cet appareil. Les refuges de l’ancienne Cathédrale restent compatibles. Export/import JSON permet de conserver ou transférer le profil ; l’import remplace les données du jeu sur cet appareil. Aucun e-mail n’est collecté.
 
-Guide intégré, carte, choix de présentation, ambiance musicale procédurale, volume et réduction des effets d’impact. Le son démarre après une action volontaire.
+Guide intégré, carte, chronique avec le bouton Récit, choix de présentation, trois thèmes musicaux synthétiques, volumes et réduction des effets d’impact. Le son démarre après une action volontaire.
 
 ## Exécuter et modifier
 

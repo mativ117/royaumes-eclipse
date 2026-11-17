@@ -36,7 +36,12 @@ def create(role):
  bpy.ops.object.mode_set(mode='OBJECT');rig.select_set(False)
  pieces=[]
  def finish(obj,name,bone,mat):
-  obj.name=name;obj.data.materials.append(palette[mat]);bpy.context.view_layer.objects.active=obj;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+  obj.name=name;obj.data.materials.append(palette[mat]);
+  if not obj.data.uv_layers:
+   uv=obj.data.uv_layers.new(name='Surface');xs=[v.co.x for v in obj.data.vertices];zs=[v.co.z for v in obj.data.vertices];loX,loZ=min(xs),min(zs);spanX=max(.01,max(xs)-loX);spanZ=max(.01,max(zs)-loZ)
+   for loop in obj.data.loops:
+    v=obj.data.vertices[loop.vertex_index].co;uv.data[loop.index].uv=((v.x-loX)/spanX,(v.z-loZ)/spanZ)
+  bpy.context.view_layer.objects.active=obj;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
   if bone:obj.vertex_groups.new(name=bone).add(list(range(len(obj.data.vertices))),1,'REPLACE')
   for f in obj.data.polygons:f.use_smooth=True
   pieces.append(obj);return obj
@@ -82,17 +87,17 @@ def create(role):
   ellipsoid('Boot '+side,(s*.15,-.075,.09),(.10,.205,.09),'foot.'+side,'leather')
   plate('Toe cap '+side,(s*.15,-.21,.09),(.18,.13,.10),'foot.'+side,'steel')
  # Flowing mantle with articulated lower bones and a copper hem.
- verts=[];faces=[];rows=9;cols=9
+ verts=[];faces=[];rows=13;cols=13
  for row in range(rows):
-  f=row/(rows-1);z=1.72-f*(1.05 if heavy else 1.25);width=.31+f*.15
+  f=row/(rows-1);z=1.72-f*1.48;width=.31+f*.23
   for col in range(cols):
-   x=(col/(cols-1)*2-1)*width;y=.15+f*.24+math.sin(col/(cols-1)*math.pi*4)*(.015+f*.035);verts.append((x,y,z))
+   x=(col/(cols-1)*2-1)*width;y=.15+f*.34+f*f*.20+math.sin(col/(cols-1)*math.pi*4)*(.012+f*.05);verts.append((x,y,z))
  for row in range(rows-1):
   for col in range(cols-1):i=row*cols+col;faces.append((i,i+1,i+cols+1,i+cols))
  me=bpy.data.meshes.new('Mantle weave');me.from_pydata(verts,[],faces);me.update();o=bpy.data.objects.new('Mantle',me);bpy.context.collection.objects.link(o);finish(o,'Mantle',None,'cloak')
  for bone in ['chest','cape_mid','cape_tip']:o.vertex_groups.new(name=bone)
  for i,v in enumerate(verts):
-  f=(1.72-v[2])/(1.05 if heavy else 1.25)
+  f=(1.72-v[2])/1.48
   if f<.45:a,b,w='chest','cape_mid',f/.45
   else:a,b,w='cape_mid','cape_tip',(f-.45)/.55
   o.vertex_groups[a].add([i],1-w,'REPLACE');o.vertex_groups[b].add([i],w,'REPLACE')

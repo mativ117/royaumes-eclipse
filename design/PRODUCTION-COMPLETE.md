@@ -16,8 +16,20 @@ Décisions : sans serveur pour cette livraison ; direction détaillée avec vari
 - [x] Tests des trois chapitres, de tous les héros, des modes locaux et des régressions.
 - [x] Archives, documentation, inventaire et tests de publication préparés.
 - [x] Envoi du jeu sur GitHub et vérification initiale du site : HTML, onze modèles, ZIP et démarrage du chapitre II.
-- [ ] Rétablissement du dépôt et de Pages après désactivation par GitHub : dernier envoi de documentation refusé en 403, site devenu indisponible en 404. Le propriétaire doit vérifier son compte.
+- [x] Accès GitHub rétabli : dépôt public accessible au connecteur, récupération Git autorisée et Pages disponible. Configuration vérifiée : branche main, racine /.
 
 Le rendu de production et l’équilibrage restent soumis aux parties humaines. Une livraison candidate ne signifie pas que tous les objectifs visuels des références AAA sont atteints.
 
 Contrôle distant effectué le 16 novembre 2026. Voir [le relevé de validation](VALIDATION-1.0.md).
+
+## Passe 1.1 — Ambre et obsidienne
+
+- [x] Dernières références noir/ambre prises comme direction principale.
+- [x] Matières, éclairage, composition, dunes et silhouettes intégrés au moteur.
+- [x] Onze modèles avec capes retravaillées ; appuis et prise à deux mains conservés.
+- [x] Comparaison 1.0/1.1 distincte de la comparaison historique.
+- La validation et la publication de cette passe sont relevées dans `VALIDATION-1.1.md`.
+
+- [x] Présentation des enjeux dans le menu et chronique intégrée, fins liées aux chapitres terminés.
+- [x] Trois thèmes originaux WebAudio, couches de combat, mix musique/effets et sons de pas selon le sol.
+- [x] Test de rendu audio stéréo réel et navigation du récit, sans prétendre à une validation artistique du mix.

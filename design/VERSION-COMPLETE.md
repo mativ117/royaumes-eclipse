@@ -1,4 +1,6 @@
-# Guide de la version candidate 1.0
+# Guide du contenu jouable — versions candidates 1.0 et 1.1
+
+La passe visuelle 1.1 est décrite dans [Ambre et obsidienne](ESTHETIQUE-1.1.md). Le contenu et les règles ci-dessous sont conservés.
 
 ## Ce qui est livré
 

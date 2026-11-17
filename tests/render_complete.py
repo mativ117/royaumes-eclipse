@@ -16,12 +16,12 @@ try:
    for level,hero in [(2,'neant'),(3,'bergere')]:
     run(f'ensureHeroModel("{hero}")');run(f'hero="{hero}";start();enterChapter({level});p.inv=999;')
     for quality in ['standard','light']:
-     page.select_option('#quality',quality,force=True);run('for(let i=0;i<10;i++)update(1/60);updateJourneyScenery(.1);updateSanctuary(.1);renderer.render(scene,camera)')
-     calls=run('renderer.info.render.calls');assert calls<(650 if quality=='standard' else 400),(level,width,quality,calls)
+     page.select_option('#quality',quality,force=True);run('for(let i=0;i<10;i++)update(1/60);updateJourneyScenery(.1);updateSanctuary(.1);updateVisualWorld();renderPresentation()')
+     calls=run('presentation.stats.sceneCalls');assert calls<(650 if quality=='standard' else 400),(level,width,quality,calls)
      assert run('document.documentElement.scrollWidth<=innerWidth'),(width,height)
      assert run('world.onGround(p.x,p.z)&&Number.isFinite(avatarRuntime.current.legs[0].end.getWorldPosition(new THREE.Vector3()).y)')
     run('toggleMap()');assert page.locator('#missionList button').count()>=1;assert run('document.documentElement.scrollWidth<=innerWidth');run('toggleMap()')
-    if width==1100:run('updateJourneyScenery(.1);renderer.render(scene,camera)');page.screenshot(path=f'/tmp/royaumes-final-chapter-{level}-{width}.png')
+    if width==1100:run('updateJourneyScenery(.1);updateVisualWorld();renderPresentation()');page.screenshot(path=f'/tmp/royaumes-final-chapter-{level}-{width}.png')
    page.close()
   assert not errors,errors
   assert not console,(console,missing)

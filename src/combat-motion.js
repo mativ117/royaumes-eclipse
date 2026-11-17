@@ -24,7 +24,7 @@ function beginAttack(){
 function updateAttack(dt){
  const a=p.attack;if(!a)return;const previous=a.elapsed;a.elapsed+=dt;attackAdvance(a,previous);
  if(!a.struck&&a.elapsed>=a.hitAt){
-  if(campaign.trials.forge.carrying)dropCore();a.struck=true;shotCount++;p.recoil=1;
+  if(campaign.trials.forge.carrying)dropCore();a.struck=true;shotCount++;p.recoil=1;playWorldSound(a.melee?'blade':'shot');
   if(a.melee)strikeMelee(a);else shootRifle(a);
  }
  if(a.elapsed>=a.duration)p.attack=null;
@@ -33,7 +33,7 @@ function shootRifle(a){
  const dx=-Math.sin(a.aim),dz=-Math.cos(a.aim);let x=p.x+Math.cos(a.aim)*.5+dx*1.6,z=p.z-Math.sin(a.aim)*.5+dz*1.6,y=1.35;
  const anchor=avatarRuntime.current?.muzzle;if(anchor){avatarRuntime.current.root.updateMatrixWorld(true);const origin=anchor.getWorldPosition(new THREE.Vector3());x=origin.x+dx*.08;z=origin.z+dz*.08;y=origin.y;}
  if(hero==='cendres')p.heat=Math.min(100,(p.heat||0)+12);const projectileMaterial=a.charge?cyan:hero==='rempart'?gold:classProjectileMaterial(hero);const o=mesh(sphereGeo,projectileMaterial,x,y,z,a.charge?.14:.065,a.charge?.14:.065,a.charge?.7:.4);o.rotation.y=a.aim;
- bullets.push({mesh:o,x,z,y,dx,dz,t:1.8,enemy:false,heroId:hero,owner:p,arcStart:isRifleHero()?null:y,damage:(hero==='cendres'?30:hero==='accordeur'?32:34)+a.charge*20});tone(440,.06,'sawtooth',.009);
+ bullets.push({mesh:o,x,z,y,dx,dz,t:1.8,enemy:false,heroId:hero,owner:p,arcStart:isRifleHero()?null:y,damage:(hero==='cendres'?30:hero==='accordeur'?32:34)+a.charge*20});
 }
 function strikeMelee(a){
  const dx=-Math.sin(a.aim),dz=-Math.cos(a.aim);let hits=0;
@@ -43,7 +43,7 @@ function strikeMelee(a){
    if(!e.dead&&!['boss','porter','anchor'].includes(e.type))moveEntity(e,dx*(a.combo===3?.9:.35),dz*(a.combo===3?.9:.35),.55);
   }
  }
- p.swing=.25;slashMaterial.color.set(a.charge?'#a7ecff':a.combo===3?'#fff2b6':'#ffbc76');tone(a.combo===3?140:320,.1,'triangle');
+ p.swing=.25;slashMaterial.color.set(a.charge?'#a7ecff':a.combo===3?'#fff2b6':'#ffbc76');
 }
 function poseHero(dt){
  const a=p.attack,melee=isMeleeHero();
@@ -82,6 +82,7 @@ function poseEnemy(e){
  e.robe.rotation.x=wind?-.08*progress:charge?.2:recover?.12:0;
  e.root.rotation.x=charge?.12:0;
  if(journey.level===2&&e===boss&&e.mode==='recover'&&localProfile.secret[0]&&!localProfile.secret[1]){e.rig.arms[0].rotation.x=-1.2;e.rig.arms[0].rotation.z=-.6;}
+ if(e.rig.mantle){e.rig.mantle.visible=e.type!=='shade'||shadeVulnerable(e);e.rig.eyes.visible=e.rig.mantle.visible;e.rig.mantle.rotation.x=walking*.06+Math.sin(t*1.1)*.018;}
  if(e.flash>0)e.robe.rotation.z=Math.sin(t*65)*.08;else e.robe.rotation.z=0;
 }
 

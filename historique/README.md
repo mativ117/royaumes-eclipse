@@ -26,4 +26,7 @@
 Les archives ne sont pas publiées par GitHub Pages lorsque la source est /docs. Elles ne constituent pas un historique Git complet ; elles conservent les fichiers disponibles dans cette session.
 
 - `royaumes-v1.0-rc1.html` : version candidate à trois chapitres, dix héros et un secret, modes locaux ; snapshot autonome avec les onze modèles intégrés.
-- `livraisons-zip/royaumes-eclipse-1.0-rc1.zip` : projet courant, fichiers jouables et archives HTML/sources. Les anciens ZIP restent dans le dépôt ; ils ne sont pas imbriqués récursivement dans ce paquet.
+- `livraisons-zip/royaumes-eclipse-1.0-rc1.zip` : projet de la version 1.0, fichiers jouables et archives HTML/sources. Les anciens ZIP restent dans le dépôt ; ils ne sont pas imbriqués récursivement dans ce paquet.
+
+- `royaumes-v1.1-rc2.html` : passe Ambre et obsidienne, matières, contre-jour, capes et réactions de mouvement, chronique et trois thèmes musicaux ; onze modèles intégrés.
+- `livraisons-zip/royaumes-eclipse-1.1-rc2.zip` : sources et jeu de cette passe, captures comparatives et archives HTML précédentes.

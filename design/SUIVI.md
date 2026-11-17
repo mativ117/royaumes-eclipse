@@ -1,4 +1,4 @@
-# Suivi du projet — version candidate 1.0-rc1
+# Suivi du projet — version candidate 1.1-rc2
 
 Les choix confirmés pour cette livraison sont : **sans serveur**, détails visuels avec réglage léger, aventure complète puis révision du résultat. La version livrée relie le contenu de jeu ; le rendu et l’équilibrage restent à éprouver en parties humaines.
 
@@ -15,7 +15,7 @@ Les choix confirmés pour cette livraison sont : **sans serveur**, détails visu
 | Battle | Duel local ou contre IA, équipes contre deux IA ou J3/J4 et Couronne vivante ; manches/score et conclusion |
 | Sauvegarde | Profil local nommé, ancres, statistiques, secret, export/import ; anciens refuges conservés |
 | Audio et confort | Ambiance procédurale, volume, réduction des effets, guide, carte, repères et deux qualités graphiques |
-| Direction artistique | Rendu stylisé étendu aux trois lieux ; les références Expédition 33 / Ghost of Tsushima restent une cible de production |
+| Direction artistique | Noir/ambre, soleil, dunes et silhouettes drapées ; matières PBR, contre-jour et composition HDR, avec mode léger. Références de mouvement Expédition 33 / Ghost of Tsushima |
 | GitHub et historique | Sources, modèles, provenance, licences, tests et archives séparés ; site dans docs/ et modèles chargés à la sélection |
 
 ## Limites conservées, sans les annoncer comme terminées
@@ -32,3 +32,9 @@ Les choix confirmés pour cette livraison sont : **sans serveur**, détails visu
 La Cathédrale, les serments, ses énigmes, son extraction, les archives HTML/ZIP, les modèles et les sauvegardes antérieures sont conservés. La comparaison 0.11/0.12 reste datée de ces versions, sans être présentée comme une capture de la version actuelle.
 
 Les passes [0.13](PHYSIQUE-0.13.md), [0.14](DYNAMIQUE-0.14.md) et [0.15](ANIMATIONS-0.15.md) restent documentées. Le [guide de la livraison complète](VERSION-COMPLETE.md) décrit le résultat et ses règles. La [liste de contrôle](PRODUCTION-COMPLETE.md) suit la préparation de publication.
+
+## Passe actuelle
+
+La passe [Ambre et obsidienne](ESTHETIQUE-1.1.md) suit les dernières images. Les trois chapitres et les modes sont conservés. Les captures de la nouvelle comparaison sont issues du moteur et restent distinctes de la comparaison historique 0.11/0.12.
+
+La passe [Récit et son](RECIT-SON-1.1.md) ajoute le contexte dans le menu, une chronique qui suit l’avancement et trois thèmes originaux synthétiques avec couches de combat. Pas de doublage ni de bande-son orchestrale enregistrée annoncés. Les effets de pas, tirs, lames et impacts sont différenciés.

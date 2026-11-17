@@ -17,7 +17,7 @@ function journeyBatch(geo,material,items,cast=true){const mesh=new THREE.Instanc
 function buildJourneyScenery(level,regions){
  journey.stone=journeyMaterial(level===2?'#6d7b7c':'#6c6254');const ground=journeyMaterial(level===2?'#87928b':'#b8a58b'),ivory=journeyMaterial('#d5c5a8'),copper=journeyMaterial('#9c7449',.65,.5),redLeaves=journeyMaterial(level===2?'#9a4037':'#d39b64');
  const texture=makeArtTexture((g,n)=>{g.fillStyle=level===2?'#b3b8a2':'#c6b99c';g.fillRect(0,0,n,n);let seed=29;for(let i=0;i<2200;i++){seed=(seed*1664525+1013904223)>>>0;g.fillStyle=i%3?'#fff8db18':'#263b3b24';const x=seed%n;seed=(seed*1664525+1013904223)>>>0;g.fillRect(x,seed%n,1+(i%3),1);}g.strokeStyle='#66685d55';for(let i=0;i<8;i++){g.beginPath();g.moveTo(0,i*n/8);g.lineTo(n,i*n/8);g.stroke();}},512);texture.wrapS=texture.wrapT=THREE.RepeatWrapping;texture.repeat.set(6,6);ground.map=texture;journey.textures=[texture];
- for(const r of regions){const x=(r.x0+r.x1)/2,z=(r.z0+r.z1)/2;journeyBox(x,-.35,z,r.x1-r.x0,.7,r.z1-r.z0,ground);journeyBox(x,-1.1,z,r.x1-r.x0,1.1,r.z1-r.z0,journey.stone);}
+ for(const r of regions){const x=(r.x0+r.x1)/2,z=(r.z0+r.z1)/2;const floor=journeyBox(x,-.35,z,r.x1-r.x0,.7,r.z1-r.z0,ground);(journey.floorMeshes||(journey.floorMeshes=[])).push(floor);journeyBox(x,-1.1,z,r.x1-r.x0,1.1,r.z1-r.z0,journey.stone);}
  const trunks=[],crowns=[],stones=[],archGeo=new THREE.TorusGeometry(1,.06,6,28,Math.PI);journey.geometries.push(archGeo);const arches=[];
  if(level===2){
   for(const side of [-1,1])for(let i=0;i<15;i++){const z=22-i*8.4,x=side*(i<8?31:28);trunks.push({p:[x,2.4,z],s:[.3,4.8,.3],r:[0,0,side*.12]});for(let j=0;j<3;j++)crowns.push({p:[x+Math.sin(i+j)*1.3,5+j*.7,z+Math.cos(i+j)],s:[2.8-j*.3,1.2,2.8-j*.2]});}
@@ -58,7 +58,7 @@ function enterChapter(level,checkpoint=0){
   journeyGate(0,-18,10,()=>journey.step>=1);journeyGate(0,-56,20,()=>journey.step>=3);journeyGate(0,-84,46,()=>journey.step>=5);
   journeyNode('secret-shore',29,-61,'Écouter le vide','#b8a1df','relic');
  }
- dressJourneyEnvironment();
+ dressJourneyEnvironment();refineJourneyPresentation();
  const spawnPoints=level===2?[[0,23],[-20,-9],[0,-36],[0,-46],[0,-76],[0,-88]]:[[0,24],[0,21],[0,-32],[0,-39],[0,-57],[0,-80],[0,-90]];
  const point=spawnPoints[Math.min(checkpoint,spawnPoints.length-1)];resetHeroAt(...point);journey.checkpointPoint={x:point[0],z:point[1]};if(localProfile.journey?.level===level&&checkpoint>0)journey.core=localProfile.journey.core||180;if(level===3&&checkpoint>=3)journey.route=localProfile.journey?.route||'sun';
  sanctuary.occluders=journey.occluders;navCache=null;trackedGoal='';state='playing';$('#pausePanel').hidden=true;$('#hud').hidden=false;$('#mobile').classList.add('playing');$('#menu').hidden=true;$('#bossHUD').firstElementChild.textContent=level===2?'LE SOUVERAIN SANS NOM':'LE MANGE-AUBE';saveJourneyCheckpoint(false);spawnJourneyStage();if(selectedMode()==='coop')setupLocalParty();announce(CHAPTERS[level].title+' · '+CHAPTERS[level].subtitle);updateJourney(0);updateHUD();
@@ -155,7 +155,7 @@ function updateJourney(dt){
  updateLandmarkReadability();mapClock+=dt;if(mapClock>.15){drawCampaignMap($('#miniMap'));mapClock=0;}if(journey.core<=0&&journey.level===3){announce('Les liens ont cédé. Reprenez depuis la dernière ancre.');finish(false);}
 }
 function updateJourneyScenery(dt){
- if(journey.level<=1)return;const fog=journey.level===2?'#444448':journey.route==='storm'?'#3c465b':'#675343';scene.fog.color.lerp(new THREE.Color(fog),1-Math.exp(-dt));scene.background.lerp(new THREE.Color(journey.level===2?'#a3907a':'#af8262'),1-Math.exp(-dt));scene.fog.density=.012;
+ if(journey.level<=1)return;const fog=journey.level===2?'#8c4927':journey.route==='storm'?'#5d4339':'#a45c2c';scene.fog.color.lerp(new THREE.Color(fog),1-Math.exp(-dt));scene.background.lerp(new THREE.Color(journey.level===2?'#a3907a':'#af8262'),1-Math.exp(-dt));scene.fog.density=.012;
  if(journey.detailRoot)journey.detailRoot.visible=quality!=='light';if(journey.foliage)journey.foliage.rotation.y=Math.sin(t*.1)*.001;if(journey.banners)journey.banners.rotation.z=Math.sin(t*.9)*.002;if(journey.particles){journey.particles.visible=quality!=='light';journey.particles.position.x=Math.sin(t*.2)*3;journey.particles.position.y=Math.sin(t*.17);}
  if(journey.water)journey.water.material.uniforms.waterTime.value=t;if(journey.backdrop&&journey.step>0)journey.backdrop.children.forEach((m,i)=>m.position.z=-135+((t*2+i*10)%200));
  for(const leg of journey.legs)leg.mesh.rotation.z=leg.side*(.2+Math.sin(t*1.5+leg.index)*.12);

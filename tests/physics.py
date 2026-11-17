@@ -21,7 +21,8 @@ with sync_playwright() as pw:
  run('resetHeroAt(-20,-18);moveEntity(p,15,0)')
  assert run('p.x<-16.4&&!blocked(p.x,p.z)')
  run('resetHeroAt(0,0);updateSanctuary(.02);var anchor=sun.target.position.clone();p.x+=.00001;p.z+=.00001;updateSanctuary(.02)')
- assert run('sun.target.position.distanceTo(anchor)<1e-6'),'Sub-texel movement must not shift the shadow projection'
+ assert run('sun.target.position.clone().sub(anchor).projectOnPlane(sun.position.clone().sub(sun.target.position).normalize()).length()<1e-6'),'Sub-texel movement must not shift the shadow projection plane'
+ assert run('sun.target.position.distanceTo(anchor)<.00003'),'Depth tracking must remain continuous'
  assert run('Math.abs(sun.target.position.z)<.04'),'z=0 must not jump back to the arrival court'
  run('p.leap=.375;update(1/60)')
  assert run('heroShadow.material.opacity<.15&&heroShadow.scale.x>1.4'),'Light-mode contacts soften with jump height'

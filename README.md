@@ -1,8 +1,16 @@
 # Les Royaumes de l’Éclipse
 
-**Version candidate 1.1-rc3 — Ambre et obsidienne.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
+**Version candidate 1.2-rc1 — Première production de la Lame.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.1-rc3)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.1-rc3.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.2-rc1)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.2-rc1.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
+
+## Première production de personnage
+
+La direction de la Lame d’Éclipse a été validée avant fabrication. Sa première version 3D possède un masque céramique, un costume articulé, un manteau fendu, un sabre courbe, des matières intégrées et 23 clips. Le résultat est encore nettement plus simple que le concept et doit être revu en mouvement.
+
+**[Ouvrir l’atelier 3D](https://mativ117.github.io/royaumes-eclipse/docs/atelier-lame.html?v=1.2-rc1)** · [Fiche et planche validées](design/personnages/lame-eclipse/REVUE-01.md) · [Outils et plateforme](design/OUTILS-PRODUCTION-3D.md)
+
+La mini-carte suit maintenant la barre de menu sur PC. Le bouton **Commandes**, accessible au menu, en pause et en jeu, permet de modifier les touches J1 solo. Elles restent sur cet appareil ; le clavier partagé coop conserve ses commandes fixes. Les indications du guide et des boutons suivent les réglages.
 
 ## Dernier correctif et méthode de finition
 
@@ -30,7 +38,7 @@ Les serments accompagnent l’aventure. Chaque niveau dispose d’ancres de repr
 
 Voltigeur, Dernier Rempart, Lame d’Éclipse, Tisseuse de Failles, Porte-Cendres, Voleur d’Ombres, Bergère des Astres, Colosse de Porcelaine, Accordeur et Enfant du Néant : armes, silhouettes, statistiques et pouvoirs distincts. Le secret des trois reflets ouvre l’Éclipse incarnée et son pouvoir supplémentaire Incarnation.
 
-Onze modèles GLB originaux, treize clips par modèle, haut et bas du corps indépendants, appuis au sol, prise du fusil à deux mains, recul/culasse et gestes de lame. Les ennemis marcheurs disposent aussi de jambes articulées. Les modèles supplémentaires sont chargés à la sélection ; les deux premiers sont intégrés au jeu pour réduire les dépendances au démarrage.
+Onze modèles GLB originaux, treize clips de base et 23 clips pour la nouvelle Lame, haut et bas du corps indépendants, appuis au sol, prise du fusil à deux mains, recul/culasse et gestes de lame. Les ennemis marcheurs disposent aussi de jambes articulées. Les modèles supplémentaires sont chargés à la sélection ; les deux premiers sont intégrés au jeu pour réduire les dépendances au démarrage.
 
 ## Modes sans serveur
 

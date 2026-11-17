@@ -19,7 +19,7 @@
   "sha256": {
     "rempart.glb": "c62628451115d6ff74a5020929c88ae09d09539a9812ad407941a04c80580f2d",
     "voltigeur.glb": "2b43894464fc30a5df8d7e2427c2c7957f46900aada55a2cb614d14745978757",
-    "lame.glb": "61646118440c640cdde7130984e99bab7b4548983fda10f533484fbdb5b4bb43",
+    "lame.glb": "d6c2066da95dac821b39632f59b2a524ef43d64ef82bd7d6280a1652927c2ec5",
     "tisseuse.glb": "ee7b2bcbef93e388e467937fe801dd64a38f17559e232a02762b990892e12c24",
     "cendres.glb": "e5e9db64c7a4f39113788360c6791f8a67af979cec048db8d753fcd4b9f4236f",
     "voleur.glb": "ee69d2e4bdbc544162a6068478d8921c713f10ee95f11a83523610fde3a38778",
@@ -43,5 +43,42 @@
     "interact",
     "carry",
     "hit"
-  ]
+  ],
+  "per_character": {
+    "lame": {
+      "generator": "scripts/author_lame_reference.py",
+      "base_rig": "scripts/author_characters.py",
+      "concept": "design/personnages/lame-eclipse/recherche-01.png",
+      "original_art": true,
+      "status": "first 3D production following approved concept; not final art parity",
+      "clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit"
+      ],
+      "vertices": 41890,
+      "polygons": 40508,
+      "sha256": "d6c2066da95dac821b39632f59b2a524ef43d64ef82bd7d6280a1652927c2ec5"
+    }
+  }
 }

@@ -17,7 +17,7 @@ try:
   run('soundOn=false;')
   for name in run('Object.keys(HERO_DEFS)'):
    run(f'ensureHeroModel("{name}")')
-   assert run(f'Object.keys(avatarRuntime.heroes["{name}"].actions).length===13&&avatarRuntime.heroes["{name}"].weapon'),name
+   assert run(f'Object.keys(avatarRuntime.heroes["{name}"].actions).length>=13&&avatarRuntime.heroes["{name}"].weapon'),name
   # Every ordinary kit can enter the existing expedition and activate its power.
   for name in run('Object.keys(HERO_DEFS).filter(id=>!HERO_DEFS[id].secret)'):
    run(f'hero="{name}";start();p.inv=999;p.heat=72;resetHeroAt(0,25);p.power=0;power();update(1/60);')

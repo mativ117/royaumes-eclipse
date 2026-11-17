@@ -7,7 +7,7 @@ with sync_playwright() as pw:
  page=b.new_page(viewport={'width':1100,'height':760});errors=[];logs=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('console',lambda m:logs.append(m.text) if m.type=='error' else None)
  page.set_content('<script>requestAnimationFrame=()=>0</script>'+(ROOT/'docs/index.html').read_text());page.click('#start');run=page.evaluate
  assert run('avatarRuntime.status')=='ready'
- assert run('Object.values(avatarRuntime.heroes).every(a=>a.root.getObjectsByProperty("isSkinnedMesh",true).length>=2&&Object.keys(a.actions).length===13&&a.weapon&&a.muzzle&&a.hand&&a.blade)')
+ assert run('Object.values(avatarRuntime.heroes).every(a=>a.root.getObjectsByProperty("isSkinnedMesh",true).length>=2&&Object.keys(a.actions).length>=13&&a.weapon&&a.muzzle&&a.hand&&a.blade)')
  assert run('player.legacyParts.every(o=>!o.visible)')
  run('soundOn=false;p.inv=999;p.vx=4.9;updateRigAvatar(.12);var thigh=avatarRuntime.current.root.getObjectByName("thighL"),q=thigh.quaternion.clone();updateRigAvatar(.16)')
  assert run('avatarRuntime.current.state')=='run'

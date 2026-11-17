@@ -19,7 +19,7 @@ async function prepareHeroSelection(){
 }
 async function loadAuthoredHeroes(){
  $('#start').disabled=true;$('#start').textContent='Préparation de l’expédition…';
- try{for(const name of ['rempart','voltigeur'])await ensureHeroModel(name);avatarRuntime.status='ready';syncAvatarSelection();$('#start').disabled=false;$('#start').textContent='Commencer le voyage →';}
+ try{for(const name of new Set(['rempart','voltigeur',hero]))await ensureHeroModel(name);avatarRuntime.status='ready';syncAvatarSelection();$('#start').disabled=false;$('#start').textContent='Commencer le voyage →';}
  catch(e){avatarRuntime.status='error';avatarRuntime.error=String(e);$('#intro').textContent='Le modèle du héros ne s’est pas chargé. Rechargez la page.';console.error(e);}
 }
 function syncAvatarSelection(){
@@ -34,15 +34,15 @@ function playAvatarAction(avatar,name,fade=.13,restart=false,duration=null){
  const action=avatar.actions[name]||avatar.actions.idle;if(avatar.action===action&&!restart)return;
  const previous=avatar.action;action.reset().setEffectiveWeight(1).setEffectiveTimeScale(1);
  if(duration)action.setEffectiveTimeScale(action.getClip().duration/duration);
- if(['attack1','attack2','attack3','shot','dash','leap','interact','hit'].includes(name)){action.setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;}else{action.setLoop(THREE.LoopRepeat,Infinity);action.clampWhenFinished=false;}
+ if(['attack1','attack2','attack3','shot','dash','leap','interact','hit','start','stop','turn_left','turn_right','dodge_left','dodge_right'].includes(name)){action.setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;}else{action.setLoop(THREE.LoopRepeat,Infinity);action.clampWhenFinished=false;}
  action.play();if(previous&&previous!==action){previous.fadeOut(fade);action.fadeIn(fade);}avatar.action=action;avatar.state=name;
 }
 function playLowerAction(avatar,name,fade=.11,restart=false,duration=null){
  const action=avatar.lowerActions[name]||avatar.lowerActions.idle;if(avatar.lowerAction===action&&!restart)return;
  const previous=avatar.lowerAction,phase=previous?previous.time/previous.getClip().duration:0;
  action.reset().setEffectiveWeight(1).setEffectiveTimeScale(duration?action.getClip().duration/duration:1);
- const once=['attack1','attack2','attack3','dash','leap','interact','hit'].includes(name);action.setLoop(once?THREE.LoopOnce:THREE.LoopRepeat,once?1:Infinity);action.clampWhenFinished=once;
- if(['walk','run'].includes(name)&&['walk','run'].includes(avatar.lowerState))action.time=phase*action.getClip().duration;
+ const once=['attack1','attack2','attack3','dash','leap','interact','hit','start','stop','turn_left','turn_right','dodge_left','dodge_right'].includes(name);action.setLoop(once?THREE.LoopOnce:THREE.LoopRepeat,once?1:Infinity);action.clampWhenFinished=once;
+ if(LOCOMOTION_CLIPS.includes(name)&&LOCOMOTION_CLIPS.includes(avatar.lowerState))action.time=phase*action.getClip().duration;
  action.play();if(previous&&previous!==action){previous.fadeOut(fade);action.fadeIn(fade);}avatar.lowerAction=action;avatar.lowerState=name;
 }
 function updateRigAvatar(dt){
@@ -50,10 +50,11 @@ function updateRigAvatar(dt){
  for(const object of player.legacyParts)object.visible=false;
  if(avatar.weapon)avatar.weapon.visible=!campaign?.trials.forge.carrying;
  const travel=avatar.lastPosition?Math.hypot(p.x-avatar.lastPosition.x,p.z-avatar.lastPosition.z):0;const speed=p.motionSpeed===undefined?Math.hypot(p.vx,p.vz):travel>1.5?0:Math.max(p.motionSpeed,travel/dt),gait=speed>3?'run':speed>.18?'walk':'idle';
- avatar.aimHold=Math.max(0,avatar.aimHold-dt);let lower=gait,lowerRestart=false,lowerDuration=null;
+ const locomotion=hero==='lame'?lameLocomotion(avatar,dt,speed,gait):{name:gait,duration:null};
+ avatar.aimHold=Math.max(0,avatar.aimHold-dt);let lower=locomotion.name,lowerRestart=false,lowerDuration=locomotion.duration;
  if(p.stagger>0){playAvatarAction(avatar,'hit',.035,false,.2);lower=speed>.18?gait:'hit';lowerDuration=lower==='hit'?.2:null;}
  else if(p.leap>0){playAvatarAction(avatar,'leap',.06,false,.75);lower='leap';lowerDuration=.75;}
- else if(p.dashT>0){playAvatarAction(avatar,'dash',.045,false,DODGE_DURATION);lower='dash';lowerDuration=DODGE_DURATION;}
+ else if(p.dashT>0){const dodge=hero==='lame'?lameDodgeClip(avatar):'dash';playAvatarAction(avatar,dodge,.045,false,DODGE_DURATION);lower=dodge;lowerDuration=DODGE_DURATION;}
  else if(p.attack){
   const name=p.attack.melee?'attack'+p.attack.combo:'shot',fresh=avatar.lastAttack!==p.attack;
   if(fresh){playAvatarAction(avatar,name,.035,true,p.attack.duration);avatar.lastAttack=p.attack;}
@@ -64,9 +65,9 @@ function updateRigAvatar(dt){
  else if(campaign?.trials.forge.carrying)playAvatarAction(avatar,'carry',.12);
  else if(campaign?.worldUse&&t-campaign.worldUse.started<.55){if(avatar.lastUse!==campaign.worldUse){playAvatarAction(avatar,'interact',.1,true,.55);avatar.lastUse=campaign.worldUse;}}
  else if(isRifleHero()&&avatar.aimHold>0){/* Keep the rifle ready between successive shots. */}
- else{playAvatarAction(avatar,gait,.12);if(gait!=='idle')avatar.action.setEffectiveTimeScale(Math.max(.25,speed*avatar.action.getClip().duration/(gait==='run'?1.5:1.2)));}
+ else{playAvatarAction(avatar,locomotion.name,.12,false,locomotion.duration);if(LOCOMOTION_CLIPS.includes(locomotion.name))avatar.action.setEffectiveTimeScale(Math.max(.25,speed*avatar.action.getClip().duration/(locomotion.name==='run'?1.5:1.2)));}
  playLowerAction(avatar,lower,.1,lowerRestart,lowerDuration);
- if(['walk','run'].includes(lower))avatar.lowerAction.setEffectiveTimeScale(Math.max(.2,speed*avatar.lowerAction.getClip().duration/(lower==='run'?1.5:1.2)));
+ if(LOCOMOTION_CLIPS.includes(lower))avatar.lowerAction.setEffectiveTimeScale(Math.max(.2,speed*avatar.lowerAction.getClip().duration/(lower==='run'?1.5:1.2)));
  avatar.mixer.update(dt);updateHeroMorph(avatar,p,hero,dt);updateBodyDynamics(avatar,p,dt);updateAvatarKinematics(avatar,dt,speed);updateBladeTrail(avatar,dt);
 }
 
@@ -82,7 +83,7 @@ function updateBladeTrail(avatar,dt){
 }
 
 function resetAvatarPose(){
- for(const avatar of Object.values(avatarRuntime.heroes)){avatar.mixer.stopAllAction();avatar.action=avatar.lowerAction=null;avatar.lastAttack=avatar.lastUse=null;avatar.aimHold=0;avatar.root.position.y=0;avatar.morphWeight=0;avatar.morphActive=true;updateHeroMorph(avatar,{formT:0,incarnateT:0},hero,0);resetAvatarKinematics(avatar);playAvatarAction(avatar,'idle',.05,true);playLowerAction(avatar,'idle',.05,true);avatar.mixer.update(0);}
+ for(const avatar of Object.values(avatarRuntime.heroes)){avatar.mixer.stopAllAction();avatar.action=avatar.lowerAction=null;avatar.lastAttack=avatar.lastUse=null;avatar.aimHold=0;avatar.root.position.y=0;avatar.lameMotion=null;avatar.morphWeight=0;avatar.morphActive=true;updateHeroMorph(avatar,{formT:0,incarnateT:0},hero,0);resetAvatarKinematics(avatar);playAvatarAction(avatar,'idle',.05,true);playLowerAction(avatar,'idle',.05,true);avatar.mixer.update(0);}
  bladeTrail.samples=[];if(bladeTrail.mesh)bladeTrail.mesh.visible=false;
 }
 

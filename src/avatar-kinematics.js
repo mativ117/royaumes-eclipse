@@ -10,7 +10,7 @@ function initAvatarKinematics(a){
  }
  a.groundHeight=a.legs.reduce((sum,leg)=>sum+leg.end.getWorldPosition(new THREE.Vector3()).y,0)/a.legs.length;a.foregrip=avatarBone(a,'foregrip');a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;
 }
-function resetAvatarKinematics(a){a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;a.motion=null;}
+function resetAvatarKinematics(a){a.feetWeight=0;a.weaponWeight=0;a.stepPhase=0;a.lastPosition=null;a.motion=null;a.lameMotion=null;}
 function pointJointAt(joint,child,target,weight){
  const s=ikScratch; joint.getWorldPosition(s.h);child.getWorldPosition(s.f);s.from.copy(s.f).sub(s.h).normalize();s.to.copy(target).sub(s.h).normalize();
  if(s.from.lengthSq()<.9||s.to.lengthSq()<.9)return;

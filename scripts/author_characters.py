@@ -246,5 +246,10 @@ def create(role):
  print('AUTHORED',role,(OUT/(role+'.glb')).stat().st_size)
 
 ROLES=['rempart','voltigeur','lame','tisseuse','cendres','voleur','bergere','colosse','accordeur','neant','eclipse']
-for role in ROLES:create(role)
+for role in ROLES:
+ if role=='lame' and (OUT/'LAME-PRODUCTION.json').exists():continue
+ create(role)
 (OUT/'PROVENANCE.json').write_text(json.dumps({'author':'Original models authored for Les Royaumes de l’Éclipse','generator':'scripts/author_characters.py','blender':'4.3.2','third_party_art':False,'files':[role+'.glb' for role in ROLES],'sha256':{name:hashlib.sha256((OUT/name).read_bytes()).hexdigest() for name in [role+'.glb' for role in ROLES]},'clips':['idle','walk','run','attack1','attack2','attack3','shot','dash','leap','shield','interact','carry','hit']},indent=2)+'\n')
+
+if (OUT/"LAME-PRODUCTION.json").exists():
+ p=json.loads((OUT/"PROVENANCE.json").read_text());p["per_character"]={"lame":json.loads((OUT/"LAME-PRODUCTION.json").read_text())};(OUT/"PROVENANCE.json").write_text(json.dumps(p,indent=2)+"\n")

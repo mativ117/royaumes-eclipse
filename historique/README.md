@@ -32,3 +32,5 @@ Les archives ne sont pas publiées par GitHub Pages lorsque la source est /docs.
 - `livraisons-zip/royaumes-eclipse-1.1-rc2.zip` : sources et jeu de cette passe, captures comparatives et archives HTML précédentes.
 
 - `royaumes-v1.1-rc3.html` et `livraisons-zip/royaumes-eclipse-1.1-rc3.zip` : correctif des messages masqués, cibles proches, occultations et appuis ; contenu antérieur conservé.
+
+- `royaumes-v1.2-rc1.html` et `livraisons-zip/royaumes-eclipse-1.2-rc1.zip` : première production 3D de la Lame après validation du concept, atelier animé, disposition PC et touches solo configurables. Les personnages et créatures restants gardent leurs ressources précédentes.

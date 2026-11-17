@@ -1,4 +1,4 @@
-# Suivi du projet — version candidate 1.1-rc3
+# Suivi du projet — version candidate 1.2-rc1
 
 Les choix confirmés pour cette livraison sont : **sans serveur**, détails visuels avec réglage léger, aventure complète puis révision du résultat. La version livrée relie le contenu de jeu ; le rendu et l’équilibrage restent à éprouver en parties humaines.
 
@@ -40,3 +40,7 @@ La passe [Ambre et obsidienne](ESTHETIQUE-1.1.md) suit les dernières images. Le
 La passe [Récit et son](RECIT-SON-1.1.md) ajoute le contexte dans le menu, une chronique qui suit l’avancement et trois thèmes originaux synthétiques avec couches de combat. Pas de doublage ni de bande-son orchestrale enregistrée annoncés. Les effets de pas, tirs, lames et impacts sont différenciés.
 
 Les retours des captures ont conduit au [correctif rc3](CORRECTIFS-1.1-rc3.md). La [séquence de référence](SEQUENCE-REFERENCE.md) définit désormais les critères qualitatifs à atteindre avant d’étendre la finition. La fluidité réelle du téléphone et les clips de locomotion restent à valider.
+
+## Revue du premier personnage
+
+La [direction de la Lame](personnages/lame-eclipse/REVUE-01.md) est validée et sa première production 3D est intégrée avec un atelier de revue. Le niveau artistique de la planche n’est pas atteint. Les autres héros et la refonte anatomique des créatures restent à traiter après cette revue. Le navigateur est conservé pour cette étape. Les commandes J1 solo sont configurables ; les dispositions fixes coop/manettes restent inchangées.

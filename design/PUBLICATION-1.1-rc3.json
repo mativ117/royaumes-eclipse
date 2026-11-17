@@ -1,0 +1,11 @@
+{
+  "version": "1.1-rc3",
+  "html_sha256": "be114355da93ceded6b0ed100601c00b2782d0bcdd0295ab54a1679d5fd1b7a6",
+  "verified_models": 11,
+  "zip_bytes": 14964369,
+  "zip_sha256": "1a4bc5007b69e9c5e38aba8e941b2089b8e896fb9721177c381791688fa1c744",
+  "comparison_verified": true,
+  "published_commit": "c209c5d9caf9077b327a681b9fb0b6a4b2af5aa4",
+  "verified_at_utc": "2026-11-17T08:10:28.915356+00:00",
+  "live_browser_smoke": "PASS: root redirect, remote hero, chapter II, rendered scene, score and chronicle"
+}

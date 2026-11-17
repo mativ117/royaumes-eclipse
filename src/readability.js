@@ -107,7 +107,7 @@ function dressLandmarks(){
  const focus=new THREE.Mesh(assets.focus,new THREE.MeshBasicMaterial({color:'#fff3cd',side:THREE.DoubleSide,transparent:true,opacity:.95,depthWrite:false}));focus.rotation.x=-Math.PI/2;focus.visible=false;scene.add(focus);roomObject(focus);campaign.focusRing=focus;focus.userData.ownedMaterial=true;
  const pointerMaterial=new THREE.MeshBasicMaterial({color:'#ffe9b2'});campaign.guidePointers=[];
  for(let i=0;i<4;i++){const mesh=new THREE.Mesh(assets.pointer,pointerMaterial);mesh.rotation.x=-Math.PI/2;mesh.visible=false;scene.add(mesh);roomObject(mesh);campaign.guidePointers.push(mesh);}
- campaign.guidePointers[0].userData.ownedMaterial=true;craftLandmarks();
+ campaign.guidePointers[0].userData.ownedMaterial=true;craftLandmarks();registerLandmarkOcclusion(all);
 }
 function updateLandmarkReadability(){
  const goal=selectedMission(),route=guideRoute(goal);let focus=null,nearest=Infinity;
@@ -117,6 +117,7 @@ function updateLandmarkReadability(){
   if(m.crystal){m.crystal.material.emissiveIntensity=state==='done'?.12:state==='locked'?.2:.7;if(m.kind==='lamp')m.crystal.scale.setScalar(state==='done'?.65:1);}
   if(active&&d<3.1&&d<nearest){focus=m;nearest=d;}
  }
+ const selected=state==='playing'?interactionTarget():null;if(selected?.model)focus=selected.model;
  if(campaign.focusRing){campaign.focusRing.visible=!!focus;if(focus)campaign.focusRing.position.set(focus.x,.07,focus.z);}
  const anchors=(navCache?.anchors||[]).filter(a=>a.index>(navCache?.cursor||0)+1&&distance(a,p)<15);
  for(let i=0;i<(campaign.guidePointers||[]).length;i++){

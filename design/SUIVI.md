@@ -1,4 +1,4 @@
-# Suivi du projet — version candidate 1.1-rc2
+# Suivi du projet — version candidate 1.1-rc3
 
 Les choix confirmés pour cette livraison sont : **sans serveur**, détails visuels avec réglage léger, aventure complète puis révision du résultat. La version livrée relie le contenu de jeu ; le rendu et l’équilibrage restent à éprouver en parties humaines.
 
@@ -38,3 +38,5 @@ Les passes [0.13](PHYSIQUE-0.13.md), [0.14](DYNAMIQUE-0.14.md) et [0.15](ANIMATI
 La passe [Ambre et obsidienne](ESTHETIQUE-1.1.md) suit les dernières images. Les trois chapitres et les modes sont conservés. Les captures de la nouvelle comparaison sont issues du moteur et restent distinctes de la comparaison historique 0.11/0.12.
 
 La passe [Récit et son](RECIT-SON-1.1.md) ajoute le contexte dans le menu, une chronique qui suit l’avancement et trois thèmes originaux synthétiques avec couches de combat. Pas de doublage ni de bande-son orchestrale enregistrée annoncés. Les effets de pas, tirs, lames et impacts sont différenciés.
+
+Les retours des captures ont conduit au [correctif rc3](CORRECTIFS-1.1-rc3.md). La [séquence de référence](SEQUENCE-REFERENCE.md) définit désormais les critères qualitatifs à atteindre avant d’étendre la finition. La fluidité réelle du téléphone et les clips de locomotion restent à valider.

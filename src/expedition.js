@@ -37,10 +37,10 @@ function trialTarget(){
  if(q.forge.carrying)return {type:'drop-core',label:'Poser le noyau'};
  const e=q.escort;
  if(!e.done&&distance(p,e)<2.8)return {type:'soul',label:e.started?'Guider l’âme vers le refuge':'Accueillir l’âme'};
- for(const m of campaign.trialModels){
+ for(const m of [...campaign.trialModels].sort((a,b)=>distance(p,a)-distance(p,b))){
   if(!m.root.visible||distance(p,m)>2.7)continue;
-  if(m.kind==='fresco')return {type:'fresco',label:'Lire la fresque'};
-  if(m.kind==='lamp'&&!q.bells.done)return {type:'lamp',id:m.id,label:'Accorder · '+m.id};
+  if(m.kind==='fresco')return {type:'fresco',model:m,label:'Lire la fresque'};
+  if(m.kind==='lamp'&&!q.bells.done)return {type:'lamp',model:m,id:m.id,label:'Accorder · '+m.id};
   if(m.kind==='valve'&&!q.forge.valves.includes(m.id))return{type:'valve',id:m.id,label:'Fermer la vanne'};
   if(m.kind==='core'&&!q.forge.done)return{type:'core',label:q.forge.valves.length===3?'Transporter le noyau':'Désactiver les 3 vannes'};
   if(m.kind==='archive'&&!q.archive)return{type:'archive',label:trialDead('shades')?'Prendre la lentille':'Affronter les trois Reflets'};
@@ -53,7 +53,7 @@ function trialTarget(){
 function trialInteract(target){
  const q=campaign.trials;animateWorldUse(target.type);
  if(target.type==='soul'){q.escort.started=true;announce('Restez près de l’âme. Elle attendra que les embuscades soient dispersées.');return;}
- if(target.type==='fresco'){q.bells.read=true;announce('La fresque chante : '+q.bells.order.join(' → ')+'. Accordez ces trois lanternes dans cet ordre.');return;}
+ if(target.type==='fresco'){q.bells.read=true;announce('La fresque chante : '+q.bells.order.join(' → ')+'. Accordez ces trois lanternes dans cet ordre.',{x:16,z:-7});return;}
  if(target.type==='lamp'){
   if(target.id===q.bells.order[q.bells.step]){q.bells.step++;tone(400+q.bells.step*150,.22);effect(p.x,p.z,2,'#a5f0e6');
    if(q.bells.step===3){q.bells.done=true;campaign.keys.add('east');announce('Le carillon retrouve sa voix. Empreinte du cloître obtenue.');}else announce(`Accord juste · ${q.bells.step}/3`);
@@ -159,4 +159,4 @@ function wireExpeditionUI(){
  $('#continueRun').hidden=!readRun();$('#continueRun').onclick=continueRun;
  $('#copyReport').onclick=async()=>{const text=expeditionReport();try{await navigator.clipboard.writeText(text);$('#copyReport').textContent='Bilan copié';}catch(_){$('#endText').textContent+=' '+text;}};
 }
-function expeditionReport(){return JSON.stringify({version:'1.1-rc2',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
+function expeditionReport(){return JSON.stringify({version:'1.1-rc3',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}

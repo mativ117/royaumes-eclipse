@@ -1,8 +1,14 @@
 # Les Royaumes de l’Éclipse
 
-**Version candidate 1.1-rc2 — Ambre et obsidienne.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
+**Version candidate 1.1-rc3 — Ambre et obsidienne.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone, sans Unreal. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1-rc2)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.1-rc2.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.1-rc3)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.1-rc3.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
+
+## Dernier correctif et méthode de finition
+
+La version rc3 corrige le message masqué pendant une interaction, la sélection d’objets proches, la visibilité autour des stèles/colonnes et une partie du glissement des pieds. [Détail du correctif](design/CORRECTIFS-1.1-rc3.md). Ce correctif ne constitue pas une transformation graphique.
+
+Pour obtenir un vrai saut de qualité, le travail doit se concentrer sur une [séquence de référence](design/SEQUENCE-REFERENCE.md) de deux à trois minutes : personnage, animations, scène composée et validation sur appareil physique.
 
 ## La nouvelle direction visuelle
 

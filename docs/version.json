@@ -1,5 +1,5 @@
 {
-  "version": "1.1-rc2",
+  "version": "1.1-rc3",
   "models": {
     "accordeur.glb": "01680004c41145f62ef84ab03dff96699946bb4c9c9e26821f7909eec3e90a04",
     "bergere.glb": "57dbe8c466f70449cb0c1f9cefa0b67eec13242d39a5c4684bce598a6d40c5a9",
@@ -13,5 +13,5 @@
     "voleur.glb": "ee69d2e4bdbc544162a6068478d8921c713f10ee95f11a83523610fde3a38778",
     "voltigeur.glb": "2b43894464fc30a5df8d7e2427c2c7957f46900aada55a2cb614d14745978757"
   },
-  "source_sha256": "e3a8da2ba8c5ed34a518dfca71020db5bb35f0bbafc6d2dca6b9d94ec95ef315"
+  "source_sha256": "c765eb3808ec907fd5c20da34143b1221bd8670019fda47a69993800871d7745"
 }

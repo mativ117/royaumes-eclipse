@@ -7,7 +7,7 @@ function initSanctuary(){
  const batch=(geo,mat,items)=>{const obj=new THREE.InstancedMesh(geo,mat,items.length),dummy=new THREE.Object3D();items.forEach((q,i)=>{dummy.position.set(...q.p);dummy.rotation.set(...(q.r||[0,0,0]));dummy.scale.set(...q.s);dummy.updateMatrix();obj.setMatrixAt(i,dummy.matrix);});obj.castShadow=items.some(q=>q.p[1]<1);obj.userData.shadowRole=obj.castShadow?'grounded':'overhead';obj.receiveShadow=true;root.add(obj);return obj;};
  const piers=[],arches=[],ribs=[];
  for(const side of [-1,1])for(const z of [3,15,27]){piers.push({p:[side*18.2,-.2,z],s:[1,1.7,1]});arches.push({p:[side*18.2,8.8,z-6],s:[6,5,1],r:[0,Math.PI/2,0]});}
- batch(columnGeo,limestone,piers);batch(archGeo,copper,arches);
+ for(const q of piers){const column=new THREE.Mesh(columnGeo,limestone);column.position.set(...q.p);column.scale.set(...q.s);column.castShadow=column.receiveShadow=true;column.userData.shadowRole='grounded';root.add(column);world.obstacles.push({x:q.p[0],z:q.p[2],w:2,d:2,radius:1,mesh:column});}batch(archGeo,copper,arches);
  // The two old cover pillars become carved, human-scale piers with the same footprint.
  for(const o of world.obstacles)if(Math.abs(o.x)===10&&o.z===13){o.mesh.geometry=columnGeo;o.mesh.material=limestone;o.mesh.scale.set(1.05,1.15,1.45);o.mesh.position.set(o.x,0,o.z);o.mesh.castShadow=true;}
  for(const z of [3,15,27]){ribs.push({p:[0,7.1,z],s:[10,8.2,1]});ribs.push({p:[0,7.15,z+.15],s:[9.8,8.1,1]});}batch(archGeo,limestone,ribs);
@@ -43,8 +43,22 @@ function updateSanctuary(dt){
  const right=new THREE.Vector3().setFromMatrixColumn(basis,0),up=new THREE.Vector3().setFromMatrixColumn(basis,1),texel=38/sun.shadow.mapSize.x;
  for(const axis of [right,up]){const value=target.dot(axis);target.addScaledVector(axis,Math.round(value/texel)*texel-value);}
  sun.position.copy(target).add(offset);sun.target.position.copy(target);sun.target.updateMatrixWorld();
- if(p){s.target.set(p.x,1.4,p.z);s.direction.copy(s.target).sub(camera.position);const length=s.direction.length();s.direction.normalize();s.ray.set(camera.position,s.direction);s.ray.far=Math.max(0,length-.3);const hit=new Set(s.ray.intersectObjects(s.occluders,false).map(h=>h.object));for(const mesh of s.occluders){const opacity=hit.has(mesh)?.18:1;mesh.material.opacity+=(opacity-mesh.material.opacity)*(1-Math.exp(-dt*9));mesh.material.depthWrite=mesh.material.opacity>.95;}}
+ if(p){
+  // Cover the head, both shoulders and lower body rather than a single torso ray.
+  const visible=o=>{for(let node=o;node;node=node.parent){if(!node.visible)return false;if(node===scene)return true;}return false;};
+  const candidates=s.occluders.filter(visible),hit=new Set(),right=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,0);
+  for(const [side,height]of [[0,.5],[-.3,1.25],[.3,1.25],[0,2.05]]){s.target.set(p.x,height,p.z).addScaledVector(right,side);s.direction.copy(s.target).sub(camera.position);const length=s.direction.length();s.direction.normalize();s.ray.set(camera.position,s.direction);s.ray.far=Math.max(0,length-.15);for(const intersection of s.ray.intersectObjects(candidates,false))hit.add(intersection.object);}
+  for(const object of candidates){const opacity=hit.has(object)?.12:1;for(const material of Array.isArray(object.material)?object.material:[object.material]){material.opacity+=(opacity-material.opacity)*(1-Math.exp(-dt*12));material.depthWrite=material.opacity>.95;}}
+ }
  // No expensive off-screen mirror pass once the expedition leaves the court.
  s.reflection.visible=journey.level===1&&quality!=='light'&&(!p||p.z>-10);s.fallback.visible=!s.reflection.visible;
 }
 function cameraVisibleTarget(e){const point=new THREE.Vector3(e.x,1,e.z).project(camera);return point.z>-1&&point.z<1&&Math.abs(point.x)<1.1&&Math.abs(point.y)<1.1;}
+
+function registerLandmarkOcclusion(landmarks){
+ if(!sanctuary)return;
+ const inScene=o=>{for(let node=o;node;node=node.parent)if(node===scene)return true;return false;};
+ // Room props are replaced at a retry; do not keep references to their disposed materials.
+ const live=sanctuary.occluders.filter(inScene);sanctuary.occluders.splice(0,sanctuary.occluders.length,...live);
+ for(const landmark of landmarks){landmark.root.traverse(object=>{if(!object.isMesh||object.isInstancedMesh||sanctuary.occluders.includes(object))return;const materials=Array.isArray(object.material)?object.material:[object.material];if(!materials.every(m=>m.isMeshStandardMaterial))return;const copies=materials.map(m=>{const copy=object.userData.ownedMaterial?m:m.clone();copy.transparent=true;return copy;});object.material=Array.isArray(object.material)?copies:copies[0];object.userData.ownedMaterial=true;sanctuary.occluders.push(object);});landmark.root.updateWorldMatrix(true,true);}
+}

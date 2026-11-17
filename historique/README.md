@@ -30,3 +30,5 @@ Les archives ne sont pas publiées par GitHub Pages lorsque la source est /docs.
 
 - `royaumes-v1.1-rc2.html` : passe Ambre et obsidienne, matières, contre-jour, capes et réactions de mouvement, chronique et trois thèmes musicaux ; onze modèles intégrés.
 - `livraisons-zip/royaumes-eclipse-1.1-rc2.zip` : sources et jeu de cette passe, captures comparatives et archives HTML précédentes.
+
+- `royaumes-v1.1-rc3.html` et `livraisons-zip/royaumes-eclipse-1.1-rc3.zip` : correctif des messages masqués, cibles proches, occultations et appuis ; contenu antérieur conservé.

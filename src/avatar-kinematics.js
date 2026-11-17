@@ -38,7 +38,8 @@ function updateAvatarKinematics(a,dt,speed,actor=p,heroId=hero,heading=aim){
   for(let i=0;i<a.legs.length;i++){
    const leg=a.legs[i],phase=(a.stepPhase+i*.5)%1;
    if(a.feetWeight<.3){leg.end.getWorldPosition(leg.anchor);leg.anchor.y=a.groundHeight;leg.destination.copy(leg.anchor);}
-   if(phase>=.55&&leg.lastPhase<.55){leg.destination.copy(current).addScaledVector(right,leg.side*.16).addScaledVector(forward,stride*.65);leg.destination.y=a.groundHeight;}
+   // Balance the stance ahead/behind the hip instead of exhausting reach before toe-off.
+   if(phase>=.55&&leg.lastPhase<.55){leg.destination.copy(current).addScaledVector(right,leg.side*.16).addScaledVector(forward,stride*.725);leg.destination.y=a.groundHeight;}
    if(phase<leg.lastPhase){leg.anchor.copy(leg.destination);}
    const target=leg.anchor.clone();if(phase>=.55){const u=(phase-.55)/.45,f=u*u*(3-2*u);target.lerp(leg.destination,f);target.y+=Math.sin(u*Math.PI)*(speed>3?.19:.11);}
    // Keep a stance target on the floor when a late step reaches leg extension.

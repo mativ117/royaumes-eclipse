@@ -1,6 +1,6 @@
 # Prise en charge de la qualité — candidate 1.4-rc1
 
-Le but de cette passe est d’appliquer les recherches au jeu, sur une séquence et des ressources de référence. La version reste Web PC/téléphone et sans serveur, avec qualité légère. Les chapitres, profils et sauvegardes sont conservés. Les résultats d’intégration et de publication seront consignés séparément une fois les contrôles exécutés ; les tâches d’une ligne ne sont pas toutes terminées parce qu’une correction de module existe.
+Le but de cette passe est d’appliquer les recherches au jeu, sur une séquence et des ressources de référence. La version reste Web PC/téléphone et sans serveur, avec qualité légère. Les chapitres, profils et sauvegardes sont conservés. Les résultats d’intégration et de publication sont consignés dans [la validation](VALIDATION-1.4.md) et [le relevé distant](PUBLICATION-1.4.json) ; les tâches d’une ligne ne sont pas toutes terminées parce qu’une correction de module existe.
 
 **RECHERCHÉ** signifie qu’une source primaire ou une recommandation spécialisée a été lue et reliée à un défaut du projet. **APPLIQUÉ** décrit les ressources et règles produites dans cette passe ou conservées d’une passe précédente. **À REVOIR** indique une limite réelle, une mesure encore manquante ou une décision ouverte. Ces états ne constituent pas une note artistique finale.
 
@@ -36,7 +36,7 @@ Ces valeurs décrivent le comportement intégré, pas un équilibrage validé en
 
 La recherche est appliquée à une référence jouable ; les trois niveaux n’ont pas été reconstruits, les dix autres héros n’ont pas reçu ces gestes, toutes les familles ennemies ne sont pas refaites et la musique n’est pas une bande-son orchestrale enregistrée. Le lancement 1.4 est épuré au solo conformément au choix confirmé par l’utilisateur. Le code des modes locaux et les archives 1.3 restent conservés hors du bundle courant. Le rendu final et le plaisir doivent être jugés sur le résultat à vitesse normale et lors d’essais humains.
 
-Les contrôles CPU de l’audio et du focus sont passés au niveau de leurs modules. Les contrôles d’intégration, les captures et la publication doivent être rapportés après leur exécution. Aucune réussite globale n’est déduite de ces résultats partiels.
+Les contrôles CPU, les parcours d’intégration, le paquet et les vérifications publiques ont passé ; le [relevé de validation](VALIDATION-1.4.md) précise les scénarios et limites. Ils ne constituent ni une validation artistique AAA, ni un essai sur téléphone physique.
 
 ## Connaissances conservées
 

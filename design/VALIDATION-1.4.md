@@ -33,7 +33,7 @@ Les essais Chromium avec WebGL logiciel ne valident ni les FPS, ni l’échauffe
 
 ## Paquet et publication
 
-Le contrôle du paquet et le relevé distant sont consignés après leur exécution. Le ZIP conserve l’état de livraison avant l’ajout des preuves de publication.
+Le contrôle `tests/package_release.py` a passé : archives précédentes inchangées, ZIP déterministe et snapshot autonome avec onze modèles, sans requête de modèle externe. Avec ce contrôle, 23 suites locales ont passé. Le ZIP conserve l’état de livraison avant l’ajout de ces preuves et de la consigne globale AAA demandée ensuite ; les sources courantes du dépôt conservent cette nouvelle consigne. Les prochains paquets incluront également `AGENTS.md`.
 
 HTML SHA-256 : `6d4a7102f33449fc16a5b5354c49336731f1e0cfeedcce13e523a492c5410085`.
 
@@ -42,3 +42,9 @@ Source intégrée SHA-256 : `6378000ed4fe62ffb818faaeda3c7c804e7087803bfb766d661
 Lame GLB SHA-256 : `200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6`.
 
 Fauche-Cendre GLB SHA-256 : `8e03fef66e9198fa786e567a1e5b976fb6fd5f648985d443148a84d35a9f91e7`.
+
+## Publication confirmée
+
+GitHub Pages sert le code du commit `de5e92d7dd32f02bf4ea065729a8566a9373c1cb`. Le HTML, les onze héros, la créature, l’atelier, la page comparative et ses quatre médias correspondent aux fichiers de livraison. Le ZIP public de 73421526 octets a la même empreinte que le paquet validé.
+
+Les trois parcours publics passent : atelier intégré et changements de héros ; atelier séparé puis démarrage de la Lame ; Tisseuse et chapitre II avec récit, son et reprise après la chronique. Aucun fichier manquant ni erreur JavaScript constaté dans ces parcours. [Relevé distant](PUBLICATION-1.4.json).

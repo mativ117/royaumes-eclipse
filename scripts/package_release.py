@@ -17,7 +17,7 @@ files=[]
 for folder in ['src','docs','assets','vendor','scripts','tests','design']:
  files.extend(f for f in (ROOT/folder).rglob('*') if f.is_file() and '__pycache__' not in f.parts)
 files.extend(f for f in history.rglob('*') if f.is_file() and f.suffix!='.zip' and f.name!='INVENTAIRE.json')
-for name in ['README.md','VERSION','index.html','cathedrale-v03.html','.nojekyll','.gitignore']:
+for name in ['AGENTS.md','README.md','VERSION','index.html','cathedrale-v03.html','.nojekyll','.gitignore']:
  if (ROOT/name).exists():files.append(ROOT/name)
 def write(z,name,data):
  info=zipfile.ZipInfo(name,date_time=(2026,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;info.external_attr=0o644<<16;z.writestr(info,data,compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)

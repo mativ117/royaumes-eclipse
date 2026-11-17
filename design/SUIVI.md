@@ -1,10 +1,12 @@
 # Suivi du projet — version candidate 1.4-rc1
 
+**État de reprise :** 1.4-rc1 publiée et vérifiée sur GitHub Pages. Les 23 suites locales et les contrôles publics sont consignés dans [la validation](VALIDATION-1.4.md) et [le relevé distant](PUBLICATION-1.4.json). La [consigne globale proche AAA](EXIGENCE-QUALITE.md), confirmée ensuite par l’utilisateur, s’applique à tous les contenus et systèmes ; elle reste l’objectif de production. Les instructions de reprise sont dans [AGENTS.md](../AGENTS.md).
+
 Les choix confirmés pour cette livraison sont : **sans serveur**, détails visuels avec réglage léger, aventure complète puis révision du résultat. La version candidate relie le contenu de jeu ; le rendu et l’équilibrage restent à éprouver en parties humaines.
 
 | Engagement | État vérifiable |
 |---|---|
-| PC et téléphone, sans Unreal | Navigateur Three.js, clavier/souris, tactile ; rendu et commandes simulés dans Chromium |
+| PC et téléphone | Navigateur Three.js, clavier/souris, tactile ; rendu et commandes simulés dans Chromium |
 | Trois chapitres | Cathédrale, Chasse aux Souverains et Convoi de l’Impossible, avec objectifs, rencontres, boss, conclusions et reprises |
 | Dix héros disponibles dès le début | Dix kits, statistiques, armes et modèles distincts ; aucune progression obligatoire pour ces dix héros |
 | Onzième personnage secret | Trois étapes réparties dans les niveaux ; Éclipse incarnée, Soleil noir et Incarnation supplémentaire |
@@ -14,7 +16,7 @@ Les choix confirmés pour cette livraison sont : **sans serveur**, détails visu
 | Coopération | Retirée du bundle et du lancement 1.4 ; code complet et archives 1.3 conservés |
 | Battle | Arènes, bots et Couronne retirés du bundle et du lancement 1.4 ; code complet et archives 1.3 conservés |
 | Sauvegarde | Profil local nommé, ancres, statistiques, secret, export/import ; anciens refuges conservés |
-| Audio et confort | Ambiance procédurale, master/silence zéro/pause, effets stéréo selon source/caméra, priorité et limite de voix ; focus des écrans modaux. Revue du mix et parcours intégré encore à confirmer |
+| Audio et confort | Ambiance procédurale, master/silence zéro/pause, effets stéréo selon source/caméra, priorité et limite de voix ; focus des écrans modaux. Parcours intégré vérifié ; revue du mix sur appareils physiques encore à faire |
 | Direction artistique | Noir/ambre, soleil, dunes et silhouettes drapées ; matières PBR, contre-jour et composition HDR, avec mode léger. Références de mouvement Expédition 33 / Ghost of Tsushima |
 | GitHub et historique | Sources, modèles, provenance, licences, tests et archives séparés ; site dans docs/ et modèles chargés à la sélection |
 
@@ -59,8 +61,12 @@ La passe applique les recherches à une séquence existante : mouvements Quatern
 
 Fauche-Cendre remplace la famille `warden` par un quadrupède original à 22 os, avec approche, préparation directionnelle de 0,78 s, détente de 2,4 unités sur 0,32 s et récupération de 1,4 s. Le contact inflige une seule fois 22 dégâts, selon les protections/règles du jeu. Son son d’avertissement est localisé. Les autres familles ne sont pas annoncées comme refaites.
 
-Le son utilise un master commun, le vrai silence à zéro, une pause qui nettoie les sources, un plafond de 16 voix d’effets et un panoramique relatif à la caméra. La carte, les pactes et les choix de voyage disposent d’une gestion commune du focus et d’un arrière-plan inerte. Les contrôles CPU de ces modules ont été exécutés par leurs responsables ; les essais du jeu intégré et la publication sont consignés séparément après leur exécution.
+Le son utilise un master commun, le vrai silence à zéro, une pause qui nettoie les sources, un plafond de 16 voix d’effets et un panoramique relatif à la caméra. La carte, les pactes et les choix de voyage disposent d’une gestion commune du focus et d’un arrière-plan inerte. Les contrôles CPU, les parcours du jeu intégré et la publication ont passé ; leurs scénarios et limites sont consignés dans la validation 1.4.
 
 La [matrice 1.4](PRISE-EN-CHARGE-1.4.md) montre ce qui est recherché, appliqué et encore à revoir. Le [référentiel qualité](REFERENTIEL-QUALITE.md), le [workflow](WORKFLOW-QUALITE.md) et le [skill local](skills/quality-pass/SKILL.md) conservent les connaissances dans le dépôt. Ce skill n’est ni un connecteur cloud installable ni une formation permanente du modèle.
 
 L’utilisateur a confirmé : « Aventure solo uniquement pour l’instant ; conserver les autres dans les archives ». La candidate 1.4 se concentre donc sur le solo. Les choix d’arènes, bots et groupes sont retirés du menu et leur code est exclu du bundle via `src/local-party-solo.js`. Le module complet `src/local-party.js` et les archives 1.3 conservent le travail antérieur. Les ennemis et boss gardent leur IA locale sans service connecté. Les profils, les chapitres, les matières et la composition précédents sont conservés. La réfection complète des trois niveaux, les autres héros et créatures, le mixage final, l’équilibrage et les essais physiques restent ouverts.
+
+## Travail restant à étendre à tout le jeu
+
+Priorités de production à poursuivre depuis la référence actuelle : raccords, pas orientés, réactions et esquives propres à chaque héros ; drapés et prise d’arme ; anatomie et comportement des autres familles et boss ; composition et rythme des trois niveaux ; présentation du récit, timbres et mixage ; lisibilité de toute l’interface et mesures sur PC/téléphone physiques. Les éléments appliqués et les écarts restent détaillés dans la matrice. Une scène réussie ne clôt aucun contenu encore provisoire.

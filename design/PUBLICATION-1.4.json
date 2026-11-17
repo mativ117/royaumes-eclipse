@@ -1,0 +1,17 @@
+{
+  "version": "1.4-rc1",
+  "html_sha256": "6d4a7102f33449fc16a5b5354c49336731f1e0cfeedcce13e523a492c5410085",
+  "verified_models": 11,
+  "verified_creatures": 1,
+  "modes": [
+    "solo"
+  ],
+  "zip_bytes": 73421526,
+  "zip_sha256": "fdd23fc75054bc1961cc0a44828f0351abd4e5c6db9000f7aabcca3551315765",
+  "comparison_verified": true,
+  "published_commit": "de5e92d7dd32f02bf4ea065729a8566a9373c1cb",
+  "verified_at_utc": "2026-11-17T18:14:16.298404+00:00",
+  "inline_studio_live_smoke": "PASS: actual Rempart/Lame/Voltigeur/Lame selection, attack, render suspension, disposal/recreation and invalid hero fallback",
+  "studio_live_smoke": "PASS: 23 clips, three attacks, dodge, Lame launch and Commands without missing files or JS errors",
+  "campaign_live_smoke": "PASS: root redirect, remote Tisseuse, chapter II, render, score and chronicle pause/resume"
+}

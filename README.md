@@ -4,6 +4,8 @@
 
 **[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.4-rc1)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.4-rc1.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
 
+**Exigence durable confirmée : pousser le jeu entier aussi près que possible de la qualité des meilleurs jeux AAA**, dans notre univers. Cela couvre tous les héros, créatures, mouvements, combats, niveaux, environnements, lumières et ombres, récit, mise en scène, musiques, effets sonores, interface, physique et performances PC/téléphone. La Lame et la rencontre de référence servent de premières étapes ; elles ne réduisent pas ce périmètre. Cette qualité reste une cible de production, pas un résultat déjà atteint. [Consigne complète et critères de progrès](design/EXIGENCE-QUALITE.md) · [Instructions durables du dépôt](AGENTS.md).
+
 ## Passe de référence 1.4
 
 **[Comparer les mouvements avant/après](https://mativ117.github.io/royaumes-eclipse/docs/gestes-et-creatures.html)** · Captures du jeu à vitesse normale.

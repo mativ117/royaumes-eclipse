@@ -11,6 +11,8 @@ Skill local au dépôt. Il doit être lu explicitement par l’agent ; sa prése
 
 Utiliser pour une amélioration de rendu, personnage, animation, combat, niveau, narration, audio ou interface dans ce projet. Lire `design/REFERENTIEL-QUALITE.md` pour l’axe concerné et `design/WORKFLOW-QUALITE.md` pour la procédure complète. Ne pas recommencer une recherche déjà documentée sans raison de version, d’erreur ou de nouvelle question.
 
+La [cible durable de qualité](../../EXIGENCE-QUALITE.md), confirmée par l’utilisateur, s’applique au **jeu entier aussi proche que possible des meilleurs jeux AAA**. Une passe ciblée doit s’inscrire dans la couverture de tous les héros, créatures, niveaux et systèmes ; une référence réussie ne vaut pas finition de l’ensemble. Améliorer un défaut perceptible de cohérence ou de jouabilité, puis documenter l’extension restante et les preuves réelles, sans déclarer la cible atteinte à partir de tests seuls.
+
 ## Procédure
 
 1. Définir le défaut vu par le joueur, sa séquence de référence et un critère de réussite perceptible à vitesse 1×. Préserver Web PC/téléphone, mode léger, choix sans serveur et compatibilité des sauvegardes. Le lancement 1.4 est solo : ne pas réintroduire les menus ou le code de groupes/arènes/bots dans le bundle ; conserver le module complet et les archives 1.3. Les ennemis et boss gardent leur IA locale.

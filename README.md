@@ -1,6 +1,6 @@
 # Les Royaumes de l’Éclipse
 
-**Candidate 1.5-rc1 — Onze héros, combat et duels.** Jeu d’action fantastique 3D pour navigateur sur PC et téléphone. Trois chapitres d’aventure, dix héros disponibles dès le départ et un onzième personnage secret. [Contrôles et limites de cette livraison](design/VALIDATION-1.5.md).
+**Candidate 1.5-rc1 — Onze héros, combat et duels.** Jeu d’action fantastique 3D pour navigateur sur PC et téléphone. Trois chapitres d’aventure, dix héros disponibles dès le départ et un onzième personnage secret. [Contrôles et limites de cette livraison](design/VALIDATION-1.5.md) · [Publication vérifiée](design/PUBLICATION-1.5.json).
 
 **[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.5-rc1)** · [Projet courant éditable](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.5-rc1-projet.zip) · [Toutes les sources et archives](https://github.com/mativ117/royaumes-eclipse/archive/refs/heads/main.zip) · [Suivi](design/SUIVI.md) · [Audit profond](design/AUDIT-PROFOND-1.5.md)
 

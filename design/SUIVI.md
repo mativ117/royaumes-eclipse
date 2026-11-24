@@ -1,6 +1,6 @@
 # Suivi du projet — candidate 1.5-rc1
 
-**État de reprise au 24 novembre 2026 :** contrôles locaux, captures réelles et paquet de la candidate 1.5-rc1 réussis ; publication en préparation. La 1.5 réunit les dix nouvelles fabrications de héros, la reprise du contrôle en combat, les portes et sols corrigés, un duel tactique sans API et un module LAN direct. Les résultats et limites figurent dans [la validation 1.5](VALIDATION-1.5.md). La connexion réelle entre appareils reste à éprouver.
+**État de reprise au 24 novembre 2026 :** candidate 1.5-rc1 publiée et vérifiée sur GitHub Pages. Contrôles locaux, captures réelles et paquet réussis. La 1.5 réunit les dix nouvelles fabrications de héros, la reprise du contrôle en combat, les portes et sols corrigés, un duel tactique sans API et un module LAN direct. Les résultats et limites figurent dans [la validation 1.5](VALIDATION-1.5.md). Le [relevé distant](PUBLICATION-1.5.json) consigne la publication du code `07a4c69`. La connexion réelle entre appareils reste à éprouver.
 
 La [cible durable proche AAA](EXIGENCE-QUALITE.md) concerne **tout le jeu**. Les nouvelles demandes autorisent le duel contre une IA locale et le LAN, y compris téléphone ↔ téléphone sans PC ; elles complètent le choix solo de la 1.4, conservé dans ses archives. Le périmètre courant contient seulement l’aventure et ces deux usages utiles.
 
@@ -20,7 +20,7 @@ La [cible durable proche AAA](EXIGENCE-QUALITE.md) concerne **tout le jeu**. Les
 | Preuve LAN réelle | **Non acquise** : la politique Chromium gérée interdit les candidats ICE locaux. Handshake natif SKIP. Le pont de test ne valide ni DTLS réel, ni deux téléphones, ni leur routeur |
 | Sauvegardes et commandes | Profils locaux, secret, import/export, remappage et manette conservés ; parcours de commandes sur les trois modes, remappage, interfaces et conservation des profils passés |
 | Sécurité | Identifiants propres, caches et graphes de sauvegarde bornés ; rôles, session, séquences, tailles et débits réseau ; CSP à empreintes et referrer. Tests dédiés passés, sans prétendre à un audit de pénétration certifié |
-| Publication et historique | Sources/licences/archives conservées. Projet courant vérifié et complet avec manifeste ; toutes les archives restent dans le ZIP généré par GitHub. Publication et vérification distante à relever après envoi |
+| Publication et historique | Sources/licences/archives conservées. Projet courant vérifié et complet avec manifeste ; toutes les archives restent dans le ZIP généré par GitHub. HTML, onze modèles, créature, captures et paquet comparés à la publication ; aventure, atelier, bot et lobby LAN non appairé contrôlés sur le site public |
 
 Les [prises en charge 1.5](PRISE-EN-CHARGE-1.5.md), l’[audit profond](AUDIT-PROFOND-1.5.md) et la [couverture du jeu entier](COUVERTURE-QUALITE.md) détaillent les critères. [Modes](MODES-1.5.md), [duel et IA](DUELS-1.5.md), [guide LAN téléphone](LAN-TELEPHONES-1.5.md), [sécurité LAN](LAN-SECURITE-1.5.md) et [portes/matières](PORTES-MATIERES-1.5.md) décrivent les règles et limites.
 

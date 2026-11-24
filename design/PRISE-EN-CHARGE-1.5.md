@@ -21,7 +21,7 @@
 | Niveaux et rythme | Composition, orientation et narration par le décor | Trois chapitres, épreuves, conclusions, ancres et secret conservés ; surfaces/portes ciblées | Recomposition des zones, variété, transitions et rythme novice ; 10–15 min non mesurées en parties humaines |
 | Récit, musique et effets | Narration environnementale, Web Audio, volume et spatialisation | Chronique, objectifs, trois thèmes synthétiques, master/pause/silence/stéréo conservés | Mise en scène, conséquences, timbres, variantes, transitions et écoute sur appareils ; pas de doublage ni d’orchestre enregistré annoncés |
 | Performance | Chargement différé, cycle de vie, budgets de voix/dessin | Modèle choisi chargé à la demande ; atelier suspendu et libéré ; optimisations antérieures conservées | Octets, mémoire, p50/p95/p99 et chauffe sur matériel identifié ; navigateur logiciel ≠ preuve de performance mobile |
-| Historique et livraison | Reproductibilité et distinction des preuves | Sources, licences, anciens ZIP et rapports conservés ; source ZIP GitHub pour le projet complet | Relevé final 1.5, captures réelles, intégrité des archives, publication puis contrôle distant à consigner |
+| Historique et livraison | Reproductibilité et distinction des preuves | Sources, licences, anciens ZIP et rapports conservés ; source ZIP GitHub pour le projet complet | Validation, captures réelles, intégrité et publication vérifiées ; essai matériel encore requis pour le LAN |
 
 ## Bibliothèques : attribution exacte
 

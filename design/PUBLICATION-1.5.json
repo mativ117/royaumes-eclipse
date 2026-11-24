@@ -1,0 +1,66 @@
+{
+  "version": "1.5-rc1",
+  "html_sha256": "34923ae1076e22296fe98a3c64ed1fca2856364286ab67e6b42dc237c2a3fa14",
+  "verified_models": 11,
+  "verified_creatures": 1,
+  "modes": [
+    "solo",
+    "duel",
+    "lan"
+  ],
+  "package_scope": "Current playable and editable project; full history stays in repository",
+  "package_file": "historique/livraisons-zip/royaumes-eclipse-1.5-rc1-projet.zip",
+  "zip_bytes": 92142083,
+  "zip_sha256": "f74416cf3e1068c41ee92a78cfbf145555e2a4974a0b8ffaba1d636c287fb6bf",
+  "verified_review_files": [
+    "gestes-et-creatures.html",
+    "atelier-lame.html",
+    "ambre-obsidienne.html",
+    "assets/concepts/lame-01.png"
+  ],
+  "verified_1_5_media": [
+    "previews/r5-accordeur-studio.jpg",
+    "previews/r5-bergere-studio.jpg",
+    "previews/r5-cendres-studio.jpg",
+    "previews/r5-colosse-studio.jpg",
+    "previews/r5-eclipse-studio.jpg",
+    "previews/r5-lame-studio.jpg",
+    "previews/r5-neant-studio.jpg",
+    "previews/r5-rempart-motion.mp4",
+    "previews/r5-rempart-studio.jpg",
+    "previews/r5-tisseuse-studio.jpg",
+    "previews/r5-voleur-motion.mp4",
+    "previews/r5-voleur-studio.jpg",
+    "previews/r5-voltigeur-studio.jpg"
+  ],
+  "real_device_lan_validation": false,
+  "verified_at_utc": "2026-11-24T08:17:21.299689+00:00",
+  "code_commit": "07a4c69f1d3d3df442b29dc656f32b118d159e3a",
+  "pages_workflow": "pages build and deployment",
+  "pages_workflow_conclusion": "success",
+  "entry_url": "https://mativ117.github.io/royaumes-eclipse/?v=1.5-rc1",
+  "public_browser_smokes": {
+    "adventure": true,
+    "studio": true,
+    "bot_duel": true,
+    "portrait_unpaired_lan_lobby": true,
+    "missing_resources": false,
+    "javascript_errors": false
+  },
+  "native_rtc_round_trip": "SKIP: managed browser produced no local ICE candidates",
+  "hardware_fps_measured": false,
+  "historical_1_4_archive_sha256": "fdd23fc75054bc1961cc0a44828f0351abd4e5c6db9000f7aabcca3551315765",
+  "model_sha256": {
+    "accordeur.glb": "d5c1d418fe95a747176dc3654c25bbb6a43f0b5430c5f618b32e188126af7ed6",
+    "bergere.glb": "38b7c059b652c43aa63ab65123106e9495297027268a15471d0f971edec528e1",
+    "cendres.glb": "5961211bc512609909663c2613d7a6e21ecf82b23384e4d0dbba86c03066d13d",
+    "colosse.glb": "5dcd7a69c276a9675323d8bdcb54c795221c54ba2aa895db4d7210826c405588",
+    "eclipse.glb": "9b2810dba81da76cd2f080dbfaa0bfef896f0b11ced0e4cf4b6a023a467406ea",
+    "lame.glb": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
+    "neant.glb": "c00c762940bf03218bcf6bc8aab41fb8efaa3ab46e0d37e7d1d51daeb8bdc425",
+    "rempart.glb": "69c5196560435460f2bfd4c452e4040c562405c6c92fa52783d2f9a8da55c7a4",
+    "tisseuse.glb": "e67b1a2ec703bb6f3e26e4f9228bb25f81a247d2a9802479917dc7ad901dbcb8",
+    "voleur.glb": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
+    "voltigeur.glb": "6563ebe508cc1add60acadc34aa13915d604a50a513366b44fdb8c53f41e4d4f"
+  }
+}

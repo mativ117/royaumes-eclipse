@@ -2,6 +2,8 @@
 
 Contrôles réalisés les 23 et 24 novembre 2026. Cette page consigne les résultats locaux ; la vérification de la publication est enregistrée séparément dans `PUBLICATION-1.5.json`. La cible proche AAA reste une exigence de production, pas une certification obtenue par ces tests.
 
+**Publication vérifiée le 24 novembre :** code `07a4c69`, workflow GitHub Pages réussi, HTML et onze modèles identiques, créature et treize médias contrôlés, ZIP de 92 142 083 octets identique. Les trois smokes publics passent : aventure/récit, atelier/Lame/commandes, duel contre le bot et lobby LAN portrait non appairé. [Relevé distant](PUBLICATION-1.5.json).
+
 ## Environnement et portée
 
 Python, Node, Blender 4.3.2, Playwright 1.62 et Chromium avec WebGL logiciel. Les essais graphiques sont exécutés successivement, avec des dispositions PC, portrait et paysage. Les entrées tactiles et manettes sont simulées. Aucune cadence, chauffe ou latence sur appareil physique n'est déduite de ces mesures. Les parcours de campagne utilisent des positions et dégâts contrôlés ; ils ne mesurent pas une découverte humaine de 10–15 minutes.

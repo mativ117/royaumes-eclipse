@@ -6,9 +6,9 @@ const INPUT_ACTIONS={
  attack:{label:'Attaquer au clavier',keys:[],hint:'Clic gauche'},dodge:{label:'Esquiver',keys:[' '],hint:'Espace'},power:{label:'Pouvoir',keys:['e'],hint:'E'},interact:{label:'Interagir / maintenir',keys:['f'],hint:'F'},map:{label:'Carte',keys:['m'],hint:'M'},guide:{label:'Repères',keys:['g'],hint:'G'},extra:{label:'Pouvoir supplémentaire',keys:['r'],hint:'R'}
 };
 const INPUT_CODE_PATTERN=/^(Key[A-Z]|Digit[0-9]|Numpad[0-9]|Arrow(Up|Down|Left|Right)|Space|Shift(Left|Right)|Enter|Bracket(Left|Right)|Minus|Equal|Semicolon|Quote|Backslash|Comma|Period|Slash|Backquote)$/;
-function readInputBindings(){try{const data=JSON.parse(localStorage.getItem(INPUT_STORAGE_KEY)||'{}'),result={},codes=new Set();if(!data||typeof data!=='object'||Array.isArray(data))return{};for(const [action,value]of Object.entries(data)){if(!INPUT_ACTIONS[action]||!value||!INPUT_CODE_PATTERN.test(value.code)||typeof value.label!=='string'||!value.label||value.label.length>20||codes.has(value.code))return{};result[action]={code:value.code,label:value.label};codes.add(value.code);}return result;}catch(_){return{};}}
+function readInputBindings(){try{const data=JSON.parse(localStorage.getItem(INPUT_STORAGE_KEY)||'{}'),result={},codes=new Set();if(!data||typeof data!=='object'||Array.isArray(data))return{};for(const [action,value]of Object.entries(data)){if(!Object.hasOwn(INPUT_ACTIONS,action)||!value||!INPUT_CODE_PATTERN.test(value.code)||typeof value.label!=='string'||!value.label||value.label.length>20||codes.has(value.code))return{};result[action]={code:value.code,label:value.label};codes.add(value.code);}return result;}catch(_){return{};}}
 let inputBindings=readInputBindings(),inputHeldCodes=new Set(),inputKeyboardAttack=false,inputCapture=null,inputSuppressedCodes=new Set(),inputReturnState='menu',inputReturnFocus=null;
-function inputSolo(){return selectedMode()==='solo';}
+function inputSolo(){return ['solo','duel','lan'].includes(selectedMode());}
 function inputActionLabel(action){if(!inputSolo())return({forward:'Z / W',back:'S',left:'Q / A',right:'D'})[action]||INPUT_ACTIONS[action].hint;return inputBindings[action]?inputBindings[action].label:INPUT_ACTIONS[action].hint;}
 function clearRemappedInput(){inputHeldCodes.clear();inputKeyboardAttack=false;}
 function inputAttackHeld(){return inputSolo()&&inputKeyboardAttack;}

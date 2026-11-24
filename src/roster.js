@@ -12,16 +12,24 @@ const HERO_DEFS={
  neant:{name:'L’Enfant du Néant',hp:100,speed:5.8,dash:1.25,power:10,powerName:'Ombre vive',melee:true,color:'#8da8ef',attackRate:.9,description:'Faucille · ombre combattante et métamorphose.',weapon:'Croissant du Néant'},
  eclipse:{name:'L’Éclipse incarnée',hp:140,speed:5.5,dash:1.4,power:12,powerName:'Soleil noir',melee:true,color:'#ffdb85',attackRate:1.1,secret:true,description:'Fracture · soleil noir · Incarnation supplémentaire avec R.',weapon:'Fracture'}
 };
-function isMeleeHero(id=hero){return !!HERO_DEFS[id]?.melee;}
-function isRifleHero(id=hero){return !!HERO_DEFS[id]?.rifle;}
+function isHeroId(id){return typeof id==='string'&&Object.hasOwn(HERO_DEFS,id);}
+function isMeleeHero(id=hero){return isHeroId(id)&&!!HERO_DEFS[id].melee;}
+function isRifleHero(id=hero){return isHeroId(id)&&!!HERO_DEFS[id].rifle;}
 function emptyProfile(){return {version:1,name:'Voyageur',secret:[false,false,false],completed:[],stats:{wins:0,deaths:0,kills:0,seconds:0,battleMatches:0,battleWins:0},settings:{volume:.6,music:.25,reduced:false},journey:null};}
 let localProfile=emptyProfile();
+// JSON files are already byte-limited at import; cap nesting/work before later
+// cloning or restoring a save. This is not a network-message authorization rule.
+function isBoundedSaveData(value){
+ const pending=[[value,0]];let nodes=0;
+ while(pending.length){const [item,depth]=pending.pop();if(++nodes>8192||depth>12)return false;if(item&&typeof item==='object'){const keys=Object.keys(item);if(keys.length>8192-nodes)return false;for(const key of keys)pending.push([item[key],depth+1]);}}
+ return true;
+}
 function validateProfile(data){
- if(!data||data.version!==1||typeof data.name!=='string'||!Array.isArray(data.secret)||data.secret.length!==3||data.secret.some(v=>typeof v!=='boolean')||!Array.isArray(data.completed)||data.completed.some(n=>![1,2,3].includes(n)))throw Error('Sauvegarde incompatible.');
+ if(!data||!isBoundedSaveData(data)||data.version!==1||typeof data.name!=='string'||!Array.isArray(data.secret)||data.secret.length!==3||data.secret.some(v=>typeof v!=='boolean')||!Array.isArray(data.completed)||data.completed.some(n=>![1,2,3].includes(n)))throw Error('Sauvegarde incompatible.');
  const result=emptyProfile();result.name=data.name.trim().slice(0,24)||'Voyageur';result.secret=data.secret.slice();result.completed=[...new Set(data.completed)];
  for(const key of Object.keys(result.stats)){const n=Number(data.stats?.[key]);result.stats[key]=Number.isFinite(n)&&n>=0?Math.min(n,1e9):0;}
  for(const [key,fallback]of [['volume',.6],['music',.25]]){const n=Number(data.settings?.[key]??fallback);result.settings[key]=Number.isFinite(n)?Math.max(0,Math.min(1,n)):fallback;}result.settings.reduced=!!data.settings?.reduced;
- if(data.journey&&[1,2,3].includes(data.journey.level)&&HERO_DEFS[data.journey.hero]&&['vigor','haste',''].includes(data.journey.boon)&&Number.isInteger(data.journey.checkpoint)&&data.journey.checkpoint>=0&&data.journey.checkpoint<=(data.journey.level===1?0:data.journey.level===2?5:6))result.journey={level:data.journey.level,hero:data.journey.hero,boon:data.journey.boon,checkpoint:data.journey.checkpoint,route:['sun','storm',''].includes(data.journey.route)?data.journey.route:'',core:Math.max(1,Math.min(300,Number(data.journey.core)||180))};
+ if(data.journey&&[1,2,3].includes(data.journey.level)&&isHeroId(data.journey.hero)&&['vigor','haste',''].includes(data.journey.boon)&&Number.isInteger(data.journey.checkpoint)&&data.journey.checkpoint>=0&&data.journey.checkpoint<=(data.journey.level===1?0:data.journey.level===2?5:6))result.journey={level:data.journey.level,hero:data.journey.hero,boon:data.journey.boon,checkpoint:data.journey.checkpoint,route:['sun','storm',''].includes(data.journey.route)?data.journey.route:'',core:Math.max(1,Math.min(300,Number(data.journey.core)||180))};
  return result;
 }
 try{const data=localStorage.getItem('royaumes-profile-v1');if(data)localProfile=validateProfile(JSON.parse(data));if(localStorage.getItem('royaumes-eclipse-reflet-v1')==='found')localProfile.secret[0]=true;}catch(_){}

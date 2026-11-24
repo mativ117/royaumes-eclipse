@@ -1,11 +1,22 @@
 """Narrative presentation and actual WebAudio signal; no claim of recorded orchestral sound."""
 from pathlib import Path
+from functools import partial
+from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
+from threading import Thread
 from playwright.sync_api import sync_playwright
+import sys as _check_sys
+from pathlib import Path as _CheckPath
+_check_sys.path.insert(0,str(_CheckPath(__file__).resolve().parents[1]/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 ROOT=Path(__file__).resolve().parents[1]
+class Quiet(SimpleHTTPRequestHandler):
+ def log_message(self,*args):pass
+server=ThreadingHTTPServer(('127.0.0.1',0),partial(Quiet,directory=str(ROOT/'docs')));Thread(target=server.serve_forever,daemon=True).start()
 with sync_playwright() as pw:
  b=pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--enable-unsafe-swiftshader'])
  page=b.new_page(viewport={'width':390,'height':844});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
- page.set_content('<script>requestAnimationFrame=()=>0</script>'+(ROOT/'docs/index.html').read_text());page.wait_for_function('avatarRuntime.status==="ready"',polling=50);run=page.evaluate
+ page.add_init_script('requestAnimationFrame=()=>0');page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('avatarRuntime.status==="ready"',polling=50);run=page.evaluate
  assert run('document.documentElement.scrollWidth<=innerWidth')
  assert 'soleil noir' in page.locator('#storyMenuText').text_content()
  page.click('#storyMenuOpen');assert run('state==="chronicle"&&storyReturn==="menu"')
@@ -24,4 +35,5 @@ with sync_playwright() as pw:
  assert .005<result['rms']<.3 and .015<result['peak']<.95 and result['tail']>1 and result['voices']==0,result
  assert not errors,errors
  b.close()
+server.shutdown();server.server_close()
 print('PASS: chapter premise, spoiler-aware chronicle, Escape/focus/viewport, paused simulation, chapter score changes, pause scheduling and rendered stereo PCM with reverb/limiter.')

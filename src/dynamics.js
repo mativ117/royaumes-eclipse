@@ -7,7 +7,7 @@ function advanceHeroMotion(dt){
  const config=actorDodgeConfig(p);if(p.dashElapsed!==undefined&&p.dashElapsed<config.duration){const next=Math.min(config.duration,p.dashElapsed+dt),travel=dodgeTravel(p.dashElapsed,next,config);moveEntity(p,p.dx*travel,p.dz*travel);p.dashElapsed=next;}
  else{const scale=motionSpeedScale(avatarRuntime.current,hero,p,aim);moveEntity(p,p.vx*scale*dt,p.vz*scale*dt);}
 }
-function requestDodge(){if(state!=='playing')return;p.dodgeBuffer=t+.16;if(p.dash<=0)dash();}
+function requestDodge(){if(typeof queueLanAction==='function'&&queueLanAction('dash'))return;if(state!=='playing')return;p.dodgeBuffer=t+.16;if(p.dash<=0)dash();}
 function attackAdvance(a,previous){
  if(!a.melee)return;const f=time=>{const u=Math.max(0,Math.min(1,time/Math.max(.001,a.hitAt)));return u*u*(3-2*u);};
  const definition=typeof sourceAttackDefinition==='function'?sourceAttackDefinition(a):null,distance=definition?definition.travel*motionModelScale(avatarRuntime.current):(a.combo===3?.95:.6),travel=distance*(f(a.elapsed)-f(previous));if(travel<=0)return;

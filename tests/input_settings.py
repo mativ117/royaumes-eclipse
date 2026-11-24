@@ -4,6 +4,11 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from threading import Thread
 from playwright.sync_api import sync_playwright
+import sys as _check_sys
+from pathlib import Path as _CheckPath
+_check_sys.path.insert(0,str(_CheckPath(__file__).resolve().parents[1]/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 import json
 ROOT=Path(__file__).resolve().parents[1]
 class Quiet(SimpleHTTPRequestHandler):
@@ -34,14 +39,14 @@ try:
   page.click('#inputSettingsClose');run('p.power=0;p.shield=0');page.keyboard.press('e');assert run('p.power===0');page.keyboard.press('t');assert run('p.power>0&&p.shield>0')
   run('var powerCalls=0,originalPower=power;power=()=>powerCalls++;void 0');page.keyboard.down('t');page.keyboard.down('t');page.keyboard.up('t');assert run('powerCalls===1'),run('({powerCalls,state,suppressed:[...inputSuppressedCodes],capture:inputCapture})');run('power=originalPower;void 0')
   run('resetHeroAt(0,25)');page.keyboard.down('w');assert run('movement().z===0');page.keyboard.up('w');page.keyboard.down('ArrowUp');assert run('movement().z===0');page.keyboard.up('ArrowUp');page.keyboard.down('i');assert run('movement().z<0');run('for(let i=0;i<15;i++)update(1/60)');page.keyboard.up('i');assert run('p.z<25')
-  run('resetHeroAt(0,25);p.shot=0;cancelAttack();var oldShots=shotCount');page.keyboard.down('u');run('for(let i=0;i<45;i++)update(1/60)');page.keyboard.up('u');assert run('shotCount-oldShots>=2&&!inputAttackHeld()')
+  run('resetHeroAt(0,25);p.shot=0;cancelAttack();var oldShots=shotCount');page.keyboard.down('u');run('for(let i=0,n=Math.ceil(((avatarRuntime.current.motionCalibration?.shot?.duration||.28)*2+.2)*60);i<n;i++)update(1/60)');page.keyboard.up('u');assert run('shotCount-oldShots>=2&&!inputAttackHeld()'), 'Held remapped attack repeats at the authored clip cadence'
   page.keyboard.press('m');assert run('state==="playing"');page.keyboard.press('k');assert run('state==="map"');page.focus('#guidanceToggle');checked=run('document.querySelector("#guidanceToggle").checked');page.keyboard.press('Space');assert run('state==="map"');assert run('document.querySelector("#guidanceToggle").checked')!=checked,'Map checkbox keeps native Space';page.keyboard.press('Space');assert run('document.querySelector("#guidanceToggle").checked')==checked;page.keyboard.press('k');assert run('state==="playing"'),'Remapped map key closes from checkbox focus';run('guideRevealUntil=0');page.keyboard.press('g');assert run('guideRevealUntil===0');page.keyboard.press('o');assert run('guideRevealUntil>t')
   run('boon="vigor";resetHeroAt(16,-4.5);campaign.trials.bells.read=false;updateDesign(1/60)');assert page.locator('#interact').text_content().startswith('V · ');page.keyboard.press('f');assert run('!campaign.trials.bells.read');page.keyboard.press('v');assert run('campaign.trials.bells.read')
   page.click('#helpButton');assert run('document.querySelector("#helpDialog").open&&state==="paused"');assert 'interaction V' in page.locator('#inputHelpSummary').text_content();page.keyboard.press('Escape');assert run('!document.querySelector("#helpDialog").open&&state==="playing"')
   run('var field=document.createElement("input");field.id="testField";document.body.append(field);field.focus();p.power=0');page.keyboard.type('t');assert run('p.power===0&&document.querySelector("#testField").value==="t"');run('field.remove();releaseMenuFocus()')
   run('pause()');page.click('#inputSettingsPauseButton');assert run('state==="input-settings"&&inputReturnState==="paused"');page.keyboard.press('Escape');assert run('state==="paused"');run('resume()')
   page.reload();page.wait_for_function('avatarRuntime.status==="ready"',polling=50);assert run('inputBindings.dodge.code==="KeyH"&&inputBindings.forward.code==="KeyI"&&localProfile.name==="Clavier test"')
-  assert run('selectedMode()==="solo"&&document.querySelector("#playMode").options.length===1&&document.querySelector("#playMode").value==="solo"');assert page.locator('#partyOptions').count()==0
+  assert run('selectedMode()==="solo"&&document.querySelector("#playMode").options.length===3&&document.querySelector("#playMode").value==="solo"');assert page.locator('#partyOptions').count()==0
   page.reload();page.wait_for_function('avatarRuntime.status==="ready"',polling=50);page.click('#inputSettingsMenuButton');page.click('#inputReset');assert run('Object.keys(inputBindings).length===0&&JSON.parse(localStorage.getItem(INPUT_STORAGE_KEY)).dodge===undefined');page.keyboard.press('Escape');page.click('#start');page.keyboard.press('Space');assert run('p.dash>0')
   run('localStorage.setItem(INPUT_STORAGE_KEY,"{bad json")');page.reload();page.wait_for_function('avatarRuntime.status==="ready"',polling=50);assert run('Object.keys(inputBindings).length===0&&localProfile.name==="Clavier test"');ctx.close()
   for width,height in [(390,844),(1366,1024)]:
@@ -50,5 +55,5 @@ try:
    else:assert p.evaluate('getComputedStyle(document.querySelector("#miniMap")).display==="none"')
    p.click('#inputSettingsButton');assert p.evaluate('document.documentElement.scrollWidth<=innerWidth');p.click('#inputSettingsClose');assert p.evaluate('state==="playing"');mobile.close()
   assert not errors,errors;b.close()
- print('PASS: desktop map/tool separation, map modal isolation, effective solo keyboard remapping, conflict/cancel/reset, held attack, repeat suppression, form focus, Escape/help, persistence and solo-only mode selection; portrait and wide touch layout.')
+ print('PASS: desktop map/tool separation, map modal isolation, effective solo keyboard remapping, conflict/cancel/reset, held attack, repeat suppression, form focus, Escape/help, persistence and solo/bot/LAN mode selection; portrait and wide touch layout.')
 finally:server.shutdown();server.server_close()

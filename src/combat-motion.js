@@ -10,17 +10,19 @@ function sparks(x,z,color='#ffd69a'){
  impactTime=.12;if(!localProfile.settings.reduced)hitPause=Math.max(hitPause,.025);
 }
 function updateSparks(dt){for(const s of sparkPool)if(s.life>0){s.life-=dt;s.vy-=12*dt;s.mesh.position.x+=s.vx*dt;s.mesh.position.y+=s.vy*dt;s.mesh.position.z+=s.vz*dt;s.mesh.visible=s.life>0;}impactTime=Math.max(0,impactTime-dt);}
-function requestAttack(){if(state==='playing')p.attackBuffer=t+.22;}
-function cancelAttack(){if(p.attack&&!p.attack.struck)p.overcharge=Math.min(3,p.overcharge+(p.attack.charge||0));p.attack=null;}
-function meleeClipDuration(id,combo,fallback){const clip=id==='lame'?avatarRuntime.heroes.lame?.actions['attack'+combo]?.getClip():null;return clip?.duration||fallback;}
+function requestAttack(){if(typeof queueLanAction==='function'&&queueLanAction('fire'))return;if(state==='playing'){const remaining=p.attack?Math.max(0,p.attack.duration-p.attack.elapsed):0;p.attackBuffer=t+(p.attack&&remaining<.35?remaining+.14:.22);}}
+function cancelAttack(){if(p.attack){if(!p.attack.struck)p.overcharge=Math.min(3,p.overcharge+(p.attack.charge||0));p.shot=Math.min(p.shot||0,.16);}p.attack=null;}
+function meleeClipDuration(id,combo,fallback){const clip=isHeroId(id)?avatarRuntime.heroes[id]?.motionCalibration?.attacks?.['attack'+combo]&&avatarRuntime.heroes[id]?.actions['attack'+combo]?.getClip():null;return clip?.duration||fallback;}
 function beginAttack(){
- if(state!=='playing'||p.downed||battle?.crownOwner===p||p.shot>0||p.leap>0||p.attack)return;
+ if(typeof queueLanAction==='function'&&queueLanAction('fire'))return;
+ if(state!=='playing'||p.downed||battle?.crownOwner===p||p.shot>0||p.leap>0||p.stagger>0||p.attack)return;
  if(campaign.trials.forge.carrying)dropCore();
  const melee=isMeleeHero();
  p.combo=melee?(p.comboWindow>0?p.combo%3+1:1):0;p.comboWindow=1.05;
- const baseDuration=(melee?(p.combo===3?.64:.43):.28)*(HEROES[hero].attackRate||1)*(hero==='cendres'&&p.heat>=100?1.6:1),duration=melee?meleeClipDuration(hero,p.combo,baseDuration):baseDuration;
- const definition=melee&&hero==='lame'?avatarRuntime.current?.motionCalibration?.attacks?.['attack'+p.combo]:null;
- p.attack={melee,elapsed:0,duration,hitAt:definition?.hitAt??(melee?duration*(p.combo===3?.390625:.372093):duration*.25),activeEnd:definition?.activeEnd,struck:false,combo:p.combo,charge:p.overcharge,aim,};
+ const slow=hero==='cendres'&&p.heat>=100?1.6:1,baseDuration=(melee?(p.combo===3?.64:.43):.28)*(HEROES[hero].attackRate||1),duration=(melee?meleeClipDuration(hero,p.combo,baseDuration):(avatarRuntime.current?.motionCalibration?.shot?.duration||baseDuration))*slow;
+ const definition=melee?avatarRuntime.current?.motionCalibration?.attacks?.['attack'+p.combo]:avatarRuntime.current?.motionCalibration?.shot;
+ p.attack={id:p.attackSerial=(p.attackSerial||0)+1,melee,elapsed:0,duration,hitAt:definition?.hitAt!==undefined?definition.hitAt*slow:(melee?duration*(p.combo===3?.390625:.372093):duration*.25),activeEnd:definition?.activeEnd!==undefined?definition.activeEnd*slow:undefined,struck:false,combo:p.combo,charge:p.overcharge,aim,};
+ if(melee&&avatarRuntime.current?.motionCalibration){p.vx=p.vz=0;p.comboWindow=duration+.35;}
  if(hero==='accordeur'&&classEffects.some(f=>f.kind==='rhythm'&&f.owner===p&&t-(f.lastPulse||-100)<.13))p.attack.charge=Math.min(3,p.attack.charge+1);p.overcharge=0;p.shot=duration;p.attackBuffer=0;observeTime=0;
 }
 function updateAttack(dt){
@@ -34,7 +36,11 @@ function updateAttack(dt){
 function shootRifle(a){
  const dx=-Math.sin(a.aim),dz=-Math.cos(a.aim);let x=p.x+Math.cos(a.aim)*.5+dx*1.6,z=p.z-Math.sin(a.aim)*.5+dz*1.6,y=1.35;
  const anchor=avatarRuntime.current?.muzzle;if(anchor){avatarRuntime.current.root.updateMatrixWorld(true);const origin=anchor.getWorldPosition(new THREE.Vector3());x=origin.x+dx*.08;z=origin.z+dz*.08;y=origin.y;}
- if(hero==='cendres')p.heat=Math.min(100,(p.heat||0)+12);const projectileMaterial=a.charge?cyan:hero==='rempart'?gold:classProjectileMaterial(hero);const o=mesh(sphereGeo,projectileMaterial,x,y,z,a.charge?.14:.065,a.charge?.14:.065,a.charge?.7:.4);o.rotation.y=a.aim;
+ if(hero==='cendres')p.heat=Math.min(100,(p.heat||0)+12);
+ // A long weapon can visually reach through nearby cover. Its muzzle must not
+ // spawn a shot on the far side without crossing the same collision boundary.
+ const muzzleWall=projectileBlockedAlong(p.x,p.z,x,z,.1);if(muzzleWall){effect(muzzleWall.x,muzzleWall.z,.6,'#ffc17b',.2);return;}
+ const projectileMaterial=a.charge?cyan:hero==='rempart'?gold:classProjectileMaterial(hero);const o=mesh(sphereGeo,projectileMaterial,x,y,z,a.charge?.14:.065,a.charge?.14:.065,a.charge?.7:.4);o.rotation.y=a.aim;
  bullets.push({mesh:o,x,z,y,dx,dz,t:1.8,enemy:false,heroId:hero,owner:p,arcStart:isRifleHero()?null:y,damage:(hero==='cendres'?30:hero==='accordeur'?32:34)+a.charge*20});
 }
 function strikeMelee(a){
@@ -55,7 +61,7 @@ function poseHero(dt){
  player.arms.forEach((arm,i)=>{arm.rotation.z=i===0?.08:-.08;});
  if(a){
   const before=a.elapsed<a.hitAt,prep=Math.min(1,a.elapsed/a.hitAt),after=Math.min(1,(a.elapsed-a.hitAt)/Math.max(.01,a.duration-a.hitAt));
-  player.root.rotation.y=a.aim;
+  player.root.rotation.y=a.melee&&avatarRuntime.current?.motionCalibration&&!motionAttackCommitted(avatarRuntime.current,p)?aim:a.aim;
   if(a.melee){
    const side=a.combo%2?1:-1;
    player.legs.forEach((leg,i)=>{leg.rotation.x=(i?-.12:.15)*(a.combo===3?1.4:1);});

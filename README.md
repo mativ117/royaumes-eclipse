@@ -1,112 +1,94 @@
 # Les Royaumes de l’Éclipse
 
-**Version candidate 1.4-rc1 — Mouvement, combat et créature de référence.** Jeu d’action fantastique 3D pour navigateur, PC et téléphone. Trois chapitres jouables jusqu’à leur conclusion, dix héros disponibles dès le départ et un onzième personnage secret.
+**Candidate 1.5-rc1 — Onze héros, combat et duels.** Jeu d’action fantastique 3D pour navigateur sur PC et téléphone. Trois chapitres d’aventure, dix héros disponibles dès le départ et un onzième personnage secret. [Contrôles et limites de cette livraison](design/VALIDATION-1.5.md).
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.4-rc1)** · [Télécharger le projet complet](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.4-rc1.zip) · [Guide de cette livraison](design/VERSION-COMPLETE.md) · [État et limites](design/SUIVI.md) · [Conception](design/CONCEPTION.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.5-rc1)** · [Projet courant éditable](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.5-rc1-projet.zip) · [Toutes les sources et archives](https://github.com/mativ117/royaumes-eclipse/archive/refs/heads/main.zip) · [Suivi](design/SUIVI.md) · [Audit profond](design/AUDIT-PROFOND-1.5.md)
 
-**Exigence durable confirmée : pousser le jeu entier aussi près que possible de la qualité des meilleurs jeux AAA**, dans notre univers. Cela couvre tous les héros, créatures, mouvements, combats, niveaux, environnements, lumières et ombres, récit, mise en scène, musiques, effets sonores, interface, physique et performances PC/téléphone. La Lame et la rencontre de référence servent de premières étapes ; elles ne réduisent pas ce périmètre. Cette qualité reste une cible de production, pas un résultat déjà atteint. [Consigne complète et critères de progrès](design/EXIGENCE-QUALITE.md) · [Instructions durables du dépôt](AGENTS.md).
+La cible confirmée est de rapprocher **le jeu entier de la qualité des meilleurs jeux AAA**, dans notre univers : héros, créatures, mouvements, combats, décors, récit, musiques, effets, interface et technique. Cette qualité reste un objectif de production. Les contrôles automatisés ne valident ni l’esthétique ni le plaisir. [Consigne durable](design/EXIGENCE-QUALITE.md) · [Instructions du dépôt](AGENTS.md).
 
-## Passe de référence 1.4
+## La passe 1.5
 
-**[Comparer les mouvements avant/après](https://mativ117.github.io/royaumes-eclipse/docs/gestes-et-creatures.html)** · Captures du jeu à vitesse normale.
+[Voir deux personnages en mouvement](https://mativ117.github.io/royaumes-eclipse/docs/gestes-et-creatures.html?v=1.5-rc1) · Captures réelles à vitesse normale en qualité Légère ; comparaison historique 1.3/1.4 conservée séparément sur la même page.
 
-La Lame reçoit des mouvements adaptés des bibliothèques gratuites **Quaternius Universal Animation Library 1 et 2 Standard**, sous CC0 : marche, course, garde et trois attaques. Ce sont des animations réalisées par des animateurs, retargetées sur notre personnage ; aucune capture de mouvement n’est annoncée. Foulées, cadence, appuis et distance d’esquive sont calibrés à partir des clips. Le contact du sabre suit sa trajectoire pendant une fenêtre active, au lieu d’une zone large déclenchée indépendamment du geste.
+Les dix autres héros reçoivent une fabrication détaillée pour rejoindre la méthode établie avec la Lame : proportions adultes, costume, armure et matières PBR, source Blender et animations Quaternius Standard CC0 adaptées à l’arme. Les profils distinguent fusil, gestes magiques, dagues, lame et arme lourde. La Lame approuvée est conservée. Les onze modèles, leurs appuis, leurs armes et leurs pouvoirs passent les contrôles du jeu et de l’atelier. Les pas orientés et esquives conservent des solutions analytiques ou alias hérités.
 
-Une première famille ennemie devient une créature complète : **Fauche-Cendre**, prédateur quadrupède original. Sa préparation, sa détente frontale et sa récupération sont distinctes, avec un avertissement visible et un son localisé. Les autres familles gardent leur production précédente.
+Le combat corrige la fuite au tactile, qui imposait auparavant de reculer lentement face à l’ennemi. La visée assistée suit l’intention de combat et stabilise sa cible. La préparation est réorientable dans une limite ; la frappe conserve ensuite sa direction. Les contacts de mêlée suivent les fenêtres calibrées et le trajet de l’arme. Les tirs contrôlent toute leur trajectoire contre les couverts minces.
 
-Le son passe par un volume principal commun, avec vrai silence à zéro, nettoyage à la pause, priorités et spatialisation stéréo des effets du monde. Les écrans modaux gèrent le focus pour que Tab reste dans le panneau et que la fermeture rende une cible logique aux commandes.
+Les grandes portes s’ouvrent par modules verticaux ; leur passage dépend du dégagement visible. Les sols superposés identifiés dans les chapitres II et III sont découpés sans changer les zones praticables. Les contacts d’ombre du réglage Léger sont étendus aux autres chapitres et aux duels. [Portes et matières](design/PORTES-MATIERES-1.5.md).
 
-Cette candidate travaille une séquence existante ; elle ne refait pas les trois niveaux ni tous les personnages. Les matières et la composition de la passe précédente sont conservées. [Prise en charge de chaque axe et limites](design/PRISE-EN-CHARGE-1.4.md) · [Référentiel sourcé](design/REFERENTIEL-QUALITE.md) · [Workflow et connaissances du projet](design/WORKFLOW-QUALITE.md).
+## Trois usages utiles, sans API de jeu
 
-## Atelier au choix du personnage
-
-L’atelier 3D est intégré à la sélection de départ : le modèle du personnage choisi peut être tourné et ses gestes examinés avant de jouer. Il se charge à l’approche de la zone, suspend son rendu hors vue et se libère au lancement de la partie. La refonte détaillée concerne la Lame ; les dix autres modèles restent provisoires.
-
-La passe 1.3 a donné à la Lame des proportions adultes plus élancées, des épaules et des extrémités affinées, un masque céramique retravaillé et un costume moins régulier. Son squelette et les actions compatibles sont conservés. Départ, arrêt et pivots peuvent être interrompus ; marche et course conservent leur phase. La passe 1.4 reprend les clips et leurs métadonnées de déplacement/contact, ce qui demande encore une revue des raccords et de l’équilibrage.
-
-Les textures de cuir intégrées au modèle sont conservées au lieu d’être remplacées par une matière de tissu. Sols et maçonnerie du jeu et de l’atelier utilisent six cartes PBR photographiques Poly Haven. Des bordures et supports encadrent les plates-formes de la Cathédrale ; les Archives et la forge gagnent du contexte. [Détail de la passe et limites](design/FINITION-1.3.md).
-
-**[Essayer la Lame](https://mativ117.github.io/royaumes-eclipse/?hero=lame&v=1.4-rc1)** · [Ouvrir l’atelier séparément](https://mativ117.github.io/royaumes-eclipse/docs/atelier-lame.html?v=1.4-rc1) · [Fiche et planche validées](design/personnages/lame-eclipse/REVUE-01.md) · [Outils gratuits et plateforme](design/OUTILS-PRODUCTION-3D.md)
-
-La mini-carte suit la barre de menu sur PC. Le bouton **Commandes**, accessible au menu, en pause et en jeu, permet de modifier les touches du héros. Elles restent sur cet appareil ; les indications du guide et des boutons suivent les réglages.
-
-## Dernier correctif et méthode de finition
-
-La version rc3 corrige le message masqué pendant une interaction, la sélection d’objets proches, la visibilité autour des stèles/colonnes et une partie du glissement des pieds. [Détail du correctif](design/CORRECTIFS-1.1-rc3.md). Ce correctif ne constitue pas une transformation graphique.
-
-Pour obtenir un vrai saut de qualité, le travail doit se concentrer sur une [séquence de référence](design/SEQUENCE-REFERENCE.md) de deux à trois minutes : personnage, animations, scène composée et validation sur appareil physique.
-
-## La nouvelle direction visuelle
-
-Noir profond, soleil ambré, dunes lointaines et silhouettes drapées : cette passe reprend les nouvelles références transmises. Matières avec relief et rugosité, lumière en contre-jour, composition HDR, capes retravaillées et réactions de mouvement. Une chronique présente les enjeux et suit la progression ; trois thèmes musicaux originaux évoluent en combat, avec des effets de pas et d’armes distincts. [Récit et son](design/RECIT-SON-1.1.md). Le réglage Léger est conservé. Le rendu reste stylisé et ne constitue pas encore une finition AAA.
-
-[Captures comparatives du jeu](https://mativ117.github.io/royaumes-eclipse/docs/ambre-obsidienne.html) · [Détails et limites de la passe](design/ESTHETIQUE-1.1.md)
-
-## Le voyage
-
-| Chapitre | Défis |
+| Mode | Usage |
 |---|---|
-| La Cathédrale vivante | Serment, escorte d’une âme, carillon, Archives du Reflet, noyau à transporter, Carillonneur, Veilleur et extraction |
-| La Chasse aux Souverains | Deux traces à retrouver, faiblesses à interpréter, appels du jardin, duel, terrain qui change avec les phases du Souverain |
-| Le Convoi de l’Impossible | Liens du colosse à réparer, rafales, route du couchant ou de l’orage, don d’escale, cœur à défendre, Mange-Aube et fin du voyage |
+| Aventure solo | Trois chapitres, objectifs, boss, ancres, secret et sauvegardes |
+| Duel tactique | Adversaire calculé localement, héros et difficulté choisis ; trois manches gagnantes |
+| Duel en réseau local | Deux navigateurs du même réseau, invitation et réponse partagées manuellement ; un téléphone peut être hôte |
 
-Les serments accompagnent l’aventure. Chaque niveau dispose d’ancres de reprise, d’une carte et d’objectifs suivis. La cible de conception reste **10–15 minutes par chapitre** ; elle n’est pas une durée mesurée en parties humaines. Les chapitres peuvent aussi être choisis directement pour les essayer.
+Le bot observe avec délai, recherche une portée favorable, utilise les couverts et ses pouvoirs, et peut punir une récupération. Il n’appelle aucun modèle distant et ne reçoit pas de bonus arbitraire de santé ou de dégâts. Difficulté et équilibrage demandent encore des parties humaines. [Duel et IA](design/DUELS-1.5.md).
 
-## Héros et animation
+Le LAN emploie WebRTC direct, sans serveur de rendez-vous, STUN ou TURN. Ouvrir le jeu sur les deux appareils, choisir le réseau local, échanger l’invitation puis la réponse et attendre l’état réellement connecté. L’hôte calcule la partie ; l’invité envoie ses commandes. Les profils d’aventure restent locaux.
 
-Voltigeur, Dernier Rempart, Lame d’Éclipse, Tisseuse de Failles, Porte-Cendres, Voleur d’Ombres, Bergère des Astres, Colosse de Porcelaine, Accordeur et Enfant du Néant : armes, silhouettes, statistiques et pouvoirs distincts. Le secret des trois reflets ouvre l’Éclipse incarnée et son pouvoir supplémentaire Incarnation.
+**Le transfert natif entre appareils physiques reste à valider.** Le navigateur de développement bloque la collecte ICE directe. La synchronisation est testée séparément avec deux vrais contextes reliés par un transport en mémoire ; ce contrôle ne prouve pas une connexion Wi-Fi ou DTLS réelle. L’isolation d’un réseau invité ou une politique du navigateur peut empêcher la connexion. [Guide téléphone ↔ téléphone](design/LAN-TELEPHONES-1.5.md) · [Protocole et sécurité](design/LAN-SECURITE-1.5.md) · [Modes](design/MODES-1.5.md).
 
-Onze modèles de personnages GLB originaux, treize clips de base et les actions compatibles de la Lame, dont une sélection de mouvements Quaternius CC0 adaptés. Haut et bas du corps indépendants pour la locomotion ; les attaques retargetées de la Lame engagent le corps complet. Appuis, prise du fusil à deux mains et recul/culasse restent présents. La famille Fauche-Cendre dispose d’un modèle original à 22 os ; les autres ennemis marcheurs gardent leurs jambes articulées. Les modèles supplémentaires sont chargés à la sélection ; les deux premiers sont intégrés au jeu pour réduire les dépendances au démarrage.
+Les anciennes variantes clavier partagé, groupes et Couronne restent dans les sources et archives. Aucun compte e-mail/Google, synchronisation cloud ou classement compétitif n’est proposé.
 
-## Aventure solo sans serveur
+## Le voyage et les héros
 
-Le choix confirmé est l’aventure solo uniquement pour l’instant, avec les autres modes conservés dans les archives. La version 1.4 présente donc uniquement l’aventure solo sur PC et téléphone. Les choix d’arène, d’adversaires bots et de groupes sont retirés du lancement ; leur code n’est pas inclus dans le bundle de cette candidate. Le jeu conserve ses créatures, leurs comportements locaux et les boss : cette IA ne demande aucune connexion à un service.
+| Chapitre | Épreuves |
+|---|---|
+| La Cathédrale vivante | Serment, escorte d’une âme, carillon, Archives du Reflet, transport du noyau, Carillonneur, Veilleur et extraction |
+| La Chasse aux Souverains | Traces, faiblesses à interpréter, appels du jardin, duel et terrain transformé par le Souverain |
+| Le Convoi de l’Impossible | Liens à réparer, vent, choix de route, escale, défense du cœur, Mange-Aube et fin du voyage |
 
-Les modes coopératifs et compétitifs locaux précédents restent dans `src/local-party.js` et les [archives de la version 1.3](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.3-rc1.zip). Ils ne sont pas proposés dans cette candidate. Les profils et sauvegardes d’aventure restent conservés. **Il n’y a ni jeu entre appareils, ni compte e-mail/Google, ni synchronisation en ligne**, conformément au choix sans serveur.
+La cible de **10–15 minutes par chapitre** reste à mesurer en parties humaines. Les chapitres peuvent être choisis directement. Le secret des trois reflets ouvre l’Éclipse incarnée et son pouvoir supplémentaire Incarnation.
 
-## Commandes
+Voltigeur, Dernier Rempart, Lame d’Éclipse, Tisseuse de Failles, Porte-Cendres, Voleur d’Ombres, Bergère des Astres, Colosse de Porcelaine, Accordeur et Enfant du Néant disposent de kits distincts. Le bot utilise ces kits ; il ne remplace pas le chantier des créatures. Fauche-Cendre est la première famille entièrement produite en quadrupède ; les autres familles et boss demandent encore une production propre.
 
-- Clavier et souris : ZQSD/WASD ou flèches ; souris ; clic pour attaquer ; Espace pour esquiver ; E pour le pouvoir ; F pour interagir ; G pour les repères ; M pour la carte ; Échap pour la pause. Incarnation : **R**.
-- Manette : stick gauche pour marcher, droit pour viser, X/gâchette pour attaquer, A pour esquiver, Y pour le pouvoir, B pour interagir, RB pour Incarnation. La première manette contrôle le héros.
-- Téléphone : joystick, visée automatique et boutons tactiles. Paysage conseillé. Qualité Haute ou variante Légère.
+## Atelier, commandes et confort
 
-## Sauvegarde et réglages
+L’atelier 3D intégré à la sélection permet de tourner le héros et d’examiner ses gestes. Le modèle choisi se charge à la demande ; le rendu de l’atelier se suspend hors vue et ses ressources se libèrent au lancement. [Atelier séparé](https://mativ117.github.io/royaumes-eclipse/docs/atelier-lame.html) · [Direction approuvée de la Lame](design/personnages/lame-eclipse/REVUE-01.md).
 
-Profil local nommé, statistiques, chapitres terminés, étapes du secret et ancres de reprise sont conservés sur cet appareil. Les refuges de l’ancienne Cathédrale restent compatibles. Export/import JSON permet de conserver ou transférer le profil ; l’import remplace les données du jeu sur cet appareil. Aucun e-mail n’est collecté.
+- **PC** : ZQSD/WASD ou flèches ; souris et clic pour attaquer ; Espace pour esquiver ; E pour le pouvoir ; F pour interagir ; G pour les repères ; M pour la carte ; Échap pour la pause ; R pour Incarnation.
+- **Manette** : stick gauche pour marcher, droit pour viser ; X/gâchette pour attaquer ; A pour esquiver ; Y pour le pouvoir ; B pour interagir ; RB pour Incarnation.
+- **Téléphone** : joystick, visée assistée et boutons tactiles. Paysage conseillé. Réglages Haute et Léger conservés.
 
-Guide intégré, carte, chronique avec le bouton Récit, choix de présentation, trois thèmes musicaux synthétiques, volumes et réduction des effets d’impact. Le son démarre après une action volontaire.
+Le bouton **Commandes**, au menu, en pause et en jeu, permet de remapper les touches ; les indications suivent le réglage dans les trois modes utiles. Guide, carte et chronique restent disponibles. Les musiques sont trois thèmes synthétiques originaux avec couches de combat ; pas de bande-son orchestrale enregistrée annoncée. Volume principal, silence à zéro, stéréo des effets et réduction des effets d’impact sont conservés.
+
+Profil local nommé, statistiques, étapes du secret, chapitres et ancres restent sur cet appareil. L’export/import JSON permet de transférer le profil ; l’import remplace les données locales du jeu. Les refuges de l’ancienne Cathédrale restent compatibles. Aucun e-mail n’est collecté.
 
 ## Exécuter et modifier
 
-Le site généré est dans `docs/`, avec ses modèles dans `docs/assets/characters/`. **Conserver les dossiers** lors d’un transfert.
+Le site construit est dans `docs/`, avec les modèles dans `docs/assets/characters/`. Conserver les dossiers lors d’un transfert. GitHub Pages sert les fichiers ; il ne calcule pas les parties.
 
 ```sh
 python scripts/build.py
 python -m http.server 8000 --directory docs
 ```
 
-Ouvrir `http://localhost:8000`. Le serveur local évite les restrictions des navigateurs sur le chargement de modèles depuis un fichier HTML ouvert directement. GitHub Pages sert les mêmes fichiers sans serveur applicatif.
+Ouvrir `http://localhost:8000`. Le serveur local évite les restrictions de chargement des modèles d’un HTML ouvert directement. La construction ajoute une CSP à empreintes de scripts et une politique de référent ; elle n’autorise ni `eval` ni les gestionnaires de script dans les attributs HTML.
 
 ```text
-src/        Niveaux, campagne, héros, animation, modes locaux et interface
-assets/     Modèles GLB, source Blender, matières et provenance
+src/        Niveaux, campagne, héros, animation, duels et interface
+assets/     GLB, sources Blender, animations, matières et provenance
 vendor/     Three.js et composants, sources et licence MIT
-scripts/    Construction du site et génération Blender des personnages
-tests/      Tests de parcours, classes, contrôles, rendu et publication
-design/     Conception, suivi, guide et notes techniques
-historique/ Anciens jeux, snapshots et ZIP de livraison
+scripts/    Construction, fabrication et contrôles de publication
+tests/      Parcours, classes, commandes, rendu, réseau et sécurité
+design/     Conception, suivi, recherche et preuves
+historique/ Anciens jeux, snapshots et ZIP conservés
 ```
 
-## Validation
+Le ZIP des sources fourni en haut de page est généré par GitHub pour `main` et conserve les archives du dépôt. La [livraison 1.4-rc1](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.4-rc1.zip) reste disponible séparément ; ses captures et rapports restent datés de cette version.
 
-[Relevé détaillé de la livraison 1.4](design/VALIDATION-1.4.md) · mesures, parcours exécutés et limites.
+## Validation et limites
 
-La base de tests couvre les chapitres jusqu’à leur fin, modèles et pouvoirs, secret, sauvegardes, animation, collisions, cartes et rendu Haute/Légère en desktop/portrait/paysage. Les contrôles de modes locaux des versions antérieures restent dans les sources ; ils ne prouvent pas leur présence dans le bundle solo 1.4. Les vérifications de mission utilisent notamment des positions et dégâts contrôlés ; elles ne constituent pas une partie humaine de 30–45 minutes. Les tests tactiles et manettes sont simulés dans Chromium, pas sur un téléphone ou une manette physiques.
+La [validation 1.5](design/VALIDATION-1.5.md), la [matrice](design/PRISE-EN-CHARGE-1.5.md), l’[audit](design/AUDIT-PROFOND-1.5.md) et la [couverture du jeu entier](design/COUVERTURE-QUALITE.md) distinguent correctifs, tests exécutés et travaux ouverts. Les relevés historiques, dont [la validation 1.4](design/VALIDATION-1.4.md), restent datés de leur livraison.
 
-Le rendu stylisé, les transitions, l’équilibrage des onze kits et le rythme des rencontres restent à réviser en parties. La physique reste au sol : pas de pentes, d’escaliers ou de corps rigides poussables. Voir [le suivi](design/SUIVI.md) pour les limites conservées et les fonctions en ligne reportées.
+Les essais Chromium utilisent notamment tactile et manette simulés ; ils ne prouvent pas cadence, chauffe ou compatibilité d’un téléphone physique. Les parcours de campagne emploient des positions et dégâts contrôlés, sans mesurer une découverte humaine. La physique reste au sol : pas de pentes, escaliers ou corps rigides poussables. Raccords, pas latéraux, esquives, drapés, bestiaire, boss, composition des niveaux, histoire, mix et équilibrage restent à pousser vers la cible artistique.
 
-## Crédits des nouvelles matières
+## Sources et crédits
 
-Textures [pavement_01](https://polyhaven.com/a/pavement_01), Rob Tuytel, et [castle_wall_slates](https://polyhaven.com/a/castle_wall_slates), Rob Tuytel, distribuées par Poly Haven sous CC0. Les cartes de couleur, normale et rugosité sont adaptées en 512 × 512 et intégrées au site. [Licence et provenance](assets/materials/LICENSE.md).
+Textures Poly Haven CC0 : [pavement_01](https://polyhaven.com/a/pavement_01) et [castle_wall_slates](https://polyhaven.com/a/castle_wall_slates), Rob Tuytel. [Provenance](assets/materials/LICENSE.md).
 
-Animations source : [Universal Animation Library](https://quaternius.itch.io/universal-animation-library) et [Universal Animation Library 2](https://quaternius.itch.io/universal-animation-library-2), éditions Standard gratuites, Quaternius, CC0. [Licences, fichiers d’origine et provenance](assets/animations/quaternius/README.md). Les éditions Pro/Source n’ont pas été utilisées.
+Animations utilisées : [Universal Animation Library](https://quaternius.itch.io/universal-animation-library) et [Universal Animation Library 2](https://quaternius.itch.io/universal-animation-library-2), éditions Standard gratuites Quaternius, CC0. Pas de version payante ni de capture de mouvement annoncée. [Fichiers et licences](assets/animations/quaternius/README.md) · [Fabrication des dix autres héros](assets/characters/ROSTER-PRODUCTION.json). KayKit Free a été évalué ; sa présence dans les sources n’établit pas son utilisation dans les exports.
+
+[Référentiel sourcé](design/REFERENTIEL-QUALITE.md) · [Workflow](design/WORKFLOW-QUALITE.md) · [Skill local](design/skills/quality-pass/SKILL.md). Ce dernier est une procédure lue dans le dépôt, pas un connecteur cloud ni une formation du modèle.

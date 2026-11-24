@@ -26,7 +26,7 @@ function heroPreviewSyncActivity(){
  heroPreviewPlayState();
 }
 function heroPreviewSelect(id){
- const view=heroPreviewRuntime;if(!heroPreviewAllowed(id))return;const changed=id!==view.selected;view.selected=id;const definition=HERO_DEFS[id];$('#heroPreviewName').textContent=definition.name;$('#heroPreviewKit').textContent=definition.weapon+' · '+definition.description;$('#heroPreviewTruth').textContent=id==='lame'?'Étude 3D en cours : proportions, matières et animations restent à revoir.':'Modèle de prototype : la refonte visuelle de ce personnage n’a pas encore été réalisée.';
+ const view=heroPreviewRuntime;if(!heroPreviewAllowed(id))return;const changed=id!==view.selected;view.selected=id;const definition=HERO_DEFS[id];$('#heroPreviewName').textContent=definition.name;$('#heroPreviewKit').textContent=definition.weapon+' · '+definition.description;$('#heroPreviewTruth').textContent=id==='lame'?'Étude 3D en cours : proportions, matières et animations restent à revoir.':'Personnage retravaillé : silhouette, matières et mouvements propres à son équipement. La finition reste à éprouver en jeu.';
  if(changed){view.readyHero=null;view.message=view.supported?'Chargement de l’aperçu 3D…':'L’aperçu 3D intégré est disponible depuis la page en ligne. Vous pouvez toujours choisir un personnage et lancer le jeu ici.';if(view.frame){view.frame.title='Aperçu 3D : '+definition.name;heroPreviewPost({type:'review-hero',hero:id});heroPreviewWatchLoading();}}
  heroPreviewPlayState();heroPreviewFeedback();heroPreviewSyncActivity();
 }

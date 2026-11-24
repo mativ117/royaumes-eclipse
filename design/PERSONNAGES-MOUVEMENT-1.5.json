@@ -1,0 +1,2056 @@
+{
+  "reports": [
+    {
+      "hero": "rempart",
+      "sha256": "69c5196560435460f2bfd4c452e4040c562405c6c92fa52783d2f9a8da55c7a4",
+      "bytes": 2760540,
+      "vertices": 20610,
+      "images": 3,
+      "materials": 8,
+      "clips": 24,
+      "profile": "rifle",
+      "idle": {
+        "idle": [
+          [
+            0.0035791281673412077,
+            0.0035791281673412077
+          ],
+          [
+            2.7403807476705788e-08,
+            2.7403807476705788e-08
+          ]
+        ],
+        "guard": [
+          [
+            0.0035791281673412077,
+            0.0035791281673412077
+          ],
+          [
+            2.7403807476705788e-08,
+            2.7403807476705788e-08
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.017600197013891334,
+          "maxSoleCorrection": 0.0463675368371021,
+          "maxContactDrift": 0.003335687485366482,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.00017223074812083156,
+            0.1770667129186058
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.06312031754795422,
+          "maxSoleCorrection": 0.09568170057328057,
+          "maxContactDrift": 0.001964403787563497,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.019432760695273e-07,
+            0.32784494892340443
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.016101490017991542,
+          "maxSoleCorrection": 0.04717306718278311,
+          "maxContactDrift": 0.0024876860661597437,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.0004893979213356145,
+            0.1770667129186049
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.07798407985602715,
+          "maxSoleCorrection": 0.09732389290852822,
+          "maxContactDrift": 0.003749929920585032,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.018956062778022e-07,
+            0.32784494892340543
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.015036233530685998,
+          "maxSoleCorrection": 0.04778660029966464,
+          "maxContactDrift": 0.0016918131531115997,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.0004893979213297581,
+            0.17706671291860554
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.08705114294600307,
+          "maxSoleCorrection": 0.09975233935741426,
+          "maxContactDrift": 0.007644586763733367,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0003307649548682963,
+            0.327844948923411
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 14,
+          "activeTipSpan": 1.5185053421175732,
+          "duration": 0.433333,
+          "hitAt": 0.233333,
+          "activeEnd": 0.333333,
+          "travel": 0.872115
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 11,
+          "activeTipSpan": 2.6959481103649012,
+          "duration": 0.533333,
+          "hitAt": 0.233333,
+          "activeEnd": 0.333333,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 7,
+          "activeTipSpan": 2.682363471345365,
+          "duration": 1.4,
+          "hitAt": 0.6,
+          "activeEnd": 0.766667,
+          "travel": 1.2
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": 0.9518338164897789,
+          "maxAimDot": 0.9989862607292748,
+          "fireAimDot": 0.9519387808433124,
+          "fireSampleCount": 2,
+          "maxSpineDelta": 0,
+          "directions": [
+            [
+              -0.028993951714190096,
+              0.05429105947353895,
+              -0.9981041186295325
+            ],
+            [
+              -0.028600766512324512,
+              0.280770874357601,
+              -0.9593485874630637
+            ],
+            [
+              -0.028548047182844875,
+              0.04464251077539107,
+              -0.9985950406614861
+            ],
+            [
+              -0.028548755788932144,
+              0.03480945192257347,
+              -0.998986121324893
+            ]
+          ]
+        },
+        {
+          "walking": true,
+          "minAimDot": 0.9529990721311173,
+          "maxAimDot": 0.9862685233528048,
+          "fireAimDot": 0.95549512020743,
+          "fireSampleCount": 2,
+          "maxSpineDelta": 0.07174124276202214,
+          "directions": [
+            [
+              -0.16500681218894375,
+              -0.006866714987592284,
+              -0.9862685233528048
+            ],
+            [
+              -0.2628209758373483,
+              0.10874987790504909,
+              -0.9586963016073135
+            ],
+            [
+              -0.24556232722596963,
+              -0.07574060278961169,
+              -0.9664173552541531
+            ],
+            [
+              -0.2323315538272528,
+              -0.07218477201227458,
+              -0.9699543328351858
+            ]
+          ]
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.0004893979213356145,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.4980000000000002,
+        1.4980000000000002,
+        1.4980000000000002
+      ],
+      "weaponWeights": {
+        "weaponGrip": 256,
+        "forearmL": 78,
+        "bolt": 78
+      },
+      "muzzleForegripDistance": 0.5523731678048296
+    },
+    {
+      "hero": "voltigeur",
+      "sha256": "6563ebe508cc1add60acadc34aa13915d604a50a513366b44fdb8c53f41e4d4f",
+      "bytes": 2630208,
+      "vertices": 18154,
+      "images": 3,
+      "materials": 8,
+      "clips": 24,
+      "profile": "blade",
+      "idle": {
+        "idle": [
+          [
+            0.0027450377217688206,
+            0.004966660580959133
+          ],
+          [
+            -4.544097448704043e-07,
+            -3.1694620544406304e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.0027450377217688206,
+            0.004966660580959133
+          ],
+          [
+            -4.544097448704043e-07,
+            -3.1694620544406304e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.022168007507132353,
+          "maxSoleCorrection": 0.05931005692384997,
+          "maxContactDrift": 0.005006739283669613,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00038579541291939787,
+            0.20683201833363984
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.08180488089449828,
+          "maxSoleCorrection": 0.10206373656852247,
+          "maxContactDrift": 0.002026682495699679,
+          "releasedFraction": 0,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.799488758997327e-07,
+            0.37148496734869174
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.021461153373252193,
+          "maxSoleCorrection": 0.06119721056166519,
+          "maxContactDrift": 0.003174943424274208,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00036289977669111406,
+            0.20683201833363976
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.0900194853192011,
+          "maxSoleCorrection": 0.10044623521200652,
+          "maxContactDrift": 0.01837809021664063,
+          "releasedFraction": 0.06779661016949153,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.792695902893328e-07,
+            0.3714849673486902
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.01921127524089567,
+          "maxSoleCorrection": 0.06275045871651538,
+          "maxContactDrift": 0.0020689957047874273,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00048264247863836346,
+            0.20686387679376506
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.11205811600744797,
+          "maxSoleCorrection": 0.10931806195454827,
+          "maxContactDrift": 0.03144753322545481,
+          "releasedFraction": 0.06153846153846154,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.8151411697190385e-07,
+            0.37148496734869035
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 14,
+          "activeTipSpan": 1.4118489843920377,
+          "duration": 0.433333,
+          "hitAt": 0.233333,
+          "activeEnd": 0.333333,
+          "travel": 0.872115
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 15,
+          "activeTipSpan": 1.88082000316921,
+          "duration": 0.533333,
+          "hitAt": 0.2,
+          "activeEnd": 0.333333,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 6,
+          "activeTipSpan": 2.4043381121050853,
+          "duration": 1.4,
+          "hitAt": 0.6,
+          "activeEnd": 0.733333,
+          "travel": 1.2
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        },
+        {
+          "walking": true,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.00048264247863836346,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.712,
+        1.7120000000000002,
+        1.712
+      ],
+      "weaponWeights": {
+        "weaponGrip": 134
+      },
+      "muzzleForegripDistance": 0.5523726671966491
+    },
+    {
+      "hero": "lame",
+      "sha256": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
+      "bytes": 6841936,
+      "vertices": 43742,
+      "images": 3,
+      "materials": 8,
+      "clips": 23,
+      "profile": "blade",
+      "idle": {
+        "idle": [
+          [
+            0.0027450403514223155,
+            0.004966548873884022
+          ],
+          [
+            -4.494837119728423e-07,
+            -3.179848057609236e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.0027450403514223155,
+            0.004966548873884022
+          ],
+          [
+            -4.494837119728423e-07,
+            -3.179848057609236e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.01936054036996736,
+          "maxSoleCorrection": 0.0539334381590569,
+          "maxContactDrift": 0.0028079256244540178,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0003961196836735348,
+            0.19147341091744294
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.09083785847697819,
+          "maxSoleCorrection": 0.10194225259771514,
+          "maxContactDrift": 0.00914002352009499,
+          "releasedFraction": 0.03125,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00046384141690372985,
+            0.3498390802751459
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.018705215225474033,
+          "maxSoleCorrection": 0.05524429858890872,
+          "maxContactDrift": 0.0024917276258578196,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00039611968367363193,
+            0.19147341091744205
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.1062434194409837,
+          "maxSoleCorrection": 0.10547699941004621,
+          "maxContactDrift": 0.020187368500786115,
+          "releasedFraction": 0.030303030303030304,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.5061690998455797e-07,
+            0.34983908027514715
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.017349340859690816,
+          "maxSoleCorrection": 0.05608083505496119,
+          "maxContactDrift": 0.0016415705637785104,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0003961196836756477,
+            0.19147341091744216
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.11263473747781409,
+          "maxSoleCorrection": 0.10601656768364037,
+          "maxContactDrift": 0.021127551792217213,
+          "releasedFraction": 0.022388059701492536,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.504028751946664e-07,
+            0.3500061626234923
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 7,
+          "activeTipSpan": 1.7035091125931718,
+          "duration": 0.933333,
+          "hitAt": 0.233333,
+          "activeEnd": 0.333333,
+          "travel": 0.872115
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 8,
+          "activeTipSpan": 2.6858210070430197,
+          "duration": 1.033333,
+          "hitAt": 0.2,
+          "activeEnd": 0.333333,
+          "travel": 0.15
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 6,
+          "activeTipSpan": 3.1964870604391113,
+          "duration": 1.4,
+          "hitAt": 0.6,
+          "activeEnd": 0.733333,
+          "travel": 1.2
+        }
+      ],
+      "shots": [],
+      "diagnostics": {
+        "maxWalkPenetration": 0.00046384141690372985,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.712,
+        1.7120000000000002,
+        1.712
+      ],
+      "weaponWeights": {
+        "weaponGrip": 832
+      },
+      "muzzleForegripDistance": 0.5523728118438128
+    },
+    {
+      "hero": "tisseuse",
+      "sha256": "e67b1a2ec703bb6f3e26e4f9228bb25f81a247d2a9802479917dc7ad901dbcb8",
+      "bytes": 2584976,
+      "vertices": 17853,
+      "images": 3,
+      "materials": 9,
+      "clips": 24,
+      "profile": "caster",
+      "idle": {
+        "idle": [
+          [
+            0.0037724338573597235,
+            0.006762755719189058
+          ],
+          [
+            -5.222708136208565e-07,
+            -4.456831699077568e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.0037724338573597235,
+            0.006762755719189058
+          ],
+          [
+            -5.222708136208565e-07,
+            -4.456831699077568e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.019967919305963228,
+          "maxSoleCorrection": 0.050529623710612454,
+          "maxContactDrift": 0.0050010045826389135,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004069774137143607,
+            0.18233466784810054
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.08075319502049039,
+          "maxSoleCorrection": 0.1011974137168663,
+          "maxContactDrift": 0.00920845024436445,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.2960963926298437e-07,
+            0.3421610652492762
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.01788250074685218,
+          "maxSoleCorrection": 0.05256833661799612,
+          "maxContactDrift": 0.0027828019593215867,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00034033365375596425,
+            0.1864382645702329
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.098690867494892,
+          "maxSoleCorrection": 0.10228599867990945,
+          "maxContactDrift": 0.011501367352845532,
+          "releasedFraction": 0.014925373134328358,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.2976426363184874e-07,
+            0.3428960255525733
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.01660041366227489,
+          "maxSoleCorrection": 0.053109244433720004,
+          "maxContactDrift": 0.001880852396348057,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004597239646573041,
+            0.18643826457023174
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.10831406336149096,
+          "maxSoleCorrection": 0.10331399821143569,
+          "maxContactDrift": 0.017979107326645326,
+          "releasedFraction": 0,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.298621810421398e-07,
+            0.34289602555257687
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845531073188818,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845505508958213,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845480350472039,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        },
+        {
+          "walking": true,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.0004597239646573041,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.712,
+        1.7120000000000002,
+        1.712
+      ],
+      "weaponWeights": {
+        "weaponGrip": 335
+      },
+      "muzzleForegripDistance": 1.0294264598345153
+    },
+    {
+      "hero": "cendres",
+      "sha256": "5961211bc512609909663c2613d7a6e21ecf82b23384e4d0dbba86c03066d13d",
+      "bytes": 2770624,
+      "vertices": 20888,
+      "images": 3,
+      "materials": 8,
+      "clips": 24,
+      "profile": "rifle",
+      "idle": {
+        "idle": [
+          [
+            0.0035791281673412077,
+            0.0035791281673412077
+          ],
+          [
+            2.7403807476705788e-08,
+            2.7403807476705788e-08
+          ]
+        ],
+        "guard": [
+          [
+            0.0035791281673412077,
+            0.0035791281673412077
+          ],
+          [
+            2.7403807476705788e-08,
+            2.7403807476705788e-08
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.015028901932929304,
+          "maxSoleCorrection": 0.04261166606711894,
+          "maxContactDrift": 0.0010254354519552862,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.0002761948385077845,
+            0.1709375693685167
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.05869428243036918,
+          "maxSoleCorrection": 0.094125149134821,
+          "maxContactDrift": 0.004612719829884896,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -2.8763039348206343e-07,
+            0.31900699913582026
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.01497525024271457,
+          "maxSoleCorrection": 0.0439890549260602,
+          "maxContactDrift": 0.0010032064741491552,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.0004774086138661579,
+            0.17137258774671316
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.07036576912460973,
+          "maxSoleCorrection": 0.09497019549134697,
+          "maxContactDrift": 0.002958043988407634,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -2.8793486259864887e-07,
+            0.319636791437841
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.013240041143356309,
+          "maxSoleCorrection": 0.0448947259008185,
+          "maxContactDrift": 0.0011130889128280431,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.0004774086138668518,
+            0.17233797649828256
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.07850865122779095,
+          "maxSoleCorrection": 0.09773074459699255,
+          "maxContactDrift": 0.0036827018204383505,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -2.880012822704947e-07,
+            0.320037105940006
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 14,
+          "activeTipSpan": 1.5185053421175732,
+          "duration": 0.433333,
+          "hitAt": 0.233333,
+          "activeEnd": 0.333333,
+          "travel": 0.872115
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 11,
+          "activeTipSpan": 2.6959481103649012,
+          "duration": 0.533333,
+          "hitAt": 0.233333,
+          "activeEnd": 0.333333,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 7,
+          "activeTipSpan": 2.682363471345365,
+          "duration": 1.4,
+          "hitAt": 0.6,
+          "activeEnd": 0.766667,
+          "travel": 1.2
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": 0.9518338164897789,
+          "maxAimDot": 0.9989862607292748,
+          "fireAimDot": 0.9519387808433124,
+          "fireSampleCount": 2,
+          "maxSpineDelta": 0,
+          "directions": [
+            [
+              -0.028993951714190096,
+              0.05429105947353895,
+              -0.9981041186295325
+            ],
+            [
+              -0.028600766512324512,
+              0.280770874357601,
+              -0.9593485874630637
+            ],
+            [
+              -0.028548047182844875,
+              0.04464251077539107,
+              -0.9985950406614861
+            ],
+            [
+              -0.028548755788932144,
+              0.03480945192257347,
+              -0.998986121324893
+            ]
+          ]
+        },
+        {
+          "walking": true,
+          "minAimDot": 0.9529990721311173,
+          "maxAimDot": 0.9862685233528048,
+          "fireAimDot": 0.95549512020743,
+          "fireSampleCount": 2,
+          "maxSpineDelta": 0.07174124276202214,
+          "directions": [
+            [
+              -0.16500681218894375,
+              -0.006866714987592284,
+              -0.9862685233528048
+            ],
+            [
+              -0.2628209758373483,
+              0.10874987790504909,
+              -0.9586963016073135
+            ],
+            [
+              -0.24556232722596963,
+              -0.07574060278961169,
+              -0.9664173552541531
+            ],
+            [
+              -0.2323315538272528,
+              -0.07218477201227458,
+              -0.9699543328351858
+            ]
+          ]
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.0004774086138668518,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.4980000000000002,
+        1.4980000000000002,
+        1.4980000000000002
+      ],
+      "weaponWeights": {
+        "weaponGrip": 306,
+        "forearmL": 78,
+        "bolt": 78
+      },
+      "muzzleForegripDistance": 0.5523731678048296
+    },
+    {
+      "hero": "voleur",
+      "sha256": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
+      "bytes": 2547988,
+      "vertices": 16660,
+      "images": 3,
+      "materials": 8,
+      "clips": 24,
+      "profile": "dagger",
+      "idle": {
+        "idle": [
+          [
+            0.0027450377217688206,
+            0.004966660580959133
+          ],
+          [
+            -4.544097448704043e-07,
+            -3.1694620544406304e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.0027450377217688206,
+            0.004966660580959133
+          ],
+          [
+            -4.544097448704043e-07,
+            -3.1694620544406304e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.021572158173415186,
+          "maxSoleCorrection": 0.058357565957701446,
+          "maxContactDrift": 0.0038102698790940543,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00019783925468765465,
+            0.20248210874846093
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.07563961883123631,
+          "maxSoleCorrection": 0.10084682882924767,
+          "maxContactDrift": 0.042087811350517056,
+          "releasedFraction": 0.03571428571428571,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.7539364364930217e-07,
+            0.3676528175975767
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.02103298667365666,
+          "maxSoleCorrection": 0.06036780016376214,
+          "maxContactDrift": 0.002878140072636677,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004309619675122861,
+            0.2044351883077845
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.1235439349066223,
+          "maxSoleCorrection": 0.10170434384730806,
+          "maxContactDrift": 0.035080563564220124,
+          "releasedFraction": 0.015625,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.758544138976472e-07,
+            0.36765281759757745
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.019550740338524754,
+          "maxSoleCorrection": 0.06173620463780222,
+          "maxContactDrift": 0.0022984415654280486,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004479167854157702,
+            0.2044351883077824
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.12712491572479384,
+          "maxSoleCorrection": 0.10741283612015576,
+          "maxContactDrift": 0.03296116839165447,
+          "releasedFraction": 0.03787878787878788,
+          "contactGroups": 7,
+          "bootSoles": [
+            -5.251117641188324e-05,
+            0.367652817597581
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 5,
+          "activeTipSpan": 0.09730048336794715,
+          "duration": 0.866667,
+          "hitAt": 0.166667,
+          "activeEnd": 0.233333,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 5,
+          "activeTipSpan": 0.5539842490331832,
+          "duration": 1,
+          "hitAt": 0.2,
+          "activeEnd": 0.266667,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 13,
+          "activeTipSpan": 1.1579947317369628,
+          "duration": 0.466667,
+          "hitAt": 0.033333,
+          "activeEnd": 0.133333,
+          "travel": 0.154106
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        },
+        {
+          "walking": true,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.0004479167854157702,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.712,
+        1.7120000000000002,
+        1.712
+      ],
+      "weaponWeights": {
+        "weaponGrip": 134,
+        "handL": 128
+      },
+      "muzzleForegripDistance": 0.5523725756609372
+    },
+    {
+      "hero": "bergere",
+      "sha256": "38b7c059b652c43aa63ab65123106e9495297027268a15471d0f971edec528e1",
+      "bytes": 2669148,
+      "vertices": 18463,
+      "images": 3,
+      "materials": 9,
+      "clips": 24,
+      "profile": "caster",
+      "idle": {
+        "idle": [
+          [
+            0.0037724338573597235,
+            0.006762755719189058
+          ],
+          [
+            -5.222708136208565e-07,
+            -4.456831699077568e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.0037724338573597235,
+            0.006762755719189058
+          ],
+          [
+            -5.222708136208565e-07,
+            -4.456831699077568e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.019481461139611,
+          "maxSoleCorrection": 0.05011830316545121,
+          "maxContactDrift": 0.004863644276191192,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00033463337863200854,
+            0.1837536736573149
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.07560874137422352,
+          "maxSoleCorrection": 0.09514377466166166,
+          "maxContactDrift": 0.003259408613043927,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.225319620062117e-07,
+            0.3379733491767203
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.017464871304493586,
+          "maxSoleCorrection": 0.05120720350206928,
+          "maxContactDrift": 0.002679080973586225,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0003984701780066109,
+            0.18382483178060866
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.0859499745053565,
+          "maxSoleCorrection": 0.09952934636013414,
+          "maxContactDrift": 0.0023953054680331087,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.2252380522540536e-07,
+            0.3379733491767204
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.016200345629459007,
+          "maxSoleCorrection": 0.05173287518933081,
+          "maxContactDrift": 0.0018106943109061527,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004891975219939622,
+            0.183824831780606
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.10266441117430172,
+          "maxSoleCorrection": 0.10261059535754682,
+          "maxContactDrift": 0.013308921340266427,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.2287478466536124e-07,
+            0.3389961933922253
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845531073188818,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845505508958213,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845480350472039,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        },
+        {
+          "walking": true,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.0004891975219939622,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.712,
+        1.7120000000000002,
+        1.712
+      ],
+      "weaponWeights": {
+        "weaponGrip": 605
+      },
+      "muzzleForegripDistance": 1.0294264598345153
+    },
+    {
+      "hero": "colosse",
+      "sha256": "5dcd7a69c276a9675323d8bdcb54c795221c54ba2aa895db4d7210826c405588",
+      "bytes": 2802324,
+      "vertices": 20610,
+      "images": 3,
+      "materials": 8,
+      "clips": 24,
+      "profile": "heavy",
+      "idle": {
+        "idle": [
+          [
+            0.0029759287450951896,
+            0.005384417078423062
+          ],
+          [
+            -4.926311246433723e-07,
+            -3.4360523176735214e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.0029759287450951896,
+            0.005384417078423062
+          ],
+          [
+            -4.926311246433723e-07,
+            -3.4360523176735214e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.011385169629983111,
+          "maxSoleCorrection": 0.03554341936221525,
+          "maxContactDrift": 0.00250692305707613,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.0002784910450336492,
+            0.16803582858779298
+          ],
+          "steps": 7
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.03901547181647674,
+          "maxSoleCorrection": 0.08945515302185902,
+          "maxContactDrift": 0.005191367296012031,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -2.5569074551742843e-07,
+            0.2975945505480668
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.010423713826233768,
+          "maxSoleCorrection": 0.036144089040459904,
+          "maxContactDrift": 0.00139324643219367,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.00027849104503895744,
+            0.16859023989469718
+          ],
+          "steps": 7
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.04606596149305954,
+          "maxSoleCorrection": 0.09111420836542736,
+          "maxContactDrift": 0.0033894701050821894,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -2.556990299079631e-07,
+            0.29996074397006856
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.01122476932759097,
+          "maxSoleCorrection": 0.036481856316412375,
+          "maxContactDrift": 0.0013106086096670163,
+          "releasedFraction": 0,
+          "contactGroups": 5,
+          "bootSoles": [
+            -0.000411099645761262,
+            0.16934076925749603
+          ],
+          "steps": 7
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.05202449758518256,
+          "maxSoleCorrection": 0.09474629818725375,
+          "maxContactDrift": 0.003396438571639776,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004221897323925944,
+            0.30090715742124885
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 4,
+          "activeTipSpan": 0.11807265033907735,
+          "duration": 0.966667,
+          "hitAt": 0.133333,
+          "activeEnd": 0.2,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 4,
+          "activeTipSpan": 1.1974039901255142,
+          "duration": 1.466667,
+          "hitAt": 0.466667,
+          "activeEnd": 0.566667,
+          "travel": 1.2
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 5,
+          "activeTipSpan": 1.756003875628191,
+          "duration": 1.6,
+          "hitAt": 0.6,
+          "activeEnd": 0.733333,
+          "travel": 1.2
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        },
+        {
+          "walking": true,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.0004221897323925944,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.6239999999999999,
+        1.6239999999999997,
+        1.6239999999999999
+      ],
+      "weaponWeights": {
+        "weaponGrip": 206
+      },
+      "muzzleForegripDistance": 0.5988339800344348
+    },
+    {
+      "hero": "accordeur",
+      "sha256": "d5c1d418fe95a747176dc3654c25bbb6a43f0b5430c5f618b32e188126af7ed6",
+      "bytes": 2572300,
+      "vertices": 17526,
+      "images": 3,
+      "materials": 8,
+      "clips": 24,
+      "profile": "caster",
+      "idle": {
+        "idle": [
+          [
+            0.0037724338573597235,
+            0.006762755719189058
+          ],
+          [
+            -5.222708136208565e-07,
+            -4.456831699077568e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.0037724338573597235,
+            0.006762755719189058
+          ],
+          [
+            -5.222708136208565e-07,
+            -4.456831699077568e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.019967919305963228,
+          "maxSoleCorrection": 0.050529623710612454,
+          "maxContactDrift": 0.0050010045826389135,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004069774137143607,
+            0.18233466784810054
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.08075319502049039,
+          "maxSoleCorrection": 0.1011974137168663,
+          "maxContactDrift": 0.00920845024436445,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.2960963926298437e-07,
+            0.3421610652492762
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.01788250074685218,
+          "maxSoleCorrection": 0.05256833661799612,
+          "maxContactDrift": 0.0027828019593215867,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00034033365375596425,
+            0.1864382645702329
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.098690867494892,
+          "maxSoleCorrection": 0.10228599867990945,
+          "maxContactDrift": 0.011501367352845532,
+          "releasedFraction": 0.014925373134328358,
+          "contactGroups": 6,
+          "bootSoles": [
+            -3.2976426363184874e-07,
+            0.3428960255525733
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.01660041366227489,
+          "maxSoleCorrection": 0.053109244433720004,
+          "maxContactDrift": 0.001880852396348057,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004597239646573041,
+            0.18643826457023174
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.10831406336149096,
+          "maxSoleCorrection": 0.10331399821143569,
+          "maxContactDrift": 0.017979107326645326,
+          "releasedFraction": 0,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.298621810421398e-07,
+            0.34289602555257687
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845531073188818,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845505508958213,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 17,
+          "activeTipSpan": 0.06845480350472039,
+          "duration": 0.5,
+          "hitAt": 0.033333,
+          "activeEnd": 0.166667,
+          "travel": 0.1
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        },
+        {
+          "walking": true,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.0004597239646573041,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.712,
+        1.7120000000000002,
+        1.712
+      ],
+      "weaponWeights": {
+        "weaponGrip": 150
+      },
+      "muzzleForegripDistance": 1.0294264598345153
+    },
+    {
+      "hero": "neant",
+      "sha256": "c00c762940bf03218bcf6bc8aab41fb8efaa3ab46e0d37e7d1d51daeb8bdc425",
+      "bytes": 2531156,
+      "vertices": 17060,
+      "images": 3,
+      "materials": 8,
+      "clips": 24,
+      "profile": "shadow",
+      "idle": {
+        "idle": [
+          [
+            0.002206292000674015,
+            0.0039918954202102785
+          ],
+          [
+            -3.6522652382617316e-07,
+            -2.5474180961534976e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.002206292000674015,
+            0.0039918954202102785
+          ],
+          [
+            -3.6522652382617316e-07,
+            -2.5474180961534976e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.017817277061807843,
+          "maxSoleCorrection": 0.047669765378047624,
+          "maxContactDrift": 0.004024108209305352,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004956280363435997,
+            0.16623881847376626
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.0657497137615269,
+          "maxSoleCorrection": 0.08203253089290341,
+          "maxContactDrift": 0.0016289297461477069,
+          "releasedFraction": 0,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.0538009663030885e-07,
+            0.2985766904834465
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.017249151309342965,
+          "maxSoleCorrection": 0.04918654306825482,
+          "maxContactDrift": 0.0025518236867993127,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.0004063803938614309,
+            0.16623881847376668
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.10550557727391818,
+          "maxSoleCorrection": 0.08073248168354116,
+          "maxContactDrift": 0.01626898127386271,
+          "releasedFraction": 0,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.04809668616457e-07,
+            0.29857669189759306
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.015440838044084268,
+          "maxSoleCorrection": 0.050434948127295126,
+          "maxContactDrift": 0.0016629311272117,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00046836878629440484,
+            0.16626442433891656
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.11134150810586939,
+          "maxSoleCorrection": 0.0878631154432532,
+          "maxContactDrift": 0.024761590011337944,
+          "releasedFraction": 0.03076923076923077,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.0665431093035433e-07,
+            0.29857668993338426
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 14,
+          "activeTipSpan": 0.9739051164558338,
+          "duration": 0.433333,
+          "hitAt": 0.233333,
+          "activeEnd": 0.333333,
+          "travel": 0.872115
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 15,
+          "activeTipSpan": 1.1966295757073708,
+          "duration": 0.533333,
+          "hitAt": 0.2,
+          "activeEnd": 0.333333,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 6,
+          "activeTipSpan": 1.6446715156997802,
+          "duration": 1.4,
+          "hitAt": 0.6,
+          "activeEnd": 0.733333,
+          "travel": 1.2
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        },
+        {
+          "walking": true,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.0004956280363435997,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.3760000000000001,
+        1.3760000000000001,
+        1.376
+      ],
+      "weaponWeights": {
+        "weaponGrip": 92
+      },
+      "muzzleForegripDistance": 0.4439631231289774
+    },
+    {
+      "hero": "eclipse",
+      "sha256": "9b2810dba81da76cd2f080dbfaa0bfef896f0b11ced0e4cf4b6a023a467406ea",
+      "bytes": 2840576,
+      "vertices": 21314,
+      "images": 3,
+      "materials": 9,
+      "clips": 24,
+      "profile": "ultimate",
+      "idle": {
+        "idle": [
+          [
+            0.0027450377217688206,
+            0.004966660580959133
+          ],
+          [
+            -4.544097448704043e-07,
+            -3.1694620544406304e-07
+          ]
+        ],
+        "guard": [
+          [
+            0.0027450377217688206,
+            0.004966660580959133
+          ],
+          [
+            -4.544097448704043e-07,
+            -3.1694620544406304e-07
+          ]
+        ]
+      },
+      "movement": [
+        {
+          "hz": 30,
+          "input": 0.45,
+          "maxCorrection": 0.019360564679179227,
+          "maxSoleCorrection": 0.05351706064339054,
+          "maxContactDrift": 0.0028078931056141846,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00026271945481899303,
+            0.19148645228167266
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 30,
+          "input": 1,
+          "maxCorrection": 0.09083798227734485,
+          "maxSoleCorrection": 0.10110107401814883,
+          "maxContactDrift": 0.009140245184375102,
+          "releasedFraction": 0.03125,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00032430031963749315,
+            0.3498672450117498
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 60,
+          "input": 0.45,
+          "maxCorrection": 0.018705310723753046,
+          "maxSoleCorrection": 0.0548279151105511,
+          "maxContactDrift": 0.002491699867447422,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00034484105567211473,
+            0.19148645228167155
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 60,
+          "input": 1,
+          "maxCorrection": 0.10624351520924283,
+          "maxSoleCorrection": 0.10466305677565826,
+          "maxContactDrift": 0.020187623496708947,
+          "releasedFraction": 0.030303030303030304,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.43326220807183e-07,
+            0.3498672450117518
+          ],
+          "steps": 9
+        },
+        {
+          "hz": 120,
+          "input": 0.45,
+          "maxCorrection": 0.01734944341997498,
+          "maxSoleCorrection": 0.055687845589448004,
+          "maxContactDrift": 0.001641543386999401,
+          "releasedFraction": 0,
+          "contactGroups": 6,
+          "bootSoles": [
+            -0.00047167127845561957,
+            0.19148645228167308
+          ],
+          "steps": 8
+        },
+        {
+          "hz": 120,
+          "input": 1,
+          "maxCorrection": 0.11263483900723464,
+          "maxSoleCorrection": 0.10517538974180196,
+          "maxContactDrift": 0.021127767774246478,
+          "releasedFraction": 0.022388059701492536,
+          "contactGroups": 7,
+          "bootSoles": [
+            -3.4363967894163183e-07,
+            0.35002805581775204
+          ],
+          "steps": 9
+        }
+      ],
+      "attacks": [
+        {
+          "clip": "attack1",
+          "activeSamples": 14,
+          "activeTipSpan": 2.1085729657344183,
+          "duration": 0.433333,
+          "hitAt": 0.233333,
+          "activeEnd": 0.333333,
+          "travel": 0.872115
+        },
+        {
+          "clip": "attack2",
+          "activeSamples": 15,
+          "activeTipSpan": 3.2795350578779363,
+          "duration": 0.533333,
+          "hitAt": 0.2,
+          "activeEnd": 0.333333,
+          "travel": 0.1
+        },
+        {
+          "clip": "attack3",
+          "activeSamples": 6,
+          "activeTipSpan": 3.6404074866912985,
+          "duration": 1.4,
+          "hitAt": 0.6,
+          "activeEnd": 0.733333,
+          "travel": 1.2
+        }
+      ],
+      "shots": [
+        {
+          "walking": false,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        },
+        {
+          "walking": true,
+          "minAimDot": null,
+          "maxAimDot": null,
+          "fireAimDot": null,
+          "fireSampleCount": 0,
+          "maxSpineDelta": 0,
+          "directions": []
+        }
+      ],
+      "diagnostics": {
+        "maxWalkPenetration": 0.00047167127845561957,
+        "rifleAimAligned": true
+      },
+      "dodgeDistances": [
+        1.712,
+        1.7120000000000002,
+        1.712
+      ],
+      "weaponWeights": {
+        "weaponGrip": 212
+      },
+      "muzzleForegripDistance": 0.5523726671966491
+    }
+  ],
+  "failures": [],
+  "scope": "CPU Three.js real skinned geometry; no hardware FPS or artistic quality claim"
+}

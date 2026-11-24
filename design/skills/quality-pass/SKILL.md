@@ -15,7 +15,7 @@ La [cible durable de qualité](../../EXIGENCE-QUALITE.md), confirmée par l’ut
 
 ## Procédure
 
-1. Définir le défaut vu par le joueur, sa séquence de référence et un critère de réussite perceptible à vitesse 1×. Préserver Web PC/téléphone, mode léger, choix sans serveur et compatibilité des sauvegardes. Le lancement 1.4 est solo : ne pas réintroduire les menus ou le code de groupes/arènes/bots dans le bundle ; conserver le module complet et les archives 1.3. Les ennemis et boss gardent leur IA locale.
+1. Définir le défaut vu par le joueur, sa séquence de référence et un critère de réussite perceptible à vitesse 1×. Préserver Web PC/téléphone, mode léger, choix sans serveur et compatibilité des sauvegardes. Les archives 1.4 solo restent intactes. La nouvelle demande 1.5 autorise des duels avec un bot tactique local et le LAN WebRTC direct entre PC/téléphones sans PC obligatoire ni API ; conserver seulement les modes utiles et fonctionnels, ainsi que les ennemis et boss locaux. Étendre la qualité de la Lame à tous les personnages.
 2. Lire les fichiers responsables. Consulter une source primaire pertinente si le référentiel ne suffit pas ; enregistrer version, URL, date, point retenu et limite. Une source méthodologique d’un autre moteur n’autorise pas sa migration.
 3. Capturer l’état réel avant modification. Mesurer le défaut approprié sans annoncer une mesure sur appareil physique à partir d’un navigateur simulé.
 4. Produire une ressource source éditable et/ou un correctif ciblé. Vérifier licence/provenance des assets externes et éventuels coûts des outils avant usage. Conserver atlas, rig, durées et contacts à l’intégration ; séparer matériau, mouvement, collision et rendu dans le diagnostic.

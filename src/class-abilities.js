@@ -1,7 +1,7 @@
 'use strict';
 let classEffects=[];
 function clearClassAbilities(){for(const fx of classEffects){scene.remove(fx.root);for(const m of fx.materials||[])m.dispose();if(fx.collider)obstacles=obstacles.filter(o=>!fx.collider.includes(o));}classEffects=[];}
-function classLine(from,to){const n=Math.ceil(distance(from,to)/.3);for(let i=1;i<n;i++)if(blocked(from.x+(to.x-from.x)*i/n,from.z+(to.z-from.z)*i/n,.06,true))return false;return true;}
+function classLine(from,to){const n=Math.max(2,Math.ceil(distance(from,to)/.3));for(let i=1;i<n;i++)if(blocked(from.x+(to.x-from.x)*i/n,from.z+(to.z-from.z)*i/n,.06,true))return false;return true;}
 function abilityTargets(owner){return battle?[p,...localParty].filter(a=>!a.downed&&(a.team||0)!==(owner.team||0)):enemies.filter(e=>!e.dead);}
 function abilityDamage(target,n,owner,center=owner){if(battle)battleDamage(target,n,owner);else damage(target,n,{...center,heroId:owner.heroId||hero,owner});}
 function classBurst(actor,radius,amount,color,interrupt=true){const owner=actor.owner||actor;effect(actor.x,actor.z,radius,color,.7);for(const e of abilityTargets(owner))if(distance(e,actor)<radius&&classLine(actor,e)){if(interrupt){if(e.mode==='windup'){e.mode='recover';e.timer=2;clearHazards();}if(battle)e.attack=null;}abilityDamage(e,amount,owner,actor);}}
@@ -9,12 +9,12 @@ function canPhaseBetween(a,b){const n=Math.ceil(distance(a,b)/.2);for(let i=1;i<
 function safeBlink(actor,angle,range){const dx=-Math.sin(angle),dz=-Math.cos(angle);let allowed=range;for(let d=.2;d<=range;d+=.2)if(obstacles.some(o=>(o.gate||o.questGate)&&solidActive(o,false)&&collisionContact(o,actor.x+dx*d,actor.z+dz*d,.48))){allowed=d-.3;break;}for(let d=allowed;d>.1;d-=.2){const x=actor.x+dx*d,z=actor.z+dz*d;if(!blocked(x,z)){actor.x=x;actor.z=z;return;}}}
 function abilityRoot(color){const root=new THREE.Group(),material=new THREE.MeshStandardMaterial({color,emissive:color,emissiveIntensity:.5,transparent:true,opacity:.75,roughness:.45});scene.add(root);return {root,materials:[material],material};}
 function castClassPower(actor,id=hero,heading=aim){
- const def=HERO_DEFS[id];actor.heroId=id;actor.power=def.power;const color=def.color;
+ const def=HERO_DEFS[id];beginPowerVisual(actor,id);actor.heroId=id;actor.power=def.power;const color=def.color;
  if(id==='rempart'){actor.shield=3;classBurst(actor,5,55,color);return;}
  if(id==='voltigeur'){actor.leap=.75;actor.inv=.85;return;}
  if(id==='lame'){actor.inv=.75;moveEntity(actor,-Math.sin(heading)*3.4,-Math.cos(heading)*3.4);classBurst(actor,3.3,80,color);actor.stagger=0;return;}
  if(id==='tisseuse'){
-  const entrance={x:actor.x,z:actor.z};safeBlink(actor,heading,6);const exit={x:actor.x,z:actor.z},fx=abilityRoot(color);fx.kind='rift';fx.life=fx.max=7;fx.entrance=entrance;fx.exit=exit;fx.last=new WeakMap();fx.last.set(actor,Infinity);
+  const entrance={x:actor.x,z:actor.z};safeBlink(actor,heading,6);const exit={x:actor.x,z:actor.z},fx=abilityRoot(color);fx.kind='rift';fx.owner=actor;fx.life=fx.max=7;fx.entrance=entrance;fx.exit=exit;fx.last=new WeakMap();fx.last.set(actor,Infinity);
   for(const point of [entrance,exit]){const ring=new THREE.Mesh(ringGeo,fx.material);ring.position.set(point.x,1.2,point.z);ring.scale.set(1,1.4,1);fx.root.add(ring);}classEffects.push(fx);classBurst(actor,2,40,color);return;
  }
  if(id==='cendres'){const heat=actor.heat||0;actor.heat=0;classBurst(actor,4.5,65+heat*.7,color);const fx=abilityRoot(color);fx.kind='burn';fx.x=actor.x;fx.z=actor.z;fx.owner=actor;fx.life=fx.max=5;fx.tick=0;const ring=mesh(discGeo,fx.material,actor.x,.04,actor.z,4.5,4.5,4.5,fx.root);ring.rotation.x=-Math.PI/2;classEffects.push(fx);return;}
@@ -29,13 +29,14 @@ function castClassPower(actor,id=hero,heading=aim){
   classEffects.push(fx);return;
  }
  if(id==='colosse'){
-  classBurst(actor,5,100,color);const fx=abilityRoot(color);fx.material.opacity=1;fx.kind='cover';fx.life=fx.max=7;fx.collider=[];const forward={x:-Math.sin(heading),z:-Math.cos(heading)},right={x:Math.cos(heading),z:-Math.sin(heading)};
+  classBurst(actor,5,100,color);const fx=abilityRoot(color);fx.material.opacity=1;fx.kind='cover';fx.owner=actor;fx.life=fx.max=7;fx.collider=[];const forward={x:-Math.sin(heading),z:-Math.cos(heading)},right={x:Math.cos(heading),z:-Math.sin(heading)};
   for(const side of [-1,0,1]){const x=actor.x+forward.x*2.4+right.x*side*1.05,z=actor.z+forward.z*2.4+right.z*side*1.05;if(!world.onGround(x,z,.5)||blocked(x,z,.5))continue;const root=new THREE.Group();root.position.set(x,0,z);fx.root.add(root);mesh(boxGeo,fx.material,0,.8,0,.9,1.6,.9,root).castShadow=true;const o={x,z,w:.9,d:.9,root};obstacles.push(o);fx.collider.push(o);}classEffects.push(fx);return;
  }
  if(id==='accordeur'){const fx=abilityRoot(color);fx.kind='rhythm';fx.owner=actor;fx.life=fx.max=2;fx.tick=0;fx.pulses=0;classEffects.push(fx);}
 }
 function updateClassAbilities(dt){
  for(const actor of [p,...(typeof localParty==='undefined'?[]:localParty)]){
+  if(actor===p)actor.powerVisualT=Math.max(0,(actor.powerVisualT||0)-dt);
   if(actor.heat>0&&!actor.attack)actor.heat=Math.max(0,actor.heat-dt*7);const previousIncarnation=actor.incarnateT||0;for(const key of ['formT','incarnateT','fragileT','wardT','doubleSwapLock'])actor[key]=Math.max(0,(actor[key]||0)-dt);if(previousIncarnation>0&&!actor.incarnateT)actor.fragileT=4;
  }
  for(const fx of classEffects){fx.life-=dt;fx.tick=(fx.tick||0)-dt;
@@ -59,4 +60,4 @@ function updateClassAbilities(dt){
  const expired=classEffects.filter(f=>f.life<=0);for(const fx of expired){scene.remove(fx.root);for(const m of fx.materials)m.dispose();if(fx.collider)obstacles=obstacles.filter(o=>!fx.collider.includes(o));}classEffects=classEffects.filter(f=>f.life>0);
 }
 function castIncarnation(actor,id){if(state!=='playing'||battle?.crownOwner===actor||id!=='eclipse'||(actor.incarnation||0)<100||actor.incarnateT>0)return;actor.incarnation=0;actor.incarnateT=8;actor.fragileT=0;actor.hp=Math.min(actor.max,actor.hp+30);classBurst(actor,7,80,'#ffdb85');const fx=abilityRoot('#f7ce7c');fx.kind='incarnation';fx.owner=actor;fx.life=fx.max=8;for(let i=0;i<3;i++){const ring=mesh(ringGeo,fx.material,0,1.1+i*.5,0,1.1+i*.18,1.1+i*.18,1.1+i*.18,fx.root);ring.rotation.x=i===1?Math.PI/2:.3;}classEffects.push(fx);announce('Incarnation · huit secondes, puis quatre secondes de fragilité.');}
-function activateIncarnation(){castIncarnation(p,hero);}
+function activateIncarnation(){if(typeof queueLanAction==='function'&&queueLanAction('extra'))return;castIncarnation(p,hero);}

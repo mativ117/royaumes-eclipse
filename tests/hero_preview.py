@@ -4,6 +4,11 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from threading import Thread
 from playwright.sync_api import sync_playwright
+import sys as _check_sys
+from pathlib import Path as _CheckPath
+_check_sys.path.insert(0,str(_CheckPath(__file__).resolve().parents[1]/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 ROOT=Path(__file__).resolve().parents[1]
 class Quiet(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
@@ -25,7 +30,7 @@ try:
   frame=page.locator('.hero-preview-frame').element_handle().content_frame();frame.wait_for_function('window.reviewActive===true',polling=50)
   run('heroPreviewRuntime.observer.emit(false)');page.wait_for_function('!heroPreviewRuntime.active',polling=50);assert not run('heroPreviewActive()');assert page.locator('.hero-preview-frame').count()==1;frame.wait_for_function('window.reviewActive===false',polling=50)
   run('heroPreviewRuntime.observer.emit(true)');page.wait_for_function('heroPreviewRuntime.active',polling=50)
-  page.click('[data-hero=voltigeur]');page.wait_for_function('heroPreviewRuntime.readyHero==="voltigeur"',polling=50);assert page.locator('#heroPreviewName').text_content()=='Le Voltigeur';assert 'prototype' in page.locator('#heroPreviewTruth').text_content()
+  page.click('[data-hero=voltigeur]');page.wait_for_function('heroPreviewRuntime.readyHero==="voltigeur"',polling=50);assert page.locator('#heroPreviewName').text_content()=='Le Voltigeur';assert 'retravaillé' in page.locator('#heroPreviewTruth').text_content()
   run('heroPreviewRuntime.readyHero=null;heroPreviewRuntime.message="Sentinelle";heroPreviewFeedback();window.dispatchEvent(new MessageEvent("message",{origin:"https://invalid.example",source:heroPreviewRuntime.frame.contentWindow,data:{type:"review-ready",hero:"voltigeur"}}))');assert run('heroPreviewRuntime.readyHero===null')
   run('window.dispatchEvent(new MessageEvent("message",{origin:location.origin,source:window,data:{type:"review-ready",hero:"voltigeur"}}))');assert run('heroPreviewRuntime.readyHero===null')
   run('heroPreviewSelect("eclipse")');assert run('heroPreviewRuntime.selected==="voltigeur"'),'Locked secret must not be previewed'

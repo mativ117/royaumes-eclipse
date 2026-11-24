@@ -1,0 +1,2295 @@
+{
+  "version": "1.5-rc1",
+  "characters": {
+    "rempart": {
+      "hero": "rempart",
+      "profile": "rifle",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/rempart.blend",
+      "sha256": "69c5196560435460f2bfd4c452e4040c562405c6c92fa52783d2f9a8da55c7a4",
+      "bytes": 2760540,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "rempart",
+        "profile": "rifle",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.149745,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.4,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.433333,
+            "hitAt": 0.233333,
+            "activeEnd": 0.333333,
+            "travel": 0.872115,
+            "sourceClip": "Sword_Regular_A"
+          },
+          "attack2": {
+            "duration": 0.533333,
+            "hitAt": 0.233333,
+            "activeEnd": 0.333333,
+            "travel": 0.1,
+            "sourceClip": "Sword_Regular_B"
+          },
+          "attack3": {
+            "duration": 1.4,
+            "hitAt": 0.6,
+            "activeEnd": 0.766667,
+            "travel": 1.2,
+            "sourceClip": "Sword_Regular_C"
+          }
+        },
+        "shot": {
+          "duration": 0.6333333333333333,
+          "hitAt": 0.166667
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.8333333333333334,
+          "fullBody": false
+        },
+        "weaponRadius": 0.1,
+        "combatReach": 1.825303
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "voltigeur": {
+      "hero": "voltigeur",
+      "profile": "blade",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/voltigeur.blend",
+      "sha256": "6563ebe508cc1add60acadc34aa13915d604a50a513366b44fdb8c53f41e4d4f",
+      "bytes": 2630208,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "voltigeur",
+        "profile": "blade",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.116453,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.6,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.433333,
+            "hitAt": 0.233333,
+            "activeEnd": 0.333333,
+            "travel": 0.872115,
+            "sourceClip": "Sword_Regular_A"
+          },
+          "attack2": {
+            "duration": 0.533333,
+            "hitAt": 0.2,
+            "activeEnd": 0.333333,
+            "travel": 0.1,
+            "sourceClip": "Sword_Regular_B"
+          },
+          "attack3": {
+            "duration": 1.4,
+            "hitAt": 0.6,
+            "activeEnd": 0.733333,
+            "travel": 1.2,
+            "sourceClip": "Sword_Regular_C"
+          }
+        },
+        "shot": {
+          "duration": 0.5,
+          "hitAt": 0.2
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.8333333333333334,
+          "fullBody": false
+        },
+        "weaponRadius": 0.1,
+        "combatReach": 1.456011
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "tisseuse": {
+      "hero": "tisseuse",
+      "profile": "caster",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/tisseuse.blend",
+      "sha256": "e67b1a2ec703bb6f3e26e4f9228bb25f81a247d2a9802479917dc7ad901dbcb8",
+      "bytes": 2584976,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "tisseuse",
+        "profile": "caster",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.116453,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.6,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          },
+          "attack2": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          },
+          "attack3": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          }
+        },
+        "shot": {
+          "duration": 0.5,
+          "hitAt": 0.2
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.5333333333333333,
+          "fullBody": false
+        },
+        "weaponRadius": 0.1,
+        "combatReach": 0.549607
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "cendres": {
+      "hero": "cendres",
+      "profile": "rifle",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/cendres.blend",
+      "sha256": "5961211bc512609909663c2613d7a6e21ecf82b23384e4d0dbba86c03066d13d",
+      "bytes": 2770624,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "cendres",
+        "profile": "rifle",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.125,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.4,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.433333,
+            "hitAt": 0.233333,
+            "activeEnd": 0.333333,
+            "travel": 0.872115,
+            "sourceClip": "Sword_Regular_A"
+          },
+          "attack2": {
+            "duration": 0.533333,
+            "hitAt": 0.233333,
+            "activeEnd": 0.333333,
+            "travel": 0.1,
+            "sourceClip": "Sword_Regular_B"
+          },
+          "attack3": {
+            "duration": 1.4,
+            "hitAt": 0.6,
+            "activeEnd": 0.766667,
+            "travel": 1.2,
+            "sourceClip": "Sword_Regular_C"
+          }
+        },
+        "shot": {
+          "duration": 0.6333333333333333,
+          "hitAt": 0.166667
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.8333333333333334,
+          "fullBody": false
+        },
+        "weaponRadius": 0.1,
+        "combatReach": 1.825303
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "voleur": {
+      "hero": "voleur",
+      "profile": "dagger",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/voleur.blend",
+      "sha256": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
+      "bytes": 2547988,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "voleur",
+        "profile": "dagger",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.116453,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.6,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.866667,
+            "hitAt": 0.166667,
+            "activeEnd": 0.233333,
+            "travel": 0.1,
+            "sourceClip": "Punch_Jab"
+          },
+          "attack2": {
+            "duration": 1.0,
+            "hitAt": 0.2,
+            "activeEnd": 0.266667,
+            "travel": 0.1,
+            "sourceClip": "Punch_Cross"
+          },
+          "attack3": {
+            "duration": 0.466667,
+            "hitAt": 0.033333,
+            "activeEnd": 0.133333,
+            "travel": 0.154106,
+            "sourceClip": "Melee_Hook"
+          }
+        },
+        "shot": {
+          "duration": 0.5,
+          "hitAt": 0.2
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.8333333333333334,
+          "fullBody": false
+        },
+        "weaponRadius": 0.07,
+        "combatReach": 1.07447
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "bergere": {
+      "hero": "bergere",
+      "profile": "caster",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/bergere.blend",
+      "sha256": "38b7c059b652c43aa63ab65123106e9495297027268a15471d0f971edec528e1",
+      "bytes": 2669148,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "bergere",
+        "profile": "caster",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.233027,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.6,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          },
+          "attack2": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          },
+          "attack3": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          }
+        },
+        "shot": {
+          "duration": 0.5,
+          "hitAt": 0.2
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.5333333333333333,
+          "fullBody": false
+        },
+        "weaponRadius": 0.1,
+        "combatReach": 0.549607
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "colosse": {
+      "hero": "colosse",
+      "profile": "heavy",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/colosse.blend",
+      "sha256": "5dcd7a69c276a9675323d8bdcb54c795221c54ba2aa895db4d7210826c405588",
+      "bytes": 2802324,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "colosse",
+        "profile": "heavy",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.125,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.4,
+          "duration": 0.48
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.966667,
+            "hitAt": 0.133333,
+            "activeEnd": 0.2,
+            "travel": 0.1,
+            "sourceClip": "TreeChopping_Loop"
+          },
+          "attack2": {
+            "duration": 1.466667,
+            "hitAt": 0.466667,
+            "activeEnd": 0.566667,
+            "travel": 1.2,
+            "sourceClip": "Sword_Heavy_Combo"
+          },
+          "attack3": {
+            "duration": 1.6,
+            "hitAt": 0.6,
+            "activeEnd": 0.733333,
+            "travel": 1.2,
+            "sourceClip": "Sword_Regular_C"
+          }
+        },
+        "shot": {
+          "duration": 0.5,
+          "hitAt": 0.2
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.5333333333333333,
+          "fullBody": true
+        },
+        "weaponRadius": 0.22,
+        "combatReach": 1.639139
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "accordeur": {
+      "hero": "accordeur",
+      "profile": "caster",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/accordeur.blend",
+      "sha256": "d5c1d418fe95a747176dc3654c25bbb6a43f0b5430c5f618b32e188126af7ed6",
+      "bytes": 2572300,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "accordeur",
+        "profile": "caster",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.230145,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.6,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          },
+          "attack2": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          },
+          "attack3": {
+            "duration": 0.5,
+            "hitAt": 0.033333,
+            "activeEnd": 0.166667,
+            "travel": 0.1,
+            "sourceClip": "Spell_Simple_Shoot"
+          }
+        },
+        "shot": {
+          "duration": 0.5,
+          "hitAt": 0.2
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.5333333333333333,
+          "fullBody": false
+        },
+        "weaponRadius": 0.1,
+        "combatReach": 0.549607
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "neant": {
+      "hero": "neant",
+      "profile": "shadow",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/neant.blend",
+      "sha256": "c00c762940bf03218bcf6bc8aab41fb8efaa3ab46e0d37e7d1d51daeb8bdc425",
+      "bytes": 2531156,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "neant",
+        "profile": "shadow",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.188129,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.6,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.433333,
+            "hitAt": 0.233333,
+            "activeEnd": 0.333333,
+            "travel": 0.872115,
+            "sourceClip": "Sword_Regular_A"
+          },
+          "attack2": {
+            "duration": 0.533333,
+            "hitAt": 0.2,
+            "activeEnd": 0.333333,
+            "travel": 0.1,
+            "sourceClip": "Sword_Regular_B"
+          },
+          "attack3": {
+            "duration": 1.4,
+            "hitAt": 0.6,
+            "activeEnd": 0.733333,
+            "travel": 1.2,
+            "sourceClip": "Sword_Regular_C"
+          }
+        },
+        "shot": {
+          "duration": 0.5,
+          "hitAt": 0.2
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.5333333333333333,
+          "fullBody": false
+        },
+        "weaponRadius": 0.1,
+        "combatReach": 1.325667
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    },
+    "eclipse": {
+      "hero": "eclipse",
+      "profile": "ultimate",
+      "generator": "scripts/retarget_roster_animations.py",
+      "art_generator": "scripts/upgrade_roster_art.py",
+      "source": "assets/source/roster/eclipse.blend",
+      "sha256": "9b2810dba81da76cd2f080dbfaa0bfef896f0b11ced0e4cf4b6a023a467406ea",
+      "bytes": 2840576,
+      "motion_calibration": {
+        "version": 1,
+        "heroId": "eclipse",
+        "profile": "ultimate",
+        "units": "model",
+        "source": "Quaternius Standard CC0",
+        "soleClearance": 0.025,
+        "bodyHeight": 2.360391,
+        "gaits": {
+          "walk": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "run": {
+            "cycleDistance": 5.310519,
+            "duration": 0.9333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.21429
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  0.67857
+                ]
+              ]
+            },
+            "sourceClip": "Jog_Fwd_Loop"
+          },
+          "walk_back": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_left": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          },
+          "strafe_right": {
+            "cycleDistance": 1.380735,
+            "duration": 1.3333333333333333,
+            "contacts": {
+              "L": [
+                [
+                  0.0,
+                  0.425
+                ]
+              ],
+              "R": [
+                [
+                  0.5,
+                  1.0
+                ]
+              ]
+            },
+            "sourceClip": "Walk_Loop"
+          }
+        },
+        "dodge": {
+          "distance": 1.6,
+          "duration": 0.4
+        },
+        "attacks": {
+          "attack1": {
+            "duration": 0.433333,
+            "hitAt": 0.233333,
+            "activeEnd": 0.333333,
+            "travel": 0.872115,
+            "sourceClip": "Sword_Regular_A"
+          },
+          "attack2": {
+            "duration": 0.533333,
+            "hitAt": 0.2,
+            "activeEnd": 0.333333,
+            "travel": 0.1,
+            "sourceClip": "Sword_Regular_B"
+          },
+          "attack3": {
+            "duration": 1.4,
+            "hitAt": 0.6,
+            "activeEnd": 0.733333,
+            "travel": 1.2,
+            "sourceClip": "Sword_Regular_C"
+          }
+        },
+        "shot": {
+          "duration": 0.5,
+          "hitAt": 0.2
+        },
+        "power": {
+          "clip": "power",
+          "duration": 0.5333333333333333,
+          "fullBody": true
+        },
+        "weaponRadius": 0.1,
+        "combatReach": 1.904818
+      },
+      "retargeted_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power",
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "fallback_scope": "Backward/strafing clips use the source forward walk; transitions use short source guards. Dash, leap, shield, interact, carry and hit retain the original authored gestures; directional dodges copy dash. No purpose-built directional capture or dodge claim.",
+      "animation_sources": "assets/animations/quaternius/PROVENANCE.json",
+      "clips": [
+        "attack1",
+        "attack2",
+        "attack3",
+        "carry",
+        "dash",
+        "dodge_left",
+        "dodge_right",
+        "guard",
+        "hit",
+        "idle",
+        "interact",
+        "leap",
+        "power",
+        "run",
+        "shield",
+        "shot",
+        "start",
+        "stop",
+        "strafe_left",
+        "strafe_right",
+        "turn_left",
+        "turn_right",
+        "walk",
+        "walk_back"
+      ],
+      "sampled_clips": [
+        "idle",
+        "guard",
+        "walk",
+        "run",
+        "attack1",
+        "attack2",
+        "attack3",
+        "shot",
+        "power"
+      ],
+      "derived_clips": [
+        "walk_back",
+        "strafe_left",
+        "strafe_right",
+        "start",
+        "stop",
+        "turn_left",
+        "turn_right"
+      ],
+      "inherited_clips": [
+        "dash",
+        "leap",
+        "shield",
+        "interact",
+        "carry",
+        "hit",
+        "dodge_left",
+        "dodge_right"
+      ]
+    }
+  }
+}

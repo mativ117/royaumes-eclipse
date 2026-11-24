@@ -9,6 +9,11 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from threading import Thread
 from playwright.sync_api import sync_playwright
+import sys as _check_sys
+from pathlib import Path as _CheckPath
+_check_sys.path.insert(0,str(_CheckPath(__file__).resolve().parents[1]/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -116,15 +121,23 @@ try:
                 value = row[mode]
                 assert value['after'] == value['before'] and not value['contacts'], (mode, row)
             assert row['vertical']['bodyMinY'] > 8, row
-        # Other classes retain existing rhythm rather than inheriting Lame retiming.
+        # Newly authored heroes use their own source timing, not Lame timing or
+        # their former procedural hardcoded duration. Loading is lazy in 1.5.
+        run('Promise.all(["voltigeur","rempart"].map(ensureHeroModel))')
         run('hero="voltigeur";applyHero();cancelAttack();p.shot=0;p.comboWindow=0;beginAttack()')
-        assert run('Math.abs(p.attack.duration-.43*HEROES.voltigeur.attackRate)<1e-6')
+        assert run('''()=>{const a=avatarRuntime.current,d=a.motionCalibration?.attacks.attack1;
+         return !!d&&!!p.attack&&Math.abs(p.attack.duration-a.actions.attack1.getClip().duration)<1e-6
+          &&Math.abs(p.attack.hitAt-d.hitAt)<1e-6&&Math.abs(p.attack.activeEnd-d.activeEnd)<1e-6;}''')
         run('hero="rempart";applyHero();cancelAttack();p.shot=0;beginAttack()')
-        assert run('Math.abs(p.attack.duration-.28*HEROES.rempart.attackRate)<1e-6')
+        assert run('''()=>{const d=avatarRuntime.current.motionCalibration?.shot;return !!d&&!!p.attack
+         &&Math.abs(p.attack.duration-d.duration)<1e-6&&Math.abs(p.attack.hitAt-d.hitAt)<1e-6;}''')
         assert run('meleeClipDuration("absent",1,.43)===.43')
+        # An optional model that has not loaded still retains a bounded fallback.
+        assert run('''()=>{const a=avatarRuntime.heroes.voltigeur;try{delete avatarRuntime.heroes.voltigeur;
+         return meleeClipDuration("voltigeur",1,.43)===.43;}finally{avatarRuntime.heroes.voltigeur=a;}}''')
         assert not errors, errors
         browser.close()
-    print('PASS: three actual retargeted clips at 1x; fixed body hit once in the source window; physical wall, recovery, horizontal and vertical whiffs; no legacy cone damage; other hero timings preserved. No human balance or FPS claim.')
+    print('PASS: three actual retargeted clips at 1x; fixed body hit once in the source window; physical wall, recovery, horizontal and vertical whiffs; no legacy cone damage; new hero source timings and missing-model fallback. No human balance or FPS claim.')
 finally:
     server.shutdown()
     server.server_close()

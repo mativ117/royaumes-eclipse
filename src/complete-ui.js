@@ -1,9 +1,9 @@
 'use strict';
 let primaryPadFire=false,primaryPadAim=null,padPrevious=[];
-function availableGamepads(){return Array.from(navigator.getGamepads?.()||[]).filter(Boolean);}
-function primaryPadMovement(){const pad=selectedMode()==='solo'?availableGamepads()[0]:null;if(!pad)return{x:0,z:0};return{x:Math.abs(pad.axes[0]||0)>.16?pad.axes[0]:0,z:Math.abs(pad.axes[1]||0)>.16?pad.axes[1]:0};}
+function availableGamepads(){try{return Array.from(navigator.getGamepads?.()||[]).filter(Boolean);}catch(_){return[];}}
+function primaryPadMovement(){const pad=availableGamepads()[0];if(!pad)return{x:0,z:0};return{x:Math.abs(pad.axes[0]||0)>.16?pad.axes[0]:0,z:Math.abs(pad.axes[1]||0)>.16?pad.axes[1]:0};}
 function pollPrimaryGamepad(){
- const pad=selectedMode()==='solo'?availableGamepads()[0]:null;primaryPadFire=false;primaryPadAim=null;if(!pad||state!=='playing')return;if(Math.hypot(pad.axes[2]||0,pad.axes[3]||0)>.2)primaryPadAim=Math.atan2(-pad.axes[2],-pad.axes[3]);const buttons=pad.buttons.map(b=>b.pressed);primaryPadFire=buttons[2]||buttons[7];if(buttons[0]&&!padPrevious[0])requestDodge();if(buttons[3]&&!padPrevious[3])power();if(buttons[1]&&!padPrevious[1])interact();if(buttons[5]&&!padPrevious[5])activateIncarnation();if(buttons[9]&&!padPrevious[9])pause('manette');padPrevious=buttons;
+ const pad=availableGamepads()[0];primaryPadFire=false;primaryPadAim=null;if(!pad||state!=='playing')return;if(Math.hypot(pad.axes[2]||0,pad.axes[3]||0)>.2)primaryPadAim=Math.atan2(-pad.axes[2],-pad.axes[3]);const buttons=pad.buttons.map(b=>b.pressed);primaryPadFire=buttons[2]||buttons[7];if(buttons[0]&&!padPrevious[0])requestDodge();if(buttons[3]&&!padPrevious[3])power();if(buttons[1]&&!padPrevious[1])interact();if(buttons[5]&&!padPrevious[5])activateIncarnation();if(buttons[9]&&!padPrevious[9])pause('manette');padPrevious=buttons;
 }
 function refreshProfileUI(){
  if(!$('#profileName'))return;$('#profileName').value=localProfile.name;$('#profileStats').textContent=`${localProfile.completed.length}/3 chapitres terminés · ${localProfile.stats.wins} victoires · ${localProfile.stats.kills} adversaires · ${Math.floor(localProfile.stats.seconds/60)} min enregistrées · ${localProfile.secret.filter(Boolean).length}/3 reflets · progression locale`;
@@ -14,7 +14,7 @@ function buildHeroGallery(){
  for(let i=1;i<=3;i++){const select=$('#partyHero'+i);if(!select)continue;select.replaceChildren();for(const [id,d]of Object.entries(HERO_DEFS)){if(d.secret&&!secretUnlocked())continue;const option=document.createElement('option');option.value=id;option.textContent=d.name;select.append(option);}select.value=['voltigeur','bergere','colosse'][i-1];}
 }
 function beginCompleteRun(){
- if($('#start').disabled)return;const mode=selectedMode(),amount=Number($('#partySize')?.value||1),required=mode==='coop'?Math.max(0,amount-2)+($('#secondInput').value==='pad'?1:0):['battle','crown'].includes(mode)&&$('#arenaOpponents').value==='human'?2+($('#secondInput').value==='pad'?1:0):0;
+ if($('#start').disabled)return;if(selectedMode()==='duel'){beginDuelMatch({kind:'bot',opponentHero:$('#duelOpponentHero')?.value||'rempart',seed:Math.floor(Math.random()*2147483647)}).catch(e=>{$('#menuFeedback').textContent=e.message;});return;}if(selectedMode()==='lan'){document.querySelector('#lanPanel')?.scrollIntoView({block:'center',behavior:'smooth'});return;}const mode=selectedMode(),amount=Number($('#partySize')?.value||1),required=mode==='coop'?Math.max(0,amount-2)+($('#secondInput').value==='pad'?1:0):['battle','crown'].includes(mode)&&$('#arenaOpponents').value==='human'?2+($('#secondInput').value==='pad'?1:0):0;
  if(availableGamepads().length<required){$('#menuFeedback').textContent='Il manque '+(required-availableGamepads().length)+' manette(s) pour ce groupe. Choisis deux joueurs ou connecte les manettes.';return;}
  start();const level=Number($('#chapterSelect').value);if(['duel','duel-local','battle','crown'].includes(mode))beginBattle(mode);else if(level>1)enterChapter(level);else if(mode==='coop')setupLocalParty();$('#nextChapter').hidden=true;
  if(!battle)localProfile.journey={level:journey.level,hero,boon,checkpoint:journey.level>1?journey.step:0,route:journey.route,core:journey.core};persistProfile();$('#menuFeedback').textContent='';

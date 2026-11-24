@@ -125,6 +125,11 @@
     "sha256": "fdd23fc75054bc1961cc0a44828f0351abd4e5c6db9000f7aabcca3551315765"
   },
   {
+    "file": "historique/livraisons-zip/royaumes-eclipse-1.5-rc1-projet.zip",
+    "bytes": 92142083,
+    "sha256": "f74416cf3e1068c41ee92a78cfbf145555e2a4974a0b8ffaba1d636c287fb6bf"
+  },
+  {
     "file": "historique/livraisons-zip/royaumes-eclipse-3d-v0.10.zip",
     "bytes": 467182,
     "sha256": "c5ee9b2a19d0143b746c588c45938dbc5ee6f2b80907e0a551471bc25d2743e1"
@@ -273,6 +278,11 @@
     "file": "historique/royaumes-v1.4-rc1.html",
     "bytes": 21263942,
     "sha256": "9266d7072fe1de46c5fe768082ba69d546b47c8e4c79619414828914c7a76720"
+  },
+  {
+    "file": "historique/royaumes-v1.5-rc1.html",
+    "bytes": 48676903,
+    "sha256": "5b710d68d501e2d27a5c00fd18e78ed0e37e5a351cdca609c62631a3582238fe"
   },
   {
     "file": "historique/sources-v0.7/art.js",

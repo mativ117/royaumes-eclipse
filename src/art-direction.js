@@ -103,18 +103,67 @@ function initArtDirection(){
  artDirection={palettes,root,detail,grassMesh,grassMaterial,windTime,windDirection,contacts,wind,leafGeometry,dummy,petalPhase:0,clock:0,gates:[]};
  sculptGates();
 }
+// Ritual thresholds use short vertical modules. A wide corridor must never
+// become a pair of 24-unit blades sweeping into the neighbouring lanes.
+function craftedGateModuleGeometry(width,height,depth){
+ const parts=[],metal='#baa17b',dark='#49434a',barDepth=Math.min(.13,Math.max(.08,depth*.28));
+ const add=(pos,size,color=metal)=>parts.push({pos,size,color});
+ add([0,.065,0],[width,.13,barDepth],dark);
+ for(const y of [.15,height*.43,height-.09])add([0,y,0],[width,.045,barDepth]);
+ const count=Math.max(3,Math.ceil(width/.42));
+ for(let i=0;i<=count;i++)add([-width/2+.0225+i*(width-.045)/count,height/2,0],[i===0||i===count?.045:.028,height,barDepth]);
+ const radius=Math.min(.68,width*.27),arch=new THREE.TorusGeometry(radius,.014,5,24,Math.PI),seal=new THREE.TorusGeometry(.15,.013,5,24);
+ parts.push({geo:arch,pos:[0,height*.64,0],size:[1,1,1],color:'#d0b589'},{geo:seal,pos:[0,height*.40,0],size:[1,1,1],color:'#d0b589'});
+ const geometry=mergedStageParts(parts);arch.dispose();seal.dispose();geometry.computeBoundingBox();geometry.computeBoundingSphere();return geometry;
+}
+function setCraftedGateOpen(gate,progress){
+ gate.open=THREE.MathUtils.clamp(Number.isFinite(progress)?progress:0,0,1);
+ gate.lift=gate.maxLift*gate.open;gate.panelRoot.position.y=gate.lift;
+ gate.clearance=gate.moduleBottom+gate.lift;gate.passable=gate.open>=.995||gate.clearance>=gate.requiredClearance;
+ // Fully retracted bars are stored above the threshold rather than casting a
+ // phantom ceiling shadow. The groups keep their transforms for inspection.
+ gate.panelRoot.visible=gate.open<.995;
+ for(const panel of gate.panels)panel.castShadow=!gate.passable;
+}
+function craftedGateRequiredClearance(){
+ let required=2.5;
+ const consider=avatar=>{const height=avatar?.motionCalibration?.bodyHeight,scale=Math.abs(avatar?.root?.scale?.y||1);if(Number.isFinite(height)&&height>0&&Number.isFinite(scale))required=Math.max(required,height*scale+.05);};
+ if(typeof avatarRuntime!=='undefined')consider(avatarRuntime.current);
+ if(typeof localParty!=='undefined')for(const actor of localParty)consider(actor.avatar);
+ return required;
+}
+function craftedGateOccupied(obstacle){
+ const actors=typeof p!=='undefined'&&p?[p,...(typeof localParty!=='undefined'?localParty:[])]:[];
+ return actors.some(actor=>Number.isFinite(actor.x)&&Number.isFinite(actor.z)&&Math.abs(actor.x-obstacle.x)<obstacle.w/2+.6&&Math.abs(actor.z-obstacle.z)<obstacle.d/2+.6);
+}
+function updateCraftedGates(dt){
+ if(!artDirection)return;const blend=1-Math.exp(-Math.max(0,dt)*4),requiredClearance=craftedGateRequiredClearance();
+ for(const obstacle of artDirection.gates){
+  const gate=obstacle.craftedGate,requestedOpen=!campaignGateClosed(obstacle.gate);gate.requiredClearance=requiredClearance;
+  if(requestedOpen)gate.wasRequestedOpen=true;
+  const hold=gate.wasRequestedOpen&&gate.open>.0001&&!requestedOpen&&craftedGateOccupied(obstacle),target=requestedOpen||hold?1:0;
+  let next=gate.open+(target-gate.open)*blend;if(target===0&&next<.0001){next=0;gate.wasRequestedOpen=false;}
+  gate.heldForActor=hold;setCraftedGateOpen(gate,next);obstacle.mesh.visible=true;
+ }
+}
 function sculptGates(){
- const ribs=[{pos:[0,-.37,0],size:[1,.26,.12],color:'#49434a'}];
- for(const x of [-.46,0,.46])ribs.push({pos:[x,0,0],size:[.035,1,.07],color:'#b7a07b'});
- for(const y of [-.48,-.22,.48])ribs.push({pos:[0,y,0],size:[1,.025,.07],color:'#b7a07b'});
- for(const x of [-.23,.23])ribs.push({geo:new THREE.TorusGeometry(.21,.012,4,20,Math.PI),pos:[x,.22,0],size:[1,1,1],color:'#c9ad7d'});
- ribs.push({geo:new THREE.TorusGeometry(.16,.012,4,24),pos:[0,.08,0],size:[1,1,1],color:'#c9ad7d'});
- const geometry=mergedStageParts(ribs),empty=new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute([],3)),material=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.72,metalness:.38});for(const rib of ribs)if(rib.geo)rib.geo.dispose();
-
- for(const o of world.obstacles.filter(o=>o.gate)){
-  const h=o.mesh.scale.y;for(const child of [...o.mesh.children])o.mesh.remove(child);o.mesh.geometry=empty;o.mesh.material.opacity=0;o.mesh.scale.set(1,1,1);o.mesh.position.set(o.x,0,o.z);
-  const hinges=[];for(const side of [-1,1]){const hinge=new THREE.Group();hinge.position.set(side*o.w/2,0,0);o.mesh.add(hinge);const leaf=new THREE.Mesh(geometry,material);leaf.scale.set(o.w/2,h,1);leaf.position.set(-side*o.w/4,h/2,0);hinge.add(leaf);hinges.push(hinge);}
-  o.craftedGate={hinges,open:0};artDirection.gates.push(o);
+ const empty=new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute([],3)),material=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.54,metalness:.58});
+ material.name='Ritual brushed bronze';material.userData.surface='metal';
+ for(const obstacle of world.obstacles.filter(item=>item.gate)){
+  const height=obstacle.mesh.scale.y;for(const child of [...obstacle.mesh.children])obstacle.mesh.remove(child);
+  obstacle.mesh.geometry=empty;obstacle.mesh.material.opacity=0;obstacle.mesh.scale.set(1,1,1);obstacle.mesh.rotation.set(0,0,0);obstacle.mesh.position.set(obstacle.x,0,obstacle.z);
+  const moduleCount=Math.max(1,Math.ceil(obstacle.w/3.2)),moduleWidth=obstacle.w/moduleCount,geometry=craftedGateModuleGeometry(moduleWidth,height,obstacle.d),panelRoot=new THREE.Group(),hinges=[],panels=[],matrix=new THREE.Matrix4();
+  panelRoot.name='Ritual vertical panels';obstacle.mesh.add(panelRoot);
+  // Two instanced batches retain the old gate's draw-call budget. These groups
+  // no longer rotate; hinges is retained only for old art inspection consumers.
+  for(const [start,count]of [[0,Math.ceil(moduleCount/2)],[Math.ceil(moduleCount/2),Math.floor(moduleCount/2)]]){
+   const group=new THREE.Group();panelRoot.add(group);hinges.push(group);if(!count)continue;
+   const batch=new THREE.InstancedMesh(geometry,material,count);batch.name='Ritual modules';batch.receiveShadow=true;batch.castShadow=true;
+   for(let i=0;i<count;i++){matrix.makeTranslation(-obstacle.w/2+(start+i+.5)*moduleWidth,0,0);batch.setMatrixAt(i,matrix);}
+   batch.instanceMatrix.needsUpdate=true;batch.computeBoundingBox();batch.computeBoundingSphere();group.add(batch);panels.push(batch);
+  }
+  const gate={hinges,panels,panelRoot,moduleCount,moduleWidth,height,moduleBottom:geometry.boundingBox.min.y,maxLift:height+.18,requiredClearance:2.5,open:0,lift:0,clearance:0,passable:false,wasRequestedOpen:false,heldForActor:false};
+  obstacle.craftedGate=gate;setCraftedGateOpen(gate,0);artDirection.gates.push(obstacle);
  }
 }
 function updateArtDirection(dt){
@@ -124,7 +173,7 @@ function updateArtDirection(dt){
  a.contacts.visible=quality==='light';a.contacts.count=0;if(campaign)for(const e of enemies)if(!e.dead&&e.root.visible&&a.contacts.count<32){dummy.position.set(e.x,.025,e.z);dummy.rotation.set(-Math.PI/2,0,0);const r=['boss','porter'].includes(e.type)?1.5:.65;dummy.scale.set(r,r*.65,1);dummy.updateMatrix();a.contacts.setMatrixAt(a.contacts.count++,dummy.matrix);}a.contacts.instanceMatrix.needsUpdate=true;
  a.wind.visible=guided;const path=navCache?.route.slice(navCache.cursor)||[];
  if(guided&&path.length>1){const length=Math.min(routeDistance(path),12);for(let i=0;i<a.wind.count;i++){let distanceAlong=(i*.65+(a.clock*.6))%Math.max(.1,length),j=0;while(j<path.length-2&&distanceAlong>distance(path[j],path[j+1])){distanceAlong-=distance(path[j],path[j+1]);j++;}const from=path[j],to=path[j+1],f=Math.min(1,distanceAlong/Math.max(.01,distance(from,to)));dummy.position.set(from.x+(to.x-from.x)*f,.45+Math.sin(a.clock+i)*.18,from.z+(to.z-from.z)*f);dummy.rotation.set(0,Math.atan2(to.x-from.x,to.z-from.z),Math.sin(a.clock+i)*.3);dummy.scale.set(.7,.7,.7);dummy.updateMatrix();a.wind.setMatrixAt(i,dummy.matrix);}a.wind.instanceMatrix.needsUpdate=true;}else a.wind.visible=false;
- for(const o of a.gates){const g=o.craftedGate,target=campaignGateClosed(o.gate)?0:1;g.open+=(target-g.open)*(1-Math.exp(-dt*4));g.hinges.forEach((hinge,i)=>hinge.rotation.y=(i?1:-1)*g.open*Math.PI*.5);o.mesh.visible=true;}
+ updateCraftedGates(dt);
  if(state==='playing')animateLandmarkCraft(dt);
 }
 function wireArtDirectionUI(){

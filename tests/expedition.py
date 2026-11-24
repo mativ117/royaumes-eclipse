@@ -7,6 +7,10 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from threading import Thread
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0,str(ROOT/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 class Quiet(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Quiet,directory=str(ROOT/'docs')))
@@ -16,12 +20,12 @@ try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
   page=b.new_page(viewport={'width':1100,'height':760});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.add_init_script('window.requestAnimationFrame=()=>0');page.goto(f'http://127.0.0.1:{server.server_port}/');page.click('[data-hero=voltigeur]');page.click('#start')
+  page.add_init_script('window.requestAnimationFrame=()=>0');page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('avatarRuntime.status==="ready"');page.click('[data-hero=voltigeur]');page.click('#start');page.wait_for_function('state==="playing"&&hero==="voltigeur"')
   run=page.evaluate
-  run('(code)=>{(0,eval)(code)}',NAV)
+  run('window.route='+NAV+';void 0;');run('window.settleGates=()=>{for(let i=0;i<120;i++)updateCraftedGates(1/60);};void 0;')
   run('soundOn=false;p.inv=999;')
   assert run('route([0,23],[0,-38])') is False
-  run('p.x=9;p.z=7;interact()');page.click('#sealPact');assert run('boon')=='haste'
+  run('p.x=9;p.z=7;interact()');page.click('#sealPact');run('settleGates()');assert run('boon')=='haste'
   assert run('route([0,23],[-20,-8])')
   assert not run('route([0,-36],[-52,-68])')
   # Soul travels its actual route, stopping for finite ambushes, with player nearby.
@@ -37,6 +41,7 @@ try:
   assert run('campaign.trials.bells.read&&campaign.trials.bells.step===0&&hazards.length>0')
   run('for(const id of campaign.trials.bells.order)trialInteract({type:"lamp",id});')
   assert run('campaign.keys.size')==2
+  run('settleGates()')
   # Both wings, every interactive object and ritual reachable; court still locked.
   for x,z in [(-52,-68),(-54,-51),(-40,-67),(-27,-53),(26,-47),(53,-47),(39,-68),(54,-68),(-9,-62),(9,-55)]:
    assert run(f'route([0,-36],[{x},{z}])'),(x,z)
@@ -51,27 +56,32 @@ try:
   assert run('campaign.trials.forge.carrying')
   run('p.dash=0;dash()');assert not run('campaign.trials.forge.carrying')
   run('p.dashT=0;trialInteract({type:"core"});p.inv=0;p.leap=0;p.shield=0;hurt(1)');assert not run('campaign.trials.forge.carrying')
-  run('trialInteract({type:"core"});p.shot=0;beginAttack()');assert not run('campaign.trials.forge.carrying')
+  run('p.stagger=0;trialInteract({type:"core"});p.shot=0;beginAttack()');assert not run('campaign.trials.forge.carrying')
   run('cancelAttack();trialInteract({type:"core"});p.x=0;p.z=-38;updateTrials(.01)');assert run('campaign.trials.forge.done')
   assert run('readRun()!==null')
   run('trialInteract({type:"ritual",id:"west"});trialInteract({type:"ritual",id:"east"});var porter=enemies.find(e=>e.type==="porter"), hp=porter.hp;damage(porter,10000)')
   assert run('porter.hp===hp')
   run('for(const e of enemies)if(e.type==="anchor")damage(e,10000);porter.mode="recover";damage(porter,10000)')
   assert run('campaign.defeated.has("carillonneur")')
+  run('settleGates()')
   assert run('route([0,-65],[0,-80])')
   run('p.x=0;p.z=-71;updateCampaign(.01)');assert run('campaign.checkpoint.id')=='threshold'
-  page.reload();page.click('#continueRun');assert run('campaign.trials.archive&&campaign.trials.forge.done&&campaign.defeated.has("carillonneur")')
+  page.reload();page.wait_for_function('avatarRuntime.status==="ready"');page.click('#continueRun');page.wait_for_function('state==="playing"&&hero==="voltigeur"');assert run('campaign.trials.archive&&campaign.trials.forge.done&&campaign.defeated.has("carillonneur")')
   assert run('hero')=='voltigeur' and run('boon')=='haste'
-  # Contact timing: attacks do not deal instant/repeated damage, cancellation refunds charge.
-  run('p.x=0;p.z=-50;p.shot=0;p.combo=0;p.comboWindow=0;aim=0;var target=spawn(0,-52,"warden");target.hp=target.max=300;var hp=target.hp;beginAttack();updateAttack(.1);poseHero(.1);var wind=player.arms[1].rotation.x;')
-  assert run('target.hp===hp')
-  run('updateAttack(.07);poseHero(.07);var contact=player.arms[1].rotation.x');assert run('target.hp')==256
-  run('updateAttack(.03)');assert run('target.hp')==256
-  assert run('wind!==contact&&player.sword.parent===player.arms[1]&&player.rifle.parent===player.arms[1]')
+  # Source timing and cancellation in the live mission. Physical blade/body
+  # intersections are isolated by lame_attack_timing.py and session_actors.py.
+  run('resetHeroAt(0,-50);p.shot=0;p.combo=0;p.comboWindow=0;aim=0;var target=spawn(0,-52,"warden");target.hp=target.max=300;var hp=target.hp;var attacksBefore=shotCount;beginAttack();var definition=avatarRuntime.current.motionCalibration.attacks.attack1;var beforeHit=p.attack.hitAt-.001;updateAttack(beforeHit);poseHero(beforeHit);var wind=avatarRuntime.current.hand.getWorldPosition(new THREE.Vector3());')
+  assert run('target.hp===hp&&!p.attack.struck&&shotCount===attacksBefore')
+  assert run('Math.abs(p.attack.duration-definition.duration)<.002&&Math.abs(p.attack.hitAt-definition.hitAt)<1e-6')
+  run('updateAttack(.002);poseHero(.002);var contact=avatarRuntime.current.hand.getWorldPosition(new THREE.Vector3());')
+  assert run('p.attack.struck&&shotCount===attacksBefore+1')
+  run('updateAttack(.01)');assert run('shotCount===attacksBefore+1')
+  assert run('wind.distanceTo(contact)>1e-5&&player.sword.parent===player.arms[1]&&player.rifle.parent===player.arms[1]')
   run('cancelAttack();p.shot=0;p.overcharge=2;beginAttack();cancelAttack()');assert run('p.overcharge')==2
-  run('p.shot=0;p.attack=null;p.combo=2;p.comboWindow=1;beginAttack()');assert run('p.attack.combo===3&&p.attack.hitAt===.25')
-  run('cancelAttack();hero="rempart";applyHero();p.shot=0;var count=bullets.length;beginAttack();updateAttack(.06)');assert run('bullets.length===count')
-  run('updateAttack(.02)');assert run('bullets.length===count+1')
+  run('p.shot=0;p.attack=null;p.combo=2;p.comboWindow=1;beginAttack()');assert run('p.attack.combo===3&&Math.abs(p.attack.hitAt-avatarRuntime.current.motionCalibration.attacks.attack3.hitAt)<1e-6')
+  run('ensureHeroModel("rempart")')
+  run('cancelAttack();hero="rempart";applyHero();p.shot=0;var count=bullets.length;beginAttack();var shotWindow=p.attack.hitAt;updateAttack(shotWindow-.001)');assert run('bullets.length===count')
+  run('updateAttack(.002)');assert run('bullets.length===count+1')
   # Boss phases, extraction checkpoint, retry keeps defeated boss and completes at original soul.
   run('cancelAttack();var hp=boss.hp;damage(boss,99999)');assert run('boss.hp===hp')
   run('p.x=0;p.z=-80;updateCampaign(.01);boss.hp=boss.max*.6;updateBoss(boss,.01)');assert run('boss.phase')==2
@@ -83,5 +93,5 @@ try:
   assert run('JSON.parse(expeditionReport()).finished')
   assert not errors,errors
   b.close()
- print('PASS: complete mission, escort navigation, all objective routes, gates, puzzle errors, phase immunity, cargo risks, ritual, checkpoint reload, timed melee/rifle, three boss phases, extraction retry and victory. Controlled integration, not a duration playtest.')
+ print('PASS: complete mission, escort navigation, all objective routes, gates, puzzle errors, phase immunity, cargo risks, ritual, checkpoint reload, source-timed attack events/rifle, three boss phases, extraction retry and victory. Controlled integration, not a duration playtest.')
 finally:server.shutdown();server.server_close()

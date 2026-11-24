@@ -1,6 +1,11 @@
 """Review the real published studio and launch its hero in the actual game."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+import sys as _check_sys
+from pathlib import Path as _CheckPath
+_check_sys.path.insert(0,str(_CheckPath(__file__).resolve().parents[1]/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 version=(Path(__file__).resolve().parents[1]/'VERSION').read_text().strip()
 with sync_playwright() as pw:
  b=pw.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--enable-unsafe-swiftshader']);page=b.new_page(viewport={'width':1100,'height':760});page.add_init_script('requestAnimationFrame=()=>0');errors=[];missing=[]

@@ -1,0 +1,2711 @@
+{
+  "reports": [
+    {
+      "hero": "rempart",
+      "hash": "69c5196560435460f2bfd4c452e4040c562405c6c92fa52783d2f9a8da55c7a4",
+      "outcomes": [
+        {
+          "hero": "rempart",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013239795813198437,
+          "ankle": [
+            0.12372737470967915,
+            0.1533130189379931
+          ],
+          "hullSoles": [
+            -0.00016499972805983365,
+            0.0010593449300658059
+          ],
+          "sampledSkinSoles": [
+            -1.4976615233391888e-07,
+            0.15303790460223188
+          ],
+          "maxCorrection": 0.010508858219097698,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "rempart",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121521331
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "rempart",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886992999849
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "rempart",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.1083288672082939
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "rempart",
+          "requested": 4.9,
+          "speed": 4.9,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 6,
+          "drift": 0.002856044140618361,
+          "ankle": [
+            0.16368256801433706,
+            0.23403937206808406
+          ],
+          "hullSoles": [
+            -3.0189560629168e-07,
+            -1.0130099564742423e-08
+          ],
+          "sampledSkinSoles": [
+            -3.018956062778022e-07,
+            0.3220918272192587
+          ],
+          "maxCorrection": 0.07798407985602715,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "rempart",
+          "requested": 4.9,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121521136
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "rempart",
+          "requested": 4.9,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886992999849
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "rempart",
+          "requested": 4.9,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.1083288672082939
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "voltigeur",
+      "hash": "6563ebe508cc1add60acadc34aa13915d604a50a513366b44fdb8c53f41e4d4f",
+      "outcomes": [
+        {
+          "hero": "voltigeur",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013239795813198437,
+          "ankle": [
+            0.12372737470967915,
+            0.1533130189379931
+          ],
+          "hullSoles": [
+            -0.00016499972805983365,
+            0.0010593449300658059
+          ],
+          "sampledSkinSoles": [
+            -1.4976615233391888e-07,
+            0.15303790460223188
+          ],
+          "maxCorrection": 0.010508858219097698,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voltigeur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121502948
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voltigeur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832887061460103
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voltigeur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886876727549
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voltigeur",
+          "requested": 6.1,
+          "speed": 6.0881306847942245,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 7,
+          "drift": 0.004566673068701292,
+          "ankle": [
+            0.1857528104496175,
+            0.22643372282529597
+          ],
+          "hullSoles": [
+            -3.7923993639887854e-07,
+            -1.726186569517285e-07
+          ],
+          "sampledSkinSoles": [
+            -3.7923992999427947e-07,
+            0.36536626890291846
+          ],
+          "maxCorrection": 0.09001948531920115,
+          "releasedFraction": 0.06779661016949153,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voltigeur",
+          "requested": 6.1,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121502854
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voltigeur",
+          "requested": 6.1,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832887061460103
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voltigeur",
+          "requested": 6.1,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886876727549
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "lame",
+      "hash": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
+      "outcomes": [
+        {
+          "hero": "lame",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013240156890397142,
+          "ankle": [
+            0.12372740287719286,
+            0.1534972947611094
+          ],
+          "hullSoles": [
+            -0.0001938299123331877,
+            0.0010513593208346106
+          ],
+          "sampledSkinSoles": [
+            -5.417694252066868e-05,
+            0.15282956978035903
+          ],
+          "maxCorrection": 0.010508912740919496,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "lame",
+          "requested": 1.8,
+          "speed": 1.0588235368365648,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 5,
+          "drift": 4.906852621477465e-08,
+          "ankle": [
+            0.1230498253663655,
+            0.1230499074438196
+          ],
+          "hullSoles": [
+            -2.0455918493811343e-07,
+            -1.0982694653716152e-07
+          ],
+          "sampledSkinSoles": [
+            -2.045591849519912e-07,
+            0.10971569331794326
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "lame",
+          "requested": 1.8,
+          "speed": 1.0588235368365648,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 5,
+          "drift": 8.440957414066008e-08,
+          "ankle": [
+            0.12304983225383126,
+            0.12304989039532843
+          ],
+          "hullSoles": [
+            -1.8755660413649622e-07,
+            -1.2188357027820285e-07
+          ],
+          "sampledSkinSoles": [
+            -1.8682500768640864e-07,
+            0.10971569752512203
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "lame",
+          "requested": 1.8,
+          "speed": 1.0588235368365648,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 5,
+          "drift": 8.335095750700263e-08,
+          "ankle": [
+            0.12304983226675492,
+            0.12304989458240617
+          ],
+          "hullSoles": [
+            -1.875512554982972e-07,
+            -1.1776629837978447e-07
+          ],
+          "sampledSkinSoles": [
+            -1.8733252862834782e-07,
+            0.10971569703825315
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "lame",
+          "requested": 5.5,
+          "speed": 5.5,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 7,
+          "drift": 0.01134594983614267,
+          "ankle": [
+            0.17232122479825523,
+            0.23919130944310846
+          ],
+          "hullSoles": [
+            -3.5061691047721943e-07,
+            -4.4989632658198886e-08
+          ],
+          "sampledSkinSoles": [
+            -3.494774566611958e-07,
+            0.34159982041776926
+          ],
+          "maxCorrection": 0.10624341944098463,
+          "releasedFraction": 0.030303030303030304,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "lame",
+          "requested": 5.5,
+          "speed": 1.0588235368365648,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 5,
+          "drift": 4.906852621477465e-08,
+          "ankle": [
+            0.1230498253663655,
+            0.1230499074438196
+          ],
+          "hullSoles": [
+            -2.0455918493811343e-07,
+            -1.0982694653716152e-07
+          ],
+          "sampledSkinSoles": [
+            -2.045591849519912e-07,
+            0.10971569331794326
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "lame",
+          "requested": 5.5,
+          "speed": 1.0588235368365648,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 5,
+          "drift": 8.440957414066008e-08,
+          "ankle": [
+            0.12304983225383126,
+            0.12304989039532843
+          ],
+          "hullSoles": [
+            -1.8755660413649622e-07,
+            -1.2188357027820285e-07
+          ],
+          "sampledSkinSoles": [
+            -1.8682500768640864e-07,
+            0.10971569752512203
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "lame",
+          "requested": 5.5,
+          "speed": 1.0588235368365648,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 5,
+          "drift": 8.335095750700263e-08,
+          "ankle": [
+            0.12304983226675492,
+            0.12304989458240617
+          ],
+          "hullSoles": [
+            -1.875512554982972e-07,
+            -1.1776629837978447e-07
+          ],
+          "sampledSkinSoles": [
+            -1.8733252862834782e-07,
+            0.10971569703825315
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "tisseuse",
+      "hash": "e67b1a2ec703bb6f3e26e4f9228bb25f81a247d2a9802479917dc7ad901dbcb8",
+      "outcomes": [
+        {
+          "hero": "tisseuse",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013239795813198437,
+          "ankle": [
+            0.12372737470967915,
+            0.1533130189379931
+          ],
+          "hullSoles": [
+            -0.00016499972805983365,
+            0.0010593449300658059
+          ],
+          "sampledSkinSoles": [
+            -1.4976615233391888e-07,
+            0.15303790460223188
+          ],
+          "maxCorrection": 0.010508858219097698,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "tisseuse",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121543183
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "tisseuse",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886993176427
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "tisseuse",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886721804044
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "tisseuse",
+          "requested": 5.3,
+          "speed": 5.3,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 7,
+          "drift": 0.010503185726595332,
+          "ankle": [
+            0.17051917992191695,
+            0.2379016519549383
+          ],
+          "hullSoles": [
+            -3.297642633404152e-07,
+            1.047956518784865e-08
+          ],
+          "sampledSkinSoles": [
+            -3.1917922582030966e-07,
+            0.3378201644954568
+          ],
+          "maxCorrection": 0.09869086749490799,
+          "releasedFraction": 0.014925373134328358,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "tisseuse",
+          "requested": 5.3,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121542983
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "tisseuse",
+          "requested": 5.3,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886993176427
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "tisseuse",
+          "requested": 5.3,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886721804044
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "cendres",
+      "hash": "5961211bc512609909663c2613d7a6e21ecf82b23384e4d0dbba86c03066d13d",
+      "outcomes": [
+        {
+          "hero": "cendres",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013239795813198437,
+          "ankle": [
+            0.12372737470967915,
+            0.1533130189379931
+          ],
+          "hullSoles": [
+            -0.00016499972805983365,
+            0.0010593449300658059
+          ],
+          "sampledSkinSoles": [
+            -1.4976615233391888e-07,
+            0.15303790460223188
+          ],
+          "maxCorrection": 0.010508858219097698,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "cendres",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121521331
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "cendres",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886992999849
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "cendres",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.1083288672082939
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "cendres",
+          "requested": 4.7,
+          "speed": 4.7,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 6,
+          "drift": 0.0021723528085327384,
+          "ankle": [
+            0.16058478423506156,
+            0.2324563227236106
+          ],
+          "hullSoles": [
+            -2.8793486353539954e-07,
+            -2.3123305270544847e-08
+          ],
+          "sampledSkinSoles": [
+            -2.835581642199325e-07,
+            0.319636791437841
+          ],
+          "maxCorrection": 0.07036576912461016,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "cendres",
+          "requested": 4.7,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121521136
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "cendres",
+          "requested": 4.7,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886992999849
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "cendres",
+          "requested": 4.7,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.1083288672082939
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "voleur",
+      "hash": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
+      "outcomes": [
+        {
+          "hero": "voleur",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013239795813198437,
+          "ankle": [
+            0.12372737470967915,
+            0.1533130189379931
+          ],
+          "hullSoles": [
+            -0.00016499972805983365,
+            0.0010593449300658059
+          ],
+          "sampledSkinSoles": [
+            -1.4976615233391888e-07,
+            0.15303790460223188
+          ],
+          "maxCorrection": 0.010508858219097698,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voleur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121502948
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voleur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832887061460103
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voleur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886876727549
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voleur",
+          "requested": 6,
+          "speed": 6,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 7,
+          "drift": 0.01171729980398732,
+          "ankle": [
+            0.17941559120553852,
+            0.23829619017908946
+          ],
+          "hullSoles": [
+            -3.758544138698916e-07,
+            -9.782679721848098e-09
+          ],
+          "sampledSkinSoles": [
+            -3.752154516326045e-07,
+            0.3549105910309248
+          ],
+          "maxCorrection": 0.12354393490662284,
+          "releasedFraction": 0.015625,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voleur",
+          "requested": 6,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121502854
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voleur",
+          "requested": 6,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832887061460103
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "voleur",
+          "requested": 6,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886876727549
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "bergere",
+      "hash": "38b7c059b652c43aa63ab65123106e9495297027268a15471d0f971edec528e1",
+      "outcomes": [
+        {
+          "hero": "bergere",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013239795813198437,
+          "ankle": [
+            0.12372737470967915,
+            0.1533130189379931
+          ],
+          "hullSoles": [
+            -0.00016499972805983365,
+            0.0010593449300658059
+          ],
+          "sampledSkinSoles": [
+            -1.4976615233391888e-07,
+            0.15303790460223188
+          ],
+          "maxCorrection": 0.010508858219097698,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "bergere",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121543183
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "bergere",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886993176427
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "bergere",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886721804044
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "bergere",
+          "requested": 5.2,
+          "speed": 5.2,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 6,
+          "drift": 0.0016559024463064754,
+          "ankle": [
+            0.17318591525160876,
+            0.23441486576190007
+          ],
+          "hullSoles": [
+            -3.2252380377517653e-07,
+            -2.036539958893968e-08
+          ],
+          "sampledSkinSoles": [
+            -3.169951287643191e-07,
+            0.3349528220150168
+          ],
+          "maxCorrection": 0.0859499745053576,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "bergere",
+          "requested": 5.2,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121542983
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "bergere",
+          "requested": 5.2,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886993176427
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "bergere",
+          "requested": 5.2,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886721804044
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "colosse",
+      "hash": "5dcd7a69c276a9675323d8bdcb54c795221c54ba2aa895db4d7210826c405588",
+      "outcomes": [
+        {
+          "hero": "colosse",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0016114190837170647,
+          "ankle": [
+            0.13418737407253273,
+            0.1633949132803043
+          ],
+          "hullSoles": [
+            -0.0004944765370991921,
+            0.0011228900062395797
+          ],
+          "sampledSkinSoles": [
+            -1.5517397775402508e-07,
+            0.16668655437313548
+          ],
+          "maxCorrection": 0.03637051266319405,
+          "releasedFraction": 0.1342281879194631,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "colosse",
+          "requested": 1.8,
+          "speed": 1.2012394142002758,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.2601000130201886e-07,
+          "ankle": [
+            0.13339991604984414,
+            0.13340019284118443
+          ],
+          "hullSoles": [
+            -1.2967258150586858e-07,
+            2.775369379037773e-07
+          ],
+          "sampledSkinSoles": [
+            -1.1233060956405971e-07,
+            0.10832890545316012
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "colosse",
+          "requested": 1.8,
+          "speed": 1.2012394142002758,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.2021188726862284e-07,
+          "ankle": [
+            0.13339989505082656,
+            0.13340014839333797
+          ],
+          "hullSoles": [
+            -1.4754765434443762e-07,
+            2.354637994583797e-07
+          ],
+          "sampledSkinSoles": [
+            -1.2998385190421402e-07,
+            0.10832889468164017
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "colosse",
+          "requested": 1.8,
+          "speed": 1.2012394142002758,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.497841873463002e-07,
+          "ankle": [
+            0.1333999249749932,
+            0.13340014946406276
+          ],
+          "hullSoles": [
+            -1.1746621220165565e-07,
+            2.3633897605623844e-07
+          ],
+          "sampledSkinSoles": [
+            -9.549532484220968e-08,
+            0.10832889292049988
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "colosse",
+          "requested": 4.3,
+          "speed": 4.3,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 6,
+          "drift": 0.0026224822448271284,
+          "ankle": [
+            0.1647045232552805,
+            0.23897687284314473
+          ],
+          "hullSoles": [
+            -2.556990299495965e-07,
+            -5.9461978701991214e-08
+          ],
+          "sampledSkinSoles": [
+            0.0002375971122749558,
+            0.27885060038191756
+          ],
+          "maxCorrection": 0.04606596149305954,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "colosse",
+          "requested": 4.3,
+          "speed": 1.2012394142002758,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.2601000130201886e-07,
+          "ankle": [
+            0.13339991604984414,
+            0.13340019284118443
+          ],
+          "hullSoles": [
+            -1.2967258150586858e-07,
+            2.775369379037773e-07
+          ],
+          "sampledSkinSoles": [
+            -1.1233060956405971e-07,
+            0.10832890545315832
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "colosse",
+          "requested": 4.3,
+          "speed": 1.2012394142002758,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.2021188726862284e-07,
+          "ankle": [
+            0.13339989505082656,
+            0.13340014839333797
+          ],
+          "hullSoles": [
+            -1.4754765434443762e-07,
+            2.354637994583797e-07
+          ],
+          "sampledSkinSoles": [
+            -1.2998385190421402e-07,
+            0.10832889468164017
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "colosse",
+          "requested": 4.3,
+          "speed": 1.2012394142002758,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.497841873463002e-07,
+          "ankle": [
+            0.1333999249749932,
+            0.13340014946406276
+          ],
+          "hullSoles": [
+            -1.1746621220165565e-07,
+            2.3633897605623844e-07
+          ],
+          "sampledSkinSoles": [
+            -9.549532484220968e-08,
+            0.10832889292049988
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "accordeur",
+      "hash": "d5c1d418fe95a747176dc3654c25bbb6a43f0b5430c5f618b32e188126af7ed6",
+      "outcomes": [
+        {
+          "hero": "accordeur",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013239795813198437,
+          "ankle": [
+            0.12372737470967915,
+            0.1533130189379931
+          ],
+          "hullSoles": [
+            -0.00016499972805983365,
+            0.0010593449300658059
+          ],
+          "sampledSkinSoles": [
+            -1.4976615233391888e-07,
+            0.15303790460223188
+          ],
+          "maxCorrection": 0.010508858219097698,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "accordeur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121543183
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "accordeur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886993176427
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "accordeur",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886721804044
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "accordeur",
+          "requested": 5.3,
+          "speed": 5.3,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 7,
+          "drift": 0.010503185726595332,
+          "ankle": [
+            0.17051917992191695,
+            0.2379016519549383
+          ],
+          "hullSoles": [
+            -3.297642633404152e-07,
+            1.047956518784865e-08
+          ],
+          "sampledSkinSoles": [
+            -3.1917922582030966e-07,
+            0.3378201644954568
+          ],
+          "maxCorrection": 0.09869086749490799,
+          "releasedFraction": 0.014925373134328358,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "accordeur",
+          "requested": 5.3,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121542983
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "accordeur",
+          "requested": 5.3,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832886993176427
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "accordeur",
+          "requested": 5.3,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886721804044
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "neant",
+      "hash": "c00c762940bf03218bcf6bc8aab41fb8efaa3ab46e0d37e7d1d51daeb8bdc425",
+      "outcomes": [
+        {
+          "hero": "neant",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0010886721285464525,
+          "ankle": [
+            0.09971605933638245,
+            0.13212316955273706
+          ],
+          "hullSoles": [
+            -0.0002483736671083092,
+            0.0007902196222748237
+          ],
+          "sampledSkinSoles": [
+            -1.1508717170927163e-07,
+            0.1433916856120775
+          ],
+          "maxCorrection": 0.013434074253772667,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "neant",
+          "requested": 1.8,
+          "speed": 0.8905740484588253,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.1099728154666435e-07,
+          "ankle": [
+            0.09889992839452183,
+            0.09890010454601644
+          ],
+          "hullSoles": [
+            -1.0716932398457946e-07,
+            1.6352905021776998e-07
+          ],
+          "sampledSkinSoles": [
+            -9.07597581950581e-08,
+            0.1083288293998591
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "neant",
+          "requested": 1.8,
+          "speed": 0.8905740484588253,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.1950044845818197e-07,
+          "ankle": [
+            0.09889990440157725,
+            0.09890006510712757
+          ],
+          "hullSoles": [
+            -1.2406928720509747e-07,
+            1.3018140115894639e-07
+          ],
+          "sampledSkinSoles": [
+            -1.035445609115504e-07,
+            0.10832881890539744
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "neant",
+          "requested": 1.8,
+          "speed": 0.8905740484588253,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.4075612281992827e-07,
+          "ankle": [
+            0.09889994803758739,
+            0.09890006475775509
+          ],
+          "hullSoles": [
+            -9.903166728331136e-08,
+            1.298322575143951e-07
+          ],
+          "sampledSkinSoles": [
+            -7.679084278178205e-08,
+            0.10832881758121427
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "neant",
+          "requested": 5.8,
+          "speed": 4.893263914881339,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 7,
+          "drift": 0.012202577312690862,
+          "ankle": [
+            0.1492966513894159,
+            0.1923581560046021
+          ],
+          "hullSoles": [
+            -3.04809668616457e-07,
+            -3.766716133446479e-09
+          ],
+          "sampledSkinSoles": [
+            -3.048096634296338e-07,
+            0.29365887033318694
+          ],
+          "maxCorrection": 0.10550557727391818,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "neant",
+          "requested": 5.8,
+          "speed": 0.8905740484588253,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.1099728154666435e-07,
+          "ankle": [
+            0.09889992839452183,
+            0.09890010454601644
+          ],
+          "hullSoles": [
+            -1.0716932398457946e-07,
+            1.6352905021776998e-07
+          ],
+          "sampledSkinSoles": [
+            -9.07597581950581e-08,
+            0.10832882939985836
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "neant",
+          "requested": 5.8,
+          "speed": 0.8905740484588253,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.1950044845818197e-07,
+          "ankle": [
+            0.09889990440157725,
+            0.09890006510712757
+          ],
+          "hullSoles": [
+            -1.2406928720509747e-07,
+            1.3018140115894639e-07
+          ],
+          "sampledSkinSoles": [
+            -1.035445609115504e-07,
+            0.10832881890539744
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "neant",
+          "requested": 5.8,
+          "speed": 0.8905740484588253,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.4075612281992827e-07,
+          "ankle": [
+            0.09889994803758739,
+            0.09890006475775509
+          ],
+          "hullSoles": [
+            -9.903166728331136e-08,
+            1.298322575143951e-07
+          ],
+          "sampledSkinSoles": [
+            -7.679084278178205e-08,
+            0.10832881758121427
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    },
+    {
+      "hero": "eclipse",
+      "hash": "9b2810dba81da76cd2f080dbfaa0bfef896f0b11ced0e4cf4b6a023a467406ea",
+      "outcomes": [
+        {
+          "hero": "eclipse",
+          "requested": 1.8,
+          "speed": 1.8,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "walk"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 5,
+          "drift": 0.0013239795813198437,
+          "ankle": [
+            0.12372737470967915,
+            0.1533130189379931
+          ],
+          "hullSoles": [
+            -0.00016499972805983365,
+            0.0010593449300658059
+          ],
+          "sampledSkinSoles": [
+            -1.4976615233391888e-07,
+            0.15303790460223188
+          ],
+          "maxCorrection": 0.010508858219097698,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "eclipse",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121502948
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "eclipse",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832887061460103
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "eclipse",
+          "requested": 1.8,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886876727549
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "eclipse",
+          "requested": 5.5,
+          "speed": 5.5,
+          "dx": 0,
+          "dz": -1,
+          "states": [
+            "run"
+          ],
+          "modes": [
+            "calibrated"
+          ],
+          "groups": 7,
+          "drift": 0.011346015213307603,
+          "ankle": [
+            0.17201286233674667,
+            0.23824944659617936
+          ],
+          "hullSoles": [
+            -3.4332622156352244e-07,
+            5.320365092931212e-09
+          ],
+          "sampledSkinSoles": [
+            -3.3365312414324055e-07,
+            0.3418007571544554
+          ],
+          "maxCorrection": 0.10624351520924516,
+          "releasedFraction": 0.030303030303030304,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "eclipse",
+          "requested": 5.5,
+          "speed": 1.1080398044778408,
+          "dx": 0,
+          "dz": 1,
+          "states": [
+            "walk_back"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.9102746106879504e-07,
+          "ankle": [
+            0.1230499198446039,
+            0.12305016585526446
+          ],
+          "hullSoles": [
+            -1.2290437574613566e-07,
+            2.4283953375947576e-07
+          ],
+          "sampledSkinSoles": [
+            -1.0570602845816346e-07,
+            0.10832888121502854
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "eclipse",
+          "requested": 5.5,
+          "speed": 1.1080398044778408,
+          "dx": 1,
+          "dz": 0,
+          "states": [
+            "strafe_right"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 2.896435578318652e-07,
+          "ankle": [
+            0.1230498980261181,
+            0.12305012273350652
+          ],
+          "hullSoles": [
+            -1.3870838944107788e-07,
+            2.033209534069158e-07
+          ],
+          "sampledSkinSoles": [
+            -1.220988020689262e-07,
+            0.10832887061460103
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        },
+        {
+          "hero": "eclipse",
+          "requested": 5.5,
+          "speed": 1.1080398044778408,
+          "dx": -1,
+          "dz": 0,
+          "states": [
+            "strafe_left"
+          ],
+          "modes": [
+            "analytical"
+          ],
+          "groups": 4,
+          "drift": 3.162750033050818e-07,
+          "ankle": [
+            0.12304993417528515,
+            0.12305012331834153
+          ],
+          "hullSoles": [
+            -1.0926265395228008e-07,
+            2.0377053838727122e-07
+          ],
+          "sampledSkinSoles": [
+            -8.513217614192214e-08,
+            0.10832886876727549
+          ],
+          "maxCorrection": 0,
+          "releasedFraction": 0,
+          "coreReleaseFraction": 0
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

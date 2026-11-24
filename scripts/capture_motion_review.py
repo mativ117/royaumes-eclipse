@@ -10,6 +10,11 @@ from threading import Thread
 from urllib.parse import unquote,urlsplit
 import argparse,hashlib,json,subprocess,tempfile,time
 from playwright.sync_api import sync_playwright
+import sys as _check_sys
+from pathlib import Path as _CheckPath
+_check_sys.path.insert(0,str(_CheckPath(__file__).resolve().parents[1]/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'docs/previews'
 BEFORE='8f787ee328eb2396ee00da7067123159e22cdef5' # Published 1.3, pinned before this pass.
 FPS=30;WIDTH=720;HEIGHT=480

@@ -6,7 +6,11 @@ from threading import Thread
 import subprocess
 import json
 from playwright.sync_api import sync_playwright
+import sys
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 version=(ROOT/'VERSION').read_text().strip()
 paths=['index.html','cathedrale-v03.html','version.json','.nojekyll']
 before={p:(ROOT/'docs'/p).read_bytes() for p in paths}
@@ -21,10 +25,11 @@ try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
   ctx=b.new_context(viewport={'width':740,'height':390},has_touch=True,is_mobile=True)
-  page=ctx.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page=ctx.new_page();page.add_init_script('requestAnimationFrame=()=>0');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(url+'/cathedrale-v03.html?v=04')
   page.wait_for_url('**/index.html?v=04')
   assert f'Version {version}' in page.locator('#menu').text_content()
+  page.wait_for_function('avatarRuntime.status==="ready"&&!document.querySelector("#start").disabled',polling=50)
   page.tap('#start');assert page.evaluate('state')=='playing'
   page.evaluate('window.dispatchEvent(new Event("blur"))');assert page.evaluate('state')=='playing'
   page.evaluate('p.inv=999;p.x=9;p.z=7;update(1/60)');page.tap('#interact')

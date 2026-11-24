@@ -140,7 +140,7 @@ function readRun(rawOverride=null){
  try{
   const raw=rawOverride||localStorage.getItem(RUN_KEY);if(!raw||raw.length>60000)return null;
   const d=JSON.parse(raw),s=d.snapshot,q=s?.trials;
-  if(d.version!=='0.9'||!HERO_DEFS[d.hero]||!['vigor','haste'].includes(d.boon)||!q?.escort||!q?.bells||!q?.forge||!Array.isArray(q.ritual))return null;
+  if(!isBoundedSaveData(d)||d.version!=='0.9'||!isHeroId(d.hero)||!['vigor','haste'].includes(d.boon)||!q?.escort||!q?.bells||!q?.forge||!Array.isArray(q.ritual))return null;
   if(!Number.isFinite(s.x)||!Number.isFinite(s.z)||!(baseWorld?.onGround||world.onGround)(s.x,s.z))return null;
   if(!Array.isArray(s.keys)||s.keys.some(x=>!['west','east'].includes(x))||!Array.isArray(s.completed)||!Array.isArray(s.dead)||s.dead.some(id=>!ENCOUNTERS.some(e=>e.id===id)))return null;
   if(!Array.isArray(q.bells.order)||q.bells.order.length!==3||new Set(q.bells.order).size!==3||q.bells.order.some(x=>!LAMPS.some(l=>l.id===x)))return null;
@@ -159,4 +159,4 @@ function wireExpeditionUI(){
  $('#continueRun').hidden=!readRun();$('#continueRun').onclick=continueRun;
  $('#copyReport').onclick=async()=>{const text=expeditionReport();try{await navigator.clipboard.writeText(text);$('#copyReport').textContent='Bilan copié';}catch(_){$('#endText').textContent+=' '+text;}};
 }
-function expeditionReport(){return JSON.stringify({version:'1.4-rc1',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}
+function expeditionReport(){return JSON.stringify({version:'1.5-rc1',hero,serment:boon,activeSeconds:Math.round(campaign.activeSeconds||campaign.time),deaths:campaign.deaths||0,kills,finished:state==='won',chapters:campaign.chapterTimes||{}},null,2)}

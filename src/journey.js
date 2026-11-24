@@ -17,7 +17,7 @@ function journeyBatch(geo,material,items,cast=true){const mesh=new THREE.Instanc
 function buildJourneyScenery(level,regions){
  journey.stone=journeyMaterial(level===2?'#6d7b7c':'#6c6254');const ground=journeyMaterial(level===2?'#87928b':'#b8a58b'),ivory=journeyMaterial('#d5c5a8'),copper=journeyMaterial('#9c7449',.65,.5),redLeaves=journeyMaterial(level===2?'#9a4037':'#d39b64');
  const texture=makeArtTexture((g,n)=>{g.fillStyle=level===2?'#b3b8a2':'#c6b99c';g.fillRect(0,0,n,n);let seed=29;for(let i=0;i<2200;i++){seed=(seed*1664525+1013904223)>>>0;g.fillStyle=i%3?'#fff8db18':'#263b3b24';const x=seed%n;seed=(seed*1664525+1013904223)>>>0;g.fillRect(x,seed%n,1+(i%3),1);}g.strokeStyle='#66685d55';for(let i=0;i<8;i++){g.beginPath();g.moveTo(0,i*n/8);g.lineTo(n,i*n/8);g.stroke();}},512);texture.wrapS=texture.wrapT=THREE.RepeatWrapping;texture.repeat.set(6,6);ground.map=texture;journey.textures=[texture];
- for(const r of regions){const x=(r.x0+r.x1)/2,z=(r.z0+r.z1)/2;const floor=journeyBox(x,-.35,z,r.x1-r.x0,.7,r.z1-r.z0,ground);(journey.floorMeshes||(journey.floorMeshes=[])).push(floor);journeyBox(x,-1.1,z,r.x1-r.x0,1.1,r.z1-r.z0,journey.stone);}
+ for(const r of uniqueGroundRectangles(regions)){const x=(r.x0+r.x1)/2,z=(r.z0+r.z1)/2;const floor=journeyBox(x,-.35,z,r.x1-r.x0,.7,r.z1-r.z0,ground);(journey.floorMeshes||(journey.floorMeshes=[])).push(floor);journeyBox(x,-1.1,z,r.x1-r.x0,1.1,r.z1-r.z0,journey.stone);}
  const trunks=[],crowns=[],stones=[],archGeo=new THREE.TorusGeometry(1,.06,6,28,Math.PI);journey.geometries.push(archGeo);const arches=[];
  if(level===2){
   for(const side of [-1,1])for(let i=0;i<15;i++){const z=22-i*8.4,x=side*(i<8?31:28);trunks.push({p:[x,2.4,z],s:[.3,4.8,.3],r:[0,0,side*.12]});for(let j=0;j<3;j++)crowns.push({p:[x+Math.sin(i+j)*1.3,5+j*.7,z+Math.cos(i+j)],s:[2.8-j*.3,1.2,2.8-j*.2]});}
@@ -128,7 +128,7 @@ function performJourneyInteraction(target,actor=p){
  if(a==='supply'){if(journeyGroupClear())openJourneyChoice('supply');}
  if(a==='heart'){if(!journeyGroupClear('heart'))return;advanceJourney();}
  if(a==='secret'){
-  if(journey.secretOpen)return;journey.secretOpen=true;world.regions.push({x0:30,x1:45,z0:-63,z1:-57,name:'L’Escale invisible'},{x0:35,x1:47,z0:-68,z1:-51,name:'Le Reflet dernier'});journeyBox(38,-.4,-60,18,.8,6,journey.stone);journeyBox(41,-.4,-60,12,.8,17,journey.stone);spawnJourneyFoes('secret',[[41,-60,'porter']]);announce('L’escale prend forme. Affrontez l’ombre qui vous attend.');navCache=null;
+  if(journey.secretOpen)return;journey.secretOpen=true;const secretRegions=[{x0:30,x1:45,z0:-63,z1:-57,name:'L’Escale invisible'},{x0:35,x1:47,z0:-68,z1:-51,name:'Le Reflet dernier'}],surfaces=uniqueGroundRectangles(secretRegions,world.regions);world.regions.push(...secretRegions);for(const q of surfaces){const floor=journeyBox((q.x0+q.x1)/2,-.4,(q.z0+q.z1)/2,q.x1-q.x0,.8,q.z1-q.z0,journey.stone);(journey.floorMeshes||(journey.floorMeshes=[])).push(floor);}spawnJourneyFoes('secret',[[41,-60,'porter']]);announce('L’escale prend forme. Affrontez l’ombre qui vous attend.');navCache=null;
  }
  if(a==='secret-take'){recordSecret(2);effect(41,-60,6,'#ffdb85',1);}
  if(a==='exit')finish(true);

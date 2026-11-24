@@ -4,11 +4,16 @@ from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from functools import partial
 from threading import Thread
 from playwright.sync_api import sync_playwright
+import sys as _check_sys
+from pathlib import Path as _CheckPath
+_check_sys.path.insert(0,str(_CheckPath(__file__).resolve().parents[1]/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 ROOT=Path(__file__).resolve().parents[1]
 # This regression describes archived 1.3 modes, intentionally absent from 1.4.
 import json,sys
-if json.loads((ROOT/'docs/version.json').read_text()).get('modes')==['solo']:
- print('SKIP: local coop/arena modes are archived in 1.3 and excluded from the published solo bundle.')
+if set(json.loads((ROOT/'docs/version.json').read_text()).get('modes',[])).issubset({'solo','duel','lan'}):
+ print('SKIP: historical shared-keyboard coop/crown tests target archived 1.3; current tactical and LAN duels have dedicated tests.')
  sys.exit(0)
 class Quiet(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass

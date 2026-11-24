@@ -16,9 +16,10 @@ Lire [l’exigence durable](design/EXIGENCE-QUALITE.md) et l’appliquer aux tra
 ## Choix à préserver
 
 - Jeu par lien dans le navigateur sur PC et téléphone ; pas de migration de moteur imposée.
-- Sans serveur. Aventure solo uniquement pour l’instant ; anciens modes conservés dans les sources et les archives, hors du lancement et du bundle courants. L’IA locale des créatures et boss reste active.
+- Sans serveur cloud ni appel API pour le jeu ou les bots. Nouvelle demande confirmée : conserver l’aventure solo et ajouter des duels contre une IA tactique locale ainsi qu’entre navigateurs du même réseau, y compris téléphone ↔ téléphone sans PC. WebRTC direct avec appairage manuel ; ne pas réintroduire les anciens modes inutiles. Les archives restent intactes.
 - Détails visuels privilégiés avec réglage Léger. Une baisse de qualité doit préserver les informations, les contacts et les règles nécessaires pour jouer.
 - Trois chapitres, dix héros disponibles au départ et un héros secret ; profils locaux, export/import, anciennes reprises et archives à conserver.
+- Étendre explicitement le niveau de fabrication et de jouabilité de la Lame aux dix autres personnages, avec identité visuelle, gestuelle et pouvoirs propres.
 - Direction de la Lame déjà approuvée. Univers noir/ambre, monumental et drapé ; les références artistiques guident une production originale, sans prétendre reproduire leur qualité à ce stade.
 
 ## Production et preuves

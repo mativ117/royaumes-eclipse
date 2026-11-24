@@ -1,4 +1,51 @@
-# Suivi du projet — version candidate 1.4-rc1
+# Suivi du projet — candidate 1.5-rc1
+
+**État de reprise au 24 novembre 2026 :** contrôles locaux, captures réelles et paquet de la candidate 1.5-rc1 réussis ; publication en préparation. La 1.5 réunit les dix nouvelles fabrications de héros, la reprise du contrôle en combat, les portes et sols corrigés, un duel tactique sans API et un module LAN direct. Les résultats et limites figurent dans [la validation 1.5](VALIDATION-1.5.md). La connexion réelle entre appareils reste à éprouver.
+
+La [cible durable proche AAA](EXIGENCE-QUALITE.md) concerne **tout le jeu**. Les nouvelles demandes autorisent le duel contre une IA locale et le LAN, y compris téléphone ↔ téléphone sans PC ; elles complètent le choix solo de la 1.4, conservé dans ses archives. Le périmètre courant contient seulement l’aventure et ces deux usages utiles.
+
+## Livraison courante : engagements et preuves
+
+| Engagement | État vérifiable au point de reprise |
+|---|---|
+| Onze héros au même niveau de fabrication | Lame approuvée conservée ; dix modèles originaux détaillés avec sources Blender et atlas PBR. Dix exports Quaternius adaptés et provenance présents ; onze modèles contrôlés dans le jeu et l’atelier, 88 cas directionnels, onze kits et orientations des armes vérifiés. Finition et équilibrage humains encore ouverts |
+| Gestes adaptés à l’arme | Profils fusil, magique, dagues, lame et lourd ; données de foulée, contacts, cadence, pouvoir et fenêtre de frappe. Pas orientés et esquives gardent des solutions analytiques héritées ; aucun mocap annoncé |
+| Contrôle en combat | Déplacement tactile libre hors intention d’attaque, assistance stabilisée, préparation orientable bornée, direction active conservée, combo tamponné et récupération libérée ; CPU de contrôle/contact passé |
+| Couvert et physique | Tirs contrôlés sur la trajectoire et Bastion soumis à la ligne de vue ; contrôleur au sol et sous-pas conservés. Pas de relief parcourable ou de corps rigides ajoutés |
+| Grandes portes | Modules verticaux, dégagement visible lié au collider et protection d’acteur ; contrôle CPU avec vraie géométrie et collision passé. Parcours de mission et collision passés ; revue humaine de chaque seuil encore ouverte |
+| Matières et ombres | Union de sols aux deux conflits identifiés sans changer les régions logiques ; contacts Léger étendus aux autres chapitres et duels. Rendu Haute/Léger, textures réellement décodées et appuis contrôlés ; finition artistique encore ouverte |
+| Aventure | Trois chapitres, objectifs, boss, ancres, conclusion, secret et anciennes reprises conservés ; parcours des trois conclusions, secret et reprises passé après exports |
+| Duel tactique | Bot local sans API, perception retardée, couvert, portée, récupération et pouvoirs ; tests CPU passés. Duel intégré, onze kits, manches, couverts, sauvegardes et trois relances passent |
+| LAN entre appareils | Module WebRTC direct, offre/réponse manuelles, hôte autoritaire et deux joueurs. Schéma/transport/chemins d’échec contrôlés ; synchronisation du jeu passée avec pont en mémoire |
+| Preuve LAN réelle | **Non acquise** : la politique Chromium gérée interdit les candidats ICE locaux. Handshake natif SKIP. Le pont de test ne valide ni DTLS réel, ni deux téléphones, ni leur routeur |
+| Sauvegardes et commandes | Profils locaux, secret, import/export, remappage et manette conservés ; parcours de commandes sur les trois modes, remappage, interfaces et conservation des profils passés |
+| Sécurité | Identifiants propres, caches et graphes de sauvegarde bornés ; rôles, session, séquences, tailles et débits réseau ; CSP à empreintes et referrer. Tests dédiés passés, sans prétendre à un audit de pénétration certifié |
+| Publication et historique | Sources/licences/archives conservées. Projet courant vérifié et complet avec manifeste ; toutes les archives restent dans le ZIP généré par GitHub. Publication et vérification distante à relever après envoi |
+
+Les [prises en charge 1.5](PRISE-EN-CHARGE-1.5.md), l’[audit profond](AUDIT-PROFOND-1.5.md) et la [couverture du jeu entier](COUVERTURE-QUALITE.md) détaillent les critères. [Modes](MODES-1.5.md), [duel et IA](DUELS-1.5.md), [guide LAN téléphone](LAN-TELEPHONES-1.5.md), [sécurité LAN](LAN-SECURITE-1.5.md) et [portes/matières](PORTES-MATIERES-1.5.md) décrivent les règles et limites.
+
+## Ordre de clôture
+
+1. Contrôler les dix exports adaptés et leur provenance ; vérifier corps, mains, armes et actions dans l’atelier et le jeu, en conservant le GLB approuvé de la Lame.
+2. Rejouer les onze kits, le duel, la campagne, les anciennes sauvegardes et les commandes. Garder les tests GPU séquentiels. Consigner PASS, défaut ou SKIP réel ; ne pas transformer un saut de test en succès.
+3. Ajouter les captures et preuves du build courant. Les captures `r5-*-studio.jpg` doivent provenir du moteur et être accompagnées de leur relevé ; les anciens comparatifs restent datés de leur version.
+4. Construire, vérifier l’intégrité des archives, puis publier et vérifier les fichiers publics. Le relevé final 1.5 est pris en charge par le responsable de livraison ; les phrases de ce suivi doivent refléter ses résultats réels.
+5. Essayer ensuite deux téléphones physiques, la difficulté, la découverte des niveaux et les performances sur matériel identifié. Ces preuves ne peuvent pas être remplacées par le navigateur de développement.
+
+## Travail qui reste à produire après cette passe
+
+- Revue à 1× des transitions, appuis orientés, esquives, drapés, réactions et personnalité de chacun des onze héros ; aucune équivalence artistique finale n’est déduite des compteurs d’actions ou de matériaux.
+- Anatomie, locomotion, langage d’attaque et présentation propres aux autres familles ennemies et aux trois boss. Le bot du duel ne remplace pas ce chantier.
+- Composition des zones, fonctions des lieux, orientation, alternance des épreuves et rythme de découverte. La cible de 10–15 minutes par chapitre n’est pas une durée humaine mesurée.
+- Mise en scène du récit, conséquences visibles, variantes sonores, timbres et mixage. Trois motifs synthétiques et une chronique ne constituent pas la bande-son ou la narration finales.
+- Mesures PC/téléphone identifiés : chargement, mémoire, p50/p95/p99, chauffe, contrôles et écoute. Pas de revendication de FPS iPhone depuis un rendu logiciel.
+- Validation native du LAN et des conditions réseau. Aucun compte distant, synchronisation cloud, classement ou anti-triche compétitif n’est livré ; un hôte modifiant sa propre simulation reste une limite du pair-à-pair.
+
+## Historique conservé
+
+Les notes suivantes restent un relevé daté de la 1.4 et des passes antérieures. Leurs mentions « solo uniquement », « autres héros conservés » ou « pas de réseau entre appareils » décrivent ces anciennes livraisons, pas le périmètre courant 1.5. Leurs captures et validations ne sont pas des preuves du build 1.5.
+
+# Historique du suivi — livraison 1.4-rc1
 
 **État de reprise :** 1.4-rc1 publiée et vérifiée sur GitHub Pages. Les 23 suites locales et les contrôles publics sont consignés dans [la validation](VALIDATION-1.4.md) et [le relevé distant](PUBLICATION-1.4.json). La [consigne globale proche AAA](EXIGENCE-QUALITE.md), confirmée ensuite par l’utilisateur, s’applique à tous les contenus et systèmes ; elle reste l’objectif de production. Les instructions de reprise sont dans [AGENTS.md](../AGENTS.md).
 

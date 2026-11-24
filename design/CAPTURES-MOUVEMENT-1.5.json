@@ -1,0 +1,105 @@
+{
+  "version": "1.5-rc1",
+  "captured_at_utc": "2026-11-24T08:03:52Z",
+  "notes": [
+    "Actual WebGL game, ordinary desktop gameplay camera; controlled input timeline.",
+    "HUD hidden for both clips; level, actors and collision simulation retained.",
+    "Actual Light quality preset; detailed studio stills are separate. No full-shadow claim for these clips.",
+    "Player begins at the real campaign spawn; no visual actor relocation.",
+    "Two 1/60 s simulation calls per 30 fps frame; playback 1x, audio absent.",
+    "Frame export does not measure physical-device performance, balance or artistic quality.",
+    "Only static menu footer copy changed after capture; original capture HTML hashes retained. Inline engine and gameplay scripts are byte-identical to the final build."
+  ],
+  "outputs": [
+    {
+      "file": "docs/previews/r5-rempart-motion.mp4",
+      "sha256": "eed43801d4ebf323786f63ef49e4a9f7b7891f579a0aa29ad5bd87a2d44e4f1c",
+      "duration": 4.0,
+      "width": 600,
+      "height": 400,
+      "fps": 30,
+      "audio": false,
+      "playback_speed": 1,
+      "hardware_fps_measured": false,
+      "hero": "rempart",
+      "version": "1.5-rc1",
+      "html_sha256": "46a15c1984f17c833f59f7ab9275aa02cef4d8a911083911d5f2cb130a9148a0",
+      "model_sha256": "69c5196560435460f2bfd4c452e4040c562405c6c92fa52783d2f9a8da55c7a4",
+      "frames": 120,
+      "simulation_calls": 240,
+      "simulation_seconds": 3.9999999999999907,
+      "camera": "ordinary desktop gameplay",
+      "hud_hidden": true,
+      "quality": "light",
+      "combos_seen": [
+        0
+      ],
+      "attack_kinds_seen": [
+        "shot"
+      ],
+      "start": {
+        "x": 0,
+        "z": 23,
+        "hp": 150,
+        "shots": 0
+      },
+      "end": {
+        "state": "playing",
+        "t": 3.9999999999999907,
+        "x": 0.39347474423007855,
+        "z": 19.342,
+        "hp": 150,
+        "combo": 0,
+        "attack": null,
+        "shots": 3
+      }
+    },
+    {
+      "file": "docs/previews/r5-voleur-motion.mp4",
+      "sha256": "82e99c65dcc9717a6287ec8138872e4fa4de1019ed8b3e3a7f967e865f9485d3",
+      "duration": 4.0,
+      "width": 600,
+      "height": 400,
+      "fps": 30,
+      "audio": false,
+      "playback_speed": 1,
+      "hardware_fps_measured": false,
+      "hero": "voleur",
+      "version": "1.5-rc1",
+      "html_sha256": "46a15c1984f17c833f59f7ab9275aa02cef4d8a911083911d5f2cb130a9148a0",
+      "model_sha256": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
+      "frames": 120,
+      "simulation_calls": 240,
+      "simulation_seconds": 3.9999999999999907,
+      "camera": "ordinary desktop gameplay",
+      "hud_hidden": true,
+      "quality": "light",
+      "combos_seen": [
+        0,
+        1,
+        2
+      ],
+      "attack_kinds_seen": [
+        "melee"
+      ],
+      "start": {
+        "x": 0,
+        "z": 23,
+        "hp": 105,
+        "shots": 0
+      },
+      "end": {
+        "state": "playing",
+        "t": 3.9999999999999907,
+        "x": 0.34603452893599995,
+        "z": 19.342,
+        "hp": 105,
+        "combo": 2,
+        "attack": null,
+        "shots": 2
+      }
+    }
+  ],
+  "runtime_scripts_sha256": "4c6a0a7586d78c4640add3e66735f3767076f3cd6f9148442c3b224b324cc4bf",
+  "final_html_sha256": "34923ae1076e22296fe98a3c64ed1fca2856364286ab67e6b42dc237c2a3fa14"
+}

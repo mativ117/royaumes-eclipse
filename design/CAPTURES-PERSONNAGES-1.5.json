@@ -1,0 +1,106 @@
+{
+  "version": "1.5-rc1",
+  "captured_at_utc": "2026-11-24T08:09:10Z",
+  "kind": "actual WebGL studio stills; no retouching; no device FPS claim",
+  "outputs": [
+    {
+      "hero": "rempart",
+      "file": "docs/previews/r5-rempart-studio.jpg",
+      "sha256": "4ad3e63b2820f11b912b874e2d73a686158e67444660d0c4f056e8bbd3dcf0d8",
+      "model_sha256": "69c5196560435460f2bfd4c452e4040c562405c6c92fa52783d2f9a8da55c7a4",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "voltigeur",
+      "file": "docs/previews/r5-voltigeur-studio.jpg",
+      "sha256": "49ded11ecf4398fe549ef89694f6e939af7d7325383ca2dc382280c2cecdb007",
+      "model_sha256": "6563ebe508cc1add60acadc34aa13915d604a50a513366b44fdb8c53f41e4d4f",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "lame",
+      "file": "docs/previews/r5-lame-studio.jpg",
+      "sha256": "cb3d64072ecb191c94080df27f571e070e15c7d358fd0dd4bafd274805371f39",
+      "model_sha256": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "tisseuse",
+      "file": "docs/previews/r5-tisseuse-studio.jpg",
+      "sha256": "ac6f7e6a59ad96b24890d9f58d7114700d8307e38ff81a065b0262f190f4e74f",
+      "model_sha256": "e67b1a2ec703bb6f3e26e4f9228bb25f81a247d2a9802479917dc7ad901dbcb8",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "cendres",
+      "file": "docs/previews/r5-cendres-studio.jpg",
+      "sha256": "3233793a96c78e16f51f00a36911878d0bf6f86fef8ba751034a1a0ca704bd37",
+      "model_sha256": "5961211bc512609909663c2613d7a6e21ecf82b23384e4d0dbba86c03066d13d",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "voleur",
+      "file": "docs/previews/r5-voleur-studio.jpg",
+      "sha256": "b74cbe45b1a014fb9c98526346283f4769c9eb1acd6c6404d58c9ffff197aec0",
+      "model_sha256": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "bergere",
+      "file": "docs/previews/r5-bergere-studio.jpg",
+      "sha256": "64cf1af371cb6ba4ada340466fa2094d815b87c59458aaed96cf195fcbbf29b9",
+      "model_sha256": "38b7c059b652c43aa63ab65123106e9495297027268a15471d0f971edec528e1",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "colosse",
+      "file": "docs/previews/r5-colosse-studio.jpg",
+      "sha256": "c4b20161cc5ac91c38392950d6903afe4474add9adc1a6a32fdbf3487c426a0b",
+      "model_sha256": "5dcd7a69c276a9675323d8bdcb54c795221c54ba2aa895db4d7210826c405588",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "accordeur",
+      "file": "docs/previews/r5-accordeur-studio.jpg",
+      "sha256": "90636745d026edd025458fda035d9578271c47cd7ade5bb5ac4697f5d05ba7e8",
+      "model_sha256": "d5c1d418fe95a747176dc3654c25bbb6a43f0b5430c5f618b32e188126af7ed6",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "neant",
+      "file": "docs/previews/r5-neant-studio.jpg",
+      "sha256": "f38dacd756f90bbb4459a380d24eb5554b1b0b9c3f79086ad01b34ccb06fa129",
+      "model_sha256": "c00c762940bf03218bcf6bc8aab41fb8efaa3ab46e0d37e7d1d51daeb8bdc425",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    },
+    {
+      "hero": "eclipse",
+      "file": "docs/previews/r5-eclipse-studio.jpg",
+      "sha256": "9f870d6c7432957b5d24609284ef84b508e881303beae4cfedf40f8483e5c0e7",
+      "model_sha256": "9b2810dba81da76cd2f080dbfaa0bfef896f0b11ced0e4cf4b6a023a467406ea",
+      "pose": "guard",
+      "width": 600,
+      "height": 760
+    }
+  ]
+}

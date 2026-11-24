@@ -1,23 +1,36 @@
 {
-  "version": "1.4-rc1",
+  "version": "1.5-rc1",
   "modes": [
-    "solo"
+    "solo",
+    "duel",
+    "lan"
   ],
+  "network": {
+    "transport": "WebRTC",
+    "pairing": "manual-files",
+    "players": 2,
+    "external_signaling": false,
+    "api_calls": false
+  },
+  "security": {
+    "scripts": "CSP hashes",
+    "referrer": "no-referrer"
+  },
   "creatures": {
     "obsidian-warden.glb": "8e03fef66e9198fa786e567a1e5b976fb6fd5f648985d443148a84d35a9f91e7"
   },
   "models": {
-    "accordeur.glb": "01680004c41145f62ef84ab03dff96699946bb4c9c9e26821f7909eec3e90a04",
-    "bergere.glb": "57dbe8c466f70449cb0c1f9cefa0b67eec13242d39a5c4684bce598a6d40c5a9",
-    "cendres.glb": "e5e9db64c7a4f39113788360c6791f8a67af979cec048db8d753fcd4b9f4236f",
-    "colosse.glb": "8ee09985650705a0a80ed1b3caf667c5e2d822e62ae3f635f52fedcd413ce579",
-    "eclipse.glb": "287e799203668e64f502d9d6afd836224b9cecf9a8a0a63a56b5e69bff4936d1",
+    "accordeur.glb": "d5c1d418fe95a747176dc3654c25bbb6a43f0b5430c5f618b32e188126af7ed6",
+    "bergere.glb": "38b7c059b652c43aa63ab65123106e9495297027268a15471d0f971edec528e1",
+    "cendres.glb": "5961211bc512609909663c2613d7a6e21ecf82b23384e4d0dbba86c03066d13d",
+    "colosse.glb": "5dcd7a69c276a9675323d8bdcb54c795221c54ba2aa895db4d7210826c405588",
+    "eclipse.glb": "9b2810dba81da76cd2f080dbfaa0bfef896f0b11ced0e4cf4b6a023a467406ea",
     "lame.glb": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
-    "neant.glb": "6a657b62a0a8ab11113f3fd130275f422e6f047419c2dfa1acb71dd5bec72ab3",
-    "rempart.glb": "c62628451115d6ff74a5020929c88ae09d09539a9812ad407941a04c80580f2d",
-    "tisseuse.glb": "ee7b2bcbef93e388e467937fe801dd64a38f17559e232a02762b990892e12c24",
-    "voleur.glb": "ee69d2e4bdbc544162a6068478d8921c713f10ee95f11a83523610fde3a38778",
-    "voltigeur.glb": "2b43894464fc30a5df8d7e2427c2c7957f46900aada55a2cb614d14745978757"
+    "neant.glb": "c00c762940bf03218bcf6bc8aab41fb8efaa3ab46e0d37e7d1d51daeb8bdc425",
+    "rempart.glb": "69c5196560435460f2bfd4c452e4040c562405c6c92fa52783d2f9a8da55c7a4",
+    "tisseuse.glb": "e67b1a2ec703bb6f3e26e4f9228bb25f81a247d2a9802479917dc7ad901dbcb8",
+    "voleur.glb": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
+    "voltigeur.glb": "6563ebe508cc1add60acadc34aa13915d604a50a513366b44fdb8c53f41e4d4f"
   },
-  "source_sha256": "6378000ed4fe62ffb818faaeda3c7c804e7087803bfb766d66155b4e9740d469"
+  "source_sha256": "ac904765cd68e2469f1d4b09f3ffe0fd7dd4cc6f3c3099f48779229d703ec997"
 }

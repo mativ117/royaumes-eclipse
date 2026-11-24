@@ -10,6 +10,11 @@ import hashlib
 import json
 import struct
 from playwright.sync_api import sync_playwright
+import sys as _check_sys
+from pathlib import Path as _CheckPath
+_check_sys.path.insert(0,str(_CheckPath(__file__).resolve().parents[1]/'scripts'))
+from browser_checks import install_csp_wait
+install_csp_wait()
 
 ROOT=Path(__file__).resolve().parents[1]
 MODEL=ROOT/'assets/characters/lame.glb'
@@ -56,7 +61,7 @@ with sync_playwright() as pw:
  assert run('heldImages.length===6&&avatarRuntime.status==="loading"&&document.querySelector("#start").disabled&&modelLoads.length===0'), 'Start must await all photographed maps, before hero loads'
  run('releaseMaterialImages()')
  page.wait_for_function('avatarRuntime.status==="ready"',polling=50)
- assert run('!document.querySelector("#start").disabled&&modelLoads.join(",")==="rempart,voltigeur,lame"')
+ assert run('!document.querySelector("#start").disabled&&modelLoads.join(",")==="lame"'), 'Only the selected hero should load before play'
  assert run('groundMaterial.map.version>placeholderVersion&&groundMaterial.map.image===presentation.surfaces.stone.map.image'), 'Already assigned clones must receive the real photo'
  assert run('''()=>{const c=groundMaterial.map.image,d=c.getContext('2d').getImageData(0,0,c.width,c.height).data;let low=255,high=0;for(let i=0;i<d.length;i+=148){low=Math.min(low,d[i]);high=Math.max(high,d[i])}return high-low>30}'''), 'Photographic map must replace the uniform placeholder'
 

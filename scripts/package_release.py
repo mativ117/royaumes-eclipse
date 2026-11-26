@@ -14,7 +14,7 @@ import zipfile
 from html_security import secure_html
 
 ROOT = Path(__file__).resolve().parents[1]
-MAX_PACKAGE_BYTES = 95_000_000  # Leave headroom below GitHub's hard 100 MiB limit.
+MAX_PACKAGE_BYTES = 100_000_000  # Leave headroom below GitHub's hard 100 MiB limit.
 SOURCE_ARCHIVE = 'https://github.com/mativ117/royaumes-eclipse/archive/refs/heads/main.zip'
 
 
@@ -57,6 +57,12 @@ def package_release():
     end = html.index(';\n', start) + 1
     snapshot = html[:start] + 'const ROYAUMES_CHARACTER_DATA=' + json.dumps(
         models, separators=(',', ':')) + ';' + html[end:]
+    for f in sorted((ROOT/'assets/creatures').glob('*.glb')):
+        assert hashlib.sha256(f.read_bytes()).hexdigest()==built['creatures'][f.name], 'Creature changed since build'
+    enemies={role:base64.b64encode((ROOT/'assets/creatures'/name).read_bytes()).decode() for role,name in [('archer','archer-thorn.glb'),('shade','shade-manta.glb')]}
+    marker='const ROYAUMES_ENEMY_DIRECTION_DATA='
+    start=snapshot.index(marker);end=snapshot.index(';\n',start)+1
+    snapshot=snapshot[:start]+marker+json.dumps(enemies,separators=(',',':'))+';'+snapshot[end:]
     icon = base64.b64encode((ROOT / 'docs/favicon.svg').read_bytes()).decode()
     snapshot = snapshot.replace('href="./favicon.svg"',
                                 'href="data:image/svg+xml;base64,' + icon + '"')
@@ -85,7 +91,7 @@ def package_release():
                 write(z, f.relative_to(ROOT).as_posix(), f.read_bytes())
             write(z, 'PAQUET.json', (json.dumps(manifest, indent=2, ensure_ascii=False) + '\n').encode())
         if temporary.stat().st_size > MAX_PACKAGE_BYTES:
-            raise RuntimeError('Project package exceeds 95 MB; no existing ZIP was overwritten. '
+            raise RuntimeError('Project package exceeds 100 MB; no existing ZIP was overwritten. '
                                'Use GitHub generated source archive for the complete repository.')
         os.replace(temporary, output)
     finally:

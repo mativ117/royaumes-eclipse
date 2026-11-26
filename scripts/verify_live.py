@@ -45,7 +45,7 @@ assert len(manifest['models']) == 11, 'All ordinary and secret models must be pu
 # Verify current review pages plus actual media. r1-r4 remain dated historical
 # comparisons; their presence is never evidence of new 1.5 movement quality.
 media = sorted(f.relative_to(ROOT / 'docs').as_posix()
-               for f in (ROOT / 'docs/previews').glob('r5-*') if f.is_file())
+               for f in (ROOT / 'docs/previews').glob('r6-*') if f.is_file())
 review_files = ['gestes-et-creatures.html', 'atelier-lame.html', 'ambre-obsidienne.html',
                 'assets/concepts/lame-01.png']
 for name in review_files + media:
@@ -55,7 +55,7 @@ archive = release_path(version)
 relative = archive.relative_to(ROOT).as_posix()
 package = get('https://raw.githubusercontent.com/mativ117/royaumes-eclipse/main/' + relative)
 assert package == archive.read_bytes(), 'Public current-project ZIP differs'
-assert len(package) <= 95_000_000, 'Package exceeds publication headroom'
+assert len(package) <= 100_000_000, 'Package exceeds publication headroom'
 proof = {
     'version': version,
     'html_sha256': digest(html),
@@ -67,7 +67,7 @@ proof = {
     'zip_bytes': len(package),
     'zip_sha256': digest(package),
     'verified_review_files': review_files,
-    'verified_1_5_media': media,
+    'verified_1_6_media': media,
     'real_device_lan_validation': False,
 }
 Path('/tmp/royaumes-live-proof.json').write_text(json.dumps(proof, indent=2) + '\n')

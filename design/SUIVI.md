@@ -1,3 +1,15 @@
+# Suivi courant — candidate 1.6-rc1
+
+Clôture du 26 novembre 2026 : huit suites finales et le paquet déterministe passent ; captures réelles actualisées. Publication de la 1.6 en cours, à confirmer par le relevé distant. La [comparaison AAA](COMPARAISON-AAA-1.6.md) motive cette passe ; la [matrice](PRISE-EN-CHARGE-1.6.md) et la [validation](VALIDATION-1.6.md) distinguent production, essais et limites.
+
+- Deux créatures originales intégrées : Veilleur des fils et Raie du reflet, avec clips, PBR, sources Blender, comportements et collisions propres.
+- Composition et matières des trois chapitres, caméra solo cadrant les deux corps et éclairage de lecture repris.
+- Trois partitions synthétiques adaptatives, quatre effets de créature et présentations narratives courtes intégrés.
+- Onze héros, trois chapitres, profils, anciennes reprises et duels conservés. Le LAN natif entre téléphones reste à valider ; aucune preuve en mémoire n'est annoncée comme connexion réelle.
+- La cible AAA du jeu entier demeure ouverte : autres familles et boss, animation complète des héros, relief et composition détaillée, présentation narrative, timbres/mix, équilibrage et mesures physiques.
+
+Les relevés ci-dessous restent historiques ; leurs versions et limites ne décrivent pas automatiquement la livraison courante.
+
 # Suivi du projet — candidate 1.5-rc1
 
 **État de reprise au 24 novembre 2026 :** candidate 1.5-rc1 publiée et vérifiée sur GitHub Pages. Contrôles locaux, captures réelles et paquet réussis. La 1.5 réunit les dix nouvelles fabrications de héros, la reprise du contrôle en combat, les portes et sols corrigés, un duel tactique sans API et un module LAN direct. Les résultats et limites figurent dans [la validation 1.5](VALIDATION-1.5.md). Le [relevé distant](PUBLICATION-1.5.json) consigne la publication du code `07a4c69`. La connexion réelle entre appareils reste à éprouver.

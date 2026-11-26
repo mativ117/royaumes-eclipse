@@ -1,5 +1,5 @@
 {
-  "version": "1.5-rc1",
+  "version": "1.6-rc1",
   "modes": [
     "solo",
     "duel",
@@ -17,7 +17,9 @@
     "referrer": "no-referrer"
   },
   "creatures": {
-    "obsidian-warden.glb": "8e03fef66e9198fa786e567a1e5b976fb6fd5f648985d443148a84d35a9f91e7"
+    "archer-thorn.glb": "fc80676176d49f1eddd586f3ec9db73b7277178ec16ec0bc320d0795d87851ac",
+    "obsidian-warden.glb": "8e03fef66e9198fa786e567a1e5b976fb6fd5f648985d443148a84d35a9f91e7",
+    "shade-manta.glb": "817895fa8ede266efa0dabed4eb92358ff5f38320a98ac8d480b91cb2c686d26"
   },
   "models": {
     "accordeur.glb": "d5c1d418fe95a747176dc3654c25bbb6a43f0b5430c5f618b32e188126af7ed6",
@@ -32,5 +34,5 @@
     "voleur.glb": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
     "voltigeur.glb": "6563ebe508cc1add60acadc34aa13915d604a50a513366b44fdb8c53f41e4d4f"
   },
-  "source_sha256": "ac904765cd68e2469f1d4b09f3ffe0fd7dd4cc6f3c3099f48779229d703ec997"
+  "source_sha256": "7569c81b60918d7c4f8d7c8694bf386efe9dd4842b7db1741aa1ad8f65243d94"
 }

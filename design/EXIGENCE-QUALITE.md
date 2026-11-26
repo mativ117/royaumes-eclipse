@@ -23,7 +23,7 @@ La cible porte sur la cohérence de l’expérience complète : ce que le joueur
 
 ## Décisions produit conservées
 
-Le jeu reste accessible par lien, dans le navigateur, sur PC et téléphone. Le choix sans serveur est conservé. L’aventure solo est le périmètre actuel confirmé ; les anciens modes restent dans les sources et archives et ne doivent pas réapparaître dans le lancement ou le bundle courant. Les créatures et boss conservent leur IA locale, sans service connecté.
+Le jeu reste accessible par lien, dans le navigateur, sur PC et téléphone. Le choix sans serveur est conservé. Le périmètre courant conserve l’aventure solo, les duels contre une IA tactique locale et le module LAN direct demandé ensuite, y compris téléphone ↔ téléphone sans PC obligatoire. Le transfert natif du LAN reste à éprouver. Les anciens modes inutiles restent dans les archives. Les créatures et boss conservent leur IA locale, sans service connecté.
 
 Les détails visuels sont privilégiés avec un réglage Léger. Les trois chapitres, les dix héros disponibles dès le début, le onzième personnage secret, les profils locaux, l’export/import, les anciennes reprises et l’historique restent à préserver. La direction de la Lame déjà approuvée est une base de production ; elle ne demande pas une nouvelle validation pour chaque correction déjà autorisée.
 

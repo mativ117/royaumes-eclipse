@@ -80,7 +80,7 @@ function poseHero(dt){
  if(!a&&p.leap<=0&&p.dashT<=0&&campaign.worldUse&&t-campaign.worldUse.started<.55){const reach=Math.sin((t-campaign.worldUse.started)/.55*Math.PI);player.arms[1].rotation.x=reach*1.3;player.body.rotation.y=-reach*.12;}
  if(p.stagger>0)player.body.rotation.z=Math.sin(p.stagger*55)*.1;updateRigAvatar(dt);
 }
-function poseEnemy(e){
+function poseEnemy(e,dt=1/60){if(typeof poseEnemyDirectionV16==='function'&&poseEnemyDirectionV16(e,dt))return;
  if(updateCreatureReference(e,1/60))return;
  if(!e.rig)return;
  const moved=e.poseX===undefined?0:Math.hypot(e.x-e.poseX,e.z-e.poseZ),poseDt=Math.max(.001,t-(e.poseTime??t-1/60));e.poseX=e.x;e.poseZ=e.z;e.poseTime=t;e.gaitPhase=(e.gaitPhase||0)+moved/(['boss','porter'].includes(e.type)?1.8:1.3)*Math.PI*2;

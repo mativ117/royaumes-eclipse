@@ -46,7 +46,7 @@ function syncSoundscapeLevels(s){
 }
 function scoreVoice(frequency,time,duration,volume,kind='sine'){
  const s=initSoundscape();if(!s)return;const o=audio.createOscillator(),g=audio.createGain(),filter=audio.createBiquadFilter();o.type=kind;o.frequency.value=frequency;filter.type='lowpass';filter.frequency.value=kind==='triangle'?1000:2400;
- g.gain.setValueAtTime(0,time);g.gain.linearRampToValueAtTime(volume,time+Math.min(.12,duration*.1));g.gain.exponentialRampToValueAtTime(.0001,time+duration);o.connect(filter);filter.connect(g);g.connect(s.music);
+ g.gain.value=.000001;g.gain.setValueAtTime(0,time);g.gain.linearRampToValueAtTime(volume,time+Math.min(.12,duration*.1));g.gain.exponentialRampToValueAtTime(.0001,time+duration);o.connect(filter);filter.connect(g);g.connect(s.music);
  s.voices.add(o);o.scoreGain=g;o.onended=()=>{s.voices.delete(o);o.disconnect();filter.disconnect();g.disconnect();};o.start(time);o.stop(time+duration+.03);s.events++;
 }
 function stopScoreVoices(s,now){
@@ -100,7 +100,9 @@ function updateSoundscape(dt){
  if(!enabled){if(s.active!==false)resetSoundscapeTransport(s,now);s.active=false;return;}
  const level=journey.level||1;if(s.active!==true||s.level!==level||s.lastActor&&s.lastActor!==p){resetSoundscapeTransport(s,now);if(s.level!==level)s.beat=0;s.level=level;s.active=true;}
  s.lastActor=p;const score=SCORE[level],combat=!!battle||campaign.bossAwake||enemies.some(e=>!e.dead&&e.alert>1&&Math.hypot(e.x-p.x,e.z-p.z)<12);if(s.next<now-.2)s.next=now;
+ if(typeof scheduleEncounterScore==='function'){scheduleEncounterScore(s,level,combat,now);}else{
  while(s.next<now+.12){const beat=s.beat,bar=Math.floor(beat/4),chord=score.chords[Math.floor(bar/2)%4],f=semitone=>score.root*Math.pow(2,semitone/12);if(beat%4===0){scoreVoice(f(chord-12),s.next,score.beat*4.2,.07,'triangle');scoreVoice(f(chord),s.next,score.beat*4.8,.025);scoreVoice(f(chord+7),s.next+.04,score.beat*4.6,.018);}if(beat%2===0)scoreVoice(f(score.motif[(beat/2)%8]),s.next,score.beat*2.8,.035);if(combat){scoreVoice(f(chord-12),s.next,.16,.065,'triangle');if(beat%2)scoreVoice(f(19),s.next,.12,.018);}s.beat=(beat+1)%32;s.next+=score.beat;}
+ }
  const point={x:p.x,z:p.z},avatar=typeof avatarRuntime!=='undefined'?avatarRuntime.current:null,calibrated=avatar?.motionCalibration&&Number.isFinite(avatar.motionFootstepSerial);
  if(calibrated){const serial=avatar.motionFootstepSerial;if(s.stepAvatar!==avatar||s.lastFootstepSerial===null||serial<s.lastFootstepSerial){s.stepAvatar=avatar;s.lastFootstepSerial=serial;}else if(serial>s.lastFootstepSerial){if(p.dashT<=0&&p.leap<=0&&(p.motionSpeed||0)>.18)playWorldSound('step',Math.min(1,(p.motionSpeed||1)/3),point);s.lastFootstepSerial=serial;}s.stepDistance=0;}
  else if(s.lastStep&&p.dashT<=0&&p.leap<=0){const distance=Math.hypot(point.x-s.lastStep.x,point.z-s.lastStep.z);if(distance<1){s.stepDistance+=distance;if(s.stepDistance>.82){playWorldSound('step',Math.min(1,(p.motionSpeed||1)/3),point);s.stepDistance%=.82;}}else s.stepDistance=0;}else s.stepDistance=0;s.lastStep=point;

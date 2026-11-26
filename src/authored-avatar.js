@@ -39,7 +39,7 @@ async function prepareHeroSelection(){
 }
 async function loadAuthoredHeroes(){
  $('#start').disabled=true;$('#start').textContent='Préparation de l’expédition…';
- try{await waitReferenceMaterials();if(typeof initCreatureReference==='function')await initCreatureReference();await ensureHeroModel(hero);avatarRuntime.status='ready';syncAvatarSelection();$('#start').disabled=false;$('#start').textContent='Commencer le voyage →';}
+ try{await waitReferenceMaterials();await Promise.all([typeof initCreatureReference==='function'?initCreatureReference():null,typeof initEnemyDirectionV16==='function'?initEnemyDirectionV16():null]);await ensureHeroModel(hero);avatarRuntime.status='ready';syncAvatarSelection();$('#start').disabled=false;$('#start').textContent='Commencer le voyage →';}
  catch(e){avatarRuntime.status='error';avatarRuntime.error=String(e);$('#intro').textContent='Le modèle du héros ne s’est pas chargé. Rechargez la page.';console.error(e);}
 }
 function syncAvatarSelection(){

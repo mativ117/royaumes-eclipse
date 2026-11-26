@@ -21,7 +21,7 @@ try:
   assert page.locator('[data-hero=eclipse]').is_disabled()
   run('soundOn=false;')
   for name in run('Object.keys(HERO_DEFS)'):
-   run(f'ensureHeroModel("{name}")')
+   run(f'async()=>{{await ensureHeroModel("{name}");return true;}}')
    assert run(f'Object.keys(avatarRuntime.heroes["{name}"].actions).length>=13&&avatarRuntime.heroes["{name}"].weapon'),name
   # Every ordinary kit can enter the existing expedition and activate its power.
   for name in run('Object.keys(HERO_DEFS).filter(id=>!HERO_DEFS[id].secret)'):

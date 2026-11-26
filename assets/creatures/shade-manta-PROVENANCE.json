@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "name": "Raie du reflet",
+  "role": "shade",
+  "front": "-Z",
+  "units": "metres",
+  "generator": "scripts/build_enemy_v16.py",
+  "original_art": true,
+  "third_party_art": false,
+  "clips": {
+    "idle": 2.4,
+    "move": 1.4,
+    "windup": 0.9,
+    "release": 0.4,
+    "recover": 1.3,
+    "hit": 0.3,
+    "death": 1.1,
+    "phase": 1.2
+  },
+  "rig_bones": 18,
+  "vertices": 2920,
+  "source": "assets/source/creatures/shade-manta.blend",
+  "warning_material": "Threat glow",
+  "body_height": 0.857357,
+  "bind_bounds_blender": {
+    "min": [
+      -1.1597791910171509,
+      -1.962822675704956,
+      0.5546128749847412
+    ],
+    "max": [
+      1.1597791910171509,
+      1.101873517036438,
+      1.411969780921936
+    ]
+  },
+  "collision_core_radius": 0.55,
+  "contact_policy": "levitating anatomy; no ground-foot claim",
+  "author": "Les Royaumes de l’Éclipse project, original generated sculpture",
+  "release_event_at": 0,
+  "fps": 30,
+  "footprint": {
+    "front": 1.102,
+    "back": 1.963,
+    "lateral_deployed": 1.16,
+    "lateral_folded": 0.516,
+    "local_forward_axis": "-Z"
+  },
+  "wing_fold": {
+    "axis": "local_X",
+    "main_radians": 1.2,
+    "tip_radians": 0.66,
+    "same_positive_sign_both_sides": true,
+    "bones": [
+      "wing.L",
+      "wing.R"
+    ],
+    "tip_bones": [
+      "wing_tip.L",
+      "wing_tip.R"
+    ],
+    "loader_bones": [
+      "wingL",
+      "wingR"
+    ],
+    "loader_tip_bones": [
+      "wing_tipL",
+      "wing_tipR"
+    ],
+    "observed_max_folded_y": 2.24,
+    "scope": "bind-pose real skinned geometry; runtime checks dynamic clearance"
+  },
+  "sha256": "817895fa8ede266efa0dabed4eb92358ff5f38320a98ac8d480b91cb2c686d26",
+  "bytes": 790408
+}

@@ -1,0 +1,269 @@
+{
+  "date_utc": "2026-11-26",
+  "version": "1.6-rc1",
+  "scope": "Controlled software Chromium and CPU checks; no physical-device or native WebRTC claim",
+  "final_suites": [
+    {
+      "test": "tests/enemy_direction_v16.py",
+      "passed": true,
+      "seconds": 0.29
+    },
+    {
+      "test": "tests/direction_v16_integration.py",
+      "passed": true,
+      "seconds": 18.6
+    },
+    {
+      "test": "tests/complete_campaign.py",
+      "passed": true,
+      "seconds": 64.65
+    },
+    {
+      "test": "tests/render_complete.py",
+      "passed": true,
+      "seconds": 63.2
+    },
+    {
+      "test": "tests/story_sound.py",
+      "passed": true,
+      "seconds": 13.96
+    },
+    {
+      "test": "tests/session_actors.py",
+      "passed": true,
+      "seconds": 82.14
+    },
+    {
+      "test": "tests/lan_game.py",
+      "passed": true,
+      "seconds": 10.94
+    },
+    {
+      "test": "tests/interaction_visibility.py",
+      "passed": true,
+      "seconds": 11.38
+    }
+  ],
+  "creature_integration": {
+    "archer": {
+      "time": 1.1833333333333316,
+      "x": 15.332626552790922,
+      "y": 1.3438369885025465,
+      "z": -8.633222952450991,
+      "phase": "release",
+      "releaseElapsed": 0.07499997615814062
+    },
+    "arrowEvents": 1,
+    "shade": {
+      "lost": 18,
+      "travel": 4.3999999999999915,
+      "phase": "recover"
+    },
+    "isolatedBones": 23,
+    "deathMaterials": 6
+  },
+  "enemy_cpu": {
+    "timing": [
+      {
+        "hz": 30,
+        "time": 1.2000000000000004,
+        "angle": 0
+      },
+      {
+        "hz": 60,
+        "time": 1.183333333333334,
+        "angle": 0
+      },
+      {
+        "hz": 120,
+        "time": 1.1749999999999983,
+        "angle": 0
+      }
+    ],
+    "charges": [
+      {
+        "hz": 30,
+        "distance": 4.400000000000001,
+        "hits": 1
+      },
+      {
+        "hz": 60,
+        "distance": 4.399999999999998,
+        "hits": 1
+      },
+      {
+        "hz": 120,
+        "distance": 4.399999999999998,
+        "hits": 1
+      }
+    ],
+    "footprint": {
+      "tailStoppedAt": 0.13333333333333333,
+      "maximumTurn": 0.7330382858376184
+    },
+    "models": [
+      {
+        "role": "archer",
+        "clips": [
+          "death",
+          "hit",
+          "idle",
+          "move",
+          "recover",
+          "release",
+          "windup"
+        ],
+        "skinnedMinimumY": -0.0006207244394565783,
+        "stanceGroups": 5,
+        "maxStanceDrift": 3.7523336352458806e-08,
+        "isolatedBones": 23
+      },
+      {
+        "role": "shade",
+        "clips": [
+          "death",
+          "hit",
+          "idle",
+          "move",
+          "phase",
+          "recover",
+          "release",
+          "windup"
+        ],
+        "skinnedMinimumY": 0.5268870931992587,
+        "stanceGroups": 0,
+        "maxStanceDrift": null,
+        "isolatedBones": 18
+      }
+    ]
+  },
+  "audio_pcm": {
+    "music": [
+      {
+        "level": 1,
+        "combat": false,
+        "rms": 0.009582977789598181,
+        "peak": 0.04216238111257553,
+        "crossings": 4235,
+        "tail": 0,
+        "maxVoices": 11,
+        "remaining": 0,
+        "events": 19,
+        "intensity": 0,
+        "bars": 3
+      },
+      {
+        "level": 2,
+        "combat": false,
+        "rms": 0.009795365886490274,
+        "peak": 0.04299404099583626,
+        "crossings": 4722,
+        "tail": 0,
+        "maxVoices": 11,
+        "remaining": 0,
+        "events": 19,
+        "intensity": 0,
+        "bars": 3
+      },
+      {
+        "level": 3,
+        "combat": false,
+        "rms": 0.00973691341748831,
+        "peak": 0.043707385659217834,
+        "crossings": 4521,
+        "tail": 0,
+        "maxVoices": 11,
+        "remaining": 0,
+        "events": 13,
+        "intensity": 0,
+        "bars": 2
+      }
+    ],
+    "tension": {
+      "level": 1,
+      "combat": true,
+      "rms": 0.009138206788015359,
+      "peak": 0.04270010069012642,
+      "crossings": 4033,
+      "tail": 0,
+      "maxVoices": 12,
+      "remaining": 0,
+      "events": 31,
+      "intensity": 0.9852311950336974,
+      "bars": 3
+    },
+    "sounds": [
+      {
+        "kind": "bow_draw",
+        "peak": 0.005689361598342657,
+        "crossings": 2538,
+        "energy": [
+          3.973192476300357e-05,
+          0.006414622149026115
+        ],
+        "atStart": 1,
+        "sourceCount": 2,
+        "remaining": 0,
+        "created": 1,
+        "disposed": 1,
+        "dropped": 0
+      },
+      {
+        "kind": "bow_release",
+        "peak": 0.008698787540197372,
+        "crossings": 1441,
+        "energy": [
+          4.8655589717107504e-05,
+          0.007855326011459452
+        ],
+        "atStart": 1,
+        "sourceCount": 2,
+        "remaining": 0,
+        "created": 1,
+        "disposed": 1,
+        "dropped": 0
+      },
+      {
+        "kind": "shade_reveal",
+        "peak": 0.01129841711372137,
+        "crossings": 3941,
+        "energy": [
+          0.0002035545567519288,
+          0.03286338563971034
+        ],
+        "atStart": 1,
+        "sourceCount": 3,
+        "remaining": 0,
+        "created": 1,
+        "disposed": 1,
+        "dropped": 0
+      },
+      {
+        "kind": "ceramic_hit",
+        "peak": 0.021839622408151627,
+        "crossings": 7836,
+        "energy": [
+          0.00042243088367161473,
+          0.06820043348028408
+        ],
+        "atStart": 1,
+        "sourceCount": 4,
+        "remaining": 0,
+        "created": 1,
+        "disposed": 1,
+        "dropped": 0
+      }
+    ],
+    "scope": "CPU OfflineAudioContext signal and DOM; no WebGL, physical listening or hardware FPS claim"
+  },
+  "native_rtc": "SKIP: managed browser policy disables local ICE candidates; in-memory game sync only",
+  "hardware_validation": false,
+  "package_test": {
+    "passed": true,
+    "deterministic_two_builds": true,
+    "standalone_secret_and_enemies_ready": true,
+    "external_model_requests": 0,
+    "old_archives_unchanged": true,
+    "eleven_hero_hashes_unchanged": true
+  }
+}

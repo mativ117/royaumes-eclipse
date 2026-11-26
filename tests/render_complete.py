@@ -19,7 +19,7 @@ try:
   for width,height,touch in [(1100,760,False),(390,844,True),(844,390,True)]:
    page=b.new_page(viewport={'width':width,'height':height},is_mobile=touch,has_touch=touch);page.add_init_script('requestAnimationFrame=()=>0');page.on('pageerror',lambda e:errors.append(str(e)));page.on('response',lambda r:missing.append(r.url) if r.status>=400 else None);page.on('console',lambda m:console.append(m.text) if m.type=='error' else None);page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('avatarRuntime.status==="ready"',polling=50);run=page.evaluate;run('soundOn=false;')
    for level,hero in [(2,'neant'),(3,'bergere')]:
-    run(f'ensureHeroModel("{hero}")');run(f'hero="{hero}";start();enterChapter({level});p.inv=999;')
+    run(f'async()=>{{await ensureHeroModel("{hero}");return true;}}');run(f'hero="{hero}";start();enterChapter({level});p.inv=999;')
     for quality in ['standard','light']:
      page.select_option('#quality',quality,force=True);run('for(let i=0;i<10;i++)update(1/60);updateJourneyScenery(.1);updateSanctuary(.1);updateVisualWorld();renderPresentation()')
      calls=run('presentation.stats.sceneCalls');assert calls<(650 if quality=='standard' else 400),(level,width,quality,calls)

@@ -1,0 +1,32 @@
+{
+  "version": "1.6-rc1",
+  "captured_at_utc": "2026-11-26T20:52:24Z",
+  "html_sha256": "9731e4c7cbe1f3144d66cf384f11245430593df648243f958c47c49bb99cabcd",
+  "outputs": [
+    {
+      "scene": "atrium",
+      "file": "docs/previews/r6-atrium-after.jpg",
+      "sha256": "96dea7b6c3599b85685bf145b7d3a1044378b99e4d4507de4009fce33e01af92",
+      "calls": 277,
+      "quality": "light",
+      "camera": "fixed identical before/after; actual game actors, HUD hidden"
+    },
+    {
+      "scene": "cloitre",
+      "file": "docs/previews/r6-cloitre-after.jpg",
+      "sha256": "e5c9a46f2a767e93c956b6fca532c47aba76475ff38e7952edb0a35947ec5aeb",
+      "calls": 220,
+      "quality": "light",
+      "camera": "fixed identical before/after; actual game actors, HUD hidden"
+    },
+    {
+      "scene": "hunt",
+      "file": "docs/previews/r6-hunt-after.jpg",
+      "sha256": "19b2d27d6a5e7811afafd86a39b9c1245a84be66c22fcbf35f193b22a3aba015",
+      "calls": 174,
+      "quality": "light",
+      "camera": "fixed identical before/after; actual game actors, HUD hidden"
+    }
+  ],
+  "scope": "Actual engine stills, not concepts or hardware frame-rate evidence"
+}

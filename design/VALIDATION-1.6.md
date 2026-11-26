@@ -29,7 +29,7 @@ Les mesures de clôture figurent dans [CONTROLES-1.6.json](CONTROLES-1.6.json). 
 
 ## Paquet et publication
 
-`tests/package_release.py` a passé : deux constructions identiques du ZIP, manifeste et empreintes de chaque entrée contrôlés, sources éditables présentes, archives antérieures inchangées. Le modèle secret et les deux nouvelles créatures se chargent dans le HTML autonome sans requête GLB. Le paquet reste sous 100 Mo (environ 96,3 Mo). Les onze héros conservent les empreintes de la publication 1.5. Le relevé distant sera ajouté séparément après le déploiement, sans réécrire cette archive.
+`tests/package_release.py` a passé : deux constructions identiques du ZIP, manifeste et empreintes de chaque entrée contrôlés, sources éditables présentes, archives antérieures inchangées. Le modèle secret et les deux nouvelles créatures se chargent dans le HTML autonome sans requête GLB. Le paquet reste sous 100 Mo (environ 96,3 Mo). Les onze héros conservent les empreintes de la publication 1.5. Le [relevé distant](PUBLICATION-1.6.json), ajouté après déploiement sans réécrire cette archive, confirme le workflow réussi pour `c3e12a5`, les fichiers publics identiques et les trois suites publiques passées : aventure, atelier, duel bot/lobby LAN non appairé. Le ZIP vérifié fait exactement 96 256 080 octets.
 
 ## Limites conservées
 

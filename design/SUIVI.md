@@ -1,6 +1,6 @@
 # Suivi courant — candidate 1.6-rc1
 
-Clôture du 26 novembre 2026 : huit suites finales et le paquet déterministe passent ; captures réelles actualisées. Publication de la 1.6 en cours, à confirmer par le relevé distant. La [comparaison AAA](COMPARAISON-AAA-1.6.md) motive cette passe ; la [matrice](PRISE-EN-CHARGE-1.6.md) et la [validation](VALIDATION-1.6.md) distinguent production, essais et limites.
+Clôture du 26 novembre 2026 : huit suites finales et le paquet déterministe passent ; captures réelles actualisées. La 1.6 est publiée et vérifiée : HTML, onze héros, trois créatures, six captures et ZIP identiques ; aventure, atelier, duel bot et lobby LAN non appairé passent sur le site public. Le [relevé distant](PUBLICATION-1.6.json) consigne le code `c3e12a5` et le workflow réussi. La [comparaison AAA](COMPARAISON-AAA-1.6.md) motive cette passe ; la [matrice](PRISE-EN-CHARGE-1.6.md) et la [validation](VALIDATION-1.6.md) distinguent production, essais et limites.
 
 - Deux créatures originales intégrées : Veilleur des fils et Raie du reflet, avec clips, PBR, sources Blender, comportements et collisions propres.
 - Composition et matières des trois chapitres, caméra solo cadrant les deux corps et éclairage de lecture repris.

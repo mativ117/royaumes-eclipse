@@ -1,0 +1,78 @@
+{
+  "version": "1.6-rc1",
+  "html_sha256": "9731e4c7cbe1f3144d66cf384f11245430593df648243f958c47c49bb99cabcd",
+  "verified_models": 11,
+  "verified_creatures": 3,
+  "modes": [
+    "solo",
+    "duel",
+    "lan"
+  ],
+  "package_scope": "Current playable and editable project; full history stays in repository",
+  "package_file": "historique/livraisons-zip/royaumes-eclipse-1.6-rc1-projet.zip",
+  "zip_bytes": 96256080,
+  "zip_sha256": "934d6d7ec9563e5f2551998a0f5e1e74bfd1577135946ecf5069322967e0e096",
+  "verified_review_files": [
+    "gestes-et-creatures.html",
+    "atelier-lame.html",
+    "ambre-obsidienne.html",
+    "assets/concepts/lame-01.png"
+  ],
+  "verified_1_6_media": [
+    "previews/r6-atrium-after.jpg",
+    "previews/r6-atrium-before.jpg",
+    "previews/r6-cloitre-after.jpg",
+    "previews/r6-cloitre-before.jpg",
+    "previews/r6-hunt-after.jpg",
+    "previews/r6-hunt-before.jpg"
+  ],
+  "real_device_lan_validation": false,
+  "verified_at_utc": "2026-11-26T20:58:50.503726+00:00",
+  "code_commit": "c3e12a51f016bf8c52a6f91b15de7f1f24eb78f2",
+  "pages_workflow": "pages build and deployment",
+  "pages_workflow_conclusion": "success",
+  "pages_workflow_url": "https://github.com/mativ117/royaumes-eclipse/actions/runs/45894580938",
+  "entry_url": "https://mativ117.github.io/royaumes-eclipse/?v=1.6-rc1",
+  "public_browser_suites": [
+    {
+      "test": "smoke_live",
+      "passed": true,
+      "seconds": 12.23
+    },
+    {
+      "test": "smoke_lame_live",
+      "passed": true,
+      "seconds": 26.16
+    },
+    {
+      "test": "smoke_sessions_live",
+      "passed": true,
+      "seconds": 8.68
+    }
+  ],
+  "public_browser_smokes": {
+    "adventure": true,
+    "studio": true,
+    "bot_duel": true,
+    "portrait_unpaired_lan_lobby": true,
+    "missing_resources": false,
+    "javascript_errors": false
+  },
+  "native_rtc_round_trip": "SKIP: managed browser produced no local ICE candidates; in-memory synchronization only",
+  "hardware_fps_measured": false,
+  "historical_1_5_archive_sha256": "f74416cf3e1068c41ee92a78cfbf145555e2a4974a0b8ffaba1d636c287fb6bf",
+  "historical_1_4_archive_sha256": "fdd23fc75054bc1961cc0a44828f0351abd4e5c6db9000f7aabcca3551315765",
+  "model_sha256": {
+    "accordeur.glb": "d5c1d418fe95a747176dc3654c25bbb6a43f0b5430c5f618b32e188126af7ed6",
+    "bergere.glb": "38b7c059b652c43aa63ab65123106e9495297027268a15471d0f971edec528e1",
+    "cendres.glb": "5961211bc512609909663c2613d7a6e21ecf82b23384e4d0dbba86c03066d13d",
+    "colosse.glb": "5dcd7a69c276a9675323d8bdcb54c795221c54ba2aa895db4d7210826c405588",
+    "eclipse.glb": "9b2810dba81da76cd2f080dbfaa0bfef896f0b11ced0e4cf4b6a023a467406ea",
+    "lame.glb": "200c30d20d5ef4735f27871ebcd8165d95a8bedbf98a7cb3d3c23b43a72312f6",
+    "neant.glb": "c00c762940bf03218bcf6bc8aab41fb8efaa3ab46e0d37e7d1d51daeb8bdc425",
+    "rempart.glb": "69c5196560435460f2bfd4c452e4040c562405c6c92fa52783d2f9a8da55c7a4",
+    "tisseuse.glb": "e67b1a2ec703bb6f3e26e4f9228bb25f81a247d2a9802479917dc7ad901dbcb8",
+    "voleur.glb": "8f809d212c6aaddd4edda8140e6bec3c619730d9bc9645593544144c80bd0760",
+    "voltigeur.glb": "6563ebe508cc1add60acadc34aa13915d604a50a513366b44fdb8c53f41e4d4f"
+  }
+}

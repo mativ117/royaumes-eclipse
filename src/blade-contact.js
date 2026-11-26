@@ -28,7 +28,7 @@ function resolveBladeContacts(actor=p,avatar=avatarRuntime.current,id=hero){
   if(Math.hypot(enemy.x-actor.x,enemy.z-actor.z)>4.5||!(actor===p?clearStrikeLine(enemy.x,enemy.z):classLine(actor,enemy)))continue;
   if(!sweptBladeHits(previous,sample,bladeBodyCapsule(enemy),avatar.motionCalibration.weaponRadius?avatar.motionCalibration.weaponRadius*motionModelScale(avatar):.10))continue;attack.hitTargets.add(enemy);
   const amount=((attack.combo===3?72:44)+(attack.charge||0)*20)*(id==='colosse'?1.4:id==='eclipse'?1.1:1),before=enemy.hp;
-  if(actor===p)damage(enemy,amount,{x:actor.x,z:actor.z,owner:actor,heroId:id});else abilityDamage(enemy,amount,actor);
+  if(actor===p)damage(enemy,amount,{x:actor.x,z:actor.z,owner:actor,heroId:id,feedbackKind:'melee'});else abilityDamage(enemy,amount,actor,actor,{feedbackKind:'melee'});
   if(enemy.hp<before){sparks(enemy.x,enemy.z);actor.recoil=1;const dx=enemy.x-actor.x,dz=enemy.z-actor.z,n=Math.max(.001,Math.hypot(dx,dz));if(!enemy.dead&&!enemy.partyOwner&&!['boss','porter','anchor'].includes(enemy.type))moveEntity(enemy,dx/n*.18,dz/n*.18,.55);}
  }
 }

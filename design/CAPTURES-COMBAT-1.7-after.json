@@ -1,0 +1,42 @@
+{
+  "version": "1.7-rc1",
+  "captured_at_utc": "2026-11-26T22:34:27Z",
+  "html_sha256": "841a2ced2b8396b478c94fc08e28c7efdafabf673594ae1d70479cbb46645049",
+  "viewport": [
+    800,
+    500
+  ],
+  "quality": "light",
+  "scope": "Actual engine, identical camera/input; fixed simulation normal-speed video, no audio, not hardware FPS",
+  "outputs": [
+    {
+      "file": "docs/previews/r7-enemies-after.jpg",
+      "sha256": "f8c490c45e07356f12f8cdea12ff29a83742378052fdd5af6233ccc9df3345ab"
+    },
+    {
+      "file": "docs/previews/r7-warden-after.jpg",
+      "sha256": "0fa2e9d7626d0cbe90924d82fb3f8a65f57ae92b56606f5c5a22eab95008143e"
+    },
+    {
+      "file": "docs/previews/r7-archer-after.jpg",
+      "sha256": "0b4494ec725f62cb0e87bb7660b173543ff4d228800914c86948e7bde858bdae"
+    },
+    {
+      "file": "docs/previews/r7-shade-after.jpg",
+      "sha256": "d0ea812f3b8d37db2e17d85f05faf965379dd81d54d76662c6d6abe3c66f4c10"
+    },
+    {
+      "file": "docs/previews/r7-contact-after.jpg",
+      "sha256": "736f181342ed062b6236f14e9400a7a4a754229145ec32af219928cc8143b594"
+    },
+    {
+      "file": "docs/previews/r7-combat-after.mp4",
+      "sha256": "5415df5e827ab7f93a288564f26815197062700b72825fefa66b75061f430b00",
+      "seconds": 4,
+      "simulation_hz": 120,
+      "playback_fps": 24,
+      "audio": false,
+      "hp_lost": 160
+    }
+  ]
+}

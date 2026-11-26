@@ -94,6 +94,7 @@ function updateRigAvatar(dt){
 
 const bladeTrail={samples:[],mesh:null,lastTime:-1};
 function updateBladeTrail(avatar,dt){
+ if(typeof combatFeedbackWeaponV17==='function'){slash.visible=false;bladeTrail.samples=[];if(bladeTrail.mesh)bladeTrail.mesh.visible=false;combatFeedbackWeaponV17(p,avatar,hero,dt);return;}
  if(!bladeTrail.mesh){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(7*18),3));geometry.setAttribute('color',new THREE.BufferAttribute(new Float32Array(7*18),3));geometry.setDrawRange(0,0);bladeTrail.mesh=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,transparent:true,opacity:.5,depthWrite:false}));bladeTrail.mesh.frustumCulled=false;scene.add(bladeTrail.mesh);}
  slash.visible=false;
  const active=isMeleeHero()&&p.attack?.melee&&p.attack.elapsed>=p.attack.hitAt*.65&&p.attack.elapsed<p.attack.duration*.9;
@@ -104,6 +105,7 @@ function updateBladeTrail(avatar,dt){
 }
 
 function resetAvatarPose(){
+ if(typeof clearCombatFeedbackV17==='function')clearCombatFeedbackV17();
  for(const avatar of Object.values(avatarRuntime.heroes)){avatar.mixer.stopAllAction();avatar.action=avatar.lowerAction=null;avatar.motionBlendLower=avatar.motionBlendUpper=null;avatar.lastAttack=avatar.lastUse=null;avatar.powerVisualActive=false;avatar.aimHold=0;avatar.root.position.y=0;avatar.lameMotion=null;avatar.morphWeight=0;avatar.morphActive=true;updateHeroMorph(avatar,{formT:0,incarnateT:0},hero,0);resetAvatarKinematics(avatar);const baseline=avatar.motionCalibration&&avatar.actions.guard?'guard':'idle';playAvatarAction(avatar,baseline,.05,true);playLowerAction(avatar,baseline,.05,true);avatar.mixer.update(0);}
  bladeTrail.samples=[];if(bladeTrail.mesh)bladeTrail.mesh.visible=false;
 }

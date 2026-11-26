@@ -1,7 +1,7 @@
 """Original Fauche-Cendre quadruped: continuous anatomy, shared atlas and articulated rig.
 Blender 4.3 CPU. Only writes assets/creatures and /tmp/creature-reference.
 """
-import bpy,math,json,hashlib
+import bpy,math,json,hashlib,sys
 from pathlib import Path
 from mathutils import Vector
 import numpy as np
@@ -17,7 +17,7 @@ for name,head,tail,parent in specs:
  if parent:b.parent=arm.edit_bones[parent]
 bpy.ops.object.mode_set(mode='OBJECT');rig.select_set(False)
 # Four original materials and one embedded atlas; no external art or external texture request.
-colors=[(.055,.068,.08),(.12,.14,.17),(.62,.55,.42),(.85,.26,.035)];materials=[]
+colors=[(.065,.072,.085),(.28,.30,.33),(.48,.47,.43),(.85,.26,.035)];materials=[]
 for kind in ['base','orm','normal']:
  size=512;yy,xx=np.mgrid[0:size,0:size];index=(xx//256)+(yy//256)*2;u=(xx%256)/256;v=(yy%256)/256;noise=np.random.default_rng(441).random((size,size))-.5;image=bpy.data.images.new('FaucheCendre_'+kind,width=size,height=size,alpha=True);a=np.ones((size,size,4),dtype=np.float32)
  if kind=='base':
@@ -65,10 +65,10 @@ def smooth_rows(profile,steps=4):
   for k in range(steps):
    f=k/steps;f=f*f*(3-2*f);out.append(tuple(profile[i][j]*(1-f)+profile[i+1][j]*f for j in range(4)))
  return out+[profile[-1]]
-loft_y('Sculpted thorax and haunches',smooth_rows([(-.49,.74,.14,.15),(-.35,.74,.27,.27),(-.15,.66,.30,.30),(.06,.63,.225,.23),(.25,.64,.22,.21),(.40,.65,.245,.25),(.52,.65,.13,.15)]),0,lambda c,i:blend('hips','chest',(.30-c[1])/.65),48)
+loft_y('Sculpted thorax and haunches',smooth_rows([(-.49,.76,.18,.19),(-.35,.79,.32,.30),(-.15,.72,.34,.32),(.06,.66,.235,.24),(.25,.66,.23,.24),(.40,.68,.26,.27),(.52,.65,.13,.15)]),0,lambda c,i:blend('hips','chest',(.30-c[1])/.65),48)
 loft_y('Muscular neck',smooth_rows([(-.34,.78,.20,.20),(-.47,.76,.19,.18),(-.62,.69,.16,.14),(-.73,.65,.14,.12)]),0,'neck',40)
-loft_y('Long predator skull',smooth_rows([(-.57,.74,.16,.14),(-.69,.73,.205,.17),(-.81,.67,.17,.12),(-.94,.62,.13,.09),(-1.00,.615,.075,.065)]),1,'head',48)
-loft_y('Articulated lower jaw',smooth_rows([(-.66,.605,.125,.055),(-.82,.56,.13,.045),(-.98,.565,.075,.025)]),0,'jaw',32)
+loft_y('Deep blunt predator cranium',smooth_rows([(-.54,.77,.16,.17),(-.64,.79,.23,.22),(-.75,.76,.23,.20),(-.87,.70,.17,.17),(-.91,.69,.145,.145)]),1,'head',48)
+loft_y('Muscular lower jaw',smooth_rows([(-.62,.59,.145,.065),(-.76,.535,.18,.075),(-.89,.55,.125,.06)]),0,'jaw',32)
 # Continuous limb skins follow the anatomical upper/lower path, including knee/elbow blends.
 for side,sign in [('L',1),('R',-1)]:
  for family,centres in [('fore',[(.25,-.34,.80,.105),(.32,-.19,.43,.075),(.25,-.44,.11,.047)]),('hind',[(.23,.34,.70,.14),(.32,.12,.41,.085),(.23,.40,.12,.048)])]:
@@ -96,14 +96,21 @@ for side,sign in [('L',1),('R',-1)]:
    mesh('Curved claw',[(x-.011,y,.065),(x+.011,y,.065),(x+.007,y-.07,.035),(x,y-.09,.03),(x-.007,y-.07,.035),(x,y,.09)],[(0,1,2),(0,2,3),(0,3,4),(0,4,5),(1,5,2),(2,5,4),(2,4,3)],2,family+'_foot.'+side)
 # Integrated obsidian plates lie on the spine, rather than floating above the body.
 for k in range(6):
- y=-.32+k*.14;z=.97 if k<3 else .87;width=.17 if k<3 else .14
+ y=-.32+k*.14;z=1.055 if k<3 else .93;width=.22 if k<3 else .17
  mesh('Dorsal fracture plate',[(0,y-.13,z+.03),(-width,y,z-.065),(0,y+.11,z-.01),(width,y,z-.065),(0,y+.012,z+.12)],[(0,1,4),(1,2,4),(2,3,4),(3,0,4),(0,3,2,1)],1,'chest' if k<3 else 'hips')
 # Two directional ears, facial cuts, fangs and a connected balancing tail.
 for sign in [-1,1]:
  mesh('Swept ear',[(sign*.13,-.61,.84),(sign*.22,-.50,1.055),(sign*.22,-.66,.91),(sign*.16,-.72,.81)],[(0,1,2),(0,2,3),(0,3,1),(1,3,2)],1,'head')
  mesh('Inset amber eye',[(sign*.167,-.776,.745),(sign*.157,-.852,.723),(sign*.173,-.816,.708)],[(0,1,2),(2,1,0)],3,'head')
- for y in [-.80,-.9]:
-  x=sign*(.105 if y<-.85 else .145);mesh('Fang',[(x-.015,y,.585),(x+.015,y,.585),(x,y-.008,.51),(x,y+.019,.58)],[(0,1,2),(0,2,3),(1,3,2),(0,3,1)],2,'head')
+ for y in [-.77,-.86]:
+  x=sign*(.125 if y<-.8 else .17);mesh('Fang',[(x-.021,y,.64),(x+.021,y,.64),(x,y-.012,.48),(x,y+.027,.635)],[(0,1,2),(0,2,3),(1,3,2),(0,3,1)],2,'head')
+# Sculpted cheek/brow and scapular masses interrupt the former flat bill profile.
+for sign in [-1,1]:
+ mesh('Heavy swept brow',[(sign*.12,-.88,.83),(sign*.245,-.74,.92),(sign*.25,-.63,.90),(sign*.21,-.70,.80),(sign*.14,-.86,.77)],[(0,1,2),(0,2,3),(0,3,4),(4,3,2,1,0)],1,'head')
+ scapula=loft_y('Connected scapula '+str(sign),smooth_rows([(-.45,.82,.10,.13),(-.32,.86,.16,.19),(-.16,.81,.13,.13)]),0,'chest',24)
+ for vertex in scapula.data.vertices:vertex.co.x+=sign*.22
+ # The cheek blades are rooted at the skull, not floating spikes.
+ mesh('Cheek blade',[(sign*.16,-.87,.66),(sign*.24,-.76,.72),(sign*.24,-.58,.64),(sign*.14,-.65,.56)],[(0,1,2),(0,2,3),(0,3,1),(1,3,2)],1,'head')
 # Tail: continuous changing cross section, smooth bone blend along its length.
 rows=smooth_rows([(.43,.69,.09,.075),(.73,.63,.075,.06),(.98,.72,.045,.04),(1.21,.84,.018,.025)],8)
 loft_y('Long articulated tail',rows,0,lambda c,i:blend('tail_1','tail_2',(c[1]-.63)/.25) if c[1]<.97 else blend('tail_2','tail_3',(c[1]-.97)/.20),28)
@@ -140,5 +147,6 @@ for name,pos,power,size,color in [('Key',(-3,-4,4),450,3,(1,.89,.76)),('Rim',(2,
  light=bpy.data.lights.new(name,'AREA');light.energy=power;light.shape='DISK';light.size=size;light.color=color;o=bpy.data.objects.new(name,light);scene.collection.objects.link(o);o.location=pos;o.rotation_euler=(Vector((0,0,.5))-o.location).to_track_quat('-Z','Y').to_euler()
 camera=bpy.data.objects.new('Review',bpy.data.cameras.new('Review'));scene.collection.objects.link(camera);scene.camera=camera;camera.data.lens=60;camera.location=(2.2,-3.1,1.7);camera.rotation_euler=(Vector((0,.05,.5))-camera.location).to_track_quat('-Z','Y').to_euler()
 bpy.ops.mesh.primitive_plane_add(size=100,location=(0,0,.005));floor=bpy.data.materials.new('Review floor');floor.diffuse_color=(.035,.035,.04,1);bpy.context.object.data.materials.append(floor)
-bpy.ops.wm.save_as_mainfile(filepath=str(OUT/'obsidian-warden.blend'));scene.render.filepath=str(PREVIEW/'warden-threequarter.png');bpy.ops.render.render(write_still=True)
+bpy.ops.wm.save_as_mainfile(filepath=str(OUT/'obsidian-warden.blend'));scene.render.filepath=str(PREVIEW/'warden-threequarter.png');
+if '--no-render' not in sys.argv:bpy.ops.render.render(write_still=True)
 print('CREATURE_PRODUCTION',json.dumps(proof))

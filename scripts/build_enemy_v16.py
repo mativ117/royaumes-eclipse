@@ -23,7 +23,7 @@ def reset():
 
 def make_materials(role):
  # Shared six-tile atlas, with distinct grain direction and fracture scratches.
- palette=[(.12,.145,.17),(.68,.65,.53),(.39,.25,.12),(.22,.12,.12),(.95,.39,.075),(.17,.23,.28)]
+ palette=[(.29,.31,.34),(.51,.53,.55),(.39,.25,.12),(.22,.12,.12),(.95,.39,.075),(.20,.23,.27)]
  names=['Obsidian lacquer','Porcelain bone','Oxidised bronze','Tendon','Threat glow','Membrane']
  textures={}
  for kind,size in [('color',1024),('normal',512),('orm',512)]:
@@ -44,8 +44,8 @@ def make_materials(role):
    pixels[:,:,1]=.5+np.round((ribs*.009)*64)/64
    pixels[:,:,2]=1
   else:
-   pixels[:,:,1]=np.clip(np.asarray([.34,.61,.53,.72,.3,.48])[tile]+np.round(grain*3)/96+fracture*.08,0,1)
-   pixels[:,:,2]=np.asarray([.62,0,.72,0,.16,.12])[tile]
+   pixels[:,:,1]=np.clip(np.asarray([.73,.66,.53,.72,.3,.68])[tile]+np.round(grain*3)/96+fracture*.08,0,1)
+   pixels[:,:,2]=np.asarray([.12,0,.72,0,.16,.04])[tile]
   image=bpy.data.images.new(role+'_'+kind,width=size,height=size,alpha=kind!='color')
   if kind!='color':image.colorspace_settings.name='Non-Color'
   image.pixels.foreach_set(pixels.ravel())
@@ -134,18 +134,20 @@ def archer(s):
  # Continuous torso and digitigrade legs, not a rescaled humanoid block.
  s.tube('Continuous waisted thorax',[(0,.08,.98),(0,.06,1.12),(0,.015,1.31),(0,0,1.48),(0,-.015,1.62),(0,-.02,1.70)],[(.15,.12),(.14,.10),(.22,.14),(.31,.18),(.28,.15),(.16,.13)],0,lambda c,i:blend('spine','chest',(c[2]-1.25)/.30),32)
  s.tube('Muscular forward neck',[(0,-.02,1.58),(0,-.055,1.73),(0,-.13,1.86)],[(.13,.12),(.105,.105),(.1,.10)],0,'neck',24)
- s.tube('Needle beaked skull',[(0,-.1,1.89),(0,-.19,1.94),(0,-.32,1.90),(0,-.45,1.83),(0,-.48,1.80)],[(.115,.13),(.14,.12),(.10,.085),(.046,.043),(.008,.008)],1,'head',32)
- s.tube('Working lower mandible',[(0,-.16,1.81),(0,-.31,1.77),(0,-.45,1.79)],[(.07,.028),(.062,.027),(.013,.012)],3,'jaw',18)
+ s.tube('Short deep faceless cranium',[(0,-.10,1.91),(0,-.19,1.95),(0,-.28,1.93),(0,-.32,1.88)],[(.12,.15),(.17,.19),(.16,.18),(.13,.15)],0,'head',32)
+ s.plate('Split porcelain death mask',(0,-.345,1.82),(.135,-.035,.26),1,'head')
+ s.tube('Vertical black face cleft',[(0,-.38,1.76),(0,-.39,1.92),(0,-.37,2.04)],[(.014,.012),(.020,.012),(.009,.008)],0,'head',12)
+ s.tube('Short hanging mandible',[(0,-.20,1.81),(0,-.28,1.76),(0,-.30,1.70)],[(.08,.05),(.09,.055),(.045,.025)],3,'jaw',18)
  for side,sign in [('L',1),('R',-1)]:
   path=[(sign*.17,.08,1.05),(sign*.20,.02,.89),(sign*.24,-.04,.62),(sign*.22,.02,.40),(sign*.19,.12,.22)]
   s.tube('Sinewed leg '+side,path,[.12,.11,.075,.060,.043],0,lambda c,i,si=side:blend('thigh.'+si,'shin.'+si,max(0,min(1,(.76-c[2])/.26))),24)
-  s.tube('Planted elongated foot '+side,[(sign*.19,.13,.22),(sign*.19,.045,.12),(sign*.19,-.10,.057)],[(.048,.052),(.067,.05),(.08,.035)],1,'foot.'+side,22)
-  for j in [-1,0,1]:
-   x=sign*.19+j*.045;s.tube('Three hooked toes',[(x,-.075,.065),(x,-.14,.055),(x,-.205,.027)],[.025,.018,.003],2,'foot.'+side,10)
+  s.tube('Planted elongated foot '+side,[(sign*.19,.13,.22),(sign*.19,.045,.12),(sign*.19,-.10,.057)],[(.048,.052),(.058,.05),(.06,.035)],0,'foot.'+side,22)
+  for j in [-.5,.5]:
+   x=sign*.19+j*.045;s.tube('Split short keratin claw',[(x,-.075,.065),(x,-.13,.055),(x,-.16,.027)],[.022,.017,.003],1,'foot.'+side,10)
   # Long face crest and layered plates define creature rather than helmeted soldier.
   s.tube('Porcelain swept antenna '+side,[(sign*.09,-.09,1.97),(sign*.17,.03,2.12),(sign*.19,.11,2.27),(sign*.14,.14,2.32)],[.033,.037,.021,.003],1,'head',16)
-  s.ellipsoid('Deep eye socket '+side,(sign*.105,-.25,1.936),(.040,.052,.034),0,'head',8,18)
-  s.ellipsoid('Amber compound eye '+side,(sign*.127,-.255,1.942),(.014,.029,.014),4,'head',8,16)
+  s.ellipsoid('Deep eye socket '+side,(sign*.095,-.337,1.948),(.052,.023,.029),0,'head',8,18)
+  s.ellipsoid('Amber compound eye '+side,(sign*.095,-.36,1.951),(.031,.008,.008),4,'head',8,16)
   for k in range(4):
    s.plate('Grown rib armour '+side,(sign*(.17+k*.021),-.13,1.55-k*.095),(.15,.13,.085),1,'chest' if k<2 else 'spine')
   s.tube('Shoulder mantle tendon '+side,[(sign*.19,.1,1.64),(sign*.4,.21,1.47),(sign*.43,.28,1.22)],[(.09,.06),(.12,.04),(.05,.017)],5,'mantle.'+side,20)
@@ -169,8 +171,10 @@ def archer(s):
 def shade(s):
  s.tube('Continuous ray thorax',[(0,.42,1.15),(0,.20,1.21),(0,-.04,1.23),(0,-.26,1.20),(0,-.47,1.14)],[(.08,.065),(.20,.12),(.30,.15),(.28,.12),(.14,.09)],0,lambda c,i:blend('spine','chest',(.1-c[1])/.5),32)
  s.tube('Forward neck',[(0,-.35,1.16),(0,-.5,1.14),(0,-.64,1.11)],[(.14,.10),(.12,.095),(.10,.075)],0,'neck',24)
- s.tube('Ray skull',[(0,-.53,1.15),(0,-.64,1.19),(0,-.78,1.14),(0,-.91,1.08)],[(.10,.09),(.16,.13),(.13,.09),(.025,.035)],1,'head',28)
- s.tube('Articulated underside jaw',[(0,-.59,1.07),(0,-.74,1.02),(0,-.90,1.06)],[(.085,.035),(.09,.04),(.025,.014)],3,'jaw',18)
+ s.tube('Deep spectral head',[(0,-.48,1.19),(0,-.58,1.23),(0,-.69,1.20),(0,-.76,1.13)],[(.13,.13),(.21,.22),(.20,.22),(.14,.17)],0,'head',28)
+ s.plate('Broken facial crown',(0,-.79,1.08),(.17,-.035,.35),1,'head')
+ s.tube('Hollow vertical mouth',[(0,-.825,1.00),(0,-.835,1.17),(0,-.81,1.30)],[(.038,.013),(.056,.014),(.016,.009)],0,'head',14)
+ s.tube('Articulated split jaw',[(0,-.59,1.03),(0,-.72,.94),(0,-.77,.88)],[(.12,.055),(.13,.055),(.075,.028)],3,'jaw',18)
  # Wings form broad continuous membranes with radial folds, weighted across two limbs.
  for side,sign in [('L',1),('R',-1)]:
   verts=[];uv=[];rows=17;segs=19
@@ -191,8 +195,8 @@ def shade(s):
   path=[(sign*.22,-.38,1.10),(sign*.39,-.49,.88),(sign*.47,-.62,.67),(sign*.45,-.83,.58),(sign*.38,-.99,.62)]
   s.tube('Suspended grappling appendage '+side,path,[.076,.061,.038,.026,.012],0,lambda c,i,si=side:blend('arm.'+si,'claw.'+si,(i//18/4-.35)/.4),18)
   for j in [-1,1]:s.tube('Split hooked claw '+side,[(sign*.38,-.96,.62),(sign*(.38+j*.05),-1.07,.64),(sign*(.38+j*.06),-1.1,.72)],[.018,.014,.002],1,'claw.'+side,10)
-  s.ellipsoid('Hollow eye well '+side,(sign*.118,-.71,1.205),(.046,.058,.025),0,'head',8,18)
-  s.ellipsoid('Eye warning slit '+side,(sign*.124,-.727,1.213),(.013,.030,.012),4,'head',8,16)
+  s.ellipsoid('Hollow eye well '+side,(sign*.12,-.764,1.26),(.047,.027,.032),0,'head',8,18)
+  s.ellipsoid('Eye warning slit '+side,(sign*.12,-.791,1.268),(.028,.008,.009),4,'head',8,16)
   s.tube('Swept head feeler '+side,[(sign*.12,-.59,1.24),(sign*.20,-.47,1.38),(sign*.26,-.31,1.41)],[.023,.017,.002],1,'head',12)
  # Tail has four bending segments; filaments stay rooted in the same body hierarchy.
  points=[]
@@ -282,7 +286,7 @@ for role in ROLES:
  bpy.context.view_layer.update()
  coords=[body.matrix_world@v.co for v in body.data.vertices]
  bounds={'min':[min(v[i] for v in coords) for i in range(3)],'max':[max(v[i] for v in coords) for i in range(3)]}
- meta={'version':1,'name':title,'role':role,'front':'-Z','units':'metres','generator':'scripts/build_enemy_v16.py','original_art':True,'third_party_art':False,'clips':durations,'rig_bones':len(specs),'vertices':len(body.data.vertices),'source':f'assets/source/creatures/{name}.blend','warning_material':'Threat glow','body_height':round(bounds['max'][2]-bounds['min'][2],6),'bind_bounds_blender':bounds,'collision_core_radius':.48 if role=='archer' else .55,'contact_policy':'digitigrade anatomy; runtime locomotion and foot planting remain separate' if role=='archer' else 'levitating anatomy; no ground-foot claim','author':'Les Royaumes de l’Éclipse project, original generated sculpture','release_event_at':2/30 if role=='archer' else 0,'fps':30}
+ meta={'version':2,'name':title,'role':role,'front':'-Z','units':'metres','generator':'scripts/build_enemy_v16.py','original_art':True,'third_party_art':False,'clips':durations,'rig_bones':len(specs),'vertices':len(body.data.vertices),'source':f'assets/source/creatures/{name}.blend','warning_material':'Threat glow','body_height':round(bounds['max'][2]-bounds['min'][2],6),'bind_bounds_blender':bounds,'collision_core_radius':.48 if role=='archer' else .55,'contact_policy':'digitigrade anatomy; runtime locomotion and foot planting remain separate' if role=='archer' else 'levitating anatomy; no ground-foot claim','author':'Les Royaumes de l’Éclipse project, original generated sculpture','release_event_at':2/30 if role=='archer' else 0,'fps':30}
  if role=='shade':
   meta['footprint']={'front':1.102,'back':1.963,'lateral_deployed':1.160,'lateral_folded':.516,'local_forward_axis':'-Z'}
   meta['wing_fold']={'axis':'local_X','main_radians':1.2,'tip_radians':.66,'same_positive_sign_both_sides':True,'bones':['wing.L','wing.R'],'tip_bones':['wing_tip.L','wing_tip.R'],'loader_bones':['wingL','wingR'],'loader_tip_bones':['wing_tipL','wing_tipR'],'observed_max_folded_y':2.24,'scope':'bind-pose real skinned geometry; runtime checks dynamic clearance'}
@@ -294,4 +298,4 @@ for role in ROLES:
  meta['sha256']=hashlib.sha256(target.read_bytes()).hexdigest();meta['bytes']=target.stat().st_size;reports[role]=meta;(OUT/(name+'-PROVENANCE.json')).write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n')
  print('EXPORTED_ENEMY '+json.dumps(meta,ensure_ascii=False),flush=True)
  if '--no-render' not in ARGS:render_review(role,rig)
-(OUT/'ENEMIES-PRODUCTION-1.6.json').write_text(json.dumps(reports,ensure_ascii=False,indent=2)+'\n')
+(OUT/'ENEMIES-PRODUCTION-1.7.json').write_text(json.dumps(reports,ensure_ascii=False,indent=2)+'\n')

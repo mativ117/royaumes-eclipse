@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "Raie du reflet",
   "role": "shade",
   "front": "-Z",
@@ -18,10 +18,10 @@
     "phase": 1.2
   },
   "rig_bones": 18,
-  "vertices": 2920,
+  "vertices": 2968,
   "source": "assets/source/creatures/shade-manta.blend",
   "warning_material": "Threat glow",
-  "body_height": 0.857357,
+  "body_height": 0.895138,
   "bind_bounds_blender": {
     "min": [
       -1.1597791910171509,
@@ -31,7 +31,7 @@
     "max": [
       1.1597791910171509,
       1.101873517036438,
-      1.411969780921936
+      1.4497510194778442
     ]
   },
   "collision_core_radius": 0.55,
@@ -70,6 +70,6 @@
     "observed_max_folded_y": 2.24,
     "scope": "bind-pose real skinned geometry; runtime checks dynamic clearance"
   },
-  "sha256": "817895fa8ede266efa0dabed4eb92358ff5f38320a98ac8d480b91cb2c686d26",
-  "bytes": 790408
+  "sha256": "e3d9e3f9e1748b134c560c6248ad80fa01a765a6df191e0d1d9dfcb69b25c136",
+  "bytes": 793884
 }

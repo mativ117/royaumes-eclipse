@@ -1,14 +1,22 @@
 # Les Royaumes de l’Éclipse
 
-**Candidate 1.6-rc1 — Onze héros, combat et duels.** Jeu d’action fantastique 3D pour navigateur sur PC et téléphone. Trois chapitres d’aventure, dix héros disponibles dès le départ et un onzième personnage secret. [Contrôles et limites de cette livraison](design/VALIDATION-1.6.md) · [Publication vérifiée](design/PUBLICATION-1.6.json).
+**Candidate 1.7-rc1 — Onze héros, combat et duels.** Jeu d’action fantastique 3D pour navigateur sur PC et téléphone. Trois chapitres d’aventure, dix héros disponibles dès le départ et un onzième personnage secret. [Contrôles et limites de cette livraison](design/VALIDATION-1.7.md) · [Publication vérifiée](design/PUBLICATION-1.7.json).
 
-**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.6-rc1)** · [Projet courant éditable](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.6-rc1-projet.zip) · [Toutes les sources et archives](https://github.com/mativ117/royaumes-eclipse/archive/refs/heads/main.zip) · [Suivi](design/SUIVI.md) · [Audit profond](design/AUDIT-PROFOND-1.5.md)
+**[Jouer](https://mativ117.github.io/royaumes-eclipse/?v=1.7-rc1)** · [Projet courant éditable](https://github.com/mativ117/royaumes-eclipse/raw/refs/heads/main/historique/livraisons-zip/royaumes-eclipse-1.7-rc1-projet.zip) · [Toutes les sources et archives](https://github.com/mativ117/royaumes-eclipse/archive/refs/heads/main.zip) · [Suivi](design/SUIVI.md) · [Audit profond](design/AUDIT-PROFOND-1.5.md)
 
 La cible confirmée est de rapprocher **le jeu entier de la qualité des meilleurs jeux AAA**, dans notre univers : héros, créatures, mouvements, combats, décors, récit, musiques, effets, interface et technique. Cette qualité reste un objectif de production. Les contrôles automatisés ne valident ni l’esthétique ni le plaisir. [Consigne durable](design/EXIGENCE-QUALITE.md) · [Instructions du dépôt](AGENTS.md).
 
-## La passe 1.6
+## Correction 1.7 : silhouettes et coups
 
-[Comparaison aux références AAA](design/COMPARAISON-AAA-1.6.md) · [Avant/après dans le moteur](https://mativ117.github.io/royaumes-eclipse/docs/gestes-et-creatures.html?v=1.6-rc1).
+Trois silhouettes ennemies sont reprises : crânes moins allongés, mâchoires plus profondes, griffes courtes, masses de prédateur et matières moins brillantes. Le Veilleur porte un masque vertical fendu ; la Raie une tête spectrale avec mandibule. Les squelettes, appuis, gabarits et règles de combat sont conservés.
+
+Les impacts suivent les PV réellement perdus et la direction du coup ; mêlée, projectile, pouvoir et garde emploient des signes distincts. Les anciennes sphères/cercles de contact et grands rubans sont remplacés par des fragments et traits courts à hauteur du corps. Les onze profils d’armes, les réglages Haute/Léger et les effets réduits sont couverts. [Comparer les captures du moteur](https://mativ117.github.io/royaumes-eclipse/docs/gestes-et-creatures.html?v=1.7-rc1) · [Technique et limites](design/COMBAT-VISUEL-1.7.md).
+
+Les familles restantes et les boss gardent leur fabrication précédente. L’animation complète et la finition artistique restent à poursuivre ; aucun niveau AAA atteint n’est annoncé.
+
+## Base conservée · passe 1.6
+
+[Comparaison aux références AAA](design/COMPARAISON-AAA-1.6.md) · [Avant/après dans le moteur](https://mativ117.github.io/royaumes-eclipse/docs/gestes-et-creatures.html?v=1.7-rc1).
 
 Deux familles deviennent des créatures originales animées : le **Veilleur des fils**, archer digitigrade à bras-arc, et la **Raie du reflet**, dont les ailes se replient près des obstacles. Préparation, tir ou charge, récupération, réaction et mort suivent leurs clips et leurs collisions. La caméra solo resserre progressivement un combat en conservant les deux corps dans le cadre ; un remplissage local aide à lire les personnages sombres.
 

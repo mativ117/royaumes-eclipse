@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "Veilleur des fils",
   "role": "archer",
   "front": "-Z",
@@ -17,15 +17,15 @@
     "death": 1.1
   },
   "rig_bones": 23,
-  "vertices": 3160,
+  "vertices": 3110,
   "source": "assets/source/creatures/archer-thorn.blend",
   "warning_material": "Threat glow",
-  "body_height": 2.297898,
+  "body_height": 2.297363,
   "bind_bounds_blender": {
     "min": [
       -0.7984659671783447,
       -0.37000003457069397,
-      0.024379614740610123
+      0.024914175271987915
     ],
     "max": [
       0.5308075547218323,
@@ -38,6 +38,6 @@
   "author": "Les Royaumes de l’Éclipse project, original generated sculpture",
   "release_event_at": 0.06666666666666667,
   "fps": 30,
-  "sha256": "fc80676176d49f1eddd586f3ec9db73b7277178ec16ec0bc320d0795d87851ac",
-  "bytes": 800060
+  "sha256": "bf0304aad6cdedab73b0b86ef522c18deb888dbfe62f835a83317e9ea6f97555",
+  "bytes": 798068
 }

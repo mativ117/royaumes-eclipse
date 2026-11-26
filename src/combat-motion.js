@@ -6,6 +6,7 @@ function initCombatMotion(){
  for(let i=0;i<24;i++){const o=new THREE.Mesh(sphereGeo,material);o.visible=false;scene.add(o);sparkPool.push({mesh:o,life:0,vx:0,vy:0,vz:0});}
 }
 function sparks(x,z,color='#ffd69a'){
+ if(typeof combatFeedbackContactV17==='function'){impactTime=.12;if(!localProfile.settings.reduced)hitPause=Math.max(hitPause,.025);return;}
  for(let i=0;i<5;i++){const s=sparkPool.find(q=>q.life<=0);if(!s)break;s.life=.25+Math.random()*.1;s.mesh.position.set(x,1.1,z);s.mesh.scale.setScalar(.045+Math.random()*.05);const a=Math.random()*Math.PI*2;s.vx=Math.cos(a)*3;s.vz=Math.sin(a)*3;s.vy=2+Math.random()*3;s.mesh.visible=true;}
  impactTime=.12;if(!localProfile.settings.reduced)hitPause=Math.max(hitPause,.025);
 }
@@ -48,7 +49,7 @@ function strikeMelee(a){
  const dx=-Math.sin(a.aim),dz=-Math.cos(a.aim);let hits=0;
  for(const e of enemies){const d=distance(e,p);if(e.dead||!trialActive(e)||e.type==='boss'&&!campaign.bossAwake)continue;
   if(d<2.7+(e.type==='boss'?1.2:0)&&((e.x-p.x)*dx+(e.z-p.z)*dz)/Math.max(.01,d)>.15&&clearStrikeLine(e.x,e.z)){
-   const hp=e.hp;damage(e,((a.combo===3?72:44)+a.charge*20)*(hero==='colosse'?1.4:hero==='eclipse'?1.1:1),{...p,owner:p,heroId:hero});if(e.hp<hp){hits++;sparks(e.x,e.z);}
+   const hp=e.hp;damage(e,((a.combo===3?72:44)+a.charge*20)*(hero==='colosse'?1.4:hero==='eclipse'?1.1:1),{...p,owner:p,heroId:hero,feedbackKind:'melee'});if(e.hp<hp){hits++;sparks(e.x,e.z);}
    if(!e.dead&&!['boss','porter','anchor'].includes(e.type))moveEntity(e,dx*(a.combo===3?.9:.35),dz*(a.combo===3?.9:.35),.55);
   }
  }

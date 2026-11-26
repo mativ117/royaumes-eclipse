@@ -1,0 +1,37 @@
+{
+  "version": "1.6-rc1",
+  "captured_at_utc": "2026-11-26T22:24:27Z",
+  "html_sha256": "9731e4c7cbe1f3144d66cf384f11245430593df648243f958c47c49bb99cabcd",
+  "viewport": [
+    800,
+    500
+  ],
+  "quality": "light",
+  "scope": "Actual engine, identical camera/input; fixed simulation normal-speed video, no audio, not hardware FPS",
+  "outputs": [
+    {
+      "file": "docs/previews/r7-enemies-before.jpg",
+      "sha256": "008ea67183824e7569f50f90d86d0027e1014a7e5098f1f472ea81fa82315e7a"
+    },
+    {
+      "file": "docs/previews/r7-warden-before.jpg",
+      "sha256": "c40fbdbbbe42fb2a1382a1066115a625967d9e4becf587cbf23b106354aa9f9a"
+    },
+    {
+      "file": "docs/previews/r7-archer-before.jpg",
+      "sha256": "358459357caf9c4614f921403ae6611f221b861c080084adcefe4b58d72de54b"
+    },
+    {
+      "file": "docs/previews/r7-shade-before.jpg",
+      "sha256": "754aa098c8d37d3cdd3b840d328a72c46d097aa48b09691db47410ea142d02ff"
+    },
+    {
+      "file": "docs/previews/r7-combat-before.mp4",
+      "sha256": "0f675df0732e82c43fb6ffe726a2dbf69bcebc1d39b69af760dcc6ed3f1dd2d3",
+      "seconds": 4,
+      "simulation_hz": 120,
+      "playback_fps": 24,
+      "audio": false
+    }
+  ]
+}

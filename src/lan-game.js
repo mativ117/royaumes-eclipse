@@ -148,6 +148,7 @@ function lanNetworkTick(){
  }else if(peer.send('input',lanInputIntent())){lanSession.stats.sentInputs++;lanSession.queued={};}
 }
 function lanPatchActor(actor,data,local=false){
+ const beforeHP=actor.hp,hadSnapshot=actor._lanInitialized;
  actor.heroId=data.hero;actor.slot=actor.team=data.slot;actor.max=data.max;actor.hp=data.hp;actor.downed=data.downed;actor._lanTarget={x:data.x,z:data.z,aim:data.aim};
  if(!actor._lanInitialized||Math.hypot(actor.x-data.x,actor.z-data.z)>1.8){actor.x=data.x;actor.z=data.z;actor._lanInitialized=true;if(actor.avatar)resetAvatarKinematics(actor.avatar);}
  for(const field of LAN_ACTOR_FIELDS)if(Object.hasOwn(data,field))actor[field]=data[field];
@@ -157,6 +158,7 @@ function lanPatchActor(actor,data,local=false){
  else actor.attack={...next};
  if(local){aim=lanAngle(data.aim);if(!actor.attack&&state==='playing'&&!document.hidden)aim=lanAngle(targetAim);}
  actor.aim=data.aim;
+ if(hadSnapshot&&typeof combatFeedbackContactV17==='function'){const other=actor===p?localParty[0]:p;if(actor.hp<beforeHP)combatFeedbackContactV17(actor,beforeHP,other,{kind:'contact'});}
 }
 function applyLanSnapshot(value){
  const changedRound=battle.round!==value.round;battle.round=value.round;battle.wins=value.wins.slice();battle.time=value.time;battle.winner=value.winner<0?null:value.winner;battle.finished=value.phase==='finished';battle.ended=value.phase==='round-over'||battle.finished;
@@ -219,6 +221,7 @@ function updateLanGuest(dt){
  for(const actor of [p,...localParty]){const attack=actor.attack;if(attack&&(attack.struck||attack.elapsed>=attack.hitAt)&&lanSession.lastSounds.get(actor.slot)!==attack.id){lanSession.lastSounds.set(actor.slot,attack.id);playWorldSound(attack.melee?'blade':'shot',.75,{x:actor.x,z:actor.z});}}
  for(const view of lanSession.bulletViews.values()){const age=Math.max(0,Math.min(.1,(performance.now()-view.receivedAt)/1000)),b=view.data;view.root.position.set(b.x+b.dx*32*age,b.y,b.z+b.dz*32*age);}
  for(const view of lanSession.effectViews.values()){const age=Math.max(0,(performance.now()-view.receivedAt)/1000),life=Math.max(0,view.data.life-age);view.materials[0].opacity=Math.min(.7,life*.7);if(view.kind==='incarnation')view.root.rotation.y=t*.8;else if(view.kind==='rhythm')view.root.scale.setScalar(.8+.2*Math.sin(t*9));}
+ if(state==='playing'&&fresh&&typeof updateCombatFeedbackV17==='function')updateCombatFeedbackV17(dt);
  renderPartyStatus();updateHUD();
 }
 addEventListener('blur',()=>{lanSession.queued={};if(lanSession.peer?.connected&&isLanGuest())lanSession.peer.send('input',{x:0,z:0,aim:lanAngle(targetAim),fire:false,dash:false,power:false,extra:false,interact:false});});

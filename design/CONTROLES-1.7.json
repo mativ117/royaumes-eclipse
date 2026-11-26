@@ -1,0 +1,66 @@
+{
+  "version": "1.7-rc1",
+  "date_utc": "2026-11-26",
+  "scope": "CPU and controlled software Chromium; no hardware FPS or native WebRTC proof",
+  "suites": [
+    {
+      "test": "creature_assets_v16",
+      "passed": true,
+      "seconds": 0.36
+    },
+    {
+      "test": "enemy_direction_v16",
+      "passed": true,
+      "seconds": 0.29
+    },
+    {
+      "test": "combat_feedback_v17",
+      "passed": true,
+      "seconds": 0.15
+    },
+    {
+      "test": "combat_feedback_integration",
+      "passed": true,
+      "seconds": 16.52
+    },
+    {
+      "test": "direction_v16_integration",
+      "passed": true,
+      "seconds": 18.71
+    },
+    {
+      "test": "render_complete",
+      "passed": true,
+      "seconds": 58.66
+    },
+    {
+      "test": "session_actors",
+      "passed": true,
+      "seconds": 68.11
+    },
+    {
+      "test": "lan_game",
+      "passed": true,
+      "seconds": 10.55
+    }
+  ],
+  "warden_reference_cpu": {
+    "passed": true,
+    "log_last_line": "PASS: original embedded quadruped, warden-only replacement, four articulated planted limbs, actual-distance gait, bounded feet, per-instance warning, short bounded lunge, no contact on interruption, one cosmetic landing per attack, unchanged rules and shared-resource-safe disposal. CPU-only."
+  },
+  "integrated_contact": {
+    "contactCount": 3,
+    "blocked": 2,
+    "peak": 22
+  },
+  "eleven_hero_assets_unchanged": true,
+  "previous_archives_unchanged": true,
+  "native_rtc": "SKIP, managed browser policy blocks local ICE; in-memory sync only",
+  "package": {
+    "passed": true,
+    "two_identical_builds": true,
+    "standalone_secret_and_creatures_loaded": true,
+    "external_glb_requests": 0,
+    "previous_archives_unchanged": true
+  }
+}

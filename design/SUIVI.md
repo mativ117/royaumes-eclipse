@@ -1,3 +1,9 @@
+# Suivi courant — candidate 1.7-rc1
+
+26 novembre 2026 : correction ciblée après critique des silhouettes et des impacts de la 1.6. Trois sculptures reprises dans leurs sources Blender ; temps, squelettes, gabarits et onze héros conservés. Contacts directionnels fondés sur la perte réelle de PV, traces de sockets en fenêtre active, petites pointes ennemies, nettoyage et effets réduits. Le LAN invité lit uniquement les PV autoritaires et affiche un accent neutre.
+
+Huit suites finales, le contrôle des quatre appuis et le paquet déterministe passent ; captures et vidéo de coups infligeant réellement 160 PV enregistrées. Publication en cours. Les résultats sont consignés dans [VALIDATION-1.7.md](VALIDATION-1.7.md). La cible AAA globale, les autres familles/boss, les animations complètes des héros et les essais matériels restent ouverts. Les validations suivantes sont historiques.
+
 # Suivi courant — candidate 1.6-rc1
 
 Clôture du 26 novembre 2026 : huit suites finales et le paquet déterministe passent ; captures réelles actualisées. La 1.6 est publiée et vérifiée : HTML, onze héros, trois créatures, six captures et ZIP identiques ; aventure, atelier, duel bot et lobby LAN non appairé passent sur le site public. Le [relevé distant](PUBLICATION-1.6.json) consigne le code `c3e12a5` et le workflow réussi. La [comparaison AAA](COMPARAISON-AAA-1.6.md) motive cette passe ; la [matrice](PRISE-EN-CHARGE-1.6.md) et la [validation](VALIDATION-1.6.md) distinguent production, essais et limites.

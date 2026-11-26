@@ -5,8 +5,8 @@
   "original_art": true,
   "materials": 4,
   "rest_joints": 22,
-  "vertices": 7516,
-  "polygons": 7135,
+  "vertices": 7966,
+  "polygons": 7539,
   "clips": {
     "idle": 2.4,
     "walk": 1.1,
@@ -15,6 +15,6 @@
     "strike": 0.16,
     "recover": 1.1
   },
-  "sha256": "8e03fef66e9198fa786e567a1e5b976fb6fd5f648985d443148a84d35a9f91e7",
+  "sha256": "7f2b7d42ccd35827e19bb0674a02736a9ac2353e0926f77b77a1726872476827",
   "limits": "Stylised original quadruped; runtime foot planting is procedural, no soft tissue simulation, no claim of AAA anatomy."
 }

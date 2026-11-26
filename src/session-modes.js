@@ -126,17 +126,17 @@ function partyInput(actor,dt){
  if(actor.bot)return actor.bot.update(duelBotObservation(actor),dt);
  return actor.networkInput&&performance.now()-actor.networkInputAt<=250?actor.networkInput:DUEL_NEUTRAL_INPUT;
 }
-function partyHurt(actor,amount){
+function partyHurt(actor,amount,source=null){
  if(!duelAuthority()||battle.ended||state!=='playing'||actor.downed||!Number.isFinite(amount)||amount<=0)return;
  if(actor.shield>0||actor.leap>0||actor.inv>0||actor.dashT>0)return;
- amount*=actor.formT>0?.55:actor.incarnateT>0?.5:actor.wardT>0?.6:actor.fragileT>0?1.5:1;actor.hp=Math.max(0,actor.hp-amount);actor.inv=.65;actor.stagger=.2;cancelDuelAttack(actor);actor.recoil=.4;
- playWorldSound('impact',.8,{x:actor.x,z:actor.z});effect(actor.x,actor.z,1.2,'#ed8471',.25);
+ amount*=actor.formT>0?.55:actor.incarnateT>0?.5:actor.wardT>0?.6:actor.fragileT>0?1.5:1;const beforeHP=actor.hp;actor.hp=Math.max(0,actor.hp-amount);if(typeof combatFeedbackContactV17==='function')combatFeedbackContactV17(actor,beforeHP,source);actor.inv=.65;actor.stagger=.2;cancelDuelAttack(actor);actor.recoil=.4;
+ playWorldSound('impact',.8,{x:actor.x,z:actor.z});
  if(actor.hp<=0){actor.downed=true;actor.root.rotation.z=1.15;actor.proxy.dead=true;}
  syncDuelProxy(actor);
 }
 function battleDamage(actor,amount,source){
  if(!duelAuthority()||battle.ended||!Number.isFinite(amount)||amount<=0)return;const owner=source?.owner||source||p;
- if((owner.team||0)===(actor.team||0))return;const before=actor.hp;if(owner.incarnateT>0)amount*=1.5;if(actor===p)hurt(amount);else partyHurt(actor,amount);
+ if((owner.team||0)===(actor.team||0))return;const before=actor.hp;if(owner.incarnateT>0)amount*=1.5;if(actor===p)hurt(amount,source);else partyHurt(actor,amount,source);
  if((owner.heroId||(owner===p?hero:null))==='eclipse'&&actor.hp<before)owner.incarnation=Math.min(100,(owner.incarnation||0)+(before-actor.hp)*.12);
 }
 function cancelDuelAttack(actor){if(actor.attack&&!actor.attack.struck)actor.overcharge=Math.min(3,(actor.overcharge||0)+(actor.attack.charge||0));actor.attack=null;actor.shot=Math.min(actor.shot||0,.16);}
@@ -185,6 +185,7 @@ function poseDuelActor(actor,dt){
  actor.marker.material.opacity=actor.downed?.22:.75;syncDuelProxy(actor);
 }
 function updateDuelBladeTrail(actor){
+ if(typeof combatFeedbackWeaponV17==='function'){if(actor.trailMesh)actor.trailMesh.visible=false;actor.trailSamples=[];combatFeedbackWeaponV17(actor,actor.avatar,actor.heroId,1/60);return;}
  if(!actor.avatar.blade||!actor.avatar.bladeBase)return;
  if(!actor.trailMesh){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(7*18),3));g.setDrawRange(0,0);actor.trailMesh=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:'#f2cc93',side:THREE.DoubleSide,transparent:true,opacity:.42,depthWrite:false}));actor.trailMesh.frustumCulled=false;scene.add(actor.trailMesh);actor.trailSamples=[];}
  const attack=actor.attack,active=attack?.melee&&attack.elapsed>=attack.hitAt*.75&&attack.elapsed<(attack.activeEnd??attack.duration*.8)+.10;
